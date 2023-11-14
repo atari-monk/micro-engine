@@ -1,1 +1,2 @@
-//export { ICanvasInfo } from './canvas/ICanvasInfo'
+//math
+export { Vector2 } from './math/Vector2'
