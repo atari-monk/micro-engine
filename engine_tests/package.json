@@ -21,6 +21,7 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
+    "engine": "file:engine-1.0.0.tgz",
     "engine_api": "file:engine_api-1.0.0.tgz"
   }
 }

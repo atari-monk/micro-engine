@@ -1,4 +1,4 @@
-import { Vector2 } from 'engine_api'
+import { Vector2 } from 'engine'
 
 describe('Vector2', () => {
   it('should add two vectors', () => {
