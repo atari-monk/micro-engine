@@ -1,0 +1,10 @@
+const lib = require('./../../script/js/copy-package')
+
+const projName = 'engine'
+const sourceFile = `../../${projName}/package.json`
+const targetDir = `../../${projName}/build`
+const debug = false
+
+const paths = lib.getPaths(sourceFile, targetDir)
+if (debug) lib.printPaths(paths)
+lib.copyFileToBuild(paths)
