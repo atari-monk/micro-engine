@@ -6,7 +6,8 @@ $pack = "$libName-1.0.0.tgz"
 $lib = $RepoPath + $build + $pack
 
 $targetProjects = @(
-  "$RepoPath\engine\"
+  "$RepoPath\engine\",
+  "$RepoPath\engine_tests\"
 )
 
 Build-Lib
