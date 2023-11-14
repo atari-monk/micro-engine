@@ -1,0 +1,26 @@
+{
+  "name": "engine_tests",
+  "version": "1.0.0",
+  "description": "Tests of my engine",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "keywords": [
+    "typescript",
+    "library",
+    "engine tests"
+  ],
+  "author": "atari_monk",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^29.5.8",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "engine_api": "file:engine_api-1.0.0.tgz"
+  }
+}
