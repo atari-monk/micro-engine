@@ -1,7 +1,8 @@
-. "C:\atari-monk\Code\micro-engine\script\ps1\CommonFunctions.ps1"
+. "C:\atari-monk\Code\micro-engine\script\CommonFunctions.ps1"
 
+$libFolder = "engine"
 $libName = "engine"
-$build = "$libName\build\"
+$build = "$libFolder\build\"
 $pack = "$libName-1.0.0.tgz"
 $lib = $RepoPath + $build + $pack
 
