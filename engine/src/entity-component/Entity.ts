@@ -1,7 +1,7 @@
 import { IComponent, IEntity } from 'engine_api'
 
 export default class Entity implements IEntity {
-  private components: IComponent[] = []
+  private components = [] as IComponent[]
 
   addComponent(component: IComponent) {
     this.components.push(component)
