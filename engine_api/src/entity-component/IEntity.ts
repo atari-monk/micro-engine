@@ -1,6 +1,6 @@
-import { IComponent } from './IComponent'
+import IComponent from './IComponent'
 
-export interface IEntity {
+export default interface IEntity {
   addComponent(component: IComponent): void
   update(): void
   render(): void

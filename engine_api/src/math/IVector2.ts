@@ -1,4 +1,4 @@
-export interface IVector2 {
+export default interface IVector2 {
   x: number
   y: number
 

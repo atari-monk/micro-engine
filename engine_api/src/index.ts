@@ -1,5 +1,5 @@
 //entity-component
-export { IComponent } from './entity-component/IComponent'
-export { IEntity } from './entity-component/IEntity'
+export { default as IComponent } from './entity-component/IComponent'
+export { default as IEntity } from './entity-component/IEntity'
 //math
-export { IVector2 } from './math/IVector2'
+export { default as IVector2 } from './math/IVector2'

@@ -1,6 +1,6 @@
 import { IComponent, IEntity } from 'engine_api'
 
-export class Entity implements IEntity {
+export default class Entity implements IEntity {
   private components: IComponent[] = []
 
   addComponent(component: IComponent) {

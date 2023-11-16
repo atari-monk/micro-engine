@@ -1,6 +1,6 @@
 import { IVector2 } from 'engine_api'
 
-export class Vector2 implements IVector2 {
+export default class Vector2 implements IVector2 {
   constructor(public x: number = 0, public y: number = 0) {}
 
   operate(

@@ -1,6 +1,6 @@
 import { IVector2 } from 'engine_api'
 
-export class ImmutableVector2 implements IVector2 {
+export default class ImmutableVector2 implements IVector2 {
   constructor(public readonly x: number = 0, public readonly y: number = 0) {}
 
   operate(
