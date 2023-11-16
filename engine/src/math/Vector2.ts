@@ -1,7 +1,13 @@
 import { IVector2 } from 'engine_api'
 
 export default class Vector2 implements IVector2 {
-  constructor(public x: number = 0, public y: number = 0) {}
+  public x: number
+  public y: number
+
+  constructor(x: number = 0, y: number = 0) {
+    this.x = x
+    this.y = y
+  }
 
   operate(
     { x = 0, y = 0 }: IVector2 | { x?: number; y?: number } = {},

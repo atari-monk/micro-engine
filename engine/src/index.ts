@@ -1,3 +1,5 @@
+//component
+export { default as PositionComponent } from './component/PositionComponent'
 //entity-component
 export { default as Component } from './entity-component/Component'
 export { default as Entity } from './entity-component/Entity'
