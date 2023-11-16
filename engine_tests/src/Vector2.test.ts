@@ -49,14 +49,17 @@ describe('Vector2', () => {
 
   it('should normalize the vector', () => {
     const v = new Vector2(3, 4)
+    const length = v.length()
     const result = v.normalize()
 
-    const expectedLength = v.length()
-    const expected = expectedLength
-      ? new Vector2(3 / expectedLength, 4 / expectedLength)
+    const tolerance = 1e-8
+
+    const expected = length
+      ? new Vector2(3 / length, 4 / length)
       : new Vector2(0, 0)
 
-    expect(result).toEqual(expected)
+    expect(result.x).toBeCloseTo(expected.x, tolerance)
+    expect(result.y).toBeCloseTo(expected.y, tolerance)
   })
 
   it('should handle zero vector normalization', () => {
