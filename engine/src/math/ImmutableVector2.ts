@@ -4,8 +4,8 @@ export class ImmutableVector2 implements IVector2 {
   constructor(public readonly x: number = 0, public readonly y: number = 0) {}
 
   operate(
-    { x = 0, y = 0 }: IVector2 | { x?: number; y?: number },
-    operation: 'add' | 'subtract' | 'multiply' | 'divide' | 'normalize' = 'add'
+    { x = 0, y = 0 }: IVector2 | { x?: number; y?: number } = {},
+    operation: 'add' | 'subtract' | 'multiply' | 'divide' = 'add'
   ): ImmutableVector2 {
     switch (operation) {
       case 'add':
@@ -19,11 +19,6 @@ export class ImmutableVector2 implements IVector2 {
           x !== 0 ? this.x / x : this.x,
           y !== 0 ? this.y / y : this.y
         )
-      case 'normalize':
-        const mag = this.length()
-        return mag !== 0
-          ? new ImmutableVector2(this.x / mag, this.y / mag)
-          : this
       default:
         throw new Error(`Unsupported operation: ${operation}`)
     }
@@ -54,7 +49,12 @@ export class ImmutableVector2 implements IVector2 {
   }
 
   normalize(): ImmutableVector2 {
-    return this.operate({}, 'normalize')
+    const mag = this.length()
+    if (mag !== 0) {
+      return this.operate({ x: mag, y: mag }, 'divide')
+    } else {
+      return new ImmutableVector2()
+    }
   }
 
   static zero(): ImmutableVector2 {
