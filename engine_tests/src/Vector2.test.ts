@@ -68,4 +68,30 @@ describe('Vector2', () => {
 
     expect(result).toEqual(new Vector2(0, 0))
   })
+
+  it('should chain multiple operations', () => {
+    const result = new Vector2(1, 2)
+      .add(new Vector2(3, 4))
+      .multiply(2)
+      .subtract(new Vector2(1, 1))
+
+    expect(result).toEqual(new Vector2(7, 11))
+  })
+
+  it('should destructure the result of an operation', () => {
+    const { x, y } = new Vector2(2, 4).multiply(1.5)
+
+    expect(x).toBeCloseTo(3)
+    expect(y).toBeCloseTo(6)
+  })
+
+  it('should chain and destructure in one statement', () => {
+    const { x, y } = new Vector2(1, 2)
+      .add(new Vector2(3, 4))
+      .multiply(2)
+      .subtract(new Vector2(1, 1))
+
+    expect(x).toEqual(7)
+    expect(y).toEqual(11)
+  })
 })

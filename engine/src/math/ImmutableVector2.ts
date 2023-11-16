@@ -1,24 +1,44 @@
 import { IVector2 } from 'engine_api'
 
 export class ImmutableVector2 implements IVector2 {
-  constructor(public readonly x: number, public readonly y: number) {}
+  constructor(public readonly x: number = 0, public readonly y: number = 0) {}
+
+  operate(
+    { x = 0, y = 0 }: IVector2 | { x?: number; y?: number },
+    operation: 'add' | 'subtract' | 'multiply' | 'divide' | 'normalize' = 'add'
+  ): ImmutableVector2 {
+    switch (operation) {
+      case 'add':
+        return new ImmutableVector2(this.x + x, this.y + y)
+      case 'subtract':
+        return new ImmutableVector2(this.x - x, this.y - y)
+      case 'multiply':
+        return new ImmutableVector2(this.x * x, this.y * y)
+      case 'divide':
+        return new ImmutableVector2(
+          x !== 0 ? this.x / x : this.x,
+          y !== 0 ? this.y / y : this.y
+        )
+      case 'normalize':
+        const mag = this.length()
+        return mag !== 0
+          ? new ImmutableVector2(this.x / mag, this.y / mag)
+          : this
+      default:
+        throw new Error(`Unsupported operation: ${operation}`)
+    }
+  }
 
   add(other: IVector2): ImmutableVector2 {
-    return new ImmutableVector2(
-      this.x + (other?.x ?? 0),
-      this.y + (other?.y ?? 0)
-    )
+    return this.operate(other, 'add')
   }
 
   subtract(other: IVector2): ImmutableVector2 {
-    return new ImmutableVector2(
-      this.x - (other?.x ?? 0),
-      this.y - (other?.y ?? 0)
-    )
+    return this.operate(other, 'subtract')
   }
 
   multiply(scalar: number): ImmutableVector2 {
-    return new ImmutableVector2(this.x * scalar, this.y * scalar)
+    return this.operate({ x: scalar, y: scalar }, 'multiply')
   }
 
   dot(other: IVector2): number {
@@ -26,7 +46,7 @@ export class ImmutableVector2 implements IVector2 {
   }
 
   length(): number {
-    return Math.sqrt(this.x * this.x + this.y * this.y)
+    return Math.hypot(this.x, this.y)
   }
 
   squaredLength(): number {
@@ -34,9 +54,18 @@ export class ImmutableVector2 implements IVector2 {
   }
 
   normalize(): ImmutableVector2 {
-    const mag = this.length()
-    return mag
-      ? new ImmutableVector2(this.x / mag, this.y / mag)
-      : new ImmutableVector2(0, 0)
+    return this.operate({}, 'normalize')
+  }
+
+  static zero(): ImmutableVector2 {
+    return new ImmutableVector2()
+  }
+
+  static unitX(): ImmutableVector2 {
+    return new ImmutableVector2(1, 0)
+  }
+
+  static unitY(): ImmutableVector2 {
+    return new ImmutableVector2(0, 1)
   }
 }

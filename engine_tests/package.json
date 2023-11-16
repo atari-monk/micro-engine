@@ -8,8 +8,6 @@
     "debug:test": "node --inspect-brk -r ts-node/register ./node_modules/jest/bin/jest.js --runInBand --detectOpenHandles"
   },
   "keywords": [
-    "typescript",
-    "library",
     "engine tests"
   ],
   "author": "atari_monk",
