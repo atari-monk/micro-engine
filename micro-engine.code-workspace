@@ -1,0 +1,32 @@
+{
+  "folders": [
+    {
+      "name": "engine_api",
+      "path": "engine_api"
+    },
+    {
+      "name": "engine",
+      "path": "engine"
+    },
+    {
+      "name": "engine_node_tests",
+      "path": "engine_node_tests"
+    },
+    {
+      "name": "engine_jsdom_tests",
+      "path": "engine_jsdom_tests"
+    },
+    {
+      "name": "sln",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/engine_api/**": true,
+      "**/engine/**": true,
+      "**/engine_node_tests/**": true,
+      "**/engine_jsdom_tests/**": true
+    }
+  }
+}

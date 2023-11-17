@@ -8,6 +8,7 @@ export default abstract class BaseRenderer {
   }
 
   clearCanvas(): void {
+    this.context.fillStyle = '#000000'
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
   }
 
