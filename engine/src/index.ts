@@ -3,6 +3,8 @@ export { default as PositionComponent } from './component/PositionComponent'
 //entity-component
 export { default as Component } from './entity_component/Component'
 export { default as Entity } from './entity_component/Entity'
+//game_loop
+export { default as GameLoop } from './game_loop/GameLoop'
 //math
 export { default as Vector2 } from './math/Vector2'
 export { default as ImmutableVector2 } from './math/ImmutableVector2'
