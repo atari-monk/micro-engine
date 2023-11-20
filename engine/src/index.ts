@@ -8,6 +8,9 @@ export { default as CollisionDetector } from './collision_detector/CollisionDete
 export { default as PositionComponent } from './component/PositionComponent'
 //config_manager
 export { default as ConfigManager } from './config_manager/ConfigManager'
+//engine
+export { default as Engine } from './engine/Engine'
+export { default as EngineFactory } from './engine/EngineFactory'
 //entity-component
 export { default as Component } from './entity_component/Component'
 export { default as Entity } from './entity_component/Entity'

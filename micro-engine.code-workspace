@@ -17,22 +17,16 @@
       "path": "engine_jsdom_tests"
     },
     {
-      "name": "sln",
-      "path": "."
-    },
-    {
       "name": "desktop_client",
       "path": "desktop_client"
+    },
+    {
+      "name": "sln",
+      "path": "."
     }
   ],
   "settings": {
-    "files.exclude": {
-      "**/engine_api/**": true,
-      "**/engine/**": true,
-      "**/engine_node_tests/**": true,
-      "**/engine_jsdom_tests/**": true,
-      "**/desktop_client/**": true
-    },
-    "liveServer.settings.multiRootWorkspaceName": "sln"
+    "files.exclude": {},
+    "liveServer.settings.multiRootWorkspaceName": "desktop_client"
   }
 }

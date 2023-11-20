@@ -11,6 +11,8 @@ export { default as ICollisionDetector } from './collision_detector/ICollisionDe
 //config_manager
 export { default as IConfigOptions } from './config_manager/IConfigOptions'
 export { default as IConfigurationManager } from './config_manager/IConfigurationManager'
+//engine
+export { default as IEngineConfig } from './engine/IEngineConfig'
 //entity_component
 export { default as IComponent } from './entity_component/IComponent'
 export { default as IEntity } from './entity_component/IEntity'
