@@ -1,3 +1,5 @@
+//animation_manager
+export { default as AnimationManager } from './animation_manager/AnimationManager'
 //collision_detector
 export { default as CollisionDetector } from './collision_detector/CollisionDetector'
 //component
@@ -20,5 +22,9 @@ export { default as Renderer } from './renderer/Renderer'
 export { default as RendererV2 } from './renderer/RendererV2'
 //resource_manager
 export { default as ResourceManager } from './resource_manager/ResourceManager'
+//scene_manager
+export { default as SceneManager } from './scene_manager/SceneManager'
+//sound_manager
+export { default as SoundManager } from './sound_manager/SoundManager'
 //state_manager
 export { default as StateManager } from './state_manager/StateManager'
