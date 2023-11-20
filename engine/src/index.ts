@@ -1,5 +1,7 @@
 //animation_manager
 export { default as AnimationManager } from './animation_manager/AnimationManager'
+//camera
+export { default as Camera } from './camera/Camera'
 //collision_detector
 export { default as CollisionDetector } from './collision_detector/CollisionDetector'
 //component
@@ -21,6 +23,8 @@ export { default as LogManager } from './log_manager/LogManager'
 export { default as Vector2 } from './math/Vector2'
 export { default as ImmutableVector2 } from './math/ImmutableVector2'
 export { default as RandomNumberGenerator } from './math/RandomNumberGenerator'
+//neural_network
+export { default as NeuralNetwork } from './neural_network/NeuralNetwork'
 //particle_system
 export { default as ParticleSystem } from './particle_system/ParticleSystem'
 //path_finding
@@ -39,5 +43,7 @@ export { default as SceneManager } from './scene_manager/SceneManager'
 export { default as SoundManager } from './sound_manager/SoundManager'
 //state_manager
 export { default as StateManager } from './state_manager/StateManager'
+//tile_map
+export { default as Tilemap } from './tile_map/Tilemap'
 //ui_manager
 export { default as UIManager } from './ui_manager/UIManager'
