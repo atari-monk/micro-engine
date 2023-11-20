@@ -1,4 +1,9 @@
-import { IEngineConfig, IObjectConfig, IRendererV2, LogLevel } from 'engine_api'
+import {
+  IEngineConfig,
+  IObjectConfig,
+  IObjectEntityConfig,
+  LogLevel,
+} from 'engine_api'
 import GameLoop from '../game_loop/GameLoop'
 import LogManager from '../log_manager/LogManager'
 import RendererV2 from '../renderer/RendererV2'
@@ -20,12 +25,24 @@ export default class EngineFactory {
 
   createEngineConfig(canvasId: string) {
     const renderer = new RendererV2(canvasId)
+    const input = new InputManager()
+    document.addEventListener('keydown', (event) => {
+      input.handleKeyDown(event.key)
+    })
+    const logger = new LogManager(LogLevel.INFO)
+    const objectEntityConfig: IObjectEntityConfig = {
+      objectConfig: this.objectConfig,
+      renderer: renderer,
+      input: input,
+      logger: logger,
+    }
+
     const engineConfig: IEngineConfig = {
       gameLoop: new GameLoop(),
       renderer: renderer,
       logger: new LogManager(LogLevel.INFO),
-      input: new InputManager(),
-      entities: [new ObjectEntity(this.objectConfig, renderer)],
+      input: input,
+      entities: [new ObjectEntity(objectEntityConfig)],
     }
     return engineConfig
   }

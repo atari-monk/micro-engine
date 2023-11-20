@@ -5,6 +5,7 @@ export { default as Camera } from './camera/Camera'
 //collision_detector
 export { default as CollisionDetector } from './collision_detector/CollisionDetector'
 //component
+export { default as MovementComponent } from './component/MovementComponent'
 export { default as ObjectComponent } from './component/ObjectComponent'
 export { default as RenderComponent } from './component/RenderComponent'
 //config_manager
