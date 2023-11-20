@@ -15,10 +15,17 @@ export { default as EventSystem } from './event_system/EventSystem'
 export { default as GameLoop } from './game_loop/GameLoop'
 //input_manager
 export { default as InputManager } from './input_manager/InputManager'
+//log_manager
+export { default as LogManager } from './log_manager/LogManager'
 //math
 export { default as Vector2 } from './math/Vector2'
 export { default as ImmutableVector2 } from './math/ImmutableVector2'
 export { default as RandomNumberGenerator } from './math/RandomNumberGenerator'
+//particle_system
+export { default as ParticleSystem } from './particle_system/ParticleSystem'
+//path_finding
+export { default as Grid } from './path_finding/Grid'
+export { default as Pathfinding } from './path_finding/Pathfinding'
 //renderer
 export { default as Renderer } from './renderer/Renderer'
 export { default as RendererV2 } from './renderer/RendererV2'
