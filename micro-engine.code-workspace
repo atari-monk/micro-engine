@@ -21,12 +21,10 @@
       "path": "desktop_client"
     },
     {
-      "name": "sln",
       "path": "."
     }
   ],
   "settings": {
-    "files.exclude": {},
     "liveServer.settings.multiRootWorkspaceName": "desktop_client"
   }
 }
