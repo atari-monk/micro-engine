@@ -13,6 +13,7 @@
   "author": "atari_monk",
   "license": "ISC",
   "dependencies": {
+    "@testing-library/dom": "^9.3.3",
     "engine": "file:engine-1.0.0.tgz",
     "engine_api": "file:engine_api-1.0.0.tgz"
   },

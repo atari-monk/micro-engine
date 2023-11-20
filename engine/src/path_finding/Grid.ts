@@ -9,9 +9,27 @@ export default class Grid {
 
   getNeighbors(node: IGridNode): IGridNode[] {
     const neighbors: IGridNode[] = []
+    const { x, y } = node
 
-    // Implement logic to get valid neighbors here
-    // For example, add neighboring nodes to the left, right, top, and bottom
+    // Check left neighbor
+    if (x > 0) {
+      neighbors.push(this.grid[y][x - 1])
+    }
+
+    // Check right neighbor
+    if (x < this.grid[y].length - 1) {
+      neighbors.push(this.grid[y][x + 1])
+    }
+
+    // Check top neighbor
+    if (y > 0) {
+      neighbors.push(this.grid[y - 1][x])
+    }
+
+    // Check bottom neighbor
+    if (y < this.grid.length - 1) {
+      neighbors.push(this.grid[y + 1][x])
+    }
 
     return neighbors
   }

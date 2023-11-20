@@ -59,7 +59,7 @@ export default class NeuralNetwork implements INeuralNetwork {
     }
   }
 
-  private threshold(output: number[]): number[] {
+  public threshold(output: number[]): number[] {
     return output.map((value) => (value >= 0.5 ? 1 : 0))
   }
 

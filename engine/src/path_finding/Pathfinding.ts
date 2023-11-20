@@ -17,7 +17,7 @@ export default class Pathfinding implements IPathfinding {
       openSet.splice(0, 1)
       closedSet.push(currentNode)
 
-      if (currentNode === end) {
+      if (currentNode.x === end.x && currentNode.y === end.y) {
         return { success: true, path: this.reconstructPath(start, end) }
       }
 
@@ -39,12 +39,16 @@ export default class Pathfinding implements IPathfinding {
     const path: IGridNode[] = []
     let currentNode = end
 
-    while (currentNode !== start) {
+    while (currentNode !== start && currentNode.parent) {
       path.unshift(currentNode)
-      currentNode = currentNode.parent!
+      currentNode = currentNode.parent
     }
 
-    path.unshift(start)
+    // Add the start node to the path
+    if (currentNode === start) {
+      path.unshift(currentNode)
+    }
+
     return path
   }
 }
