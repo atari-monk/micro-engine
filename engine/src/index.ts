@@ -4,6 +4,8 @@ export { default as AnimationManager } from './animation_manager/AnimationManage
 export { default as CollisionDetector } from './collision_detector/CollisionDetector'
 //component
 export { default as PositionComponent } from './component/PositionComponent'
+//config_manager
+export { default as ConfigManager } from './config_manager/ConfigManager'
 //entity-component
 export { default as Component } from './entity_component/Component'
 export { default as Entity } from './entity_component/Entity'
@@ -22,9 +24,13 @@ export { default as Renderer } from './renderer/Renderer'
 export { default as RendererV2 } from './renderer/RendererV2'
 //resource_manager
 export { default as ResourceManager } from './resource_manager/ResourceManager'
+//save_game_manager
+export { default as SaveGameManager } from './save_game_manager/SaveGameManager'
 //scene_manager
 export { default as SceneManager } from './scene_manager/SceneManager'
 //sound_manager
 export { default as SoundManager } from './sound_manager/SoundManager'
 //state_manager
 export { default as StateManager } from './state_manager/StateManager'
+//ui_manager
+export { default as UIManager } from './ui_manager/UIManager'
