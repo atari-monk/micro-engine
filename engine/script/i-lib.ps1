@@ -8,7 +8,8 @@ $lib = $RepoPath + $build + $pack
 
 $targetProjects = @(
   "$RepoPath\engine_node_tests\",
-  "$RepoPath\engine_jsdom_tests\"
+  "$RepoPath\engine_jsdom_tests\",
+  "$RepoPath\desktop_client\"
 )
 
 Build-Lib

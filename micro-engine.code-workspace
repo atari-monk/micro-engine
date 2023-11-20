@@ -19,6 +19,10 @@
     {
       "name": "sln",
       "path": "."
+    },
+    {
+      "name": "desktop_client",
+      "path": "desktop_client"
     }
   ],
   "settings": {
@@ -26,7 +30,9 @@
       "**/engine_api/**": true,
       "**/engine/**": true,
       "**/engine_node_tests/**": true,
-      "**/engine_jsdom_tests/**": true
-    }
+      "**/engine_jsdom_tests/**": true,
+      "**/desktop_client/**": true
+    },
+    "liveServer.settings.multiRootWorkspaceName": "sln"
   }
 }
