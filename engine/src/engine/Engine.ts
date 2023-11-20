@@ -1,22 +1,38 @@
-import { IEngineConfig, IGameLoop, ILogger, IRendererV2 } from 'engine_api'
-import Vector2 from '../math/Vector2'
+import {
+  IEngineConfig,
+  IEntity,
+  IGameLoop,
+  IInputManager,
+  ILogger,
+  IRendererV2,
+} from 'engine_api'
 
 export default class Engine {
   private readonly _gameLoop: IGameLoop
   private readonly _renderer: IRendererV2
   private readonly _logger: ILogger
+  private readonly _input: IInputManager
+  private readonly _entities: IEntity[]
 
   constructor(private readonly _engineConfig: IEngineConfig) {
     this._gameLoop = this._engineConfig.gameLoop
     this._renderer = this._engineConfig.renderer
     this._logger = this._engineConfig.logger
+    this._input = this._engineConfig.input
+    this._entities = this._engineConfig.entities
   }
 
-  updateCallback = (deltaTime: number) => {}
+  updateCallback = (deltaTime: number) => {
+    this._entities.forEach((entity) => {
+      entity.update()
+    })
+  }
 
   renderCallback = (deltaTime: number) => {
     this._renderer.clearCanvas()
-    this._renderer.drawRect(new Vector2(0, 0), new Vector2(100, 100), 'red')
+    this._entities.forEach((entity) => {
+      entity.render()
+    })
   }
 
   initializeEngine() {

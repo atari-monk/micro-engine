@@ -1,0 +1,18 @@
+import { IComponent, IObject, IRendererV2 } from 'engine_api'
+
+export default class RenderComponent implements IComponent {
+  constructor(
+    private readonly _object: IObject,
+    private readonly _renderer: IRendererV2
+  ) {}
+
+  update() {}
+
+  render() {
+    this._renderer.drawRect(
+      this._object.position,
+      this._object.size,
+      this._object.color
+    )
+  }
+}

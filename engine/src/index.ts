@@ -5,12 +5,15 @@ export { default as Camera } from './camera/Camera'
 //collision_detector
 export { default as CollisionDetector } from './collision_detector/CollisionDetector'
 //component
-export { default as PositionComponent } from './component/PositionComponent'
+export { default as ObjectComponent } from './component/ObjectComponent'
+export { default as RenderComponent } from './component/RenderComponent'
 //config_manager
 export { default as ConfigManager } from './config_manager/ConfigManager'
 //engine
 export { default as Engine } from './engine/Engine'
 export { default as EngineFactory } from './engine/EngineFactory'
+//entity
+export { default as ObjectEntity } from './entity/ObjectEntity'
 //entity-component
 export { default as Component } from './entity_component/Component'
 export { default as Entity } from './entity_component/Entity'

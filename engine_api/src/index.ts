@@ -8,6 +8,9 @@ export { default as IGameObject } from './collision_detector/IGameObject'
 export { default as ICollisionInfo } from './collision_detector/ICollisionInfo'
 export { default as ICollisionCallback } from './collision_detector/ICollisionCallback'
 export { default as ICollisionDetector } from './collision_detector/ICollisionDetector'
+//component
+export { default as IObject } from './component/IObject'
+export { default as IObjectConfig } from './component/IObjectConfig'
 //config_manager
 export { default as IConfigOptions } from './config_manager/IConfigOptions'
 export { default as IConfigurationManager } from './config_manager/IConfigurationManager'
