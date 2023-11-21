@@ -1,7 +1,3 @@
-import IVector2 from '../math/IVector2'
+import IObject from './IObject'
 
-export default interface IObjectConfig {
-  position: IVector2
-  size: IVector2
-  color: string
-}
+export default interface IObjectConfig extends IObject {}

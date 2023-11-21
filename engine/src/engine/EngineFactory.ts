@@ -20,6 +20,7 @@ export default class EngineFactory {
       color: 'red',
       position: new Vector2(0, 0),
       size: new Vector2(50, 150),
+      speed: new Vector2(10, 10),
     }
   }
 

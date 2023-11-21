@@ -4,4 +4,5 @@ export default interface IObject {
   position: IVector2
   size: IVector2
   color: string
+  speed: IVector2
 }

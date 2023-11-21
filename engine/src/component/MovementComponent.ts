@@ -5,19 +5,19 @@ export default class MovementComponent implements IComponent {
     input.subscribeInputEvent('KeyDown', (key) => {
       switch (key) {
         case 'ArrowLeft':
-          object.position.x -= 10
+          object.position.x -= object.speed.x
           logger.log('ArrowLeft')
           break
         case 'ArrowRight':
-          object.position.x += 10
+          object.position.x += object.speed.x
           logger.log('ArrowRight')
           break
         case 'ArrowUp':
-          object.position.y -= 10
+          object.position.y -= object.speed.y
           logger.log('ArrowUp')
           break
         case 'ArrowDown':
-          object.position.y += 10
+          object.position.y += object.speed.y
           logger.log('ArrowDown')
           break
         default:
