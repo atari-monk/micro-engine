@@ -1,7 +1,7 @@
-import IComponent from "./IComponent"
+import IComponent from './IComponent'
+import IRenderable from './IRenderable'
+import IUpdateable from './IUpdateable'
 
-export default interface IEntity {
+export default interface IEntity extends IUpdateable, IRenderable {
   addComponent(component: IComponent): void
-  update(dt: number): void
-  render(dt: number): void
 }

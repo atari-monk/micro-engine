@@ -1,10 +1,11 @@
 import {
+  IAllEntityConfig,
   IEngineConfig,
   IEntitiesManager,
   IGameLoop,
   ILogger,
   IObjectDataManager,
-  IObjectEntityConfig,
+  IRenderable,
   IRendererV2,
   LogLevel,
 } from 'engine_api'
@@ -17,6 +18,8 @@ import EntityFactory from '../entity/EntityFactory'
 import EntitiesManager from '../entity_component/EntitiesManager'
 import ObjectDataFactory from '../entity/ObjectDataFactory'
 import ObjectDataManager from '../entity/ObjectDataManager'
+import Tilemap from '../tile_map/Tilemap'
+import TilemapDataFactory from '../tile_map/TilemapDataFactory'
 
 export default class EngineFactory {
   private readonly _gameLoop: IGameLoop
@@ -27,6 +30,7 @@ export default class EngineFactory {
   private readonly _objectDataFactory: ObjectDataFactory
   private readonly _entityFactory: EntityFactory
   private readonly _entitiesManager: IEntitiesManager
+  private readonly _tileMap: IRenderable
 
   constructor(canvasId: string) {
     this._gameLoop = new GameLoop()
@@ -38,22 +42,30 @@ export default class EngineFactory {
     this._logger = new LogManager(LogLevel.INFO)
     this._objectDataManager = new ObjectDataManager()
     this._objectDataFactory = new ObjectDataFactory(this._objectDataManager)
-    const defaultObjectEntityConfig: IObjectEntityConfig = {
+    this._tileMap = new Tilemap(new TilemapDataFactory(), this._renderer)
+    const defaultAllEntityConfig: IAllEntityConfig = {
       objectConfig: this._objectDataManager.getObjectData('player'),
       renderer: this._renderer,
       input: this._input,
       logger: this._logger,
+      tileMap: this._tileMap,
     }
-    this._entityFactory = new EntityFactory(defaultObjectEntityConfig)
+    this._entityFactory = new EntityFactory(defaultAllEntityConfig)
     this._entitiesManager = new EntitiesManager()
     this._entitiesManager.addEntity(
-      'player',
-      this._entityFactory.createPlayerEntity()
+      'map',
+      this._entityFactory.createMapEntity()
     )
     this._entitiesManager.addEntity(
       'object',
       this._entityFactory.createObjectEntity(
         this._objectDataManager.getObjectData('object')
+      )
+    )
+    this._entitiesManager.addEntity(
+      'player',
+      this._entityFactory.createPlayerEntity(
+        this._objectDataManager.getObjectData('player')
       )
     )
   }

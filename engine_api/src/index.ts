@@ -17,12 +17,17 @@ export { default as IConfigurationManager } from './config_manager/IConfiguratio
 //engine
 export { default as IEngineConfig } from './engine/IEngineConfig'
 //entity
+export { default as IAllEntityConfig } from './entity/IAllEntityConfig'
+export { default as IMapEntityConfig } from './entity/IMapEntityConfig'
 export { default as IObjectDataManager } from './entity/IObjectDataManager'
 export { default as IObjectEntityConfig } from './entity/IObjectEntityConfig'
+export { default as IPlayerEntityConfig } from './entity/IPlayerEntityConfig'
 //entity_component
 export { default as IComponent } from './entity_component/IComponent'
 export { default as IEntitiesManager } from './entity_component/IEntitiesManager'
 export { default as IEntity } from './entity_component/IEntity'
+export { default as IRenderable } from './entity_component/IRenderable'
+export { default as IUpdateable } from './entity_component/IUpdateable'
 //event_system
 export { default as IEventHandler } from './event_system/IEventHandler'
 export { default as IEventSystem } from './event_system/IEventSystem'
@@ -69,7 +74,7 @@ export { default as IGenericState } from './state_manager/IGenericState'
 export { default as IStateManager } from './state_manager/IStateManager'
 //tile_map
 export { default as ITile } from './tile_map/ITile'
-export { default as IRenderable } from './tile_map/IRenderable'
+export { default as ITilemapDataFactory } from './tile_map/ITilemapDataFactory'
 //ui_manager
 export { default as IUIElement } from './ui_manager/IUIElement'
 export { default as IUIManager } from './ui_manager/IUIManager'

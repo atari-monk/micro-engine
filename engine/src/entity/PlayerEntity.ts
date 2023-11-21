@@ -1,11 +1,11 @@
-import { IObjectEntityConfig } from 'engine_api'
+import { IPlayerEntityConfig } from 'engine_api'
 import ObjectComponent from '../component/ObjectComponent'
 import Entity from '../entity_component/Entity'
 import RenderComponent from '../component/RenderComponent'
 import MovementComponent from '../component/MovementComponent'
 
 export default class PlayerEntity extends Entity {
-  constructor(config: IObjectEntityConfig) {
+  constructor(config: IPlayerEntityConfig) {
     super()
     const object = new ObjectComponent(config.objectConfig)
     const render = new RenderComponent(object, config.renderer)
