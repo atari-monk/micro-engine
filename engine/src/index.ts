@@ -14,7 +14,11 @@ export { default as ConfigManager } from './config_manager/ConfigManager'
 export { default as Engine } from './engine/Engine'
 export { default as EngineFactory } from './engine/EngineFactory'
 //entity
+export { default as EntityFactory } from './entity/EntityFactory'
+export { default as ObjectDataFactory } from './entity/ObjectDataFactory'
+export { default as ObjectDataManager } from './entity/ObjectDataManager'
 export { default as ObjectEntity } from './entity/ObjectEntity'
+export { default as PlayerEntity } from './entity/PlayerEntity'
 //entity-component
 export { default as Component } from './entity_component/Component'
 export { default as EntitiesManager } from './entity_component/EntitiesManager'

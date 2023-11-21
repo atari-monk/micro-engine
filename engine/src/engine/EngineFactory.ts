@@ -13,7 +13,7 @@ import LogManager from '../log_manager/LogManager'
 import RendererV2 from '../renderer/RendererV2'
 import Engine from './Engine'
 import InputManager from '../input_manager/InputManager'
-import ObjectEntityFactory from '../entity/ObjectEntityFactory'
+import EntityFactory from '../entity/EntityFactory'
 import EntitiesManager from '../entity_component/EntitiesManager'
 import ObjectDataFactory from '../entity/ObjectDataFactory'
 import ObjectDataManager from '../entity/ObjectDataManager'
@@ -25,7 +25,7 @@ export default class EngineFactory {
   private readonly _logger: ILogger
   private readonly _objectDataManager: IObjectDataManager
   private readonly _objectDataFactory: ObjectDataFactory
-  private readonly _objectEntityFactory: ObjectEntityFactory
+  private readonly _entityFactory: EntityFactory
   private readonly _entitiesManager: IEntitiesManager
 
   constructor(canvasId: string) {
@@ -44,17 +44,15 @@ export default class EngineFactory {
       input: this._input,
       logger: this._logger,
     }
-    this._objectEntityFactory = new ObjectEntityFactory(
-      defaultObjectEntityConfig
-    )
+    this._entityFactory = new EntityFactory(defaultObjectEntityConfig)
     this._entitiesManager = new EntitiesManager()
     this._entitiesManager.addEntity(
       'player',
-      this._objectEntityFactory.createObjectEntity()
+      this._entityFactory.createPlayerEntity()
     )
     this._entitiesManager.addEntity(
       'object',
-      this._objectEntityFactory.createObjectEntity(
+      this._entityFactory.createObjectEntity(
         this._objectDataManager.getObjectData('object')
       )
     )
