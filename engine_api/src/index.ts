@@ -17,6 +17,7 @@ export { default as IConfigurationManager } from './config_manager/IConfiguratio
 //engine
 export { default as IEngineConfig } from './engine/IEngineConfig'
 //entity
+export { default as IObjectDataManager } from './entity/IObjectDataManager'
 export { default as IObjectEntityConfig } from './entity/IObjectEntityConfig'
 //entity_component
 export { default as IComponent } from './entity_component/IComponent'
