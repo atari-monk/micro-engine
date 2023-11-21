@@ -1,7 +1,7 @@
-import IComponent from './IComponent'
+import IComponent from "./IComponent"
 
 export default interface IEntity {
   addComponent(component: IComponent): void
-  update(): void
-  render(): void
+  update(dt: number): void
+  render(dt: number): void
 }

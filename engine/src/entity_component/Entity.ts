@@ -7,15 +7,15 @@ export default class Entity implements IEntity {
     this.components.push(component)
   }
 
-  update() {
+  update(dt: number) {
     for (const component of this.components) {
-      component.update()
+      component.update(dt)
     }
   }
 
-  render() {
+  render(dt: number) {
     for (const component of this.components) {
-      component.render()
+      component.render(dt)
     }
   }
 }

@@ -21,7 +21,7 @@ describe('Entity and Component tests', () => {
     const updateSpy1 = jest.spyOn(component1, 'update')
     const updateSpy2 = jest.spyOn(component2, 'update')
 
-    entity.update()
+    entity.update(0)
 
     expect(updateSpy1).toHaveBeenCalled()
     expect(updateSpy2).toHaveBeenCalled()
@@ -38,7 +38,7 @@ describe('Entity and Component tests', () => {
     const renderSpy1 = jest.spyOn(component1, 'render')
     const renderSpy2 = jest.spyOn(component2, 'render')
 
-    entity.render()
+    entity.render(0)
 
     expect(renderSpy1).toHaveBeenCalled()
     expect(renderSpy2).toHaveBeenCalled()

@@ -17,6 +17,7 @@ export { default as EngineFactory } from './engine/EngineFactory'
 export { default as ObjectEntity } from './entity/ObjectEntity'
 //entity-component
 export { default as Component } from './entity_component/Component'
+export { default as EntitiesManager } from './entity_component/EntitiesManager'
 export { default as Entity } from './entity_component/Entity'
 //event_system
 export { default as EventSystem } from './event_system/EventSystem'

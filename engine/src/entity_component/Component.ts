@@ -1,7 +1,7 @@
 import { IComponent } from 'engine_api'
 
 export default class Component implements IComponent {
-  update() {}
+  update(dt: number) {}
 
-  render() {}
+  render(dt: number) {}
 }

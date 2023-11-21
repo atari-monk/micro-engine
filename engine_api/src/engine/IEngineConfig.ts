@@ -1,4 +1,4 @@
-import IEntity from '../entity_component/IEntity'
+import IEntitiesManager from '../entity_component/IEntitiesManager'
 import IGameLoop from '../game_loop/IGameLoop'
 import IInputManager from '../input_manager/IInputManager'
 import ILogger from '../log_manager/ILogger'
@@ -9,5 +9,5 @@ export default interface IEngineConfig {
   renderer: IRendererV2
   logger: ILogger
   input: IInputManager
-  entities: IEntity[]
+  entitiesManager: IEntitiesManager
 }

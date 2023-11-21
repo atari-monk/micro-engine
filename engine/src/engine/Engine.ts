@@ -1,6 +1,6 @@
 import {
   IEngineConfig,
-  IEntity,
+  IEntitiesManager,
   IGameLoop,
   IInputManager,
   ILogger,
@@ -12,27 +12,28 @@ export default class Engine {
   private readonly _renderer: IRendererV2
   private readonly _logger: ILogger
   private readonly _input: IInputManager
-  private readonly _entities: IEntity[]
+  private readonly _entitiesManager: IEntitiesManager
 
   constructor(private readonly _engineConfig: IEngineConfig) {
-    this._gameLoop = this._engineConfig.gameLoop
-    this._renderer = this._engineConfig.renderer
     this._logger = this._engineConfig.logger
+    this._logger.log(`Logger`)
+    this._logger.log(`Game Loop`)
+    this._gameLoop = this._engineConfig.gameLoop
+    this._logger.log(`Renderer`)
+    this._renderer = this._engineConfig.renderer
+    this._logger.log(`Input`)
     this._input = this._engineConfig.input
-    this._entities = this._engineConfig.entities
+    this._logger.log(`Entities Manager`)
+    this._entitiesManager = this._engineConfig.entitiesManager
   }
 
-  updateCallback = (deltaTime: number) => {
-    this._entities.forEach((entity) => {
-      entity.update()
-    })
+  updateCallback = (dt: number) => {
+    this._entitiesManager.updateEntities(dt)
   }
 
-  renderCallback = (deltaTime: number) => {
+  renderCallback = (dt: number) => {
     this._renderer.clearCanvas()
-    this._entities.forEach((entity) => {
-      entity.render()
-    })
+    this._entitiesManager.renderEntities(dt)
   }
 
   initializeEngine() {

@@ -20,6 +20,7 @@ export { default as IEngineConfig } from './engine/IEngineConfig'
 export { default as IObjectEntityConfig } from './entity/IObjectEntityConfig'
 //entity_component
 export { default as IComponent } from './entity_component/IComponent'
+export { default as IEntitiesManager } from './entity_component/IEntitiesManager'
 export { default as IEntity } from './entity_component/IEntity'
 //event_system
 export { default as IEventHandler } from './event_system/IEventHandler'
