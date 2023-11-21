@@ -6,9 +6,9 @@ export default class RenderComponent implements IComponent {
     private readonly _renderer: IRendererV2
   ) {}
 
-  update() {}
+  update(dt: number) {}
 
-  render() {
+  render(dt: number) {
     this._renderer.drawRect(
       this._object.position,
       this._object.size,

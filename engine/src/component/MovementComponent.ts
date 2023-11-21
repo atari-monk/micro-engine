@@ -27,7 +27,7 @@ export default class MovementComponent implements IComponent {
     })
   }
 
-  update() {}
+  update(dt: number) {}
 
-  render() {}
+  render(dt: number) {}
 }

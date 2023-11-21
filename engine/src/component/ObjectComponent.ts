@@ -13,7 +13,7 @@ export default class ObjectComponent implements IComponent, IObject {
     this.speed = objectConfig.speed
   }
 
-  update() {}
+  update(dt: number) {}
 
-  render() {}
+  render(dt: number) {}
 }
