@@ -16,10 +16,9 @@ import Engine from './Engine'
 import InputManager from '../input_manager/InputManager'
 import EntityFactory from '../entity/EntityFactory'
 import EntitiesManager from '../entity_component/EntitiesManager'
-import ObjectDataFactory from '../entity/ObjectDataFactory'
 import ObjectDataManager from '../entity/ObjectDataManager'
 import Tilemap from '../tile_map/Tilemap'
-import TilemapDataFactory from '../tile_map/TilemapDataFactory'
+import IGameData from './IGameData'
 
 export default class EngineFactory {
   private readonly _gameLoop: IGameLoop
@@ -27,12 +26,11 @@ export default class EngineFactory {
   private readonly _input: InputManager
   private readonly _logger: ILogger
   private readonly _objectDataManager: IObjectDataManager
-  private readonly _objectDataFactory: ObjectDataFactory
   private readonly _entityFactory: EntityFactory
   private readonly _entitiesManager: IEntitiesManager
   private readonly _tileMap: IRenderable
 
-  constructor(canvasId: string) {
+  constructor(canvasId: string, private readonly _gameData: IGameData) {
     this._gameLoop = new GameLoop()
     this._renderer = new RendererV2(canvasId)
     this._input = new InputManager()
@@ -41,8 +39,13 @@ export default class EngineFactory {
     })
     this._logger = new LogManager(LogLevel.INFO)
     this._objectDataManager = new ObjectDataManager()
-    this._objectDataFactory = new ObjectDataFactory(this._objectDataManager)
-    this._tileMap = new Tilemap(new TilemapDataFactory(), this._renderer)
+
+    const data = this._gameData.objectData.getAllObjectData()
+    for (const [key, value] of Object.entries(data)) {
+      this._objectDataManager.addObjectData(key, value)
+    }
+    this._tileMap = new Tilemap(this._gameData.tileMapData, this._renderer)
+
     const defaultAllEntityConfig: IAllEntityConfig = {
       objectConfig: this._objectDataManager.getObjectData('player'),
       renderer: this._renderer,

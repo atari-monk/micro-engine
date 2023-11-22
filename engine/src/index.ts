@@ -13,6 +13,8 @@ export { default as ConfigManager } from './config_manager/ConfigManager'
 //engine
 export { default as Engine } from './engine/Engine'
 export { default as EngineFactory } from './engine/EngineFactory'
+export { default as GameData } from './engine/GameData'
+export { default as IGameData } from './engine/IGameData'
 //entity
 export { default as EntityFactory } from './entity/EntityFactory'
 export { default as ObjectDataFactory } from './entity/ObjectDataFactory'
