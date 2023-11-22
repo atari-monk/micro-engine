@@ -7,6 +7,10 @@ export default class EntitiesManager implements IEntitiesManager {
     this._entities[name] = entity
   }
 
+  getEntity(name: string): IEntity {
+    return this._entities[name]
+  }
+
   removeEntity(name: string): void {
     delete this._entities[name]
   }

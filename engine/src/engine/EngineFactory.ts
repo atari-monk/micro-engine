@@ -1,7 +1,9 @@
 import {
   IAllEntityConfig,
+  ICamera,
   IEngineConfig,
   IEntitiesManager,
+  IGameData,
   IGameLoop,
   ILogger,
   IObjectConfig,
@@ -18,8 +20,8 @@ import EntityFactory from '../entity/EntityFactory'
 import EntitiesManager from '../entity_component/EntitiesManager'
 import ObjectDataManager from '../entity/ObjectDataManager'
 import Tilemap from '../tile_map/Tilemap'
-import IGameData from './IGameData'
 import Vector2 from '../math/Vector2'
+import Camera from '../camera/Camera'
 
 export default class EngineFactory {
   private readonly _gameLoop: IGameLoop = new GameLoop()
@@ -32,24 +34,23 @@ export default class EngineFactory {
   private readonly _entitiesManager: IEntitiesManager = new EntitiesManager()
   private readonly _tileMap: Tilemap
   private _keyDownHandler: (event: KeyboardEvent) => void
-  private _engineConfig: IEngineConfig
+  private _engineConfig?: IEngineConfig
   private _zeroObj: IObjectConfig = this.createZeroObj()
   private readonly _allEntityConfig: IAllEntityConfig
+  private readonly _camera: ICamera
 
-  constructor(canvasId: string, private _gameData: IGameData) {
+  get renderer(): IRendererV2 {
+    return this._renderer
+  }
+
+  constructor(canvasId: string) {
     this._renderer = new RendererV2(canvasId)
     this._tileMap = new Tilemap(this._renderer)
+    this._camera = new Camera(this._renderer)
     this._allEntityConfig = this.createAllEntityConfig()
     this._keyDownHandler = (event: KeyboardEvent) => {
       this._input.handleKeyDown(event.key)
     }
-
-    this.subscribeKeyDownEvent()
-
-    this._tileMap.load(this._gameData.tileMapData)
-    this.loadObjectData(this._gameData.objectData.getAllObjectData())
-    this.createEntities()
-    this._engineConfig = this.createEngineConfig()
   }
 
   private createZeroObj(): IObjectConfig {
@@ -119,10 +120,16 @@ export default class EngineFactory {
       logger: this._logger,
       input: this._input,
       entitiesManager: this._entitiesManager,
+      camera: this._camera,
     } as IEngineConfig
   }
 
-  createEngine() {
+  createEngine(gameData: IGameData) {
+    this.subscribeKeyDownEvent()
+    this._tileMap.load(gameData.tileMapData)
+    this.loadObjectData(gameData.objectData.getAllObjectData())
+    this.createEntities()
+    this._engineConfig = this.createEngineConfig()
     return new Engine(this._engineConfig)
   }
 
@@ -132,9 +139,8 @@ export default class EngineFactory {
     this._objectDataManager.removeAllObjectData()
     this._entitiesManager.removeAllEntities()
 
-    this._gameData = gameData
     this.subscribeKeyDownEvent()
-    this._tileMap.load(this._gameData.tileMapData)
+    this._tileMap.load(gameData.tileMapData)
     this.loadObjectData(gameData.objectData.getAllObjectData())
     this.createEntities()
   }

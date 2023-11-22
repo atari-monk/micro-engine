@@ -1,14 +1,18 @@
-import { ITilemapDataFactory } from 'engine_api'
+import {
+    IGameData,
+  IObjectDataManager,
+  IRendererV2,
+  ITilemapDataFactory,
+} from 'engine_api'
 import ObjectDataFactory from '../entity/ObjectDataFactory'
 import TilemapDataFactory from '../tile_map/TilemapDataFactory'
-import IGameData from './IGameData'
 
 export default class GameData implements IGameData {
-  public objectData: ObjectDataFactory
+  public objectData: IObjectDataManager
   public tileMapData: ITilemapDataFactory
 
-  constructor() {
-    this.objectData = new ObjectDataFactory()
+  constructor(private readonly _renderer: IRendererV2) {
+    this.objectData = new ObjectDataFactory(this._renderer)
     this.tileMapData = new TilemapDataFactory()
   }
 }

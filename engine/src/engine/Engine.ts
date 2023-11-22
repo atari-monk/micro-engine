@@ -1,11 +1,15 @@
 import {
+  ICamera,
   IEngineConfig,
   IEntitiesManager,
+  IEntity,
   IGameLoop,
   IInputManager,
   ILogger,
   IRendererV2,
+  IVector2,
 } from 'engine_api'
+import ObjectComponent from '../component/ObjectComponent'
 
 export default class Engine {
   private readonly _gameLoop: IGameLoop
@@ -13,6 +17,9 @@ export default class Engine {
   private readonly _logger: ILogger
   private readonly _input: IInputManager
   private _entitiesManager: IEntitiesManager
+  private readonly _camera: ICamera
+  private _player?: IEntity
+  private _playerPosition?: IVector2
 
   constructor(private readonly _engineConfig: IEngineConfig) {
     this._logger = this._engineConfig.logger
@@ -25,6 +32,7 @@ export default class Engine {
     this._input = this._engineConfig.input
     this._logger.log(`Entities Manager`)
     this._entitiesManager = this._engineConfig.entitiesManager
+    this._camera = this._engineConfig.camera
   }
 
   updateCallback = (dt: number) => {
@@ -33,11 +41,24 @@ export default class Engine {
 
   renderCallback = (dt: number) => {
     this._renderer.clearCanvas()
+    this._renderer.fillCanvas('rgba(87, 40, 145, 0.8)')
+    if (this._playerPosition) this._camera.setPosition(this._playerPosition)
+    // this._renderer.translate(
+    //   this._renderer
+    //     .getCenter()
+    //     .subtract(this._playerPosition!).add(new Vector2(0, 150))
+    // )
     this._entitiesManager.renderEntities(dt)
+    this._renderer.resetTranslation()
   }
 
   startEngine() {
     this._logger.log(`Starting Engine`)
+    this._player = this._entitiesManager.getEntity('player')
+    this._playerPosition =
+      this._player?.getComponentByType<ObjectComponent>(
+        ObjectComponent
+      )?.position
     this._logger.log(`Subscribe To Update`)
     this._gameLoop.subscribeToUpdate(this.updateCallback)
     this._logger.log(`Subscribe To Render`)
@@ -54,5 +75,7 @@ export default class Engine {
     this._gameLoop.unsubscribeFromRender(this.renderCallback)
     this._logger.log(`Unsubscribe From Update`)
     this._gameLoop.unsubscribeFromUpdate(this.updateCallback)
+    this._player = undefined
+    this._playerPosition = undefined
   }
 }

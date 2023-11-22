@@ -1,3 +1,4 @@
+import ICamera from '../camera/ICamera'
 import IEntitiesManager from '../entity_component/IEntitiesManager'
 import IGameLoop from '../game_loop/IGameLoop'
 import IInputManager from '../input_manager/IInputManager'
@@ -10,4 +11,5 @@ export default interface IEngineConfig {
   logger: ILogger
   input: IInputManager
   entitiesManager: IEntitiesManager
+  camera: ICamera
 }

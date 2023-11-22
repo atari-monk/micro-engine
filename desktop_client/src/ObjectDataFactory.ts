@@ -1,13 +1,15 @@
-import { IObjectConfig } from 'engine_api'
+import { IObjectConfig, IRendererV2 } from 'engine_api'
 import { ObjectDataManager, Vector2 } from 'engine'
 
 export default class ObjectDataFactory extends ObjectDataManager {
-  constructor() {
+  constructor(private readonly _renderer: IRendererV2) {
     super()
     this.createData()
   }
 
   createData() {
+    const center = this._renderer.getCenter()
+
     this.addObjectData('object', {
       color: 'yellow',
       position: new Vector2(550, 400),
@@ -17,7 +19,7 @@ export default class ObjectDataFactory extends ObjectDataManager {
 
     this.addObjectData('player', {
       color: 'pink',
-      position: new Vector2(600, 400),
+      position: new Vector2(center.x, center.y),
       size: new Vector2(50, 150),
       speed: new Vector2(10, 10),
     } as IObjectConfig)

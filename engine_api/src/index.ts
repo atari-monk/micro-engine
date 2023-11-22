@@ -16,6 +16,7 @@ export { default as IConfigOptions } from './config_manager/IConfigOptions'
 export { default as IConfigurationManager } from './config_manager/IConfigurationManager'
 //engine
 export { default as IEngineConfig } from './engine/IEngineConfig'
+export { default as IGameData } from './engine/IGameData'
 //entity
 export { default as IAllEntityConfig } from './entity/IAllEntityConfig'
 export { default as IMapEntityConfig } from './entity/IMapEntityConfig'

@@ -1,4 +1,5 @@
+import IVector2 from '../math/IVector2'
+
 export default interface ICamera {
-  setPosition(x: number, y: number): void
-  translate(context: CanvasRenderingContext2D): void
+  setPosition(position: IVector2): void
 }
