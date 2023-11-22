@@ -4,8 +4,8 @@ import {
   IEntitiesManager,
   IGameLoop,
   ILogger,
+  IObjectConfig,
   IObjectDataManager,
-  IRenderable,
   IRendererV2,
   LogLevel,
 } from 'engine_api'
@@ -19,72 +19,123 @@ import EntitiesManager from '../entity_component/EntitiesManager'
 import ObjectDataManager from '../entity/ObjectDataManager'
 import Tilemap from '../tile_map/Tilemap'
 import IGameData from './IGameData'
+import Vector2 from '../math/Vector2'
 
 export default class EngineFactory {
-  private readonly _gameLoop: IGameLoop
+  private readonly _gameLoop: IGameLoop = new GameLoop()
   private readonly _renderer: IRendererV2
-  private readonly _input: InputManager
-  private readonly _logger: ILogger
-  private readonly _objectDataManager: IObjectDataManager
-  private readonly _entityFactory: EntityFactory
-  private readonly _entitiesManager: IEntitiesManager
-  private readonly _tileMap: IRenderable
+  private readonly _input: InputManager = new InputManager()
+  private readonly _logger: ILogger = new LogManager(LogLevel.INFO)
+  private readonly _objectDataManager: IObjectDataManager =
+    new ObjectDataManager()
+  private readonly _entityFactory: EntityFactory = new EntityFactory()
+  private readonly _entitiesManager: IEntitiesManager = new EntitiesManager()
+  private readonly _tileMap: Tilemap
+  private _keyDownHandler: (event: KeyboardEvent) => void
+  private _engineConfig: IEngineConfig
+  private _zeroObj: IObjectConfig = this.createZeroObj()
+  private readonly _allEntityConfig: IAllEntityConfig
 
-  constructor(canvasId: string, private readonly _gameData: IGameData) {
-    this._gameLoop = new GameLoop()
+  constructor(canvasId: string, private _gameData: IGameData) {
     this._renderer = new RendererV2(canvasId)
-    this._input = new InputManager()
-    document.addEventListener('keydown', (event) => {
+    this._tileMap = new Tilemap(this._renderer)
+    this._allEntityConfig = this.createAllEntityConfig()
+    this._keyDownHandler = (event: KeyboardEvent) => {
       this._input.handleKeyDown(event.key)
-    })
-    this._logger = new LogManager(LogLevel.INFO)
-    this._objectDataManager = new ObjectDataManager()
-
-    const data = this._gameData.objectData.getAllObjectData()
-    for (const [key, value] of Object.entries(data)) {
-      this._objectDataManager.addObjectData(key, value)
     }
-    this._tileMap = new Tilemap(this._gameData.tileMapData, this._renderer)
 
-    const defaultAllEntityConfig: IAllEntityConfig = {
-      objectConfig: this._objectDataManager.getObjectData('player'),
+    this.subscribeKeyDownEvent()
+
+    this._tileMap.load(this._gameData.tileMapData)
+    this.loadObjectData(this._gameData.objectData.getAllObjectData())
+    this.createEntities()
+    this._engineConfig = this.createEngineConfig()
+  }
+
+  private createZeroObj(): IObjectConfig {
+    return {
+      color: 'black',
+      position: new Vector2(0, 0),
+      size: new Vector2(0, 0),
+      speed: new Vector2(0, 0),
+    } as IObjectConfig
+  }
+
+  private createAllEntityConfig() {
+    if (!this._zeroObj) throw new Error('ZeroObj dependency must be here!')
+    if (!this._renderer) throw new Error('Renderer dependency must be here!')
+    if (!this._input) throw new Error('Input dependency must be here!')
+    if (!this._logger) throw new Error('Logger dependency must be here!')
+    if (!this._tileMap) throw new Error('TileMap dependency must be here!')
+    return {
+      objectConfig: this._zeroObj,
       renderer: this._renderer,
       input: this._input,
       logger: this._logger,
       tileMap: this._tileMap,
+    } as IAllEntityConfig
+  }
+
+  private subscribeKeyDownEvent() {
+    document.addEventListener('keydown', this._keyDownHandler)
+  }
+
+  private unsubscribeKeyDownEvent(): void {
+    document.removeEventListener('keydown', this._keyDownHandler)
+  }
+
+  private loadObjectData(data: Record<string, IObjectConfig>) {
+    for (const [key, value] of Object.entries(data)) {
+      this._objectDataManager.addObjectData(key, value)
     }
-    this._entityFactory = new EntityFactory(defaultAllEntityConfig)
-    this._entitiesManager = new EntitiesManager()
+  }
+
+  private createEntities() {
+    this._allEntityConfig.objectConfig = this._zeroObj
     this._entitiesManager.addEntity(
       'map',
-      this._entityFactory.createMapEntity()
+      this._entityFactory.createMapEntity(this._allEntityConfig)
     )
+
+    this._allEntityConfig.objectConfig =
+      this._objectDataManager.getObjectData('object')
     this._entitiesManager.addEntity(
       'object',
-      this._entityFactory.createObjectEntity(
-        this._objectDataManager.getObjectData('object')
-      )
+      this._entityFactory.createObjectEntity(this._allEntityConfig)
     )
+
+    this._allEntityConfig.objectConfig =
+      this._objectDataManager.getObjectData('player')
     this._entitiesManager.addEntity(
       'player',
-      this._entityFactory.createPlayerEntity(
-        this._objectDataManager.getObjectData('player')
-      )
+      this._entityFactory.createPlayerEntity(this._allEntityConfig)
     )
   }
 
-  createEngineConfig() {
-    const engineConfig: IEngineConfig = {
+  private createEngineConfig() {
+    return {
       gameLoop: this._gameLoop,
       renderer: this._renderer,
       logger: this._logger,
       input: this._input,
       entitiesManager: this._entitiesManager,
-    }
-    return engineConfig
+    } as IEngineConfig
   }
 
   createEngine() {
-    return new Engine(this.createEngineConfig())
+    return new Engine(this._engineConfig)
+  }
+
+  reloadEngine(gameData: IGameData) {
+    this.unsubscribeKeyDownEvent()
+    this._input.unsubscribeAll('KeyDown')
+    this._objectDataManager.removeAllObjectData()
+    this._entitiesManager.removeAllEntities()
+
+    this._gameData = gameData
+    this.subscribeKeyDownEvent()
+    this._tileMap.load(this._gameData.tileMapData)
+    this.loadObjectData(gameData.objectData.getAllObjectData())
+    this.createEntities()
   }
 }

@@ -1,7 +1,5 @@
 import {
-  IAllEntityConfig,
   IMapEntityConfig,
-  IObjectConfig,
   IObjectEntityConfig,
   IPlayerEntityConfig,
 } from 'engine_api'
@@ -10,28 +8,15 @@ import PlayerEntity from './PlayerEntity'
 import MapEntity from './MapEntity'
 
 export default class EntityFactory {
-  constructor(private readonly _entityConfig: IAllEntityConfig) {}
-
-  createMapEntity(objConfig?: IObjectConfig): ObjectEntity {
-    const finalConfig: IMapEntityConfig = this._entityConfig
-    return new MapEntity(finalConfig)
+  createMapEntity(config: IMapEntityConfig) {
+    return new MapEntity(config)
   }
 
-  createObjectEntity(objConfig?: IObjectConfig): ObjectEntity {
-    const finalConfig: IObjectEntityConfig = this._entityConfig
-    finalConfig.objectConfig = {
-      ...this._entityConfig.objectConfig,
-      ...(objConfig || {}),
-    }
-    return new ObjectEntity(finalConfig)
+  createObjectEntity(config: IObjectEntityConfig) {
+    return new ObjectEntity(config)
   }
 
-  createPlayerEntity(objConfig?: IObjectConfig): PlayerEntity {
-    const finalConfig: IPlayerEntityConfig = this._entityConfig
-    finalConfig.objectConfig = {
-      ...this._entityConfig.objectConfig,
-      ...(objConfig || {}),
-    }
-    return new PlayerEntity(finalConfig)
+  createPlayerEntity(config: IPlayerEntityConfig) {
+    return new PlayerEntity(config)
   }
 }

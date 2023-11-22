@@ -11,6 +11,12 @@ export default class InputManager implements IInputManager {
     this.inputCallbacks[eventType].push(callback)
   }
 
+  unsubscribeAll(eventType: string): void {
+    if (this.inputCallbacks[eventType]) {
+      delete this.inputCallbacks[eventType]
+    }
+  }
+
   handleKeyDown(key: string): void {
     this.keyStates[key] = true
     this.handleInputEvent('KeyDown', key)

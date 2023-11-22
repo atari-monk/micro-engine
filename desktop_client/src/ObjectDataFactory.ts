@@ -1,6 +1,5 @@
 import { IObjectConfig } from 'engine_api'
-import Vector2 from '../math/Vector2'
-import ObjectDataManager from './ObjectDataManager'
+import { ObjectDataManager, Vector2 } from 'engine'
 
 export default class ObjectDataFactory extends ObjectDataManager {
   constructor() {
@@ -10,15 +9,15 @@ export default class ObjectDataFactory extends ObjectDataManager {
 
   createData() {
     this.addObjectData('object', {
-      color: 'blue',
-      position: new Vector2(150, 200),
-      size: new Vector2(150, 50),
+      color: 'yellow',
+      position: new Vector2(550, 400),
+      size: new Vector2(70, 50),
       speed: new Vector2(10, 10),
     } as IObjectConfig)
 
     this.addObjectData('player', {
-      color: 'red',
-      position: new Vector2(0, 0),
+      color: 'pink',
+      position: new Vector2(600, 400),
       size: new Vector2(50, 150),
       speed: new Vector2(10, 10),
     } as IObjectConfig)

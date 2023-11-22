@@ -18,4 +18,8 @@ export default class ObjectDataManager implements IObjectDataManager {
   removeObjectData(name: string) {
     delete this.objectData[name]
   }
+
+  removeAllObjectData() {
+    this.objectData = {}
+  }
 }

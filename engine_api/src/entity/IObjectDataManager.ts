@@ -5,4 +5,5 @@ export default interface IObjectDataManager {
   getObjectData(name: string): IObjectConfig
   getAllObjectData(): Record<string, IObjectConfig>
   removeObjectData(name: string): void
+  removeAllObjectData(): void
 }

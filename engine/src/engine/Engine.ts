@@ -12,7 +12,7 @@ export default class Engine {
   private readonly _renderer: IRendererV2
   private readonly _logger: ILogger
   private readonly _input: IInputManager
-  private readonly _entitiesManager: IEntitiesManager
+  private _entitiesManager: IEntitiesManager
 
   constructor(private readonly _engineConfig: IEngineConfig) {
     this._logger = this._engineConfig.logger
@@ -36,13 +36,23 @@ export default class Engine {
     this._entitiesManager.renderEntities(dt)
   }
 
-  initializeEngine() {
-    this._logger.log(`Initializing Engine`)
+  startEngine() {
+    this._logger.log(`Starting Engine`)
     this._logger.log(`Subscribe To Update`)
     this._gameLoop.subscribeToUpdate(this.updateCallback)
     this._logger.log(`Subscribe To Render`)
     this._gameLoop.subscribeToRender(this.renderCallback)
     this._logger.log(`Starting Game Loop`)
     this._gameLoop.startLoop()
+  }
+
+  stopEngine() {
+    this._logger.log(`Stoping Engine`)
+    this._logger.log(`Stoping Game Loop`)
+    this._gameLoop.stopLoop()
+    this._logger.log(`Unsubscribe From Render`)
+    this._gameLoop.unsubscribeFromRender(this.renderCallback)
+    this._logger.log(`Unsubscribe From Update`)
+    this._gameLoop.unsubscribeFromUpdate(this.updateCallback)
   }
 }

@@ -11,6 +11,10 @@ export default class EntitiesManager implements IEntitiesManager {
     delete this._entities[name]
   }
 
+  removeAllEntities(): void {
+    this._entities = {}
+  }
+
   updateEntities(dt: number): void {
     Object.values(this._entities).forEach((entity: IEntity) => {
       entity.update(dt)

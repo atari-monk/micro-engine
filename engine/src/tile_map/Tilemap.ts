@@ -13,18 +13,20 @@ export default class Tilemap implements IRenderable {
   private _cords: IVector2
   private _zeroTile: ITile
 
-  constructor(
-    mapFactory: ITilemapDataFactory,
-    private readonly _renderer: IRendererV2
-  ) {
-    this.map = mapFactory.createMap()
-    this.tiles = mapFactory.createTiles()
+  constructor(private readonly _renderer: IRendererV2) {
+    this.map = []
+    this.tiles = []
     this._cords = new Vector2()
     this._zeroTile = {
       id: 0,
       size: new Vector2(0, 0),
       rgba: 'rgba(0, 0, 0, 0)',
     }
+  }
+
+  load(mapFactory: ITilemapDataFactory) {
+    this.map = mapFactory.createMap()
+    this.tiles = mapFactory.createTiles()
   }
 
   render(dt: number): void {
