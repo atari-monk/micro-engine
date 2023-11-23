@@ -1,24 +1,34 @@
-import { ITile, ITilemapDataFactory } from 'engine_api'
+import { IImmutableVector2, ITile, ITilemapDataFactory } from 'engine_api'
 import Vector2 from '../math/Vector2'
+import ImmutableVector2 from '../math/ImmutableVector2'
 
 export default class TilemapDataFactory implements ITilemapDataFactory {
+  private readonly _mapOffset = new ImmutableVector2(0, 150)
+
+  get mapOffset(): IImmutableVector2 {
+    return this._mapOffset
+  }
+
   createTiles(): ITile[] {
     const tileSize = new Vector2(120, 120)
     return [
       {
         id: 1,
         size: tileSize,
-        rgba: 'rgba(139, 69, 19, 1)', // Brown color for earth
+        rgba: 'rgba(139, 69, 19, 1)',
+        desc: 'Brown color for earth',
       },
       {
         id: 2,
         size: tileSize,
-        rgba: 'rgba(0, 128, 0, 1)', // Green color for grass
+        rgba: 'rgba(0, 128, 0, 1)',
+        desc: 'Green color for grass',
       },
       {
         id: 3,
         size: tileSize,
-        rgba: 'rgba(135, 206, 250, 1)', // Light blue color for sky
+        rgba: 'rgba(135, 206, 250, 1)',
+        desc: 'Light blue color for sky',
       },
     ]
   }
@@ -26,8 +36,7 @@ export default class TilemapDataFactory implements ITilemapDataFactory {
   // prettier-ignore
   createMap(): number[][] {
     return [
-      //[ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 ]
-      //[ 3, 3, 3, 3, 3, 3, 3, 3, 3, 30, 30, 30, 30, 30, 30, 30 ]
+    //[ 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6 ]
       [ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 ],//1
       [ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 ],//2
       [ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 ],//3

@@ -21,6 +21,10 @@
       "path": "desktop_client"
     },
     {
+      "name": "server",
+      "path": "server"
+    },
+    {
       "path": "."
     }
   ],

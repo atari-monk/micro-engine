@@ -1,4 +1,4 @@
-import IVector2 from '../math/IVector2'
+import IVector2 from '../math/IImmutableVector2'
 
 export default interface IParticleSystem {
   createParticle(

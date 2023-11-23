@@ -1,4 +1,4 @@
-import { IVector2 } from 'engine_api'
+import { IImmutableVector2 } from 'engine_api'
 
 type Operation = 'add' | 'subtract' | 'multiply' | 'divide'
 
@@ -9,11 +9,14 @@ const operationMap: Record<Operation, (a: number, b: number) => number> = {
   divide: (a, b) => (b !== 0 ? a / b : a),
 }
 
-export default class ImmutableVector2 implements IVector2 {
+export default class ImmutableVector2 implements IImmutableVector2 {
   constructor(public readonly x: number = 0, public readonly y: number = 0) {}
 
   private operateWithImmutableVector(
-    { x = 0, y = 0 }: IVector2 | { x: number; y: number } = { x: 0, y: 0 },
+    { x = 0, y = 0 }: IImmutableVector2 | { x: number; y: number } = {
+      x: 0,
+      y: 0,
+    },
     operation: Operation = 'add'
   ): ImmutableVector2 {
     return new ImmutableVector2(
@@ -23,17 +26,17 @@ export default class ImmutableVector2 implements IVector2 {
   }
 
   operate(
-    { x = 0, y = 0 }: IVector2 | { x?: number; y?: number } = {},
+    { x = 0, y = 0 }: IImmutableVector2 | { x?: number; y?: number } = {},
     operation: Operation = 'add'
   ): ImmutableVector2 {
     return this.operateWithImmutableVector({ x, y }, operation)
   }
 
-  add(other: IVector2): ImmutableVector2 {
+  add(other: IImmutableVector2): ImmutableVector2 {
     return this.operateWithImmutableVector(other, 'add')
   }
 
-  subtract(other: IVector2): ImmutableVector2 {
+  subtract(other: IImmutableVector2): ImmutableVector2 {
     return this.operateWithImmutableVector(other, 'subtract')
   }
 
@@ -41,7 +44,11 @@ export default class ImmutableVector2 implements IVector2 {
     return this.operateWithImmutableVector({ x: scalar, y: scalar }, 'multiply')
   }
 
-  dot(other: IVector2): number {
+  divide(other: ImmutableVector2): ImmutableVector2 {
+    return this.operateWithImmutableVector(other, 'divide')
+  }
+
+  dot(other: IImmutableVector2): number {
     return this.x * other.x + this.y * other.y
   }
 

@@ -60,3 +60,5 @@ export { default as StateManager } from './state_manager/StateManager'
 export { default as Tilemap } from './tile_map/Tilemap'
 //ui_manager
 export { default as UIManager } from './ui_manager/UIManager'
+//utils
+export { default as WaitUtility } from './utils/WaitUtility'

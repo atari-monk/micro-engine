@@ -126,6 +126,7 @@ export default class EngineFactory {
 
   createEngine(gameData: IGameData) {
     this.subscribeKeyDownEvent()
+    this._camera.load(gameData.tileMapData)
     this._tileMap.load(gameData.tileMapData)
     this.loadObjectData(gameData.objectData.getAllObjectData())
     this.createEntities()
@@ -140,6 +141,7 @@ export default class EngineFactory {
     this._entitiesManager.removeAllEntities()
 
     this.subscribeKeyDownEvent()
+    this._camera.load(gameData.tileMapData)
     this._tileMap.load(gameData.tileMapData)
     this.loadObjectData(gameData.objectData.getAllObjectData())
     this.createEntities()

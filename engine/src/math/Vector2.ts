@@ -40,6 +40,10 @@ export default class Vector2 implements IVector2 {
     return this.operate({ x: scalar, y: scalar }, 'multiply')
   }
 
+  divide(other: IVector2): this {
+    return this.operate(other, 'divide')
+  }
+
   dot(other: IVector2): number {
     return this.x * other.x + this.y * other.y
   }

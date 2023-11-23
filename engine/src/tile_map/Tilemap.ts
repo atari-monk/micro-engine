@@ -21,6 +21,7 @@ export default class Tilemap implements IRenderable {
       id: 0,
       size: new Vector2(0, 0),
       rgba: 'rgba(0, 0, 0, 0)',
+      desc: 'default zero tile',
     }
   }
 

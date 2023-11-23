@@ -19,7 +19,7 @@ export default class ObjectDataFactory extends ObjectDataManager {
 
     this.addObjectData('player', {
       color: 'pink',
-      position: new Vector2(center.x, center.y),
+      position: new Vector2(center.x, center.y + 330),
       size: new Vector2(50, 150),
       speed: new Vector2(10, 10),
     } as IObjectConfig)
