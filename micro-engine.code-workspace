@@ -21,6 +21,10 @@
       "path": "desktop_client"
     },
     {
+      "name": "multi_desktop_client",
+      "path": "multi_desktop_client"
+    },
+    {
       "name": "server",
       "path": "server"
     },
@@ -29,6 +33,6 @@
     }
   ],
   "settings": {
-    "liveServer.settings.multiRootWorkspaceName": "desktop_client"
+    "liveServer.settings.multiRootWorkspaceName": "multi_desktop_client"
   }
 }

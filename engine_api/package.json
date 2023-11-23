@@ -8,9 +8,7 @@
     "i-lib": "powershell.exe -ExecutionPolicy Bypass -File .\\script\\i-lib.ps1"
   },
   "keywords": [
-    "typescript",
-    "library",
-    "engine api"
+    "engine_api lib"
   ],
   "author": "atari_monk",
   "license": "ISC",

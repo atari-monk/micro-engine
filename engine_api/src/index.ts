@@ -46,6 +46,8 @@ export { default as ILogger } from './log_manager/ILogger'
 export { default as IImmutableVector2 } from './math/IImmutableVector2'
 export { default as IRandomNumberGenerator } from './math/IRandomNumberGenerator'
 export { default as IVector2 } from './math/IVector2'
+//multi
+export { SocketEvents, SocketEvent } from './multi/SocketEvents'
 //neural_network
 export { default as INeuralNetwork } from './neural_network/INeuralNetwork'
 export { default as INeuralNetworkOptions } from './neural_network/INeuralNetworkOptions'

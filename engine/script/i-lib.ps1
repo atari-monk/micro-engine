@@ -9,7 +9,9 @@ $lib = $RepoPath + $build + $pack
 $targetProjects = @(
   "$RepoPath\engine_node_tests\",
   "$RepoPath\engine_jsdom_tests\",
-  "$RepoPath\desktop_client\"
+  "$RepoPath\desktop_client\",
+  "$RepoPath\multi_desktop_client\",
+  "$RepoPath\server\"
 )
 
 Build-Lib
