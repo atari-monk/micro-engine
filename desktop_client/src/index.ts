@@ -1,7 +1,7 @@
 import { EngineFactory, GameData } from 'engine'
 import './css/styles.css'
-import ObjectDataFactory from './ObjectDataFactory'
-import TilemapDataFactory from './TilemapDataFactory'
+import ObjectDataFactory from './gameData/ObjectDataFactory'
+import TilemapDataFactory from './gameData/TilemapDataFactory'
 
 const engineFactory = new EngineFactory('canvas')
 
