@@ -71,6 +71,11 @@ export { default as ISaveGameManager } from './save_game_manager/ISaveGameManage
 //scene_manager
 export { default as IScene } from './scene_manager/IScene'
 export { default as ISceneManager } from './scene_manager/ISceneManager'
+//server/dtos
+export { Direction } from './server/dtos/Direction'
+export { default as InputDto } from './server/dtos/InputDto'
+//server
+export { default as IServerApi } from './server/IServerApi'
 //sound_manager
 export { default as ISoundManager } from './sound_manager/ISoundManager'
 //state_manager
