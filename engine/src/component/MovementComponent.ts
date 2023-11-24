@@ -1,28 +1,33 @@
 import { IComponent, IInputManager, ILogger, IObject } from 'engine_api'
 
 export default class MovementComponent implements IComponent {
+  private readonly _keyActions: { [key: string]: () => void }
+
   constructor(object: IObject, input: IInputManager, logger: ILogger) {
+    this._keyActions = {
+      ArrowLeft: () => {
+        object.position.x -= object.speed.x
+        logger.log('ArrowLeft')
+      },
+      ArrowRight: () => {
+        object.position.x += object.speed.x
+        logger.log('ArrowRight')
+      },
+      ArrowUp: () => {
+        object.position.y -= object.speed.y
+        logger.log('ArrowUp')
+      },
+      ArrowDown: () => {
+        object.position.y += object.speed.y
+        logger.log('ArrowDown')
+      },
+      // Add more key actions as needed
+    }
+
     input.subscribeInputEvent('KeyDown', (key) => {
-      switch (key) {
-        case 'ArrowLeft':
-          object.position.x -= object.speed.x
-          logger.log('ArrowLeft')
-          break
-        case 'ArrowRight':
-          object.position.x += object.speed.x
-          logger.log('ArrowRight')
-          break
-        case 'ArrowUp':
-          object.position.y -= object.speed.y
-          logger.log('ArrowUp')
-          break
-        case 'ArrowDown':
-          object.position.y += object.speed.y
-          logger.log('ArrowDown')
-          break
-        default:
-          // Handle other keys or ignore
-          break
+      const action = this._keyActions[key]
+      if (action) {
+        action()
       }
     })
   }
