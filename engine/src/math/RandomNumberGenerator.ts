@@ -10,7 +10,7 @@ export default class RandomNumberGenerator implements IRandomNumberGenerator {
   }
 
   getRandomBoolean(): boolean {
-    return Math.random() < 0.5 // 50% chance of true or false
+    return Math.random() < 0.5
   }
 
   getRandomArrayElement<T>(array: T[]): T {

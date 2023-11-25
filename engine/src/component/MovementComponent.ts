@@ -7,21 +7,16 @@ export default class MovementComponent implements IComponent {
     this._keyActions = {
       ArrowLeft: () => {
         object.position.x -= object.speed.x
-        logger.log('ArrowLeft')
       },
       ArrowRight: () => {
         object.position.x += object.speed.x
-        logger.log('ArrowRight')
       },
       ArrowUp: () => {
         object.position.y -= object.speed.y
-        logger.log('ArrowUp')
       },
       ArrowDown: () => {
         object.position.y += object.speed.y
-        logger.log('ArrowDown')
       },
-      // Add more key actions as needed
     }
 
     input.subscribeInputEvent('KeyDown', (key) => {

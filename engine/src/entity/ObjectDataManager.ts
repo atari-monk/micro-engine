@@ -1,17 +1,17 @@
-import { IObjectConfig, IObjectDataManager } from 'engine_api'
+import { IObject, IObjectDataManager } from 'engine_api'
 
 export default class ObjectDataManager implements IObjectDataManager {
-  private objectData: Record<string, IObjectConfig> = {}
+  private objectData: Record<string, IObject> = {}
 
-  addObjectData(name: string, config: IObjectConfig) {
+  addObjectData(name: string, config: IObject) {
     this.objectData[name] = config
   }
 
-  getObjectData(name: string): IObjectConfig {
+  getObjectData(name: string): IObject {
     return this.objectData[name]
   }
 
-  getAllObjectData(): Record<string, IObjectConfig> {
+  getAllObjectData(): Record<string, IObject> {
     return this.objectData
   }
 

@@ -15,13 +15,11 @@ engine.startEngine()
 
 document.addEventListener('keydown', (event: KeyboardEvent) => {
   if (event.key.toLowerCase() === 'o') {
-    console.log('The "o" key was pressed!')
     engine.stopEngine()
     engineFactory.reloadEngine(gameData2)
     engine.startEngine()
   }
   if (event.key.toLowerCase() === 'p') {
-    console.log('The "p" key was pressed!')
     engine.stopEngine()
     engineFactory.reloadEngine(gameData)
     engine.startEngine()

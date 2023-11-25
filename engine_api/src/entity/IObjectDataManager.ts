@@ -1,9 +1,9 @@
-import IObjectConfig from '../component/IObjectConfig'
+import IObject from '../component/IObject'
 
 export default interface IObjectDataManager {
-  addObjectData(name: string, config: IObjectConfig): void
-  getObjectData(name: string): IObjectConfig
-  getAllObjectData(): Record<string, IObjectConfig>
+  addObjectData(name: string, config: IObject): void
+  getObjectData(name: string): IObject
+  getAllObjectData(): Record<string, IObject>
   removeObjectData(name: string): void
   removeAllObjectData(): void
 }

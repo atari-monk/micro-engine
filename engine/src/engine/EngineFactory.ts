@@ -6,7 +6,7 @@ import {
   IGameData,
   IGameLoop,
   ILogger,
-  IObjectConfig,
+  IObject,
   IObjectDataManager,
   IRendererV2,
   LogLevel,
@@ -36,7 +36,7 @@ export default class EngineFactory {
   private _keyDownHandler: (event: KeyboardEvent) => void
   private _keyUpHandler: (event: KeyboardEvent) => void
   private _engineConfig?: IEngineConfig
-  private _zeroObj: IObjectConfig = this.createZeroObj()
+  private _zeroObj: IObject = this.createZeroObj()
   protected readonly _allEntityConfig: IAllEntityConfig
   private readonly _camera: ICamera
 
@@ -62,13 +62,14 @@ export default class EngineFactory {
     return new RendererV2(canvasId)
   }
 
-  private createZeroObj(): IObjectConfig {
+  private createZeroObj(): IObject {
     return {
+      id: '',
       color: 'black',
       position: new Vector2(0, 0),
       size: new Vector2(0, 0),
       speed: new Vector2(0, 0),
-    } as IObjectConfig
+    } as IObject
   }
 
   private createAllEntityConfig() {
@@ -96,7 +97,7 @@ export default class EngineFactory {
     document.removeEventListener('keyup', this._keyUpHandler)
   }
 
-  private loadObjectData(data: Record<string, IObjectConfig>) {
+  private loadObjectData(data: Record<string, IObject>) {
     for (const [key, value] of Object.entries(data)) {
       this._objectDataManager.addObjectData(key, value)
     }

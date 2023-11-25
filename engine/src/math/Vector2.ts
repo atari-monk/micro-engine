@@ -1,13 +1,6 @@
 import { IVector2 } from 'engine_api'
-
-type Operation = 'add' | 'subtract' | 'multiply' | 'divide'
-
-const operationMap: Record<Operation, (a: number, b: number) => number> = {
-  add: (a, b) => a + b,
-  subtract: (a, b) => a - b,
-  multiply: (a, b) => a * b,
-  divide: (a, b) => (b !== 0 ? a / b : a),
-}
+import { Operation } from './Operation'
+import { operationMap } from './operationMap'
 
 export default class Vector2 implements IVector2 {
   public x: number
@@ -16,6 +9,10 @@ export default class Vector2 implements IVector2 {
   constructor(x: number = 0, y: number = 0) {
     this.x = x
     this.y = y
+  }
+
+  static fromObject(vector: IVector2) {
+    return new Vector2(vector.x, vector.y)
   }
 
   private operate(

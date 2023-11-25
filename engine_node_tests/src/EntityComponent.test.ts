@@ -7,7 +7,7 @@ describe('Entity and Component tests', () => {
 
     entity.addComponent(component)
 
-    expect(entity['components']).toContain(component)
+    expect(entity['componentsMap']).toContain(component)
   })
 
   test('Entity update calls update on all components', () => {
