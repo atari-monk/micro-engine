@@ -1,29 +1,18 @@
-import {
-  IGameLoop,
-  IUpdateCallback,
-  IRenderCallback,
-  IEntitiesManager,
-} from 'engine_api'
+import { IEntitiesManager, IUpdateCallback } from 'engine_api'
 
-export default class GameLoop implements IGameLoop {
-  private animationFrameId: number | null = null
+export default class GameLoop {
   private lastFrameTime: number = 0
   private updateCallbacks: IUpdateCallback[] = []
-  private renderCallbacks: IRenderCallback[] = []
   private paused: boolean = false
 
-  constructor(protected readonly _entitiesManager: IEntitiesManager) {}
+  constructor(entitiesManager: IEntitiesManager) {}
 
   startLoop(): void {
     this.paused = false
     this.loop()
   }
 
-  stopLoop(): void {
-    if (this.animationFrameId !== null) {
-      cancelAnimationFrame(this.animationFrameId)
-    }
-  }
+  stopLoop(): void {}
 
   pauseLoop(): void {
     this.paused = true
@@ -48,11 +37,7 @@ export default class GameLoop implements IGameLoop {
 
     this.updateCallbacks.forEach((callback) => callback(deltaTime))
 
-    this.renderCallbacks.forEach((callback) => callback(deltaTime))
-
     this.lastFrameTime = currentTime
-
-    this.animationFrameId = requestAnimationFrame(this.loop)
   }
 
   subscribeToUpdate(callback: IUpdateCallback): void {
@@ -61,13 +46,5 @@ export default class GameLoop implements IGameLoop {
 
   unsubscribeFromUpdate(callback: IUpdateCallback): void {
     this.updateCallbacks = this.updateCallbacks.filter((cb) => cb !== callback)
-  }
-
-  subscribeToRender(callback: IRenderCallback): void {
-    this.renderCallbacks.push(callback)
-  }
-
-  unsubscribeFromRender(callback: IRenderCallback): void {
-    this.renderCallbacks = this.renderCallbacks.filter((cb) => cb !== callback)
   }
 }

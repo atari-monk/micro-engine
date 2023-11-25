@@ -13,7 +13,7 @@ export class RendererMock implements IRendererV2 {
   save(): void {}
   restore(): void {}
   getCenter(): IImmutableVector2 {
-    return new ImmutableVector2()
+    return new ImmutableVector2(1920 / 2, 1080 / 2)
   }
   fillCanvas(color: string): void {}
 }

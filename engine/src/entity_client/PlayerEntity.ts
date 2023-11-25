@@ -2,7 +2,7 @@ import { IInputManager, ILogger, IObject, IRendererV2 } from 'engine_api'
 import ObjectComponent from '../component/ObjectComponent'
 import Entity from '../entity_component/Entity'
 import RenderComponent from '../component/RenderComponent'
-import MovementComponent from '../component/MovementComponent'
+import MovementComponent from '../component_client/MovementComponent'
 
 export default class PlayerEntity extends Entity {
   constructor(

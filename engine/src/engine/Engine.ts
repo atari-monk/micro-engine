@@ -16,7 +16,7 @@ export default class Engine {
   private readonly _renderer: IRendererV2
   private readonly _logger: ILogger
   private readonly _input: IInputManager
-  private _entitiesManager: IEntitiesManager
+  protected _entitiesManager: IEntitiesManager
   private readonly _camera: ICamera
   private _player?: IEntity
   private _playerPosition?: IVector2
@@ -43,11 +43,6 @@ export default class Engine {
     this._renderer.clearCanvas()
     this._renderer.fillCanvas('rgba(87, 40, 145, 0.8)')
     if (this._playerPosition) this._camera.setPosition(this._playerPosition)
-    // this._renderer.translate(
-    //   this._renderer
-    //     .getCenter()
-    //     .subtract(this._playerPosition!).add(new Vector2(0, 150))
-    // )
     this._entitiesManager.renderEntities(dt)
     this._renderer.resetTranslation()
   }

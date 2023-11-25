@@ -1,8 +1,8 @@
 import { Engine } from 'engine'
-import { Direction, IClientApi, InputDto, SocketEvents } from 'engine_api'
+import { Direction, IGameClientApi, InputDto, SocketEvents } from 'engine_api'
 import { Socket, io } from 'socket.io-client'
 
-export default class GameClient implements IClientApi {
+export default class GameClient implements IGameClientApi {
   private readonly _socket: Socket
   private _engine?: Engine
 
@@ -24,7 +24,7 @@ export default class GameClient implements IClientApi {
       SocketEvents.GameDataFrame,
       (direction: Direction[] | undefined) => {
         try {
-          //console.log('Server move', direction)
+          console.log('Server move', direction)
           //this._engine.updatePlayerPosition()
         } catch (error) {
           console.error('Error handling GameDataFrame:', error)

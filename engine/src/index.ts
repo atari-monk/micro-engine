@@ -5,7 +5,7 @@ export { default as Camera } from './camera/Camera'
 //collision_detector
 export { default as CollisionDetector } from './collision_detector/CollisionDetector'
 //component
-export { default as ClientMovementComponent } from './component/ClientMovementComponent'
+export { default as ClientMovementComponent } from './component_client/MovementComponent'
 export { default as MapComponent } from './component/MapComponent'
 export { default as MovementComponent } from './component/MovementComponent'
 export { default as ObjectComponent } from './component/ObjectComponent'
@@ -13,11 +13,14 @@ export { default as RenderComponent } from './component/RenderComponent'
 //config_manager
 export { default as ConfigManager } from './config_manager/ConfigManager'
 //engine
-export { default as ClientEngineFactory } from './engine/ClientEngineFactory'
 export { default as Engine } from './engine/Engine'
 export { default as EngineFactory } from './engine/EngineFactory'
 export { default as GameData } from './engine/GameData'
-export { default as ServerEngineFactory } from './engine/ServerEngineFactory'
+//engine_client
+export { default as ClientEngineFactory } from './engine_client/EngineFactory'
+//engine_server
+export { default as ServerEngine } from './engine_server/Engine'
+export { default as ServerEngineFactory } from './engine_server/EngineFactory'
 //entity
 export { default as EntityFactory } from './entity/EntityFactory'
 export { default as ObjectDataFactory } from './entity/ObjectDataFactory'

@@ -3,7 +3,7 @@ import http from 'http'
 import { Server } from 'socket.io'
 import cors from 'cors'
 import ConnectionManager from './ConnectionManager'
-import { SocketEvents } from 'engine_api'
+import { IEngineServerApi, SocketEvents } from 'engine_api'
 
 export default class GameServer {
   private readonly _app = express()
@@ -18,18 +18,21 @@ export default class GameServer {
   private readonly _port: number = +(process.env.PORT ?? 3001)
   private readonly _connectionManager: ConnectionManager =
     new ConnectionManager(this._io)
+  private _engine?: IEngineServerApi
 
   constructor() {
     this.setMiddleware()
-    this.setEngine()
     this._io.on(SocketEvents.Connect, this._connectionManager.OnConnection)
+  }
+
+  loadEngine(engine: IEngineServerApi) {
+    this._engine = engine
+    this._connectionManager.loadEngine(engine)
   }
 
   private setMiddleware() {
     this._app.use(cors())
   }
-
-  private setEngine() {}
 
   startServer() {
     this._httpServer.listen(this._port, () => {

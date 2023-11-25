@@ -7,7 +7,7 @@ import {
   InputDto,
 } from 'engine_api'
 
-export default class ClientMovementComponent implements IComponent {
+export default class MovementComponent implements IComponent {
   private readonly _keyActions: { [key: string]: () => void }
   private _inputDto: InputDto = new InputDto()
   private _keyToDirectionMap: { [key: string]: Direction } = {

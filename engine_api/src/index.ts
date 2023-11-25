@@ -3,8 +3,6 @@ export { default as IAnimationCallback } from './animation_manager/IAnimationCal
 export { default as IAnimationManager } from './animation_manager/IAnimationManager'
 //camera
 export { default as ICamera } from './camera/ICamera'
-//client
-export { default as IClientApi } from './client/IClientApi'
 //collision_detector
 export { default as IGameObject } from './collision_detector/IGameObject'
 export { default as ICollisionInfo } from './collision_detector/ICollisionInfo'
@@ -19,11 +17,7 @@ export { default as IConfigurationManager } from './config_manager/IConfiguratio
 export { default as IEngineConfig } from './engine/IEngineConfig'
 export { default as IGameData } from './engine/IGameData'
 //entity
-export { default as IAllEntityConfig } from './entity/IAllEntityConfig'
-export { default as IMapEntityConfig } from './entity/IMapEntityConfig'
 export { default as IObjectDataManager } from './entity/IObjectDataManager'
-export { default as IObjectEntityConfig } from './entity/IObjectEntityConfig'
-export { default as IPlayerEntityConfig } from './entity/IPlayerEntityConfig'
 //entity_component
 export { default as IComponent } from './entity_component/IComponent'
 export { default as IEntitiesManager } from './entity_component/IEntitiesManager'
@@ -51,6 +45,9 @@ export { default as IVector2 } from './math/IVector2'
 export { Direction } from './multi/dtos/Direction'
 export { default as InputDto } from './multi/dtos/InputDto'
 //multi
+export { default as IEngineServerApi } from './multi/IEngineServerApi'
+export { default as IGameClientApi } from './multi/IGameClientApi'
+export { default as IGameServerApi } from './multi/IGameServerApi'
 export { SocketEvents, SocketEvent } from './multi/SocketEvents'
 //neural_network
 export { default as INeuralNetwork } from './neural_network/INeuralNetwork'

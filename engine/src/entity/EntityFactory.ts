@@ -1,27 +1,29 @@
 import {
-  IMapEntityConfig,
-  IObjectEntityConfig,
-  IPlayerEntityConfig,
+  IInputManager,
+  ILogger,
+  IObject,
+  IRendererV2,
+  ITilemap,
 } from 'engine_api'
 import ObjectEntity from './ObjectEntity'
 import PlayerEntity from './PlayerEntity'
 import MapEntity from './MapEntity'
-import ClientPlayerEntity from './ClientPlayerEntity'
 
 export default class EntityFactory {
-  createMapEntity(config: IMapEntityConfig) {
-    return new MapEntity(config)
+  createMapEntity(tileMap: ITilemap) {
+    return new MapEntity(tileMap)
   }
 
-  createObjectEntity(config: IObjectEntityConfig) {
-    return new ObjectEntity(config)
+  createObjectEntity(objectData: IObject, renderer: IRendererV2) {
+    return new ObjectEntity(objectData, renderer)
   }
 
-  createPlayerEntity(config: IPlayerEntityConfig) {
-    return new PlayerEntity(config)
-  }
-
-  createClientPlayerEntity(config: IPlayerEntityConfig) {
-    return new ClientPlayerEntity(config)
+  createPlayerEntity(
+    objectData: IObject,
+    renderer: IRendererV2,
+    input: IInputManager,
+    logger: ILogger
+  ) {
+    return new PlayerEntity(objectData, renderer, input, logger)
   }
 }

@@ -2,26 +2,27 @@ import {
   ICamera,
   IEngineConfig,
   IEntitiesManager,
+  IGameClientApi,
   IGameData,
-  IGameLoop,
   ILogger,
   IObject,
   IObjectDataManager,
   IRendererV2,
   LogLevel,
 } from 'engine_api'
-import GameLoop from '../game_loop/GameLoop'
-import LogManager from '../log_manager/LogManager'
-import RendererV2 from '../renderer/RendererV2'
-import Engine from './Engine'
-import InputManager from '../input_manager/InputManager'
+import { GameLoop } from '../game_loop_client/GameLoop'
 import EntityFactory from '../entity/EntityFactory'
-import EntitiesManager from '../entity_component/EntitiesManager'
 import ObjectDataManager from '../entity/ObjectDataManager'
+import EntitiesManager from '../entity_component/EntitiesManager'
+import InputManager from '../input_manager/InputManager'
+import LogManager from '../log_manager/LogManager'
 import Tilemap from '../tile_map/Tilemap'
+import RendererV2 from '../renderer/RendererV2'
 import Camera from '../camera/Camera'
+import Engine from '../engine/Engine'
+import PlayerEntity from '../entity_client/PlayerEntity'
 
-export default class EngineFactory {
+export default class ClientEngineFactory {
   private readonly _renderer: IRendererV2
   private readonly _input: InputManager = new InputManager()
   private readonly _logger: ILogger = new LogManager(LogLevel.INFO)
@@ -29,7 +30,7 @@ export default class EngineFactory {
     new ObjectDataManager()
   protected readonly _entityFactory: EntityFactory = new EntityFactory()
   protected readonly _entitiesManager: IEntitiesManager = new EntitiesManager()
-  protected _gameLoop: IGameLoop
+  protected _gameLoop: GameLoop
   private readonly _tileMap: Tilemap
   private _keyDownHandler: (event: KeyboardEvent) => void
   private _keyUpHandler: (event: KeyboardEvent) => void
@@ -40,11 +41,11 @@ export default class EngineFactory {
     return this._renderer
   }
 
-  constructor(canvasId: string) {
+  constructor(canvasId: string, private readonly _clientApi: IGameClientApi) {
     this._renderer = new RendererV2(canvasId)
     this._tileMap = new Tilemap(this._renderer)
     this._camera = new Camera(this._renderer)
-    this._gameLoop = new GameLoop(this._entitiesManager)
+    this._gameLoop = new GameLoop(this._entitiesManager, this._clientApi)
     this._keyDownHandler = (event: KeyboardEvent) => {
       this._input.handleKeyDown(event.key)
     }
@@ -65,6 +66,7 @@ export default class EngineFactory {
     this._tileMap.load(gameData.tileMapData)
     this.loadObjectData(gameData.objectData.getAllObjectData())
     this.createEntities()
+    this._gameLoop.load()
   }
 
   private createEngineConfig() {
@@ -115,7 +117,7 @@ export default class EngineFactory {
   private createPlayer() {
     this._entitiesManager.addEntity(
       'player',
-      this._entityFactory.createPlayerEntity(
+      new PlayerEntity(
         this._objectDataManager.getObjectData('player'),
         this._renderer,
         this._input,
