@@ -13,6 +13,7 @@ gameData2.objectData = new ObjectDataFactory(engineFactory.renderer)
 gameData2.tileMapData = new TilemapDataFactory()
 
 let engine = engineFactory.createEngine(gameData)
+gameClient.loadEngine(engine)
 engine.startEngine()
 
 document.addEventListener('keydown', (event: KeyboardEvent) => {
