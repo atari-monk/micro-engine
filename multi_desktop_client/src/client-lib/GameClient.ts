@@ -18,13 +18,24 @@ export default class GameClient implements IClientApi {
         console.error('Error handling chat message:', error)
       }
     })
+    this._socket.on(
+      SocketEvents.GameDataFrame,
+      (direction: Direction[] | undefined) => {
+        try {
+          //console.log('Server move', direction)
+        } catch (error) {
+          console.error('Error handling GameDataFrame:', error)
+        }
+      }
+    )
     this._socket.on(SocketEvents.ConnectError, (error: Error) => {
       console.error('Connection error:', error)
     })
   }
 
   sendInput(inputDto: InputDto): void {
-    this._socket.emit(SocketEvents.GameDataFrame, inputDto.direction)
+    if (inputDto.direction && inputDto.direction.length > 0)
+      this._socket.emit(SocketEvents.GameDataFrame, inputDto.direction)
   }
 
   private onConnect() {

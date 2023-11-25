@@ -12,10 +12,13 @@ export default class ConnectionManager {
       this._io.emit(SocketEvents.ChatMessage, `${socket.id}: ${message}`)
     })
 
-    socket.on(SocketEvents.GameDataFrame, (direction: Direction) => {
-      console.log(`GameDataFrame: ${socket.id} ${direction}`)
-      this._io.emit(SocketEvents.GameDataFrame, direction)
-    })
+    socket.on(
+      SocketEvents.GameDataFrame,
+      (direction: Direction[] | undefined) => {
+        //console.log(`GameDataFrame: ${socket.id} ${direction}`)
+        this._io.emit(SocketEvents.GameDataFrame, direction)
+      }
+    )
 
     socket.on(SocketEvents.Disconnect, () => {
       console.log(`User disconnected: ${socket.id}`)
