@@ -34,6 +34,7 @@ export default class EngineFactory {
   protected _gameLoop: IGameLoop
   private readonly _tileMap: Tilemap
   private _keyDownHandler: (event: KeyboardEvent) => void
+  private _keyUpHandler: (event: KeyboardEvent) => void
   private _engineConfig?: IEngineConfig
   private _zeroObj: IObjectConfig = this.createZeroObj()
   protected readonly _allEntityConfig: IAllEntityConfig
@@ -51,6 +52,9 @@ export default class EngineFactory {
     this._allEntityConfig = this.createAllEntityConfig()
     this._keyDownHandler = (event: KeyboardEvent) => {
       this._input.handleKeyDown(event.key)
+    }
+    this._keyUpHandler = (event: KeyboardEvent) => {
+      this._input.handleKeyUp(event.key)
     }
   }
 
@@ -82,12 +86,14 @@ export default class EngineFactory {
     } as IAllEntityConfig
   }
 
-  protected subscribeKeyDownEvent() {
+  protected subscribeKeyboardEvents() {
     document.addEventListener('keydown', this._keyDownHandler)
+    document.addEventListener('keyup', this._keyUpHandler)
   }
 
-  protected unsubscribeKeyDownEvent(): void {
+  protected unsubscribeKeyboardEvents(): void {
     document.removeEventListener('keydown', this._keyDownHandler)
+    document.removeEventListener('keyup', this._keyUpHandler)
   }
 
   private loadObjectData(data: Record<string, IObjectConfig>) {
@@ -154,7 +160,7 @@ export default class EngineFactory {
   }
 
   createEngine(gameData: IGameData) {
-    this.subscribeKeyDownEvent()
+    this.subscribeKeyboardEvents()
     this._camera.load(gameData.tileMapData)
     this._tileMap.load(gameData.tileMapData)
     this.loadObjectData(gameData.objectData.getAllObjectData())
@@ -165,12 +171,12 @@ export default class EngineFactory {
   }
 
   reloadEngine(gameData: IGameData) {
-    this.unsubscribeKeyDownEvent()
+    this.unsubscribeKeyboardEvents()
     this._input.unsubscribeAll('KeyDown')
     this._objectDataManager.removeAllObjectData()
     this._entitiesManager.removeAllEntities()
 
-    this.subscribeKeyDownEvent()
+    this.subscribeKeyboardEvents()
     this._camera.load(gameData.tileMapData)
     this._tileMap.load(gameData.tileMapData)
     this.loadObjectData(gameData.objectData.getAllObjectData())

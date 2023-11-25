@@ -10,6 +10,12 @@ import {
 export default class ClientMovementComponent implements IComponent {
   private readonly _keyActions: { [key: string]: () => void }
   private _inputDto: InputDto = new InputDto()
+  private _keyToDirectionMap: { [key: string]: Direction } = {
+    ArrowLeft: Direction.Left,
+    ArrowRight: Direction.Right,
+    ArrowUp: Direction.Top,
+    ArrowDown: Direction.Bottom,
+  }
 
   get inputDto(): InputDto {
     return this._inputDto
@@ -18,22 +24,17 @@ export default class ClientMovementComponent implements IComponent {
   constructor(object: IObject, input: IInputManager, logger: ILogger) {
     this._keyActions = {
       ArrowLeft: () => {
-        this._inputDto.direction = Direction.Left
-        logger.log('ArrowLeft')
+        this._inputDto.addDirection(Direction.Left)
       },
       ArrowRight: () => {
-        this._inputDto.direction = Direction.Right
-        logger.log('ArrowRight')
+        this._inputDto.addDirection(Direction.Right)
       },
       ArrowUp: () => {
-        this._inputDto.direction = Direction.Top
-        logger.log('ArrowUp')
+        this._inputDto.addDirection(Direction.Top)
       },
       ArrowDown: () => {
-        this._inputDto.direction = Direction.Bottom
-        logger.log('ArrowDown')
+        this._inputDto.addDirection(Direction.Bottom)
       },
-      // Add more key actions as needed
     }
 
     input.subscribeInputEvent('KeyDown', (key) => {
@@ -44,11 +45,15 @@ export default class ClientMovementComponent implements IComponent {
     })
 
     input.subscribeInputEvent('KeyUp', (key) => {
-      this._inputDto.removeDirection(Direction.Left)
-      this._inputDto.removeDirection(Direction.Right)
-      this._inputDto.removeDirection(Direction.Top)
-      this._inputDto.removeDirection(Direction.Bottom)
+      const releasedDirection = this.getDirectionForKey(key)
+      if (releasedDirection) {
+        this._inputDto.removeDirection(releasedDirection)
+      }
     })
+  }
+
+  private getDirectionForKey(key: string): Direction | undefined {
+    return this._keyToDirectionMap[key]
   }
 
   update(dt: number) {}

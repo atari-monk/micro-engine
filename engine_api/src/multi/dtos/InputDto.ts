@@ -7,7 +7,7 @@ export default class InputDto {
     return this._direction
   }
 
-  set direction(direction: Direction) {
+  addDirection(direction: Direction) {
     if (!this._direction) {
       this._direction = []
     }

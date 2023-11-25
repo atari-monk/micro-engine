@@ -13,7 +13,7 @@ export default class ServerEngineFactory extends EngineFactory {
     return new RendererMock()
   }
 
-  protected subscribeKeyDownEvent() {}
+  protected subscribeKeyboardEvents() {}
 
-  protected unsubscribeKeyDownEvent(): void {}
+  protected unsubscribeKeyboardEvents(): void {}
 }

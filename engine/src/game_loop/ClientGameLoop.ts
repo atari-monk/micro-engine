@@ -22,7 +22,6 @@ export class ClientGameLoop extends GameLoop {
 
   protected onFrameEnd() {
     if (this._inputDto?.direction) {
-      console.log('send direction')
       this._clientApi.sendInput(this._inputDto)
     }
   }
