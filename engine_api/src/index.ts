@@ -3,6 +3,8 @@ export { default as IAnimationCallback } from './animation_manager/IAnimationCal
 export { default as IAnimationManager } from './animation_manager/IAnimationManager'
 //camera
 export { default as ICamera } from './camera/ICamera'
+//client
+export { default as IClientApi } from './client/IClientApi'
 //collision_detector
 export { default as IGameObject } from './collision_detector/IGameObject'
 export { default as ICollisionInfo } from './collision_detector/ICollisionInfo'
@@ -46,6 +48,9 @@ export { default as ILogger } from './log_manager/ILogger'
 export { default as IImmutableVector2 } from './math/IImmutableVector2'
 export { default as IRandomNumberGenerator } from './math/IRandomNumberGenerator'
 export { default as IVector2 } from './math/IVector2'
+//multi/dtos
+export { Direction } from './multi/dtos/Direction'
+export { default as InputDto } from './multi/dtos/InputDto'
 //multi
 export { SocketEvents, SocketEvent } from './multi/SocketEvents'
 //neural_network
@@ -71,11 +76,6 @@ export { default as ISaveGameManager } from './save_game_manager/ISaveGameManage
 //scene_manager
 export { default as IScene } from './scene_manager/IScene'
 export { default as ISceneManager } from './scene_manager/ISceneManager'
-//server/dtos
-export { Direction } from './server/dtos/Direction'
-export { default as InputDto } from './server/dtos/InputDto'
-//server
-export { default as IServerApi } from './server/IServerApi'
 //sound_manager
 export { default as ISoundManager } from './sound_manager/ISoundManager'
 //state_manager
@@ -83,6 +83,7 @@ export { default as IGenericState } from './state_manager/IGenericState'
 export { default as IStateManager } from './state_manager/IStateManager'
 //tile_map
 export { default as ITile } from './tile_map/ITile'
+export { default as ITilemap } from './tile_map/ITilemap'
 export { default as ITilemapDataFactory } from './tile_map/ITilemapDataFactory'
 //ui_manager
 export { default as IUIElement } from './ui_manager/IUIElement'

@@ -10,4 +10,5 @@ export default interface IGameLoop {
   unsubscribeFromUpdate(callback: IUpdateCallback): void
   subscribeToRender(callback: IRenderCallback): void
   unsubscribeFromRender(callback: IRenderCallback): void
+  load(): void
 }

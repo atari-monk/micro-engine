@@ -6,6 +6,7 @@ import {
 import ObjectEntity from './ObjectEntity'
 import PlayerEntity from './PlayerEntity'
 import MapEntity from './MapEntity'
+import ClientPlayerEntity from './ClientPlayerEntity'
 
 export default class EntityFactory {
   createMapEntity(config: IMapEntityConfig) {
@@ -18,5 +19,9 @@ export default class EntityFactory {
 
   createPlayerEntity(config: IPlayerEntityConfig) {
     return new PlayerEntity(config)
+  }
+
+  createClientPlayerEntity(config: IPlayerEntityConfig) {
+    return new ClientPlayerEntity(config)
   }
 }

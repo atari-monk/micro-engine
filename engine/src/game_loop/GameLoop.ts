@@ -1,4 +1,9 @@
-import { IGameLoop, IUpdateCallback, IRenderCallback } from 'engine_api'
+import {
+  IGameLoop,
+  IUpdateCallback,
+  IRenderCallback,
+  IEntitiesManager,
+} from 'engine_api'
 
 export default class GameLoop implements IGameLoop {
   private animationFrameId: number | null = null
@@ -6,6 +11,10 @@ export default class GameLoop implements IGameLoop {
   private updateCallbacks: IUpdateCallback[] = []
   private renderCallbacks: IRenderCallback[] = []
   private paused: boolean = false
+
+  constructor(protected readonly _entitiesManager: IEntitiesManager) {}
+
+  load(): void {}
 
   startLoop(): void {
     this.paused = false
@@ -43,10 +52,18 @@ export default class GameLoop implements IGameLoop {
 
     this.renderCallbacks.forEach((callback) => callback(deltaTime))
 
+    this.onFrameEnd()
+
     this.lastFrameTime = currentTime
 
+    this.requestFrame()
+  }
+
+  protected requestFrame() {
     this.animationFrameId = requestAnimationFrame(this.loop)
   }
+
+  protected onFrameEnd() {}
 
   subscribeToUpdate(callback: IUpdateCallback): void {
     this.updateCallbacks.push(callback)

@@ -24,19 +24,19 @@ import Vector2 from '../math/Vector2'
 import Camera from '../camera/Camera'
 
 export default class EngineFactory {
-  private readonly _gameLoop: IGameLoop = new GameLoop()
   private readonly _renderer: IRendererV2
   private readonly _input: InputManager = new InputManager()
   private readonly _logger: ILogger = new LogManager(LogLevel.INFO)
   private readonly _objectDataManager: IObjectDataManager =
     new ObjectDataManager()
-  private readonly _entityFactory: EntityFactory = new EntityFactory()
-  private readonly _entitiesManager: IEntitiesManager = new EntitiesManager()
+  protected readonly _entityFactory: EntityFactory = new EntityFactory()
+  protected readonly _entitiesManager: IEntitiesManager = new EntitiesManager()
+  protected _gameLoop: IGameLoop
   private readonly _tileMap: Tilemap
   private _keyDownHandler: (event: KeyboardEvent) => void
   private _engineConfig?: IEngineConfig
   private _zeroObj: IObjectConfig = this.createZeroObj()
-  private readonly _allEntityConfig: IAllEntityConfig
+  protected readonly _allEntityConfig: IAllEntityConfig
   private readonly _camera: ICamera
 
   get renderer(): IRendererV2 {
@@ -44,13 +44,18 @@ export default class EngineFactory {
   }
 
   constructor(canvasId: string) {
-    this._renderer = new RendererV2(canvasId)
+    this._renderer = this.getRenderer(canvasId)
     this._tileMap = new Tilemap(this._renderer)
     this._camera = new Camera(this._renderer)
+    this._gameLoop = new GameLoop(this._entitiesManager)
     this._allEntityConfig = this.createAllEntityConfig()
     this._keyDownHandler = (event: KeyboardEvent) => {
       this._input.handleKeyDown(event.key)
     }
+  }
+
+  protected getRenderer(canvasId: string): IRendererV2 {
+    return new RendererV2(canvasId)
   }
 
   private createZeroObj(): IObjectConfig {
@@ -77,11 +82,11 @@ export default class EngineFactory {
     } as IAllEntityConfig
   }
 
-  private subscribeKeyDownEvent() {
+  protected subscribeKeyDownEvent() {
     document.addEventListener('keydown', this._keyDownHandler)
   }
 
-  private unsubscribeKeyDownEvent(): void {
+  protected unsubscribeKeyDownEvent(): void {
     document.removeEventListener('keydown', this._keyDownHandler)
   }
 
@@ -92,21 +97,45 @@ export default class EngineFactory {
   }
 
   private createEntities() {
+    this.zeroObjectData()
+    this.createMap()
+
+    this.setObjectData()
+    this.createObject()
+
+    this.setPlayerData()
+    this.createPlayer()
+  }
+
+  private zeroObjectData() {
     this._allEntityConfig.objectConfig = this._zeroObj
+  }
+
+  private createMap() {
     this._entitiesManager.addEntity(
       'map',
       this._entityFactory.createMapEntity(this._allEntityConfig)
     )
+  }
 
+  private setObjectData() {
     this._allEntityConfig.objectConfig =
       this._objectDataManager.getObjectData('object')
+  }
+
+  private createObject() {
     this._entitiesManager.addEntity(
       'object',
       this._entityFactory.createObjectEntity(this._allEntityConfig)
     )
+  }
 
+  private setPlayerData() {
     this._allEntityConfig.objectConfig =
       this._objectDataManager.getObjectData('player')
+  }
+
+  protected createPlayer() {
     this._entitiesManager.addEntity(
       'player',
       this._entityFactory.createPlayerEntity(this._allEntityConfig)
@@ -130,6 +159,7 @@ export default class EngineFactory {
     this._tileMap.load(gameData.tileMapData)
     this.loadObjectData(gameData.objectData.getAllObjectData())
     this.createEntities()
+    this._gameLoop.load()
     this._engineConfig = this.createEngineConfig()
     return new Engine(this._engineConfig)
   }
@@ -145,5 +175,6 @@ export default class EngineFactory {
     this._tileMap.load(gameData.tileMapData)
     this.loadObjectData(gameData.objectData.getAllObjectData())
     this.createEntities()
+    this._gameLoop.load()
   }
 }

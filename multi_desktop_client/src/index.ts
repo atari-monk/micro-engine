@@ -1,10 +1,11 @@
-import { EngineFactory, GameData } from 'engine'
+import { ClientEngineFactory, GameData } from 'engine'
 import './css/styles.css'
 import ObjectDataFactory from './gameData/ObjectDataFactory'
 import TilemapDataFactory from './gameData/TilemapDataFactory'
 import GameClient from './client-lib/GameClient'
 
-const engineFactory = new EngineFactory('canvas')
+const gameClient = new GameClient('http://localhost:3001/')
+const engineFactory = new ClientEngineFactory('canvas', gameClient)
 
 const gameData = new GameData(engineFactory.renderer)
 const gameData2 = new GameData(engineFactory.renderer)
@@ -28,5 +29,3 @@ document.addEventListener('keydown', (event: KeyboardEvent) => {
     engine.startEngine()
   }
 })
-
-const gameClient = new GameClient('http://localhost:3001/')

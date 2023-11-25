@@ -3,6 +3,10 @@ import { Direction } from './Direction'
 export default class InputDto {
   private _direction: Direction[] | undefined = []
 
+  get direction(): Direction[] | undefined {
+    return this._direction
+  }
+
   set direction(direction: Direction) {
     if (!this._direction) {
       this._direction = []

@@ -7,7 +7,7 @@ import {
   InputDto,
 } from 'engine_api'
 
-export default class ServerMovementComponent implements IComponent {
+export default class ClientMovementComponent implements IComponent {
   private readonly _keyActions: { [key: string]: () => void }
   private _inputDto: InputDto = new InputDto()
 
@@ -41,6 +41,13 @@ export default class ServerMovementComponent implements IComponent {
       if (action) {
         action()
       }
+    })
+
+    input.subscribeInputEvent('KeyUp', (key) => {
+      this._inputDto.removeDirection(Direction.Left)
+      this._inputDto.removeDirection(Direction.Right)
+      this._inputDto.removeDirection(Direction.Top)
+      this._inputDto.removeDirection(Direction.Bottom)
     })
   }
 

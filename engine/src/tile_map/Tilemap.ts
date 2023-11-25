@@ -1,13 +1,13 @@
 import {
-  IRenderable,
   IRendererV2,
   ITile,
+  ITilemap,
   ITilemapDataFactory,
   IVector2,
 } from 'engine_api'
 import Vector2 from '../math/Vector2'
 
-export default class Tilemap implements IRenderable {
+export default class Tilemap implements ITilemap {
   private map: number[][]
   private tiles: ITile[]
   private _cords: IVector2
