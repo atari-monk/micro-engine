@@ -1,10 +1,15 @@
-import { Engine } from 'engine'
-import { Direction, IGameClientApi, InputDto, SocketEvents } from 'engine_api'
+import {
+  Direction,
+  IEngineClientApi,
+  IGameClientApi,
+  InputDto,
+  SocketEvents,
+} from 'engine_api'
 import { Socket, io } from 'socket.io-client'
 
 export default class GameClient implements IGameClientApi {
   private readonly _socket: Socket
-  private _engine?: Engine
+  private _engine?: IEngineClientApi
 
   get socket(): Socket {
     return this._socket
@@ -13,6 +18,7 @@ export default class GameClient implements IGameClientApi {
   constructor(serverHost: string) {
     this._socket = io(serverHost)
     this._socket.on(SocketEvents.Connect, this.onConnect.bind(this))
+    this._socket.on(SocketEvents.PlayerJoined, this.onPlayerJoined.bind(this))
     this._socket.on(SocketEvents.ChatMessage, (message: string) => {
       try {
         console.log(message)
@@ -36,7 +42,7 @@ export default class GameClient implements IGameClientApi {
     })
   }
 
-  loadEngine(engine: Engine) {
+  loadEngine(engine: IEngineClientApi) {
     this._engine = engine
   }
 
@@ -46,11 +52,21 @@ export default class GameClient implements IGameClientApi {
   }
 
   private onConnect() {
-    console.log(`Connected to the server with ID: ${this._socket.id}`)
     this._socket.emit(
       SocketEvents.ChatMessage,
-      `Hello, I am new at your server`
+      `Hello, I am new client at your server`
     )
+  }
+
+  private AssertEngine() {
+    if (!this._engine) throw new Error('_engine not valid!')
+  }
+
+  private onPlayerJoined(socketId: string) {
+    this.AssertEngine()
+    console.log(`${socketId}: User is connecting`)
+    const result = this._engine!.addPlayer(socketId)
+    console.log(result.message)
   }
 
   disconnect() {

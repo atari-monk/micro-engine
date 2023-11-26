@@ -2,6 +2,7 @@ import IEntity from './IEntity'
 
 export default interface IEntitiesManager {
   addEntity(name: string, entity: IEntity): void
+  getEntityCount(): number
   getEntity(name: string): IEntity
   removeEntity(name: string): void
   removeAllEntities(): void

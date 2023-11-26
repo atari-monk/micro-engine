@@ -40,7 +40,7 @@ export default class EngineFactory {
 
   createEngine(gameData: IGameData) {
     this.InitializeEngine(gameData)
-    return new Engine()
+    return new Engine(this._logger, this._entitiesManager, this._gameLoop)
   }
 
   private InitializeEngine(gameData: IGameData) {
@@ -58,7 +58,7 @@ export default class EngineFactory {
   private createEntities() {
     this.createMap()
     this.createObject()
-    this.createPlayer()
+    this.createPlayers()
   }
 
   private createMap() {
@@ -75,10 +75,14 @@ export default class EngineFactory {
     )
   }
 
-  private createPlayer() {
+  private createPlayers() {
     this._entitiesManager.addEntity(
-      'player',
-      new PlayerEntity(this._objectDataManager.getObjectData('player'))
+      'player1',
+      new PlayerEntity(this._objectDataManager.getObjectData('player1'))
+    )
+    this._entitiesManager.addEntity(
+      'player2',
+      new PlayerEntity(this._objectDataManager.getObjectData('player2'))
     )
   }
 

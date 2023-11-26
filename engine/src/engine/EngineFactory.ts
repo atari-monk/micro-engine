@@ -114,9 +114,9 @@ export default class EngineFactory {
 
   private createPlayer() {
     this._entitiesManager.addEntity(
-      'player',
+      'player1',
       this._entityFactory.createPlayerEntity(
-        this._objectDataManager.getObjectData('player'),
+        this._objectDataManager.getObjectData('player1'),
         this._renderer,
         this._input,
         this._logger

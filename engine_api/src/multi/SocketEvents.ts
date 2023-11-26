@@ -1,5 +1,6 @@
 export const SocketEvents = {
   Connect: 'connect',
+  PlayerJoined: 'player_joined',
   ChatMessage: 'chat message',
   Disconnect: 'disconnect',
   ConnectError: 'connect_error',

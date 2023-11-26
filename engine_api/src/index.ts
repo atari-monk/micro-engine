@@ -13,6 +13,8 @@ export { default as IObject } from './component/IObject'
 //config_manager
 export { default as IConfigOptions } from './config_manager/IConfigOptions'
 export { default as IConfigurationManager } from './config_manager/IConfigurationManager'
+//data_model
+export { default as IResult } from './data_model/IResult'
 //engine
 export { default as IEngineConfig } from './engine/IEngineConfig'
 export { default as IGameData } from './engine/IGameData'
@@ -45,6 +47,7 @@ export { default as IVector2 } from './math/IVector2'
 export { Direction } from './multi/dtos/Direction'
 export { default as InputDto } from './multi/dtos/InputDto'
 //multi
+export { default as IEngineClientApi } from './multi/IEngineClientApi'
 export { default as IEngineServerApi } from './multi/IEngineServerApi'
 export { default as IGameClientApi } from './multi/IGameClientApi'
 export { default as IGameServerApi } from './multi/IGameServerApi'

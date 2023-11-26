@@ -19,8 +19,8 @@ import LogManager from '../log_manager/LogManager'
 import Tilemap from '../tile_map/Tilemap'
 import RendererV2 from '../renderer/RendererV2'
 import Camera from '../camera/Camera'
-import Engine from '../engine/Engine'
 import PlayerEntity from '../entity_client/PlayerEntity'
+import Engine from './Engine'
 
 export default class ClientEngineFactory {
   private readonly _renderer: IRendererV2
@@ -94,7 +94,7 @@ export default class ClientEngineFactory {
   private createEntities() {
     this.createMap()
     this.createObject()
-    this.createPlayer()
+    this.createPlayers()
   }
 
   private createMap() {
@@ -114,11 +114,20 @@ export default class ClientEngineFactory {
     )
   }
 
-  private createPlayer() {
+  private createPlayers() {
     this._entitiesManager.addEntity(
-      'player',
+      'player1',
       new PlayerEntity(
-        this._objectDataManager.getObjectData('player'),
+        this._objectDataManager.getObjectData('player1'),
+        this._renderer,
+        this._input,
+        this._logger
+      )
+    )
+    this._entitiesManager.addEntity(
+      'player2',
+      new PlayerEntity(
+        this._objectDataManager.getObjectData('player2'),
         this._renderer,
         this._input,
         this._logger

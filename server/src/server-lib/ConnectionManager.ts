@@ -1,4 +1,4 @@
-import { Direction, IEngineServerApi, InputDto, SocketEvents } from 'engine_api'
+import { Direction, IEngineServerApi, SocketEvents } from 'engine_api'
 import { Server, Socket } from 'socket.io'
 
 export default class ConnectionManager {
@@ -10,17 +10,19 @@ export default class ConnectionManager {
     this._engine = engine
   }
 
-  private AssertRefs() {
+  private AssertEngine() {
     if (!this._engine) throw new Error('_engine not valid!')
   }
 
   OnConnection = (socket: Socket) => {
-    this.AssertRefs()
-    console.log(`A user connected: ${socket.id}`)
-    this._engine!.addPlayer(socket.id)
+    this.AssertEngine()
+    console.log(`${socket.id}: User is connecting`)
+    const result = this._engine!.addPlayer(socket.id)
+    console.log(result.message)
+    if (result.isDone) this._io.emit(SocketEvents.PlayerJoined, socket.id)
 
     socket.on(SocketEvents.ChatMessage, (message: string) => {
-      console.log(`Message from ${socket.id}: ${message}`)
+      console.log(`${socket.id}: ${message}`)
       this._io.emit(SocketEvents.ChatMessage, `${socket.id}: ${message}`)
     })
 
@@ -33,7 +35,7 @@ export default class ConnectionManager {
     )
 
     socket.on(SocketEvents.Disconnect, () => {
-      console.log(`User disconnected: ${socket.id}`)
+      console.log(`${socket.id}: User disconnected`)
     })
   }
 }

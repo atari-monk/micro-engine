@@ -7,6 +7,10 @@ export default class EntitiesManager implements IEntitiesManager {
     this._entities[name] = entity
   }
 
+  getEntityCount(): number {
+    return Object.keys(this._entities).length
+  }
+
   getEntity(name: string): IEntity {
     return this._entities[name]
   }
