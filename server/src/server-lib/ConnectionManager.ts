@@ -1,4 +1,4 @@
-import { Direction, IEngineServerApi, SocketEvents } from 'engine_api'
+import { IEngineServerApi, InputDto, SocketEvents } from 'engine_api'
 import { Server, Socket } from 'socket.io'
 
 export default class ConnectionManager {
@@ -26,13 +26,9 @@ export default class ConnectionManager {
       this._io.emit(SocketEvents.ChatMessage, `${socket.id}: ${message}`)
     })
 
-    socket.on(
-      SocketEvents.GameDataFrame,
-      (direction: Direction[] | undefined) => {
-        console.log('direction', direction)
-        this._io.emit(SocketEvents.GameDataFrame, direction)
-      }
-    )
+    socket.on(SocketEvents.GameDataFrame, (inputDto: InputDto) => {
+      console.log('InputDto', inputDto)
+    })
 
     socket.on(SocketEvents.Disconnect, () => {
       console.log(`${socket.id}: User disconnected`)

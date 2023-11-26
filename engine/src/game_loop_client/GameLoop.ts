@@ -24,7 +24,7 @@ export class GameLoop {
   ) {}
 
   load() {
-    this._player = this._entitiesManager.getEntity('player')
+    this._player = this._entitiesManager.getEntity('player1')
     this._inputDto = this._player?.getComponentByType<ClientMovementComponent>(
       ClientMovementComponent
     )?.inputDto
@@ -74,7 +74,7 @@ export class GameLoop {
   }
 
   private sendFrame() {
-    if (this._inputDto?.direction) {
+    if (this._inputDto) {
       this._clientApi.sendInput(this._inputDto)
     }
   }

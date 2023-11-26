@@ -1,7 +1,16 @@
 import { Direction } from './Direction'
 
 export default class InputDto {
+  private _id: string = ''
   private _direction: Direction[] | undefined = []
+
+  get id(): string {
+    return this._id
+  }
+
+  set id(id: string) {
+    this._id = id
+  }
 
   get direction(): Direction[] | undefined {
     return this._direction

@@ -47,8 +47,10 @@ export default class GameClient implements IGameClientApi {
   }
 
   sendInput(inputDto: InputDto): void {
-    if (inputDto.direction && inputDto.direction.length > 0)
-      this._socket.emit(SocketEvents.GameDataFrame, inputDto.direction)
+    if (inputDto.direction && inputDto.direction.length > 0) {
+      inputDto.id = this._engine?.getPlayer1Id() ?? 'error'
+      this._socket.emit(SocketEvents.GameDataFrame, inputDto)
+    }
   }
 
   private onConnect() {

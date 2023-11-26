@@ -78,6 +78,13 @@ export default class Engine implements IEngineClientApi {
     this._playerPosition = undefined
   }
 
+  getPlayer1Id() {
+    const player = this._playerManager.getEntity('player1')
+    const playerObj =
+      player.getComponentByType<ObjectComponent>(ObjectComponent)
+    return playerObj?.id ?? 'error'
+  }
+
   addPlayer(socketId: string) {
     this._logger.log('Adding player to client engine')
     const count = this._playerManager.getEntityCount()
