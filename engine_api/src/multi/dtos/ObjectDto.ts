@@ -1,5 +1,5 @@
-import IObject from '../../component/IObject'
-import IVector2 from '../../math/IVector2'
+import IObject from '../../browser/component/IObject'
+import IVector2 from '../../math/vector/IVector2'
 
 export default class ObjectDto {
   public id: string

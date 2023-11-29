@@ -46,7 +46,7 @@ export { default as LogManager } from './tech/log_manager/LogManager'
 //math
 export { default as Vector2 } from './math/vector/Vector2'
 export { default as ImmutableVector2 } from './math/vector/ImmutableVector2'
-export { default as RandomNumberGenerator } from './math/vector/RandomNumberGenerator'
+export { default as RandomNumberGenerator } from './math/RandomNumberGenerator'
 //neural_network
 export { default as NeuralNetwork } from './math/neural_network/NeuralNetwork'
 //particle_system

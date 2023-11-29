@@ -1,4 +1,4 @@
-import IVector2 from '../math/IImmutableVector2'
+import IVector2 from '../../math/vector/IImmutableVector2'
 
 export default interface IRendererV2 {
   clearCanvas(): void

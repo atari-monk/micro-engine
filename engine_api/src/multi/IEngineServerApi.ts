@@ -1,4 +1,4 @@
-import IResult from '../data_model/IResult'
+import IResult from './IResult'
 import InputDto from './dtos/InputDto'
 
 export default interface IEngineServerApi {

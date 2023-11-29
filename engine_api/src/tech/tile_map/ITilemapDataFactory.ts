@@ -1,4 +1,4 @@
-import IImmutableVector2 from '../math/IImmutableVector2'
+import IImmutableVector2 from '../../math/vector/IImmutableVector2'
 import ITile from './ITile'
 
 export default interface ITilemapDataFactory {

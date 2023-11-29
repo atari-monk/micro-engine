@@ -1,4 +1,4 @@
-import IObject from '../component/IObject'
+import IObject from '../../browser/component/IObject'
 
 export default interface IObjectDataManager {
   addObjectData(name: string, config: IObject): void

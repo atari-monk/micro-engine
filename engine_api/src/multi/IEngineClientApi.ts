@@ -1,4 +1,4 @@
-import IResult from '../data_model/IResult'
+import IResult from './IResult'
 
 export default interface IEngineClientApi {
   addPlayer(socketId: string): IResult
