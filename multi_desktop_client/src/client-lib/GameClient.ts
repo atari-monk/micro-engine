@@ -1,5 +1,6 @@
 import {
   Direction,
+  GameFrameDto,
   IEngineClientApi,
   IGameClientApi,
   InputDto,
@@ -26,17 +27,17 @@ export default class GameClient implements IGameClientApi {
         console.error('Error handling chat message:', error)
       }
     })
-    this._socket.on(
-      SocketEvents.GameDataFrame,
-      (direction: Direction[] | undefined) => {
-        try {
-          console.log('Server move', direction)
-          //this._engine.updatePlayerPosition()
-        } catch (error) {
-          console.error('Error handling GameDataFrame:', error)
+    this._socket.on(SocketEvents.ServerFrame, (players: any) => {
+      try {
+        const frame = GameFrameDto.fromData({ players: new Map(players) })
+        if (frame.players.size > 0) {
+          console.log('Server move', frame.players)
         }
+        //this._engine.updatePlayerPosition()
+      } catch (error) {
+        console.error('Error handling GameDataFrame:', error)
       }
-    )
+    })
     this._socket.on(SocketEvents.ConnectError, (error: Error) => {
       console.error('Connection error:', error)
     })
@@ -49,7 +50,7 @@ export default class GameClient implements IGameClientApi {
   sendInput(inputDto: InputDto) {
     if (inputDto.direction && inputDto.direction.length > 0) {
       inputDto.id = this._engine!.getPlayer1Id()
-      this._socket.emit(SocketEvents.GameDataFrame, {
+      this._socket.emit(SocketEvents.ClientFrame, {
         id: inputDto.id,
         direction: inputDto.direction,
       })

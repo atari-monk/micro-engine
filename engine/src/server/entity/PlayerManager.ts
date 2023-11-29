@@ -1,7 +1,7 @@
 import EntitiesManager from '../../tech/entity_component/EntitiesManager'
 import ObjectComponent from '../../browser/component/ObjectComponent'
 import MovementComponent from '../component/MovementComponent'
-import { InputDto } from 'engine_api'
+import { GameFrameDto, InputDto, ObjectDto } from 'engine_api'
 
 export default class PlayerManager extends EntitiesManager {
   setPlayerInput(inputDto: InputDto) {
@@ -31,5 +31,20 @@ export default class PlayerManager extends EntitiesManager {
     if (!found) {
       console.log('Fail to set setPlayerInput')
     }
+  }
+
+  getGameFrameDto() {
+    const frame = new GameFrameDto()
+    const players = this.getAllEntities()
+    for (const entity of Object.values(players)) {
+      const object = entity.getComponentByType<ObjectComponent>(ObjectComponent)
+
+      if (!object) {
+        continue
+      }
+
+      frame.addPlayer(object.id, new ObjectDto(object))
+    }
+    return frame
   }
 }

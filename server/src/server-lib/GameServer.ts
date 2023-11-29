@@ -3,9 +3,14 @@ import http from 'http'
 import { Server } from 'socket.io'
 import cors from 'cors'
 import ConnectionManager from './ConnectionManager'
-import { IEngineServerApi, SocketEvents } from 'engine_api'
+import {
+  GameFrameDto,
+  IEngineServerApi,
+  IGameServerApi,
+  SocketEvents,
+} from 'engine_api'
 
-export default class GameServer {
+export default class GameServer implements IGameServerApi {
   private readonly _app = express()
   private readonly _httpServer = http.createServer(this._app)
   private readonly _io = new Server(this._httpServer, {
@@ -38,5 +43,9 @@ export default class GameServer {
     this._httpServer.listen(this._port, () => {
       console.log(`Server is running on port ${this._port}`)
     })
+  }
+
+  sendFrame(frameDto: any) {
+    this._io.emit(SocketEvents.ServerFrame, frameDto)
   }
 }

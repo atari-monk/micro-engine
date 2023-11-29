@@ -1,1 +1,3 @@
-export default interface IGameServerApi {}
+export default interface IGameServerApi {
+  sendFrame(frameDto: any): void
+}

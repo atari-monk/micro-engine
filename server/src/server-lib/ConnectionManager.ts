@@ -26,7 +26,7 @@ export default class ConnectionManager {
       this._io.emit(SocketEvents.ChatMessage, `${socket.id}: ${message}`)
     })
 
-    socket.on(SocketEvents.GameDataFrame, (inputDto: any) => {
+    socket.on(SocketEvents.ClientFrame, (inputDto: any) => {
       const inputDtoObj = new InputDto()
       ;({ id: inputDtoObj.id, direction: inputDtoObj.direction } = inputDto)
       this._engine!.passClientInputToPlayerMovementComponent(inputDtoObj)

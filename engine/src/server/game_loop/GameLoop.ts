@@ -1,17 +1,21 @@
-import { IEntitiesManager, IGameServerApi, IUpdateCallback } from 'engine_api'
+import { IGameServerApi, IUpdateCallback } from 'engine_api'
+import PlayerManager from '../entity/PlayerManager'
 
 export default class GameLoop {
-  private lastFrameTime: number = 0
   private updateCallbacks: IUpdateCallback[] = []
   private paused: boolean = false
+  private fps: number = 60
+  private frameInterval: number = 1000 / this.fps
+  private lastFrameTime: number = 0
 
   constructor(
-    entitiesManager: IEntitiesManager
-    //private readonly _serverApi: IGameServerApi
+    private readonly _serverApi: IGameServerApi,
+    private readonly _playerManager: PlayerManager
   ) {}
 
   startLoop(): void {
     this.paused = false
+    this.lastFrameTime = performance.now()
     this.loop()
   }
 
@@ -23,10 +27,11 @@ export default class GameLoop {
 
   resumeLoop(): void {
     this.paused = false
+    this.lastFrameTime = performance.now()
     this.loop()
   }
 
-  loop = (): void => {
+  private loop = (): void => {
     if (this.paused) {
       return
     }
@@ -43,6 +48,8 @@ export default class GameLoop {
     this.sendFrame()
 
     this.lastFrameTime = currentTime
+
+    setTimeout(this.loop, this.frameInterval)
   }
 
   subscribeToUpdate(callback: IUpdateCallback): void {
@@ -53,7 +60,8 @@ export default class GameLoop {
     this.updateCallbacks = this.updateCallbacks.filter((cb) => cb !== callback)
   }
 
-  private buildGameFrame() {}
-
-  private sendFrame() {}
+  private sendFrame(): void {
+    const frame = this._playerManager.getGameFrameDto()
+    this._serverApi.sendFrame(Array.from(frame.players.entries()))
+  }
 }

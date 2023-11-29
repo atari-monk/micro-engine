@@ -6,6 +6,7 @@ import {
   IObject,
   IGameData,
   IRendererV2,
+  IGameServerApi,
 } from 'engine_api'
 import EntityFactory from '../../browser/entity/EntityFactory'
 import ObjectDataManager from '../../browser/entity/ObjectDataManager'
@@ -17,30 +18,37 @@ import PlayerEntity from '../entity/PlayerEntity'
 import ObjectEntity from '../entity/ObjectEntity'
 import Engine from './Engine'
 import GameLoop from '../game_loop/GameLoop'
+import PlayerManager from '../entity/PlayerManager'
 
 export default class EngineFactory {
   private readonly _renderer: IRendererV2
   private readonly _logger: ILogger = new LogManager(LogLevel.INFO)
   private readonly _objectDataManager: IObjectDataManager =
     new ObjectDataManager()
-  protected readonly _entityFactory: EntityFactory = new EntityFactory()
-  protected readonly _entitiesManager: IEntitiesManager = new EntitiesManager()
-  protected _gameLoop: GameLoop
+  private readonly _entityFactory: EntityFactory = new EntityFactory()
+  private readonly _entitiesManager: IEntitiesManager = new EntitiesManager()
+  private readonly _playerManager: PlayerManager = new PlayerManager()
+  private _gameLoop: GameLoop
   private readonly _tileMap: Tilemap
 
   get renderer(): IRendererV2 {
     return this._renderer
   }
 
-  constructor() {
+  constructor(private readonly _serverApi: IGameServerApi) {
     this._renderer = new RendererMock()
     this._tileMap = new Tilemap(this._renderer)
-    this._gameLoop = new GameLoop(this._entitiesManager)
+    this._gameLoop = new GameLoop(this._serverApi, this._playerManager)
   }
 
   createEngine(gameData: IGameData) {
     this.InitializeEngine(gameData)
-    return new Engine(this._logger, this._entitiesManager, this._gameLoop)
+    return new Engine(
+      this._logger,
+      this._entitiesManager,
+      this._playerManager,
+      this._gameLoop
+    )
   }
 
   private InitializeEngine(gameData: IGameData) {

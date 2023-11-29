@@ -5,7 +5,8 @@ export const SocketEvents = {
   Disconnect: 'disconnect',
   ConnectError: 'connect_error',
   GameStarts: 'game_starts',
-  GameDataFrame: 'game_data_frame',
+  ClientFrame: 'client_frame',
+  ServerFrame: 'server_frame',
 } as const
 
 export type SocketEvent = keyof typeof SocketEvents
