@@ -1,7 +1,7 @@
 import { IInputManager, ILogger, IObject, IRendererV2 } from 'engine_api'
-import ObjectComponent from '../../browser_engine/component/ObjectComponent'
-import Entity from '../../engine_tech/entity_component/Entity'
-import RenderComponent from '../../browser_engine/component/RenderComponent'
+import ObjectComponent from '../component/ObjectComponent'
+import Entity from '../../tech/entity_component/Entity'
+import RenderComponent from '../component/RenderComponent'
 import MovementComponent from '../component/MovementComponent'
 
 export default class PlayerEntity extends Entity {

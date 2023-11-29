@@ -7,12 +7,12 @@ import {
   IGameData,
   IRendererV2,
 } from 'engine_api'
-import EntityFactory from '../../browser_engine/entity/EntityFactory'
-import ObjectDataManager from '../../browser_engine/entity/ObjectDataManager'
-import EntitiesManager from '../../engine_tech/entity_component/EntitiesManager'
-import LogManager from '../../engine_tech/log_manager/LogManager'
-import { RendererMock } from '../../engine_tech/renderer/RendererMock'
-import Tilemap from '../../engine_tech/tile_map/Tilemap'
+import EntityFactory from '../../browser/entity/EntityFactory'
+import ObjectDataManager from '../../browser/entity/ObjectDataManager'
+import EntitiesManager from '../../tech/entity_component/EntitiesManager'
+import LogManager from '../../tech/log_manager/LogManager'
+import { RendererMock } from '../../tech/renderer/RendererMock'
+import Tilemap from '../../tech/tile_map/Tilemap'
 import PlayerEntity from '../entity/PlayerEntity'
 import ObjectEntity from '../entity/ObjectEntity'
 import Engine from './Engine'

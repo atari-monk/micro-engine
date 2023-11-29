@@ -5,7 +5,7 @@ import {
   ITilemapDataFactory,
 } from 'engine_api'
 import ObjectDataFactory from '../entity/ObjectDataFactory'
-import TilemapDataFactory from '../../engine_tech/tile_map/TilemapDataFactory'
+import TilemapDataFactory from '../../tech/tile_map/TilemapDataFactory'
 
 export default class GameData implements IGameData {
   public objectData: IObjectDataManager

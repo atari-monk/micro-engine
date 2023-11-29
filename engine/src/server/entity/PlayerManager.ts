@@ -1,5 +1,5 @@
-import EntitiesManager from '../../engine_tech/entity_component/EntitiesManager'
-import ObjectComponent from '../../browser_engine/component/ObjectComponent'
+import EntitiesManager from '../../tech/entity_component/EntitiesManager'
+import ObjectComponent from '../../browser/component/ObjectComponent'
 import MovementComponent from '../component/MovementComponent'
 import { InputDto } from 'engine_api'
 

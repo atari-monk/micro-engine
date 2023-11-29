@@ -6,7 +6,7 @@ import {
   InputDto,
 } from 'engine_api'
 import ServerGameLoop from '../game_loop/GameLoop'
-import ObjectComponent from '../../browser_engine/component/ObjectComponent'
+import ObjectComponent from '../../browser/component/ObjectComponent'
 import PlayerManager from '../entity/PlayerManager'
 
 export default class Engine implements IEngineServerApi {
