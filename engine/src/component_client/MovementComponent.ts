@@ -13,8 +13,8 @@ export default class MovementComponent implements IComponent {
   private _keyToDirectionMap: { [key: string]: Direction } = {
     ArrowLeft: Direction.Left,
     ArrowRight: Direction.Right,
-    ArrowUp: Direction.Top,
-    ArrowDown: Direction.Bottom,
+    ArrowUp: Direction.Up,
+    ArrowDown: Direction.Down,
   }
 
   get inputDto(): InputDto {
@@ -30,10 +30,10 @@ export default class MovementComponent implements IComponent {
         this._inputDto.addDirection(Direction.Right)
       },
       ArrowUp: () => {
-        this._inputDto.addDirection(Direction.Top)
+        this._inputDto.addDirection(Direction.Up)
       },
       ArrowDown: () => {
-        this._inputDto.addDirection(Direction.Bottom)
+        this._inputDto.addDirection(Direction.Down)
       },
     }
 

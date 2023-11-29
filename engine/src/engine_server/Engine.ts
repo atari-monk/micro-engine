@@ -3,15 +3,16 @@ import {
   IEntitiesManager,
   ILogger,
   IResult,
+  InputDto,
 } from 'engine_api'
-import EntitiesManager from '../entity_component/EntitiesManager'
 import ServerGameLoop from '../game_loop_server/GameLoop'
 import ObjectComponent from '../component/ObjectComponent'
+import PlayerManager from '../entity_server/PlayerManager'
 
 export default class Engine implements IEngineServerApi {
   private readonly _logger: ILogger
   private readonly _entitiesManager: IEntitiesManager
-  private readonly _playerManager: IEntitiesManager = new EntitiesManager()
+  private readonly _playerManager: PlayerManager = new PlayerManager()
   private readonly _gameLoop: ServerGameLoop
 
   constructor(
@@ -81,5 +82,9 @@ export default class Engine implements IEngineServerApi {
       isDone: true,
       message: `Server Engine added player on key: ${playerKey}, id: ${socketId}`,
     } as IResult
+  }
+
+  passClientInputToPlayerMovementComponent(inputDto: InputDto): void {
+    this._playerManager.setPlayerInput(inputDto)
   }
 }

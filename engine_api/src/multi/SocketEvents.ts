@@ -4,6 +4,7 @@ export const SocketEvents = {
   ChatMessage: 'chat message',
   Disconnect: 'disconnect',
   ConnectError: 'connect_error',
+  GameStarts: 'game_starts',
   GameDataFrame: 'game_data_frame',
 } as const
 

@@ -31,6 +31,10 @@ export { default as PlayerEntity } from './entity/PlayerEntity'
 export { default as Component } from './entity_component/Component'
 export { default as EntitiesManager } from './entity_component/EntitiesManager'
 export { default as Entity } from './entity_component/Entity'
+//entity-server
+export { default as ServerObjectEntity } from './entity_server/ObjectEntity'
+export { default as ServerPlayerEntity } from './entity_server/PlayerEntity'
+export { default as PlayerManager } from './entity_server/PlayerManager'
 //event_system
 export { default as EventSystem } from './event_system/EventSystem'
 //game_loop

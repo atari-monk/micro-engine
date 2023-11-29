@@ -19,15 +19,17 @@ export default class ConnectionManager {
     console.log(`${socket.id}: User is connecting`)
     const result = this._engine!.addPlayer(socket.id)
     console.log(result.message)
-    if (result.isDone) this._io.emit(SocketEvents.PlayerJoined, socket.id)
+    if (result.isDone) socket.emit(SocketEvents.PlayerJoined, socket.id)
 
     socket.on(SocketEvents.ChatMessage, (message: string) => {
       console.log(`${socket.id}: ${message}`)
       this._io.emit(SocketEvents.ChatMessage, `${socket.id}: ${message}`)
     })
 
-    socket.on(SocketEvents.GameDataFrame, (inputDto: InputDto) => {
-      console.log('InputDto', inputDto)
+    socket.on(SocketEvents.GameDataFrame, (inputDto: any) => {
+      const inputDtoObj = new InputDto()
+      ;({ id: inputDtoObj.id, direction: inputDtoObj.direction } = inputDto)
+      this._engine!.passClientInputToPlayerMovementComponent(inputDtoObj)
     })
 
     socket.on(SocketEvents.Disconnect, () => {

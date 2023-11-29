@@ -45,7 +45,9 @@ export { default as IRandomNumberGenerator } from './math/IRandomNumberGenerator
 export { default as IVector2 } from './math/IVector2'
 //multi/dtos
 export { Direction } from './multi/dtos/Direction'
+export { default as GameFrameDto } from './multi/dtos/GameFrameDto'
 export { default as InputDto } from './multi/dtos/InputDto'
+export { default as ObjectDto } from './multi/dtos/ObjectDto'
 //multi
 export { default as IEngineClientApi } from './multi/IEngineClientApi'
 export { default as IEngineServerApi } from './multi/IEngineServerApi'

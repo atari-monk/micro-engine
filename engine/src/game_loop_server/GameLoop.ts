@@ -1,11 +1,14 @@
-import { IEntitiesManager, IUpdateCallback } from 'engine_api'
+import { IEntitiesManager, IGameServerApi, IUpdateCallback } from 'engine_api'
 
 export default class GameLoop {
   private lastFrameTime: number = 0
   private updateCallbacks: IUpdateCallback[] = []
   private paused: boolean = false
 
-  constructor(entitiesManager: IEntitiesManager) {}
+  constructor(
+    entitiesManager: IEntitiesManager,
+    private readonly _serverApi: IGameServerApi
+  ) {}
 
   startLoop(): void {
     this.paused = false
@@ -37,6 +40,8 @@ export default class GameLoop {
 
     this.updateCallbacks.forEach((callback) => callback(deltaTime))
 
+    this.sendFrame()
+
     this.lastFrameTime = currentTime
   }
 
@@ -47,4 +52,8 @@ export default class GameLoop {
   unsubscribeFromUpdate(callback: IUpdateCallback): void {
     this.updateCallbacks = this.updateCallbacks.filter((cb) => cb !== callback)
   }
+
+  private buildGameFrame() {}
+
+  private sendFrame() {}
 }
