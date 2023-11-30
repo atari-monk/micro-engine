@@ -2,8 +2,6 @@ import {
   Direction,
   IComponent,
   IInputManager,
-  ILogger,
-  IObject,
   InputDto,
 } from 'engine_api'
 
@@ -21,7 +19,7 @@ export default class MovementComponent implements IComponent {
     return this._inputDto
   }
 
-  constructor(object: IObject, input: IInputManager, logger: ILogger) {
+  constructor(input: IInputManager) {
     this._keyActions = {
       ArrowLeft: () => {
         this._inputDto.addDirection(Direction.Left)
