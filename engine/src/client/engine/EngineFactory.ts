@@ -120,8 +120,7 @@ export default class ClientEngineFactory {
       new PlayerEntity(
         this._objectDataManager.getObjectData('player1'),
         this._renderer,
-        this._input,
-        this._logger
+        this._input
       )
     )
     this._entitiesManager.addEntity(
@@ -129,8 +128,7 @@ export default class ClientEngineFactory {
       new PlayerEntity(
         this._objectDataManager.getObjectData('player2'),
         this._renderer,
-        this._input,
-        this._logger
+        this._input
       )
     )
   }
