@@ -26,10 +26,10 @@ export default class ConnectionManager {
       this._io.emit(SocketEvents.ChatMessage, `${socket.id}: ${message}`)
     })
 
-    socket.on(SocketEvents.ClientFrame, (inputDto: any) => {
-      const inputDtoObj = new InputDto()
-      ;({ id: inputDtoObj.id, direction: inputDtoObj.direction } = inputDto)
-      this._engine!.passClientInputToPlayerMovementComponent(inputDtoObj)
+    socket.on(SocketEvents.ClientFrame, (inputDtoPlainData: any) => {
+      const inputDto = new InputDto()
+      ;({ id: inputDto.id, direction: inputDto.direction } = inputDtoPlainData)
+      this._engine!.passClientInputToPlayerMovementComponent(inputDto)
     })
 
     socket.on(SocketEvents.Disconnect, () => {
