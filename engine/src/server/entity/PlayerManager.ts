@@ -1,7 +1,9 @@
 import EntitiesManager from '../../tech/entity_component/EntitiesManager'
 import ObjectComponent from '../../browser/component/ObjectComponent'
 import MovementComponent from '../component/MovementComponent'
-import { GameFrameDto, InputDto, ObjectDto } from 'engine_api'
+import { InputDto } from 'engine_api'
+import GameFrameDto from '../../multi/dtos/GameFrameDto'
+import ObjectDto from '../../multi/dtos/ObjectDto'
 
 export default class PlayerManager extends EntitiesManager {
   setPlayerInput(inputDto: InputDto) {
@@ -24,7 +26,7 @@ export default class PlayerManager extends EntitiesManager {
 
       movement.inputDto = inputDto
       found = true
-      console.log('Assigned input to player on server')
+      //console.log('Assigned input to player on server')
       break
     }
 

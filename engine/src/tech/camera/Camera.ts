@@ -2,13 +2,13 @@ import { ICamera, IRendererV2, ITilemapDataFactory, IVector2 } from 'engine_api'
 import Vector2 from '../../math/vector/Vector2'
 
 export default class Camera implements ICamera {
-  private _center0: IVector2
-  private _center: IVector2 = new Vector2(0, 0)
-  private _delta: IVector2 = new Vector2(0, 0)
+  private _center0: IVector2 = new Vector2()
+  private _center: IVector2 = new Vector2()
+  private _delta: IVector2 = new Vector2()
   private _tileMap?: ITilemapDataFactory
 
   constructor(private readonly _renderer: IRendererV2) {
-    this._center0 = this._renderer.getCenter()
+    this._center0.convert(this._renderer.getCenter())
   }
 
   load(tileMap: ITilemapDataFactory) {

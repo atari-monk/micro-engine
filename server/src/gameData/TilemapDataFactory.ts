@@ -1,9 +1,4 @@
-import {
-  IImmutableVector2,
-  ITile,
-  ITilemapDataFactory,
-  IVector2,
-} from 'engine_api'
+import { IImmutableVector2, ITile, ITilemapDataFactory } from 'engine_api'
 import { ImmutableVector2 } from 'engine'
 
 export default class TilemapDataFactory implements ITilemapDataFactory {
@@ -38,7 +33,10 @@ export default class TilemapDataFactory implements ITilemapDataFactory {
     ]
   }
 
-  private generateTable(tableSize: IVector2, tileId: number): number[][] {
+  private generateTable(
+    tableSize: IImmutableVector2,
+    tileId: number
+  ): number[][] {
     const table: number[][] = []
 
     for (let i = 0; i < tableSize.y; i++) {

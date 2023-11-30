@@ -13,6 +13,7 @@ import {
 } from 'engine_api'
 import ObjectComponent from '../../browser/component/ObjectComponent'
 import EntitiesManager from '../../tech/entity_component/EntitiesManager'
+import GameFrameDto from '../../multi/dtos/GameFrameDto'
 
 export default class Engine implements IEngineClientApi {
   private readonly _gameLoop: IGameLoop
@@ -122,5 +123,18 @@ export default class Engine implements IEngineClientApi {
       isDone: true,
       message: `Client Engine added player on key: ${playerKey}, id: ${socketId}`,
     } as IResult
+  }
+
+  updatePlayer(gameFrameDto: GameFrameDto): void {
+    gameFrameDto.players.forEach((playerDto, id) => {
+      const allPlayers = this._playerManager.getAllEntities()
+      for (const player of Object.values(allPlayers)) {
+        const object =
+          player.getComponentByType<ObjectComponent>(ObjectComponent)
+        if (!object) continue
+        if (playerDto.id !== object.id) continue
+        object.position.setValues(playerDto.position)
+      }
+    })
   }
 }

@@ -62,6 +62,6 @@ export default class GameLoop {
 
   private sendFrame(): void {
     const frame = this._playerManager.getGameFrameDto()
-    this._serverApi.sendFrame(Array.from(frame.players.entries()))
+    this._serverApi.sendFrame(frame.toPlainObject())
   }
 }

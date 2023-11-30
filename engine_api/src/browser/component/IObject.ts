@@ -1,4 +1,4 @@
-import IVector2 from '../../math/vector/IImmutableVector2'
+import IVector2 from '../../math/vector/IVector2'
 
 export default interface IObject {
   id: string

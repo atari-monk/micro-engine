@@ -3,12 +3,7 @@ import http from 'http'
 import { Server } from 'socket.io'
 import cors from 'cors'
 import ConnectionManager from './ConnectionManager'
-import {
-  GameFrameDto,
-  IEngineServerApi,
-  IGameServerApi,
-  SocketEvents,
-} from 'engine_api'
+import { IEngineServerApi, IGameServerApi, SocketEvents } from 'engine_api'
 
 export default class GameServer implements IGameServerApi {
   private readonly _app = express()

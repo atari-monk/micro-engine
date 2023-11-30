@@ -3,7 +3,7 @@ import { IEntitiesManager, IEntity } from 'engine_api'
 export default class EntitiesManager implements IEntitiesManager {
   private _entities: Record<string, IEntity> = {}
 
-  protected getAllEntities(): Record<string, IEntity> {
+  getAllEntities(): Record<string, IEntity> {
     return this._entities
   }
 

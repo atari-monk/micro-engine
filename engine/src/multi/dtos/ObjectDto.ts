@@ -1,7 +1,7 @@
-import IObject from '../../browser/component/IObject'
-import IVector2 from '../../math/vector/IVector2'
+import { IObject, IObjectDto, IVector2 } from 'engine_api'
+import Vector2 from '../../math/vector/Vector2'
 
-export default class ObjectDto {
+export default class ObjectDto implements IObjectDto {
   public id: string
   public position: IVector2
   public size: IVector2
@@ -25,7 +25,7 @@ export default class ObjectDto {
   }): ObjectDto {
     const objectDTO = new ObjectDto({} as IObject)
     objectDTO.id = data.id
-    objectDTO.position = data.position
+    objectDTO.position = new Vector2(data.position.x, data.position.y)
     objectDTO.size = data.size
     objectDTO.color = data.color
     objectDTO.speed = data.speed

@@ -1,4 +1,4 @@
-import { IVector2 } from 'engine_api'
+import { IImmutableVector2, IVector2 } from 'engine_api'
 import { Operation } from './Operation'
 import { operationMap } from './operationMap'
 
@@ -23,6 +23,16 @@ export default class Vector2 implements IVector2 {
     this.y = operationMap[operation](this.y, y)
 
     return this
+  }
+
+  setValues(v: IVector2) {
+    this.x = v.x
+    this.y = v.y
+  }
+
+  convert(v: IImmutableVector2) {
+    this.x = v.x
+    this.y = v.y
   }
 
   add(other: IVector2): this {

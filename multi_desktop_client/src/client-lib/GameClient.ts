@@ -1,6 +1,5 @@
+import { GameFrameDto } from 'engine'
 import {
-  Direction,
-  GameFrameDto,
   IEngineClientApi,
   IGameClientApi,
   InputDto,
@@ -29,11 +28,12 @@ export default class GameClient implements IGameClientApi {
     })
     this._socket.on(SocketEvents.ServerFrame, (players: any) => {
       try {
-        const frame = GameFrameDto.fromData({ players: new Map(players) })
+        //console.log(players)
+        const frame = GameFrameDto.fromPlainObject(players)
+        //console.log(frame.players)
         if (frame.players.size > 0) {
-          console.log('Server move', frame.players)
+          this._engine!.updatePlayer(frame)
         }
-        //this._engine.updatePlayerPosition()
       } catch (error) {
         console.error('Error handling GameDataFrame:', error)
       }
