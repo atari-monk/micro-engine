@@ -16,7 +16,12 @@ export default class GameClient implements IGameClientApi {
   }
 
   constructor(serverHost: string) {
-    this._socket = io(serverHost)
+    const socketOptions = {
+      reconnection: true,
+      reconnectionAttempts: 2, // Number of attempts
+      reconnectionDelay: 1000, // Delay between attempts in milliseconds
+    }
+    this._socket = io(serverHost, socketOptions)
     this._socket.on(SocketEvents.Connect, this.onConnect.bind(this))
     this._socket.on(SocketEvents.PlayerJoined, this.onPlayerJoined.bind(this))
     this._socket.on(SocketEvents.ChatMessage, (message: string) => {
@@ -39,7 +44,7 @@ export default class GameClient implements IGameClientApi {
       }
     })
     this._socket.on(SocketEvents.ConnectError, (error: Error) => {
-      console.error('Connection error:', error)
+      //console.error('Connection error:', error)
     })
   }
 
