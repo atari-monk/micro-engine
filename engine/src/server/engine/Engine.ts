@@ -1,6 +1,7 @@
 import {
   IEngineServerApi,
   IEntitiesManager,
+  IGameServerApi,
   ILogger,
   IResult,
   InputDto,
@@ -19,7 +20,8 @@ export default class Engine implements IEngineServerApi {
     logger: ILogger,
     entitiesManager: IEntitiesManager,
     playerManager: PlayerManager,
-    gameLoop: GameLoop
+    gameLoop: GameLoop,
+    private readonly _serverApi: IGameServerApi
   ) {
     this._logger = logger
     this._entitiesManager = entitiesManager
@@ -45,6 +47,10 @@ export default class Engine implements IEngineServerApi {
     this._gameLoop.stopLoop()
     this._logger.log(`Unsubscribe From Update`)
     this._gameLoop.unsubscribeFromUpdate(this.updateCallback)
+  }
+
+  getPlayerCount() {
+    return this._playerManager.getEntityCount()
   }
 
   addPlayer(socketId: string) {
@@ -84,6 +90,12 @@ export default class Engine implements IEngineServerApi {
       isDone: true,
       message: `Server Engine added player on key: ${playerKey}, id: ${socketId}`,
     } as IResult
+  }
+
+  sendPlayers(): void {
+    console.log('Sending Players event')
+    const dto = this._playerManager.getClientsDto()
+    this._serverApi.sendPlayers(dto.clients)
   }
 
   passClientInputToPlayerMovementComponent(inputDto: InputDto): void {

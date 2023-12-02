@@ -47,7 +47,8 @@ export default class EngineFactory {
       this._logger,
       this._entitiesManager,
       this._playerManager,
-      this._gameLoop
+      this._gameLoop,
+      this._serverApi
     )
   }
 

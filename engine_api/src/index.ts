@@ -42,6 +42,7 @@ export { default as IImmutableVector2 } from './math/vector/IImmutableVector2'
 export { default as IRandomNumberGenerator } from './math/IRandomNumberGenerator'
 export { default as IVector2 } from './math/vector/IVector2'
 //multi/dtos
+export { default as ClientsDto } from './multi/dtos/ClientsDto'
 export { Direction } from './multi/dtos/Direction'
 export { default as IGameFrameDto } from './multi/dtos/IGameFrameDto'
 export { default as InputDto } from './multi/dtos/InputDto'

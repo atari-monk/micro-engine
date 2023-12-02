@@ -44,4 +44,8 @@ export default class GameServer implements IGameServerApi {
     this._io.emit(SocketEvents.ServerFrame, frameDto)
     //console.log(frameDto)
   }
+
+  sendPlayers(clients: any) {
+    this._io.emit(SocketEvents.SendPlayers, clients)
+  }
 }

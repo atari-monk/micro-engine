@@ -20,6 +20,7 @@ export default class ConnectionManager {
     const result = this._engine!.addPlayer(socket.id)
     console.log(result.message)
     if (result.isDone) socket.emit(SocketEvents.PlayerJoined, socket.id)
+    if(this._engine?.getPlayerCount() === 2) this._engine.sendPlayers()
 
     socket.on(SocketEvents.ChatMessage, (message: string) => {
       console.log(`${socket.id}: ${message}`)

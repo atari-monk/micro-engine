@@ -101,6 +101,17 @@ export default class Engine implements IEngineClientApi {
   }
 
   addPlayer(socketId: string) {
+    const players = this._playerManager.getAllEntities()
+    for (const player of Object.values(players)) {
+      const object = player.getComponentByType<ObjectComponent>(ObjectComponent)
+      if (!object) continue
+      if (object.id === socketId)
+        return {
+          isDone: false,
+          message: `Player already on list`,
+        } as IResult
+    }
+
     this._logger.log('Adding player to client engine')
     const count = this._playerManager.getEntityCount()
 
@@ -146,8 +157,8 @@ export default class Engine implements IEngineClientApi {
         const object =
           player.getComponentByType<ObjectComponent>(ObjectComponent)
         if (!object) continue
-        console.log('playerdto:', playerDto.id)
-        console.log('player:', object.id)
+        //console.log('playerdto:', playerDto.id)
+        //console.log('player:', object.id)
         if (playerDto.id !== object.id) continue
         //console.log('pos upd:', playerDto.id)
         object.position.setValues(playerDto.position)

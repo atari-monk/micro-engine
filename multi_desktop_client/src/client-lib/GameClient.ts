@@ -1,5 +1,6 @@
 import { GameFrameDto } from 'engine'
 import {
+  ClientsDto,
   IEngineClientApi,
   IGameClientApi,
   InputDto,
@@ -24,6 +25,7 @@ export default class GameClient implements IGameClientApi {
     this._socket = io(serverHost, socketOptions)
     this._socket.on(SocketEvents.Connect, this.onConnect.bind(this))
     this._socket.on(SocketEvents.PlayerJoined, this.onPlayerJoined.bind(this))
+    this._socket.on(SocketEvents.SendPlayers, this.onSendPlayers.bind(this))
     this._socket.on(SocketEvents.ChatMessage, (message: string) => {
       try {
         console.log(message)
@@ -80,6 +82,16 @@ export default class GameClient implements IGameClientApi {
     const result = this._engine!.addPlayer(socketId)
     console.log(result.message)
     this._engine!.loadGameLoop()
+  }
+
+  private onSendPlayers(clients: string[]) {
+    console.log('Recived players:')
+    const dto = new ClientsDto()
+    dto.clients = clients
+    dto.clients.forEach((id) => {
+      const result = this._engine!.addPlayer(id)
+      console.log(result.message)
+    })
   }
 
   disconnect() {
