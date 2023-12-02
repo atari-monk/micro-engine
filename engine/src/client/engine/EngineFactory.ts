@@ -66,7 +66,7 @@ export default class ClientEngineFactory {
     this._tileMap.load(gameData.tileMapData)
     this.loadObjectData(gameData.objectData.getAllObjectData())
     this.createEntities()
-    this._gameLoop.load()
+    //this._gameLoop.load()
   }
 
   private createEngineConfig() {

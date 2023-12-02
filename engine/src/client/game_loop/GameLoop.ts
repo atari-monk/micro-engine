@@ -6,7 +6,8 @@ import {
   IUpdateCallback,
   IRenderCallback,
 } from 'engine_api'
-import ClientMovementComponent from '../component/MovementComponent'
+import MovementComponent from '../component/MovementComponent'
+import ObjectComponent from '../../browser/component/ObjectComponent'
 
 export class GameLoop {
   private animationFrameId: number | null = null
@@ -23,11 +24,26 @@ export class GameLoop {
     private readonly _clientApi: IGameClientApi
   ) {}
 
-  load() {
-    this._player = this._entitiesManager.getEntity('player1')
-    this._inputDto = this._player?.getComponentByType<ClientMovementComponent>(
-      ClientMovementComponent
-    )?.inputDto
+  load(clientId: string) {
+    console.log('Load GameLoop clientId: ', clientId)
+    const player1 = this._entitiesManager.getEntity('player1')
+    const player2 = this._entitiesManager.getEntity('player2')
+    const player1Id =
+      player1.getComponentByType<ObjectComponent>(ObjectComponent)?.id
+    const player2Id =
+      player2.getComponentByType<ObjectComponent>(ObjectComponent)?.id
+    if (clientId == player1Id) {
+      this._player = player1
+      console.log('Player1 was chosen');
+    }
+    if (clientId == player2Id) {
+      this._player = player2
+      console.log('Player2 was chosen');
+    }
+    this._inputDto =
+      this._player?.getComponentByType<MovementComponent>(
+        MovementComponent
+      )?.inputDto
   }
 
   startLoop(): void {

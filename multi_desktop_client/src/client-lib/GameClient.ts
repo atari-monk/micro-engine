@@ -63,6 +63,8 @@ export default class GameClient implements IGameClientApi {
   }
 
   private onConnect() {
+    this.AssertEngine()
+    this._engine!.clientId = this._socket.id
     this._socket.emit(
       SocketEvents.ChatMessage,
       `Hello, I am new client at your server`
@@ -74,10 +76,10 @@ export default class GameClient implements IGameClientApi {
   }
 
   private onPlayerJoined(socketId: string) {
-    this.AssertEngine()
     console.log(`${socketId}: User is connecting`)
     const result = this._engine!.addPlayer(socketId)
     console.log(result.message)
+    this._engine!.loadGameLoop()
   }
 
   disconnect() {

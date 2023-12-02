@@ -14,6 +14,7 @@ import {
 import ObjectComponent from '../../browser/component/ObjectComponent'
 import EntitiesManager from '../../tech/entity_component/EntitiesManager'
 import GameFrameDto from '../../multi/dtos/GameFrameDto'
+import { GameLoop } from '../game_loop/GameLoop'
 
 export default class Engine implements IEngineClientApi {
   private readonly _gameLoop: IGameLoop
@@ -25,6 +26,7 @@ export default class Engine implements IEngineClientApi {
   private readonly _camera: ICamera
   private _player?: IEntity
   private _playerPosition?: IVector2
+  private _clientId: string = ''
 
   constructor(private readonly _engineConfig: IEngineConfig) {
     this._logger = this._engineConfig.logger
@@ -38,6 +40,18 @@ export default class Engine implements IEngineClientApi {
     this._logger.log(`Entities Manager`)
     this._entitiesManager = this._engineConfig.entitiesManager
     this._camera = this._engineConfig.camera
+  }
+
+  set clientId(id: string) {
+    this._clientId = id
+  }
+
+  get clientId(): string {
+    return this._clientId
+  }
+
+  loadGameLoop() {
+    ;(this._gameLoop as GameLoop).load(this.clientId)
   }
 
   updateCallback = (dt: number) => {
@@ -132,7 +146,10 @@ export default class Engine implements IEngineClientApi {
         const object =
           player.getComponentByType<ObjectComponent>(ObjectComponent)
         if (!object) continue
+        console.log('playerdto:', playerDto.id)
+        console.log('player:', object.id)
         if (playerDto.id !== object.id) continue
+        //console.log('pos upd:', playerDto.id)
         object.position.setValues(playerDto.position)
       }
     })

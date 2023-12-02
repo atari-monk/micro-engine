@@ -26,7 +26,7 @@ export default class PlayerManager extends EntitiesManager {
 
       movement.inputDto = inputDto
       found = true
-      //console.log('Assigned input to player on server')
+      //console.log('input :', inputDto.id)
       break
     }
 
