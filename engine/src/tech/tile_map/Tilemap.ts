@@ -10,13 +10,13 @@ import Vector2 from '../../math/vector/Vector2'
 export default class Tilemap implements ITilemap {
   private map: number[][]
   private tiles: ITile[]
-  private _cords: IVector2
+  private _tilePositions: IVector2[][]
   private _zeroTile: ITile
 
   constructor(private readonly _renderer: IRendererV2) {
     this.map = []
     this.tiles = []
-    this._cords = new Vector2()
+    this._tilePositions = []
     this._zeroTile = {
       id: 0,
       size: new Vector2(0, 0),
@@ -28,6 +28,13 @@ export default class Tilemap implements ITilemap {
   load(mapFactory: ITilemapDataFactory) {
     this.map = mapFactory.createMap()
     this.tiles = mapFactory.createTiles()
+
+    this._tilePositions = this.map.map((row, y) =>
+      row.map(
+        (_, x) =>
+          new Vector2(x * this.tiles[0].size.x, y * this.tiles[0].size.y)
+      )
+    )
   }
 
   render(dt: number): void {
@@ -35,10 +42,9 @@ export default class Tilemap implements ITilemap {
       for (let x = 0; x < this.map[y].length; x++) {
         const tileId = this.map[y][x]
         const tile = this.getTileById(tileId)
-        this._cords.x = x * tile.size.x
-        this._cords.y = y * tile.size.y
+        const position = this._tilePositions[y][x]
         if (tile) {
-          this.renderTile(tile)
+          this.renderTile(tile, position)
         }
       }
     }
@@ -50,7 +56,7 @@ export default class Tilemap implements ITilemap {
     return tile
   }
 
-  private renderTile(tile: ITile): void {
-    this._renderer.drawRect(this._cords, tile.size, tile.rgba)
+  private renderTile(tile: ITile, position: IVector2): void {
+    this._renderer.drawRect(position, tile.size, tile.rgba)
   }
 }

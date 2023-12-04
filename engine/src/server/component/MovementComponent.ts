@@ -11,16 +11,16 @@ export default class MovementComponent implements IComponent {
   constructor(private _object: IObject) {
     this._keyActions = {
       [Direction.Up]: (dt) => {
-        this._object.position.y -= this._object.speed.y * dt
+        this._object.position.y -= Math.round(this._object.speed.y * dt)
       },
       [Direction.Down]: (dt) => {
-        this._object.position.y += this._object.speed.y * dt
+        this._object.position.y += Math.round(this._object.speed.y * dt)
       },
       [Direction.Left]: (dt) => {
-        this._object.position.x -= this._object.speed.x * dt
+        this._object.position.x -= Math.round(this._object.speed.x * dt)
       },
       [Direction.Right]: (dt) => {
-        this._object.position.x += this._object.speed.x * dt
+        this._object.position.x += Math.round(this._object.speed.x * dt)
       },
     }
   }
