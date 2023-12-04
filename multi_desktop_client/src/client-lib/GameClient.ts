@@ -19,8 +19,8 @@ export default class GameClient implements IGameClientApi {
   constructor(serverHost: string) {
     const socketOptions = {
       reconnection: true,
-      reconnectionAttempts: 2, // Number of attempts
-      reconnectionDelay: 1000, // Delay between attempts in milliseconds
+      reconnectionAttempts: 3,
+      reconnectionDelay: 5000,
     }
     this._socket = io(serverHost, socketOptions)
     this._socket.on(SocketEvents.Connect, this.onConnect.bind(this))

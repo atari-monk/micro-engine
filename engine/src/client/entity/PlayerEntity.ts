@@ -1,4 +1,4 @@
-import { IInputManager, IObject, IRendererV2 } from 'engine_api'
+import { IInputManager, ILogger, IObject, IRendererV2 } from 'engine_api'
 import ObjectComponent from '../../browser/component/ObjectComponent'
 import Entity from '../../tech/entity_component/Entity'
 import RenderComponent from '../../browser/component/RenderComponent'
@@ -6,10 +6,12 @@ import MovementComponent from '../component/MovementComponent'
 
 export default class PlayerEntity extends Entity {
   constructor(
+    logger: ILogger,
     objectData: IObject,
     renderer: IRendererV2,
-    input: IInputManager  ) {
-    super()
+    input: IInputManager
+  ) {
+    super(logger)
     const object = new ObjectComponent(objectData)
     const render = new RenderComponent(object, renderer)
     const move = new MovementComponent(input)

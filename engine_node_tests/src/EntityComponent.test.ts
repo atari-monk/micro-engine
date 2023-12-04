@@ -1,17 +1,17 @@
-import { Entity, Component } from 'engine'
+import { Entity, Component, LogManager } from 'engine'
 
 describe('Entity and Component tests', () => {
   test('Entity can add a component', () => {
-    const entity = new Entity()
+    const entity = new Entity(new LogManager())
     const component = new Component()
 
     entity.addComponent(component)
 
-    expect(entity['componentsMap']).toContain(component)
+    expect(entity['_list']).toContain(component)
   })
 
   test('Entity update calls update on all components', () => {
-    const entity = new Entity()
+    const entity = new Entity(new LogManager())
     const component1 = new Component()
     const component2 = new Component()
 
@@ -28,7 +28,7 @@ describe('Entity and Component tests', () => {
   })
 
   test('Entity render calls render on all components', () => {
-    const entity = new Entity()
+    const entity = new Entity(new LogManager())
     const component1 = new Component()
     const component2 = new Component()
 

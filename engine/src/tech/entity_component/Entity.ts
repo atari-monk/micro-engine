@@ -1,28 +1,37 @@
-import { IComponent, IEntity } from 'engine_api'
+import { IComponent, IEntity, ILogger } from 'engine_api'
 
 export default class Entity implements IEntity {
-  private componentsMap = new Map<string, IComponent>()
+  private _list = new Map<string, IComponent>()
+
+  constructor(protected readonly _logger: ILogger) {}
 
   addComponent(component: IComponent): void {
-    // Use the component type as the key
-    this.componentsMap.set(component.constructor.name, component)
+    this._list.set(component.constructor.name, component)
   }
 
   getComponentByType<T extends IComponent>(
     componentType: new (...args: any[]) => T
-  ): T | undefined {
-    // Use the component type to retrieve the component
-    return this.componentsMap.get(componentType.name) as T | undefined
+  ): T {
+    const componentName = componentType.name
+    const component = this._list.get(componentName) as T | undefined
+
+    if (!component) {
+      const message = `Component of type ${componentName} not found.`
+      this._logger.error(message)
+      throw new Error(message)
+    }
+
+    return component
   }
 
   update(dt: number): void {
-    for (const component of this.componentsMap.values()) {
+    for (const component of this._list.values()) {
       component.update(dt)
     }
   }
 
   render(dt: number): void {
-    for (const component of this.componentsMap.values()) {
+    for (const component of this._list.values()) {
       component.render(dt)
     }
   }

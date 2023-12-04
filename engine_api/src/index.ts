@@ -1,3 +1,7 @@
+export * from './browser'
+export * from './server'
+export * from './client'
+//tech
 //animation_manager
 export { default as IAnimationCallback } from './tech/animation_manager/IAnimationCallback'
 export { default as IAnimationManager } from './tech/animation_manager/IAnimationManager'
@@ -8,14 +12,9 @@ export { default as IGameObject } from './tech/collision_detector/IGameObject'
 export { default as ICollisionInfo } from './tech/collision_detector/ICollisionInfo'
 export { default as ICollisionCallback } from './tech/collision_detector/ICollisionCallback'
 export { default as ICollisionDetector } from './tech/collision_detector/ICollisionDetector'
-//component
-export { default as IObject } from './browser/component/IObject'
 //config_manager
 export { default as IConfigOptions } from './tech/config_manager/IConfigOptions'
 export { default as IConfigurationManager } from './tech/config_manager/IConfigurationManager'
-//engine
-export { default as IEngineConfig } from './browser/engine/IEngineConfig'
-export { default as IGameData } from './browser/engine/IGameData'
 //entity
 export { default as IObjectDataManager } from './tech/entity/IObjectDataManager'
 //entity_component

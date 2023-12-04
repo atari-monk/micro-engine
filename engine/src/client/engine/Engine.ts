@@ -1,19 +1,21 @@
 import {
   ICamera,
   IEngineClientApi,
-  IEngineConfig,
   IEntityManager,
   IEntity,
   IGameLoop,
   IInputManager,
   ILogger,
   IRendererV2,
-  IResult,
   IVector2,
+  IGameFrameDto,
+  IResult,
 } from 'engine_api'
+import {
+  IClientEngineConfig,
+  IClientPlayerManager as IPlayerManager,
+} from 'engine_api/client'
 import ObjectComponent from '../../browser/component/ObjectComponent'
-import EntityManager from '../../tech/entity_component/EntityManager'
-import GameFrameDto from '../../multi/dtos/GameFrameDto'
 import { GameLoop } from '../game_loop/GameLoop'
 
 export default class Engine implements IEngineClientApi {
@@ -21,26 +23,12 @@ export default class Engine implements IEngineClientApi {
   private readonly _renderer: IRendererV2
   private readonly _logger: ILogger
   private readonly _input: IInputManager
-  protected _entityManager: IEntityManager
-  private readonly _playerManager: IEntityManager = new EntityManager()
+  private _entityManager: IEntityManager
+  private readonly _playerManager: IPlayerManager
   private readonly _camera: ICamera
   private _player: IEntity = {} as IEntity
   private _playerPosition?: IVector2
   private _clientId: string = ''
-
-  constructor(private readonly _engineConfig: IEngineConfig) {
-    this._logger = this._engineConfig.logger
-    this._logger.log(`Logger`)
-    this._logger.log(`Game Loop`)
-    this._gameLoop = this._engineConfig.gameLoop
-    this._logger.log(`Renderer`)
-    this._renderer = this._engineConfig.renderer
-    this._logger.log(`Input`)
-    this._input = this._engineConfig.input
-    this._logger.log(`Entities Manager`)
-    this._entityManager = this._engineConfig.entitiesManager
-    this._camera = this._engineConfig.camera
-  }
 
   set clientId(id: string) {
     this._clientId = id
@@ -48,6 +36,33 @@ export default class Engine implements IEngineClientApi {
 
   get clientId(): string {
     return this._clientId
+  }
+
+  constructor(private readonly _engineConfig: IClientEngineConfig) {
+    this._logger = this._engineConfig.logger
+    this._logger.debug(`Logger`)
+    this._logger.debug(`Game Loop`)
+    this._gameLoop = this._engineConfig.gameLoop
+    this._logger.debug(`Renderer`)
+    this._renderer = this._engineConfig.renderer
+    this._logger.debug(`Input`)
+    this._input = this._engineConfig.input
+    this._logger.debug(`Entities Manager`)
+    this._entityManager = this._engineConfig.entityManager
+    this._playerManager = this._engineConfig.playerManager
+    this._camera = this._engineConfig.camera
+  }
+
+  addPlayer(socketId: string): IResult {
+    return this._playerManager.addPlayer(socketId)
+  }
+
+  getPlayer1Id(): string {
+    return this._playerManager.getPlayer1Id()
+  }
+
+  updatePlayer(gameFrameDTO: IGameFrameDto): void {
+    this._playerManager.updatePlayer(gameFrameDTO)
   }
 
   loadGameLoop() {
@@ -67,102 +82,29 @@ export default class Engine implements IEngineClientApi {
   }
 
   startEngine() {
-    this._logger.log(`Starting Engine`)
+    this._logger.debug(`Starting Engine`)
     this._player = this._entityManager.getEntity('player1')
     this._playerPosition =
       this._player.getComponentByType<ObjectComponent>(
         ObjectComponent
       )?.position
-    this._logger.log(`Subscribe To Update`)
+    this._logger.debug(`Subscribe To Update`)
     this._gameLoop.subscribeToUpdate(this.updateCallback)
-    this._logger.log(`Subscribe To Render`)
+    this._logger.debug(`Subscribe To Render`)
     this._gameLoop.subscribeToRender(this.renderCallback)
-    this._logger.log(`Starting Game Loop`)
+    this._logger.debug(`Starting Game Loop`)
     this._gameLoop.startLoop()
   }
 
   stopEngine() {
-    this._logger.log(`Stoping Engine`)
-    this._logger.log(`Stoping Game Loop`)
+    this._logger.debug(`Stoping Engine`)
+    this._logger.debug(`Stoping Game Loop`)
     this._gameLoop.stopLoop()
-    this._logger.log(`Unsubscribe From Render`)
+    this._logger.debug(`Unsubscribe From Render`)
     this._gameLoop.unsubscribeFromRender(this.renderCallback)
-    this._logger.log(`Unsubscribe From Update`)
+    this._logger.debug(`Unsubscribe From Update`)
     this._gameLoop.unsubscribeFromUpdate(this.updateCallback)
     this._player = {} as IEntity
     this._playerPosition = undefined
-  }
-
-  getPlayer1Id() {
-    const player = this._playerManager.getEntity('player1')
-    const playerObj =
-      player.getComponentByType<ObjectComponent>(ObjectComponent)
-    return playerObj?.id ?? 'error'
-  }
-
-  addPlayer(socketId: string) {
-    const players = this._playerManager.getAllAsRecord()
-    for (const player of Object.values(players)) {
-      const object = player.getComponentByType<ObjectComponent>(ObjectComponent)
-      if (!object) continue
-      if (object.id === socketId)
-        return {
-          isDone: false,
-          message: `Player already on list`,
-        } as IResult
-    }
-
-    this._logger.log('Adding player to client engine')
-    const count = this._playerManager.getEntityCount()
-
-    if (count >= 2) {
-      return {
-        isDone: false,
-        message: `Number of players is ${count}. Server and clients at capacity`,
-      } as IResult
-    }
-
-    const playerKey = `player${count + 1}`
-    const player = this._entityManager.getEntity(playerKey)
-
-    if (!player) {
-      return {
-        isDone: false,
-        message: 'Error getting player entity!',
-      } as IResult
-    }
-
-    const playerObject =
-      player.getComponentByType<ObjectComponent>(ObjectComponent)
-
-    if (!playerObject) {
-      return {
-        isDone: false,
-        message: 'Error getting player Object!',
-      } as IResult
-    }
-
-    playerObject!.id = socketId
-    this._playerManager.addEntity(playerKey, player)
-    return {
-      isDone: true,
-      message: `Client Engine added player on key: ${playerKey}, id: ${socketId}`,
-    } as IResult
-  }
-
-  updatePlayer(gameFrameDto: GameFrameDto): void {
-    gameFrameDto.players.forEach((playerDto) => {
-      const allPlayers = this._playerManager.getAllAsRecord()
-      for (const player of Object.values(allPlayers)) {
-        const object =
-          player.getComponentByType<ObjectComponent>(ObjectComponent)
-        if (!object) continue
-        //console.log('playerdto:', playerDto.id)
-        //console.log('player:', object.id)
-        if (playerDto.id !== object.id) continue
-        //console.log('pos upd:', playerDto.id)
-        object.position.setValues(playerDto.position)
-      }
-    })
   }
 }

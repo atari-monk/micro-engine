@@ -21,6 +21,12 @@ export default class LogManager implements ILogger {
     }
   }
 
+  debug(message: string): void {
+    if (this.shouldLog(LogLevel.DEBUG)) {
+      console.debug(`[Game Debug] ${message}`)
+    }
+  }
+
   warn(message: string): void {
     if (this.shouldLog(LogLevel.WARNING)) {
       console.warn(`[Game Warning] ${message}`)

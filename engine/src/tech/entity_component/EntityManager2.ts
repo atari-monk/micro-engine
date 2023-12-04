@@ -1,7 +1,9 @@
-import { IEntity, IEntityManager } from 'engine_api'
+import { IEntity, IEntityManager, ILogger } from 'engine_api'
 
 export default class EntityManager2 implements IEntityManager {
-  private _list: Map<string, IEntity> = new Map()
+  protected _list: Map<string, IEntity> = new Map()
+
+  constructor(protected readonly _logger: ILogger) {}
 
   addEntity(name: string, entity: IEntity): void {
     this._list.set(name, entity)
@@ -15,21 +17,20 @@ export default class EntityManager2 implements IEntityManager {
     this._list.clear()
   }
 
-  getAll(): Map<string, IEntity> {
-    return this._list
-  }
-
-  getAllAsRecord(): Record<string, IEntity> {
-    throw new Error('Method not implemented.')
-  }
-
   getEntityCount(): number {
     return this._list.size
   }
 
-  getEntity(name: string, defaultValue?: IEntity): IEntity {
+  getEntity(name: string): IEntity {
     const entity = this._list.get(name)
-    return entity !== undefined ? entity : defaultValue || ({} as IEntity)
+
+    if (!entity) {
+      const message = `Entity name: '${name}' not found!`
+      this._logger.error(message)
+      throw new Error(message)
+    }
+
+    return entity
   }
 
   updateEntities(dt: number): void {

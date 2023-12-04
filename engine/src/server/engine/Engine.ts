@@ -6,20 +6,20 @@ import {
   IResult,
   InputDto,
 } from 'engine_api'
+import { IServerPlayerManager as IPlayerManager } from 'engine_api/server'
 import GameLoop from '../game_loop/GameLoop'
 import ObjectComponent from '../../browser/component/ObjectComponent'
-import PlayerManager from '../entity/PlayerManager'
 
 export default class Engine implements IEngineServerApi {
   private readonly _logger: ILogger
   private readonly _entityManager: IEntityManager
-  private readonly _playerManager: PlayerManager
+  private readonly _playerManager: IPlayerManager
   private readonly _gameLoop: GameLoop
 
   constructor(
     logger: ILogger,
     entityManager: IEntityManager,
-    playerManager: PlayerManager,
+    playerManager: IPlayerManager,
     gameLoop: GameLoop,
     private readonly _serverApi: IGameServerApi
   ) {

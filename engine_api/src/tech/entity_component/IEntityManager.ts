@@ -6,12 +6,9 @@ export default interface IEntityManager {
   removeEntity(name: string): void
   removeAllEntities(): void
 
-  getAll(): Map<string, IEntity>
-  getAllAsRecord(): Record<string, IEntity>
-
   getEntityCount(): number
   getEntity(name: string): IEntity
-  getEntity(name: string, defaultValue: IEntity): IEntity
+  getEntity(name: string): IEntity
 
   updateEntities(dt: number): void
   renderEntities(dt: number): void

@@ -1,5 +1,5 @@
 import { IGameServerApi, IUpdateCallback } from 'engine_api'
-import PlayerManager from '../entity/PlayerManager'
+import { IServerPlayerManager as IPlayerManager } from 'engine_api/server'
 
 export default class GameLoop {
   private updateCallbacks: IUpdateCallback[] = []
@@ -10,7 +10,7 @@ export default class GameLoop {
 
   constructor(
     private readonly _serverApi: IGameServerApi,
-    private readonly _playerManager: PlayerManager
+    private readonly _playerManager: IPlayerManager
   ) {}
 
   startLoop(): void {

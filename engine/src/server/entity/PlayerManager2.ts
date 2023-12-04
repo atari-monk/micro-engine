@@ -1,13 +1,13 @@
-import EntityManager from '../../tech/entity_component/EntityManager'
+import { ClientsDto, ILogger, InputDto } from 'engine_api'
+import { IServerPlayerManager as IPlayerManager } from 'engine_api/server'
 import ObjectComponent from '../../browser/component/ObjectComponent'
 import MovementComponent from '../component/MovementComponent'
-import { ClientsDto, ILogger, InputDto } from 'engine_api'
 import GameFrameDto from '../../multi/dtos/GameFrameDto'
 import ObjectDto from '../../multi/dtos/ObjectDto'
-import { IServerPlayerManager as IPlayerManager } from 'engine_api/server'
+import EntityManager2 from '../../tech/entity_component/EntityManager2'
 
-export default class PlayerManager
-  extends EntityManager
+export default class PlayerManager2
+  extends EntityManager2
   implements IPlayerManager
 {
   constructor(protected readonly _logger: ILogger) {
@@ -17,7 +17,7 @@ export default class PlayerManager
   setPlayerInput(inputDto: InputDto) {
     let found = false
     const message = `setPlayerInput: ${inputDto}`
-    for (const entity of Object.values(this._list)) {
+    for (const entity of this._list.values()) {
       const object = entity.getComponentByType<ObjectComponent>(ObjectComponent)
       if (object.id !== inputDto.id) {
         continue
@@ -37,7 +37,7 @@ export default class PlayerManager
 
   getGameFrameDto() {
     const dto = new GameFrameDto()
-    for (const entity of Object.values(this._list)) {
+    for (const entity of this._list.values()) {
       const object = entity.getComponentByType<ObjectComponent>(ObjectComponent)
       dto.addPlayer(object.id, new ObjectDto(object))
     }
@@ -46,9 +46,10 @@ export default class PlayerManager
 
   getClientsDto() {
     const dto = new ClientsDto()
-    for (const entity of Object.values(this._list)) {
-      const object = entity.getComponentByType<ObjectComponent>(ObjectComponent)
-      dto.clients.push(object.id)
+    for (const entity of this._list.values()) {
+      dto.clients.push(
+        entity.getComponentByType<ObjectComponent>(ObjectComponent).id
+      )
     }
     return dto
   }

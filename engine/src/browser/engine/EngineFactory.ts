@@ -16,10 +16,10 @@ import RendererV2 from '../../tech/renderer/RendererV2'
 import Engine from './Engine'
 import InputManager from '../../tech/input_manager/InputManager'
 import EntityFactory from '../entity/EntityFactory'
-import EntityManager from '../../tech/entity_component/EntityManager'
 import ObjectDataManager from '../entity/ObjectDataManager'
 import Tilemap from '../../tech/tile_map/Tilemap'
 import Camera from '../../tech/camera/Camera'
+import EntityManager2 from '../../tech/entity_component/EntityManager2'
 
 export default class EngineFactory {
   private readonly _renderer: IRendererV2
@@ -28,7 +28,9 @@ export default class EngineFactory {
   private readonly _objectDataManager: IObjectDataManager =
     new ObjectDataManager()
   protected readonly _entityFactory: EntityFactory = new EntityFactory()
-  protected readonly _entityManager: IEntityManager = new EntityManager()
+  protected readonly _entityManager: IEntityManager = new EntityManager2(
+    this._logger
+  )
   protected _gameLoop: IGameLoop
   private readonly _tileMap: Tilemap
   private _keyDownHandler: (event: KeyboardEvent) => void
@@ -73,7 +75,7 @@ export default class EngineFactory {
       renderer: this._renderer,
       logger: this._logger,
       input: this._input,
-      entitiesManager: this._entityManager,
+      entityManager: this._entityManager,
       camera: this._camera,
     } as IEngineConfig
   }
@@ -98,7 +100,7 @@ export default class EngineFactory {
   private createMap() {
     this._entityManager.addEntity(
       'map',
-      this._entityFactory.createMapEntity(this._tileMap)
+      this._entityFactory.createMapEntity(this._logger, this._tileMap)
     )
   }
 
@@ -106,6 +108,7 @@ export default class EngineFactory {
     this._entityManager.addEntity(
       'object',
       this._entityFactory.createObjectEntity(
+        this._logger,
         this._objectDataManager.getObjectData('object'),
         this._renderer
       )
@@ -116,10 +119,10 @@ export default class EngineFactory {
     this._entityManager.addEntity(
       'player1',
       this._entityFactory.createPlayerEntity(
+        this._logger,
         this._objectDataManager.getObjectData('player1'),
         this._renderer,
-        this._input,
-        this._logger
+        this._input
       )
     )
   }

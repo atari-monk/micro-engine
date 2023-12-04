@@ -31,7 +31,7 @@ export default class Engine {
     this._logger.log(`Input`)
     this._input = this._engineConfig.input
     this._logger.log(`Entities Manager`)
-    this._entityManager = this._engineConfig.entitiesManager
+    this._entityManager = this._engineConfig.entityManager
     this._camera = this._engineConfig.camera
   }
 
