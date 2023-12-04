@@ -1,13 +1,13 @@
-import EntitiesManager from '../../tech/entity_component/EntitiesManager'
+import EntityManager from '../../tech/entity_component/EntityManager'
 import ObjectComponent from '../../browser/component/ObjectComponent'
 import MovementComponent from '../component/MovementComponent'
 import { ClientsDto, InputDto } from 'engine_api'
 import GameFrameDto from '../../multi/dtos/GameFrameDto'
 import ObjectDto from '../../multi/dtos/ObjectDto'
 
-export default class PlayerManager extends EntitiesManager {
+export default class PlayerManager extends EntityManager {
   setPlayerInput(inputDto: InputDto) {
-    const players = this.getAllEntities()
+    const players = this.getAllAsRecord()
     let found = false
 
     for (const entity of Object.values(players)) {
@@ -37,7 +37,7 @@ export default class PlayerManager extends EntitiesManager {
 
   getGameFrameDto() {
     const frame = new GameFrameDto()
-    const players = this.getAllEntities()
+    const players = this.getAllAsRecord()
     for (const entity of Object.values(players)) {
       const object = entity.getComponentByType<ObjectComponent>(ObjectComponent)
 
@@ -52,7 +52,7 @@ export default class PlayerManager extends EntitiesManager {
 
   getClientsDto() {
     const dto = new ClientsDto()
-    const players = this.getAllEntities()
+    const players = this.getAllAsRecord()
     for (const entity of Object.values(players)) {
       const object = entity.getComponentByType<ObjectComponent>(ObjectComponent)
 

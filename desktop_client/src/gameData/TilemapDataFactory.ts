@@ -38,7 +38,10 @@ export default class TilemapDataFactory implements ITilemapDataFactory {
     ]
   }
 
-  private generateTable(tableSize: IVector2, tileId: number): number[][] {
+  private generateTable(
+    tableSize: IImmutableVector2,
+    tileId: number
+  ): number[][] {
     const table: number[][] = []
 
     for (let i = 0; i < tableSize.y; i++) {

@@ -2,7 +2,7 @@ import {
   ILogger,
   LogLevel,
   IObjectDataManager,
-  IEntitiesManager,
+  IEntityManager,
   IObject,
   IGameData,
   IRendererV2,
@@ -10,7 +10,7 @@ import {
 } from 'engine_api'
 import EntityFactory from '../../browser/entity/EntityFactory'
 import ObjectDataManager from '../../browser/entity/ObjectDataManager'
-import EntitiesManager from '../../tech/entity_component/EntitiesManager'
+import EntityManager from '../../tech/entity_component/EntityManager'
 import LogManager from '../../tech/log_manager/LogManager'
 import { RendererMock } from '../../tech/renderer/RendererMock'
 import Tilemap from '../../tech/tile_map/Tilemap'
@@ -26,7 +26,7 @@ export default class EngineFactory {
   private readonly _objectDataManager: IObjectDataManager =
     new ObjectDataManager()
   private readonly _entityFactory: EntityFactory = new EntityFactory()
-  private readonly _entitiesManager: IEntitiesManager = new EntitiesManager()
+  private readonly _entityManager: IEntityManager = new EntityManager()
   private readonly _playerManager: PlayerManager = new PlayerManager()
   private _gameLoop: GameLoop
   private readonly _tileMap: Tilemap
@@ -45,7 +45,7 @@ export default class EngineFactory {
     this.InitializeEngine(gameData)
     return new Engine(
       this._logger,
-      this._entitiesManager,
+      this._entityManager,
       this._playerManager,
       this._gameLoop,
       this._serverApi
@@ -71,25 +71,25 @@ export default class EngineFactory {
   }
 
   private createMap() {
-    this._entitiesManager.addEntity(
+    this._entityManager.addEntity(
       'map',
       this._entityFactory.createMapEntity(this._tileMap)
     )
   }
 
   private createObject() {
-    this._entitiesManager.addEntity(
+    this._entityManager.addEntity(
       'object',
       new ObjectEntity(this._objectDataManager.getObjectData('object'))
     )
   }
 
   private createPlayers() {
-    this._entitiesManager.addEntity(
+    this._entityManager.addEntity(
       'player1',
       new PlayerEntity(this._objectDataManager.getObjectData('player1'))
     )
-    this._entitiesManager.addEntity(
+    this._entityManager.addEntity(
       'player2',
       new PlayerEntity(this._objectDataManager.getObjectData('player2'))
     )
@@ -102,6 +102,6 @@ export default class EngineFactory {
 
   private resetEngine() {
     this._objectDataManager.removeAllObjectData()
-    this._entitiesManager.removeAllEntities()
+    this._entityManager.removeAllEntities()
   }
 }

@@ -1,6 +1,6 @@
 import {
   IEngineServerApi,
-  IEntitiesManager,
+  IEntityManager,
   IGameServerApi,
   ILogger,
   IResult,
@@ -12,25 +12,25 @@ import PlayerManager from '../entity/PlayerManager'
 
 export default class Engine implements IEngineServerApi {
   private readonly _logger: ILogger
-  private readonly _entitiesManager: IEntitiesManager
+  private readonly _entityManager: IEntityManager
   private readonly _playerManager: PlayerManager
   private readonly _gameLoop: GameLoop
 
   constructor(
     logger: ILogger,
-    entitiesManager: IEntitiesManager,
+    entityManager: IEntityManager,
     playerManager: PlayerManager,
     gameLoop: GameLoop,
     private readonly _serverApi: IGameServerApi
   ) {
     this._logger = logger
-    this._entitiesManager = entitiesManager
+    this._entityManager = entityManager
     this._playerManager = playerManager
     this._gameLoop = gameLoop
   }
 
   updateCallback = (dt: number) => {
-    this._entitiesManager.updateEntities(dt)
+    this._entityManager.updateEntities(dt)
   }
 
   startEngine() {
@@ -65,7 +65,7 @@ export default class Engine implements IEngineServerApi {
     }
 
     const playerKey = `player${count + 1}`
-    const player = this._entitiesManager.getEntity(playerKey)
+    const player = this._entityManager.getEntity(playerKey)
 
     if (!player) {
       return {

@@ -2,7 +2,7 @@ import {
   IGameLoop,
   IUpdateCallback,
   IRenderCallback,
-  IEntitiesManager,
+  IEntityManager,
 } from 'engine_api'
 
 export default class GameLoop implements IGameLoop {
@@ -12,7 +12,7 @@ export default class GameLoop implements IGameLoop {
   private renderCallbacks: IRenderCallback[] = []
   private paused: boolean = false
 
-  constructor(protected readonly _entitiesManager: IEntitiesManager) {}
+  constructor(protected readonly _entityManager: IEntityManager) {}
 
   startLoop(): void {
     this.paused = false

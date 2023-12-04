@@ -1,6 +1,6 @@
 import {
   IGameClientApi,
-  IEntitiesManager,
+  IEntityManager,
   IEntity,
   InputDto,
   IUpdateCallback,
@@ -20,25 +20,25 @@ export class GameLoop {
   private _inputDto: InputDto | undefined
 
   constructor(
-    private readonly _entitiesManager: IEntitiesManager,
+    private readonly _entityManager: IEntityManager,
     private readonly _clientApi: IGameClientApi
   ) {}
 
   load(clientId: string) {
     console.log('Load GameLoop clientId: ', clientId)
-    const player1 = this._entitiesManager.getEntity('player1')
-    const player2 = this._entitiesManager.getEntity('player2')
+    const player1 = this._entityManager.getEntity('player1')
+    const player2 = this._entityManager.getEntity('player2')
     const player1Id =
       player1.getComponentByType<ObjectComponent>(ObjectComponent)?.id
     const player2Id =
       player2.getComponentByType<ObjectComponent>(ObjectComponent)?.id
     if (clientId == player1Id) {
       this._player = player1
-      console.log('Player1 was chosen');
+      console.log('Player1 was chosen')
     }
     if (clientId == player2Id) {
       this._player = player2
-      console.log('Player2 was chosen');
+      console.log('Player2 was chosen')
     }
     this._inputDto =
       this._player?.getComponentByType<MovementComponent>(

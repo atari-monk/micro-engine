@@ -29,7 +29,8 @@ export { default as ObjectEntity } from './browser/entity/ObjectEntity'
 export { default as PlayerEntity } from './browser/entity/PlayerEntity'
 //entity-component
 export { default as Component } from './tech/entity_component/Component'
-export { default as EntitiesManager } from './tech/entity_component/EntitiesManager'
+export { default as EntityManager } from './tech/entity_component/EntityManager'
+export { default as EntityManager2 } from './tech/entity_component/EntityManager2'
 export { default as Entity } from './tech/entity_component/Entity'
 //entity-server
 export { default as ServerObjectEntity } from './server/entity/ObjectEntity'

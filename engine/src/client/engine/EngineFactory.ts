@@ -1,7 +1,7 @@
 import {
   ICamera,
   IEngineConfig,
-  IEntitiesManager,
+  IEntityManager,
   IGameClientApi,
   IGameData,
   ILogger,
@@ -13,7 +13,7 @@ import {
 import { GameLoop } from '../game_loop/GameLoop'
 import EntityFactory from '../../browser/entity/EntityFactory'
 import ObjectDataManager from '../../browser/entity/ObjectDataManager'
-import EntitiesManager from '../../tech/entity_component/EntitiesManager'
+import EntityManager from '../../tech/entity_component/EntityManager'
 import InputManager from '../../tech/input_manager/InputManager'
 import LogManager from '../../tech/log_manager/LogManager'
 import Tilemap from '../../tech/tile_map/Tilemap'
@@ -29,7 +29,7 @@ export default class ClientEngineFactory {
   private readonly _objectDataManager: IObjectDataManager =
     new ObjectDataManager()
   protected readonly _entityFactory: EntityFactory = new EntityFactory()
-  protected readonly _entitiesManager: IEntitiesManager = new EntitiesManager()
+  protected readonly _entityManager: IEntityManager = new EntityManager()
   protected _gameLoop: GameLoop
   private readonly _tileMap: Tilemap
   private _keyDownHandler: (event: KeyboardEvent) => void
@@ -45,7 +45,7 @@ export default class ClientEngineFactory {
     this._renderer = new RendererV2(canvasId)
     this._tileMap = new Tilemap(this._renderer)
     this._camera = new Camera(this._renderer)
-    this._gameLoop = new GameLoop(this._entitiesManager, this._clientApi)
+    this._gameLoop = new GameLoop(this._entityManager, this._clientApi)
     this._keyDownHandler = (event: KeyboardEvent) => {
       this._input.handleKeyDown(event.key)
     }
@@ -75,7 +75,7 @@ export default class ClientEngineFactory {
       renderer: this._renderer,
       logger: this._logger,
       input: this._input,
-      entitiesManager: this._entitiesManager,
+      entitiesManager: this._entityManager,
       camera: this._camera,
     } as IEngineConfig
   }
@@ -98,14 +98,14 @@ export default class ClientEngineFactory {
   }
 
   private createMap() {
-    this._entitiesManager.addEntity(
+    this._entityManager.addEntity(
       'map',
       this._entityFactory.createMapEntity(this._tileMap)
     )
   }
 
   private createObject() {
-    this._entitiesManager.addEntity(
+    this._entityManager.addEntity(
       'object',
       this._entityFactory.createObjectEntity(
         this._objectDataManager.getObjectData('object'),
@@ -115,7 +115,7 @@ export default class ClientEngineFactory {
   }
 
   private createPlayers() {
-    this._entitiesManager.addEntity(
+    this._entityManager.addEntity(
       'player1',
       new PlayerEntity(
         this._objectDataManager.getObjectData('player1'),
@@ -123,7 +123,7 @@ export default class ClientEngineFactory {
         this._input
       )
     )
-    this._entitiesManager.addEntity(
+    this._entityManager.addEntity(
       'player2',
       new PlayerEntity(
         this._objectDataManager.getObjectData('player2'),
@@ -142,7 +142,7 @@ export default class ClientEngineFactory {
     this.unsubscribeKeyboardEvents()
     this._input.unsubscribeAll('KeyDown')
     this._objectDataManager.removeAllObjectData()
-    this._entitiesManager.removeAllEntities()
+    this._entityManager.removeAllEntities()
   }
 
   private unsubscribeKeyboardEvents(): void {

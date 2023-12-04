@@ -20,8 +20,8 @@ export { default as IGameData } from './browser/engine/IGameData'
 export { default as IObjectDataManager } from './tech/entity/IObjectDataManager'
 //entity_component
 export { default as IComponent } from './tech/entity_component/IComponent'
-export { default as IEntitiesManager } from './tech/entity_component/IEntitiesManager'
 export { default as IEntity } from './tech/entity_component/IEntity'
+export { default as IEntityManager } from './tech/entity_component/IEntityManager'
 export { default as IRenderable } from './tech/entity_component/IRenderable'
 export { default as IUpdateable } from './tech/entity_component/IUpdateable'
 //event_system

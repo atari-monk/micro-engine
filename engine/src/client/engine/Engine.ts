@@ -2,7 +2,7 @@ import {
   ICamera,
   IEngineClientApi,
   IEngineConfig,
-  IEntitiesManager,
+  IEntityManager,
   IEntity,
   IGameLoop,
   IInputManager,
@@ -12,7 +12,7 @@ import {
   IVector2,
 } from 'engine_api'
 import ObjectComponent from '../../browser/component/ObjectComponent'
-import EntitiesManager from '../../tech/entity_component/EntitiesManager'
+import EntityManager from '../../tech/entity_component/EntityManager'
 import GameFrameDto from '../../multi/dtos/GameFrameDto'
 import { GameLoop } from '../game_loop/GameLoop'
 
@@ -21,10 +21,10 @@ export default class Engine implements IEngineClientApi {
   private readonly _renderer: IRendererV2
   private readonly _logger: ILogger
   private readonly _input: IInputManager
-  protected _entitiesManager: IEntitiesManager
-  private readonly _playerManager: IEntitiesManager = new EntitiesManager()
+  protected _entityManager: IEntityManager
+  private readonly _playerManager: IEntityManager = new EntityManager()
   private readonly _camera: ICamera
-  private _player?: IEntity
+  private _player: IEntity = {} as IEntity
   private _playerPosition?: IVector2
   private _clientId: string = ''
 
@@ -38,7 +38,7 @@ export default class Engine implements IEngineClientApi {
     this._logger.log(`Input`)
     this._input = this._engineConfig.input
     this._logger.log(`Entities Manager`)
-    this._entitiesManager = this._engineConfig.entitiesManager
+    this._entityManager = this._engineConfig.entitiesManager
     this._camera = this._engineConfig.camera
   }
 
@@ -55,22 +55,22 @@ export default class Engine implements IEngineClientApi {
   }
 
   updateCallback = (dt: number) => {
-    this._entitiesManager.updateEntities(dt)
+    this._entityManager.updateEntities(dt)
   }
 
   renderCallback = (dt: number) => {
     this._renderer.clearCanvas()
     this._renderer.fillCanvas('rgba(87, 40, 145, 0.8)')
     if (this._playerPosition) this._camera.setPosition(this._playerPosition)
-    this._entitiesManager.renderEntities(dt)
+    this._entityManager.renderEntities(dt)
     this._renderer.resetTranslation()
   }
 
   startEngine() {
     this._logger.log(`Starting Engine`)
-    this._player = this._entitiesManager.getEntity('player')
+    this._player = this._entityManager.getEntity('player1')
     this._playerPosition =
-      this._player?.getComponentByType<ObjectComponent>(
+      this._player.getComponentByType<ObjectComponent>(
         ObjectComponent
       )?.position
     this._logger.log(`Subscribe To Update`)
@@ -89,7 +89,7 @@ export default class Engine implements IEngineClientApi {
     this._gameLoop.unsubscribeFromRender(this.renderCallback)
     this._logger.log(`Unsubscribe From Update`)
     this._gameLoop.unsubscribeFromUpdate(this.updateCallback)
-    this._player = undefined
+    this._player = {} as IEntity
     this._playerPosition = undefined
   }
 
@@ -101,7 +101,7 @@ export default class Engine implements IEngineClientApi {
   }
 
   addPlayer(socketId: string) {
-    const players = this._playerManager.getAllEntities()
+    const players = this._playerManager.getAllAsRecord()
     for (const player of Object.values(players)) {
       const object = player.getComponentByType<ObjectComponent>(ObjectComponent)
       if (!object) continue
@@ -123,7 +123,7 @@ export default class Engine implements IEngineClientApi {
     }
 
     const playerKey = `player${count + 1}`
-    const player = this._entitiesManager.getEntity(playerKey)
+    const player = this._entityManager.getEntity(playerKey)
 
     if (!player) {
       return {
@@ -151,8 +151,8 @@ export default class Engine implements IEngineClientApi {
   }
 
   updatePlayer(gameFrameDto: GameFrameDto): void {
-    gameFrameDto.players.forEach((playerDto, id) => {
-      const allPlayers = this._playerManager.getAllEntities()
+    gameFrameDto.players.forEach((playerDto) => {
+      const allPlayers = this._playerManager.getAllAsRecord()
       for (const player of Object.values(allPlayers)) {
         const object =
           player.getComponentByType<ObjectComponent>(ObjectComponent)

@@ -1,5 +1,5 @@
 import { GameLoop } from 'engine'
-import { EntitiesManagerMock } from './EntitiesManagerMock'
+import { EntityManagerMock } from './EntityManagerMock'
 
 describe('GameLoop', () => {
   let gameLoop: GameLoop
@@ -7,7 +7,7 @@ describe('GameLoop', () => {
   let mockRenderCallback: jest.Mock
 
   beforeEach(() => {
-    gameLoop = new GameLoop(new EntitiesManagerMock())
+    gameLoop = new GameLoop(new EntityManagerMock())
     mockUpdateCallback = jest.fn()
     mockRenderCallback = jest.fn()
   })
