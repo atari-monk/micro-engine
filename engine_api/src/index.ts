@@ -78,6 +78,10 @@ export { default as IScene } from './tech/scene_manager/IScene'
 export { default as ISceneManager } from './tech/scene_manager/ISceneManager'
 //sound_manager
 export { default as ISoundManager } from './tech/sound_manager/ISoundManager'
+//sprite
+export { AnimationType } from './tech/sprite/AnimationType'
+export { default as IAnimationConfig } from './tech/sprite/IAnimationConfig'
+export { default as IAnimationFrame } from './tech/sprite/IAnimationFrame'
 //state_manager
 export { default as IGenericState } from './tech/state_manager/IGenericState'
 export { default as IStateManager } from './tech/state_manager/IStateManager'
