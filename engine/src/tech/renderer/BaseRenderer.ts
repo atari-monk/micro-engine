@@ -2,6 +2,10 @@ export default abstract class BaseRenderer {
   protected canvas: HTMLCanvasElement
   protected context: CanvasRenderingContext2D
 
+  get ctx(): CanvasRenderingContext2D {
+    return this.context
+  }
+
   constructor(canvasId: string) {
     this.canvas = document.getElementById(canvasId) as HTMLCanvasElement
     if (!this.canvas) throw new Error(`No canvas on id: ${canvasId}`)

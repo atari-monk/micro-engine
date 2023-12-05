@@ -1,6 +1,7 @@
 import IVector2 from '../../math/vector/IImmutableVector2'
 
 export default interface IRendererV2 {
+  get ctx(): CanvasRenderingContext2D
   clearCanvas(): void
   drawRect(position: IVector2, size: IVector2, color: string): void
   translate(v: IVector2): void
