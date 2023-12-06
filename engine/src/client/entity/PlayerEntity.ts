@@ -11,7 +11,7 @@ export default class PlayerEntity extends Entity {
     renderer: IRendererV2,
     input: IInputManager
   ) {
-    super(logger)
+    super()
     const object = new ObjectComponent(objectData)
     const render = new RenderComponent(object, renderer)
     const move = new MovementComponent(input)

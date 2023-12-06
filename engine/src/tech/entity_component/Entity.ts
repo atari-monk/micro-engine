@@ -2,8 +2,11 @@ import { IComponent, IEntity, ILogger } from 'engine_api'
 
 export default class Entity implements IEntity {
   private _list = new Map<string, IComponent>()
+  protected _logger!: ILogger
 
-  constructor(protected readonly _logger: ILogger) {}
+  set logger(logger: ILogger) {
+    this._logger = logger
+  }
 
   addComponent(component: IComponent): void {
     this._list.set(component.constructor.name, component)

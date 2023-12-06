@@ -7,27 +7,54 @@ import {
 } from 'engine_api'
 import ObjectEntity from './ObjectEntity'
 import PlayerEntity from './PlayerEntity'
+import MapEntityBuilder from './MapEntitBuilder'
+import ProtoObjectEntityBuilder from './ProtoObjectEntityBuilder'
 import MapEntity from './MapEntity'
+import PlayerEntityBuilder from './PlayerEntityBuilder'
 
 export default class EntityFactory {
-  createMapEntity(logger: ILogger, tileMap: ITilemap) {
-    return new MapEntity(logger, tileMap)
+  private readonly mapEntityBuilder = new MapEntityBuilder(MapEntity)
+  private readonly objectEntityBuilder = new ProtoObjectEntityBuilder(
+    ObjectEntity
+  )
+  private readonly playerEntityBuilder = new PlayerEntityBuilder(PlayerEntity)
+
+  setMapEntityBuilderDependencyList(logger: ILogger, tileMap: ITilemap) {
+    this.mapEntityBuilder.setLogger(logger)
+    this.mapEntityBuilder.setTileMap(tileMap)
   }
 
-  createObjectEntity(
+  createMapEntity() {
+    return this.mapEntityBuilder.build()
+  }
+
+  setObjectEntityBuilderDependencyList(
     logger: ILogger,
     objectData: IObject,
     renderer: IRendererV2
   ) {
-    return new ObjectEntity(logger, objectData, renderer)
+    this.objectEntityBuilder.setLogger(logger)
+    this.objectEntityBuilder.setObjectData(objectData)
+    this.objectEntityBuilder.setRenderer(renderer)
   }
 
-  createPlayerEntity(
+  createObjectEntity() {
+    return this.objectEntityBuilder.build()
+  }
+
+  setPlayerEntityBuilderDependencyList(
     logger: ILogger,
     objectData: IObject,
     renderer: IRendererV2,
     input: IInputManager
   ) {
-    return new PlayerEntity(objectData, renderer, input, logger)
+    this.playerEntityBuilder.setLogger(logger)
+    this.playerEntityBuilder.setObjectData(objectData)
+    this.playerEntityBuilder.setRenderer(renderer)
+    this.playerEntityBuilder.setInput(input)
+  }
+
+  createPlayerEntity() {
+    return this.playerEntityBuilder.build()
   }
 }

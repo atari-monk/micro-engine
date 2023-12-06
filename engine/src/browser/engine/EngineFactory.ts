@@ -92,38 +92,31 @@ export default class EngineFactory {
   }
 
   private createEntities() {
-    this.createMap()
-    this.createObject()
-    this.createPlayer()
-  }
-
-  private createMap() {
-    this._entityManager.addEntity(
-      'map',
-      this._entityFactory.createMapEntity(this._logger, this._tileMap)
+    this._entityFactory.setMapEntityBuilderDependencyList(
+      this._logger,
+      this._tileMap
     )
-  }
+    this._entityManager.addEntity('map', this._entityFactory.createMapEntity())
 
-  private createObject() {
+    this._entityFactory.setObjectEntityBuilderDependencyList(
+      this._logger,
+      this._objectDataManager.getObjectData('object'),
+      this._renderer
+    )
     this._entityManager.addEntity(
       'object',
-      this._entityFactory.createObjectEntity(
-        this._logger,
-        this._objectDataManager.getObjectData('object'),
-        this._renderer
-      )
+      this._entityFactory.createObjectEntity()
     )
-  }
 
-  private createPlayer() {
+    this._entityFactory.setPlayerEntityBuilderDependencyList(
+      this._logger,
+      this._objectDataManager.getObjectData('player1'),
+      this.renderer,
+      this._input
+    )
     this._entityManager.addEntity(
       'player1',
-      this._entityFactory.createPlayerEntity(
-        this._logger,
-        this._objectDataManager.getObjectData('player1'),
-        this._renderer,
-        this._input
-      )
+      this._entityFactory.createPlayerEntity()
     )
   }
 

@@ -4,7 +4,7 @@ import Entity from '../../tech/entity_component/Entity'
 
 export default class ObjectEntity extends Entity {
   constructor(logger: ILogger, objectData: IObject) {
-    super(logger)
+    super()
     const object = new ObjectComponent(objectData)
     this.addComponent(object)
   }

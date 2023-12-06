@@ -103,30 +103,22 @@ export default class ClientEngineFactory {
   }
 
   private createEntities() {
-    this.createMap()
-    this.createObject()
-    this.createPlayers()
-  }
-
-  private createMap() {
-    this._entityManager.addEntity(
-      'map',
-      this._entityFactory.createMapEntity(this._logger, this._tileMap)
+    this._entityFactory.setMapEntityBuilderDependencyList(
+      this._logger,
+      this._tileMap
     )
-  }
+    this._entityManager.addEntity('map', this._entityFactory.createMapEntity())
 
-  private createObject() {
+    this._entityFactory.setObjectEntityBuilderDependencyList(
+      this._logger,
+      this._objectDataManager.getObjectData('object'),
+      this._renderer
+    )
     this._entityManager.addEntity(
       'object',
-      this._entityFactory.createObjectEntity(
-        this._logger,
-        this._objectDataManager.getObjectData('object'),
-        this._renderer
-      )
+      this._entityFactory.createObjectEntity()
     )
-  }
 
-  private createPlayers() {
     const player1 = new PlayerEntity(
       this._logger,
       this._objectDataManager.getObjectData('player1'),
@@ -139,9 +131,7 @@ export default class ClientEngineFactory {
       this._renderer,
       this._input
     )
-    //this._playerManager.addEntity('player1', player1)
     this._entityManager.addEntity('player1', player1)
-    //this._playerManager.addEntity('player2', player2)
     this._entityManager.addEntity('player2', player2)
   }
 

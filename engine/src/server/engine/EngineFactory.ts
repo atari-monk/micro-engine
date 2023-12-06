@@ -70,19 +70,11 @@ export default class EngineFactory {
   }
 
   private createEntities() {
-    this.createMap()
-    this.createObject()
-    this.createPlayers()
-  }
-
-  private createMap() {
-    this._entityManager.addEntity(
-      'map',
-      this._entityFactory.createMapEntity(this._logger, this._tileMap)
+    this._entityFactory.setMapEntityBuilderDependencyList(
+      this._logger,
+      this._tileMap
     )
-  }
-
-  private createObject() {
+    this._entityManager.addEntity('map', this._entityFactory.createMapEntity())
     this._entityManager.addEntity(
       'object',
       new ObjectEntity(
@@ -90,9 +82,6 @@ export default class EngineFactory {
         this._objectDataManager.getObjectData('object')
       )
     )
-  }
-
-  private createPlayers() {
     this._entityManager.addEntity(
       'player1',
       new PlayerEntity(

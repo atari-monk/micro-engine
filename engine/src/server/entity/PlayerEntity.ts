@@ -5,7 +5,7 @@ import MovementComponent from '../component/MovementComponent'
 
 export default class PlayerEntity extends Entity {
   constructor(logger: ILogger, objectData: IObject) {
-    super(logger)
+    super()
     const object = new ObjectComponent(objectData)
     const movement = new MovementComponent(object)
     this.addComponent(object)
