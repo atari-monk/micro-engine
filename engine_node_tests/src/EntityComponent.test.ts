@@ -2,7 +2,7 @@ import { Entity, Component, LogManager } from 'engine'
 
 describe('Entity and Component tests', () => {
   test('Entity can add a component', () => {
-    const entity = new Entity(new LogManager())
+    const entity = new Entity()
     const component = new Component()
 
     entity.addComponent(component)
@@ -11,7 +11,7 @@ describe('Entity and Component tests', () => {
   })
 
   test('Entity update calls update on all components', () => {
-    const entity = new Entity(new LogManager())
+    const entity = new Entity()
     const component1 = new Component()
     const component2 = new Component()
 
@@ -28,7 +28,7 @@ describe('Entity and Component tests', () => {
   })
 
   test('Entity render calls render on all components', () => {
-    const entity = new Entity(new LogManager())
+    const entity = new Entity()
     const component1 = new Component()
     const component2 = new Component()
 

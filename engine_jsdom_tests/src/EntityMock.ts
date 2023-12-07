@@ -1,7 +1,10 @@
 import { Component } from 'engine'
-import { IComponent, IEntity } from 'engine_api'
+import { IComponent, IEntity, ILogger } from 'engine_api'
 
 export class EntityMock implements IEntity {
+  set logger(logger: ILogger) {
+      throw new Error('Method not implemented.')
+  }
   addComponent(component: IComponent): void {}
   getComponentByType<T extends IComponent>(
     componentType: new (...args: any[]) => T

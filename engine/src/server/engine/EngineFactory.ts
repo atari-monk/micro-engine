@@ -7,26 +7,34 @@ import {
   IGameData,
   IRendererV2,
   IGameServerApi,
+  IEntityDependencyListBuilder,
 } from 'engine_api'
 import { IServerPlayerManager as IPlayerManager } from 'engine_api/server'
-import EntityFactory from '../../browser/entity/EntityFactory'
+import EntityFactory from '../../browser/entity/builder/EntityFactory'
 import ObjectDataManager from '../../browser/entity/ObjectDataManager'
 import LogManager from '../../tech/log_manager/LogManager'
 import { RendererMock } from '../../tech/renderer/RendererMock'
 import Tilemap from '../../tech/tile_map/Tilemap'
-import PlayerEntity from '../entity/PlayerEntity'
-import ObjectEntity from '../entity/ObjectEntity'
 import Engine from './Engine'
 import GameLoop from '../game_loop/GameLoop'
 import EntityManager2 from '../../tech/entity_component/EntityManager2'
 import PlayerManager2 from '../entity/PlayerManager2'
+import { EntityDependencyListBuilder } from '../../browser/entity/builder/EntityDependencyListBuilder'
+import PlayerEntityBuilder from '../entity/builder/PlayerEntityBuilder'
+import PlayerEntity from '../../browser/entity/PlayerEntity'
+import ObjectEntity from '../../browser/entity/ObjectEntity'
+import ObjectEntityBuilder from '../entity/builder/ObjectEntityBuilder'
 
 export default class EngineFactory {
   private readonly _renderer: IRendererV2
   private readonly _logger: ILogger = new LogManager(LogLevel.INFO)
   private readonly _objectDataManager: IObjectDataManager =
     new ObjectDataManager()
-  private readonly _entityFactory: EntityFactory = new EntityFactory()
+  protected readonly _dependencyBuilder: IEntityDependencyListBuilder =
+    new EntityDependencyListBuilder()
+  private readonly _entityFactory: EntityFactory = new EntityFactory(
+    this._dependencyBuilder
+  )
   private readonly _entityManager: IEntityManager = new EntityManager2(
     this._logger
   )
@@ -70,31 +78,42 @@ export default class EngineFactory {
   }
 
   private createEntities() {
-    this._entityFactory.setMapEntityBuilderDependencyList(
-      this._logger,
-      this._tileMap
+    this._entityFactory.playerEntityBuilder = new PlayerEntityBuilder(
+      PlayerEntity,
+      this._dependencyBuilder
     )
+    this._entityFactory.objectEntityBuilder = new ObjectEntityBuilder(
+      ObjectEntity,
+      this._dependencyBuilder
+    )
+
+    this._dependencyBuilder.setLogger(this._logger)
+    this._dependencyBuilder.setTileMap(this._tileMap)
     this._entityManager.addEntity('map', this._entityFactory.createMapEntity())
+
+    this._dependencyBuilder.setRenderer(this._renderer)
+    this._dependencyBuilder.setObjectData(
+      this._objectDataManager.getObjectData('object')
+    )
     this._entityManager.addEntity(
       'object',
-      new ObjectEntity(
-        this._logger,
-        this._objectDataManager.getObjectData('object')
-      )
+      this._entityFactory.createObjectEntity()
+    )
+
+    this._dependencyBuilder.setObjectData(
+      this._objectDataManager.getObjectData('player1')
     )
     this._entityManager.addEntity(
       'player1',
-      new PlayerEntity(
-        this._logger,
-        this._objectDataManager.getObjectData('player1')
-      )
+      this._entityFactory.createPlayerEntity()
+    )
+
+    this._dependencyBuilder.setObjectData(
+      this._objectDataManager.getObjectData('player2')
     )
     this._entityManager.addEntity(
       'player2',
-      new PlayerEntity(
-        this._logger,
-        this._objectDataManager.getObjectData('player2')
-      )
+      this._entityFactory.createPlayerEntity()
     )
   }
 

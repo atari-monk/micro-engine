@@ -4,7 +4,7 @@ import { IServerPlayerManager as IPlayerManager } from 'engine_api/server'
 export default class GameLoop {
   private updateCallbacks: IUpdateCallback[] = []
   private paused: boolean = false
-  private fps: number = 60
+  private fps: number = 30
   private frameInterval: number = 1000 / this.fps
   private lastFrameTime: number = 0
 
@@ -61,7 +61,8 @@ export default class GameLoop {
   }
 
   private sendFrame(): void {
-    const frame = this._playerManager.getGameFrameDto()
-    this._serverApi.sendFrame(frame.toPlainObject())
+    this._serverApi.sendFrame(
+      this._playerManager.getGameFrameDto().toPlainObject()
+    )
   }
 }

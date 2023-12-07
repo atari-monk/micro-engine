@@ -22,7 +22,7 @@ export { default as ClientEngineFactory } from './client/engine/EngineFactory'
 export { default as ServerEngine } from './server/engine/Engine'
 export { default as ServerEngineFactory } from './server/engine/EngineFactory'
 //entity
-export { default as EntityFactory } from './browser/entity/EntityFactory'
+export { default as EntityFactory } from './browser/entity/builder/EntityFactory'
 export { default as ObjectDataFactory } from './browser/entity/ObjectDataFactory'
 export { default as ObjectDataManager } from './browser/entity/ObjectDataManager'
 export { default as ObjectEntity } from './browser/entity/ObjectEntity'
@@ -33,8 +33,6 @@ export { default as EntityManager } from './tech/entity_component/EntityManager'
 export { default as EntityManager2 } from './tech/entity_component/EntityManager2'
 export { default as Entity } from './tech/entity_component/Entity'
 //entity-server
-export { default as ServerObjectEntity } from './server/entity/ObjectEntity'
-export { default as ServerPlayerEntity } from './server/entity/PlayerEntity'
 export { default as PlayerManager } from './server/entity/PlayerManager'
 //event_system
 export { default as EventSystem } from './tech/event_system/EventSystem'

@@ -58,7 +58,9 @@ export default class PlayerManager
         const object =
           player.getComponentByType<ObjectComponent>(ObjectComponent)
         if (playerDto.id !== object.id) continue
-        this._logger.debug(`updatePlayer: ${playerDto}`)
+        this._logger.debug(
+          `updatePlayer: (${playerDto.position.x}, ${playerDto.position.y})`
+        )
         object.position.setValues(playerDto.position)
       }
     })

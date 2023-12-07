@@ -1,6 +1,7 @@
 import {
   ICamera,
   IEngineConfig,
+  IEntityDependencyListBuilder,
   IEntityManager,
   IGameData,
   IGameLoop,
@@ -15,11 +16,12 @@ import LogManager from '../../tech/log_manager/LogManager'
 import RendererV2 from '../../tech/renderer/RendererV2'
 import Engine from './Engine'
 import InputManager from '../../tech/input_manager/InputManager'
-import EntityFactory from '../entity/EntityFactory'
+import EntityFactory from '../entity/builder/EntityFactory'
 import ObjectDataManager from '../entity/ObjectDataManager'
 import Tilemap from '../../tech/tile_map/Tilemap'
 import Camera from '../../tech/camera/Camera'
 import EntityManager2 from '../../tech/entity_component/EntityManager2'
+import { EntityDependencyListBuilder } from '../entity/builder/EntityDependencyListBuilder'
 
 export default class EngineFactory {
   private readonly _renderer: IRendererV2
@@ -27,7 +29,11 @@ export default class EngineFactory {
   private readonly _logger: ILogger = new LogManager(LogLevel.INFO)
   private readonly _objectDataManager: IObjectDataManager =
     new ObjectDataManager()
-  protected readonly _entityFactory: EntityFactory = new EntityFactory()
+  protected readonly _dependencyBuilder: IEntityDependencyListBuilder =
+    new EntityDependencyListBuilder()
+  protected readonly _entityFactory: EntityFactory = new EntityFactory(
+    this._dependencyBuilder
+  )
   protected readonly _entityManager: IEntityManager = new EntityManager2(
     this._logger
   )
@@ -92,27 +98,22 @@ export default class EngineFactory {
   }
 
   private createEntities() {
-    this._entityFactory.setMapEntityBuilderDependencyList(
-      this._logger,
-      this._tileMap
-    )
+    this._dependencyBuilder.setLogger(this._logger)
+    this._dependencyBuilder.setTileMap(this._tileMap)
     this._entityManager.addEntity('map', this._entityFactory.createMapEntity())
 
-    this._entityFactory.setObjectEntityBuilderDependencyList(
-      this._logger,
-      this._objectDataManager.getObjectData('object'),
-      this._renderer
+    this._dependencyBuilder.setRenderer(this._renderer)
+    this._dependencyBuilder.setObjectData(
+      this._objectDataManager.getObjectData('object')
     )
     this._entityManager.addEntity(
       'object',
       this._entityFactory.createObjectEntity()
     )
 
-    this._entityFactory.setPlayerEntityBuilderDependencyList(
-      this._logger,
-      this._objectDataManager.getObjectData('player1'),
-      this.renderer,
-      this._input
+    this._dependencyBuilder.setInput(this._input)
+    this._dependencyBuilder.setObjectData(
+      this._objectDataManager.getObjectData('player1')
     )
     this._entityManager.addEntity(
       'player1',

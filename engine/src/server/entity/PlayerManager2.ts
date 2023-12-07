@@ -16,7 +16,7 @@ export default class PlayerManager2
 
   setPlayerInput(inputDto: InputDto) {
     let found = false
-    const message = `setPlayerInput: ${inputDto}`
+    const message = `setPlayerInput: ${inputDto.id} ${inputDto.direction}`
     for (const entity of this._list.values()) {
       const object = entity.getComponentByType<ObjectComponent>(ObjectComponent)
       if (object.id !== inputDto.id) {
@@ -39,6 +39,7 @@ export default class PlayerManager2
     const dto = new GameFrameDto()
     for (const entity of this._list.values()) {
       const object = entity.getComponentByType<ObjectComponent>(ObjectComponent)
+      this._logger.debug(`${object.position.x}, ${object.position.y}`)
       dto.addPlayer(object.id, new ObjectDto(object))
     }
     return dto

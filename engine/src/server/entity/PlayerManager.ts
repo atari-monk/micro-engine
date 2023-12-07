@@ -16,7 +16,7 @@ export default class PlayerManager
 
   setPlayerInput(inputDto: InputDto) {
     let found = false
-    const message = `setPlayerInput: ${inputDto}`
+    const message = `setPlayerInput: ${inputDto.id} ${inputDto.direction}`
     for (const entity of Object.values(this._list)) {
       const object = entity.getComponentByType<ObjectComponent>(ObjectComponent)
       if (object.id !== inputDto.id) {
