@@ -47,13 +47,13 @@ export default class EntityCreator {
     this.setupPlayerEntity(player1Key, player1Key)
   }
 
-  private setupMapEntity() {
+  protected setupMapEntity() {
     this._dependencyBuilder.setLogger(this._logger)
     this._dependencyBuilder.setTileMap(this._tileMap)
     this._entityManager.addEntity('map', this._entityFactory.createMapEntity())
   }
 
-  private setupObjectEntity(entityName: string, objectDataKey: string) {
+  protected setupObjectEntity(entityName: string, objectDataKey: string) {
     this._dependencyBuilder.setRenderer(this._renderer)
     this._dependencyBuilder.setObjectData(
       this._objectDataManager.getObjectData(objectDataKey)
@@ -64,7 +64,7 @@ export default class EntityCreator {
     )
   }
 
-  private setupPlayerEntity(entityName: string, objectDataKey: string) {
+  protected setupPlayerEntity(entityName: string, objectDataKey: string) {
     this._dependencyBuilder.setInput(this._input)
     this._dependencyBuilder.setObjectData(
       this._objectDataManager.getObjectData(objectDataKey)
