@@ -10,7 +10,6 @@ import {
   IEntityDependencyListBuilder,
 } from 'engine_api'
 import { IServerPlayerManager as IPlayerManager } from 'engine_api/server'
-import EntityFactory from '../../browser/entity/builder/EntityFactory'
 import ObjectDataManager from '../../browser/entity/ObjectDataManager'
 import LogManager from '../../tech/log_manager/LogManager'
 import { RendererMock } from '../../tech/renderer/RendererMock'
@@ -20,10 +19,8 @@ import GameLoop from '../game_loop/GameLoop'
 import EntityManager2 from '../../tech/entity_component/EntityManager2'
 import PlayerManager2 from '../entity/PlayerManager2'
 import { EntityDependencyListBuilder } from '../../browser/entity/builder/EntityDependencyListBuilder'
-import PlayerEntityBuilder from '../entity/builder/PlayerEntityBuilder'
-import PlayerEntity from '../../browser/entity/PlayerEntity'
-import ObjectEntity from '../../browser/entity/ObjectEntity'
-import ObjectEntityBuilder from '../entity/builder/ObjectEntityBuilder'
+import EntityCreator from '../entity/EntityCreator'
+import EntityCreatorBuilder from '../entity/EntityCreatorBuilder'
 
 export default class EngineFactory {
   private readonly _renderer: IRendererV2
@@ -32,9 +29,6 @@ export default class EngineFactory {
     new ObjectDataManager()
   protected readonly _dependencyBuilder: IEntityDependencyListBuilder =
     new EntityDependencyListBuilder()
-  private readonly _entityFactory: EntityFactory = new EntityFactory(
-    this._dependencyBuilder
-  )
   private readonly _entityManager: IEntityManager = new EntityManager2(
     this._logger
   )
@@ -43,6 +37,7 @@ export default class EngineFactory {
   )
   private _gameLoop: GameLoop
   private readonly _tileMap: Tilemap
+  private readonly _entityCreator: EntityCreator
 
   get renderer(): IRendererV2 {
     return this._renderer
@@ -52,6 +47,14 @@ export default class EngineFactory {
     this._renderer = new RendererMock()
     this._tileMap = new Tilemap(this._renderer)
     this._gameLoop = new GameLoop(this._serverApi, this._playerManager)
+    this._entityCreator = new EntityCreatorBuilder()
+      .withDependencyBuilder(this._dependencyBuilder)
+      .withEntityManager(this._entityManager)
+      .withObjectDataManager(this._objectDataManager)
+      .withLogger(this._logger)
+      .withTileMap(this._tileMap)
+      .withRenderer(this._renderer)
+      .build()
   }
 
   createEngine(gameData: IGameData) {
@@ -78,43 +81,40 @@ export default class EngineFactory {
   }
 
   private createEntities() {
-    this._entityFactory.playerEntityBuilder = new PlayerEntityBuilder(
-      PlayerEntity,
-      this._dependencyBuilder
-    )
-    this._entityFactory.objectEntityBuilder = new ObjectEntityBuilder(
-      ObjectEntity,
-      this._dependencyBuilder
-    )
-
-    this._dependencyBuilder.setLogger(this._logger)
-    this._dependencyBuilder.setTileMap(this._tileMap)
-    this._entityManager.addEntity('map', this._entityFactory.createMapEntity())
-
-    this._dependencyBuilder.setRenderer(this._renderer)
-    this._dependencyBuilder.setObjectData(
-      this._objectDataManager.getObjectData('object')
-    )
-    this._entityManager.addEntity(
-      'object',
-      this._entityFactory.createObjectEntity()
-    )
-
-    this._dependencyBuilder.setObjectData(
-      this._objectDataManager.getObjectData('player1')
-    )
-    this._entityManager.addEntity(
-      'player1',
-      this._entityFactory.createPlayerEntity()
-    )
-
-    this._dependencyBuilder.setObjectData(
-      this._objectDataManager.getObjectData('player2')
-    )
-    this._entityManager.addEntity(
-      'player2',
-      this._entityFactory.createPlayerEntity()
-    )
+    this._entityCreator.createEntities()
+    // this._entityFactory.playerEntityBuilder = new PlayerEntityBuilder(
+    //   PlayerEntity,
+    //   this._dependencyBuilder
+    // )
+    // this._entityFactory.objectEntityBuilder = new ObjectEntityBuilder(
+    //   ObjectEntity,
+    //   this._dependencyBuilder
+    // )
+    // this._dependencyBuilder.setLogger(this._logger)
+    // this._dependencyBuilder.setTileMap(this._tileMap)
+    // this._entityManager.addEntity('map', this._entityFactory.createMapEntity())
+    // this._dependencyBuilder.setRenderer(this._renderer)
+    // this._dependencyBuilder.setObjectData(
+    //   this._objectDataManager.getObjectData('object')
+    // )
+    // this._entityManager.addEntity(
+    //   'object',
+    //   this._entityFactory.createObjectEntity()
+    // )
+    // this._dependencyBuilder.setObjectData(
+    //   this._objectDataManager.getObjectData('player1')
+    // )
+    // this._entityManager.addEntity(
+    //   'player1',
+    //   this._entityFactory.createPlayerEntity()
+    // )
+    // this._dependencyBuilder.setObjectData(
+    //   this._objectDataManager.getObjectData('player2')
+    // )
+    // this._entityManager.addEntity(
+    //   'player2',
+    //   this._entityFactory.createPlayerEntity()
+    // )
   }
 
   reloadEngine(gameData: IGameData) {

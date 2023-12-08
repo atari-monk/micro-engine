@@ -10,14 +10,14 @@ import {
 import EntityFactory from './builder/EntityFactory'
 
 export default class EntityCreator {
-  private _dependencyBuilder: IEntityDependencyListBuilder
-  private _entityManager: IEntityManager
-  private _objectDataManager: IObjectDataManager
-  private _entityFactory: EntityFactory
-  private _logger: ILogger
-  private _tileMap: ITilemap
-  private _renderer: IRendererV2
-  private _input: IInputManager
+  protected _dependencyBuilder: IEntityDependencyListBuilder
+  protected _entityManager: IEntityManager
+  protected _objectDataManager: IObjectDataManager
+  protected _entityFactory: EntityFactory
+  protected _logger: ILogger
+  protected _tileMap: ITilemap
+  protected _renderer: IRendererV2
+  protected _input: IInputManager
 
   constructor(
     dependencyBuilder: IEntityDependencyListBuilder,

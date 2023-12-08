@@ -93,7 +93,6 @@ export default class EngineFactory {
     this._tileMap.load(gameData.tileMapData)
     this.loadObjectData(gameData.objectData.getAllObjectData())
     this.createEntities()
-    //this._gameLoop.load()
   }
 
   private createEngineConfig() {
@@ -121,36 +120,6 @@ export default class EngineFactory {
 
   private createEntities() {
     this._entityCreator.createEntities()
-    // this._entityFactory.playerEntityBuilder = new PlayerEntityBuilder(
-    //   PlayerEntity,
-    //   this._dependencyBuilder
-    // )
-    // this._dependencyBuilder.setLogger(this._logger)
-    // this._dependencyBuilder.setTileMap(this._tileMap)
-    // this._entityManager.addEntity('map', this._entityFactory.createMapEntity())
-    // this._dependencyBuilder.setRenderer(this._renderer)
-    // this._dependencyBuilder.setObjectData(
-    //   this._objectDataManager.getObjectData('object')
-    // )
-    // this._entityManager.addEntity(
-    //   'object',
-    //   this._entityFactory.createObjectEntity()
-    // )
-    // this._dependencyBuilder.setInput(this._input)
-    // this._dependencyBuilder.setObjectData(
-    //   this._objectDataManager.getObjectData('player1')
-    // )
-    // this._entityManager.addEntity(
-    //   'player1',
-    //   this._entityFactory.createPlayerEntity()
-    // )
-    // this._dependencyBuilder.setObjectData(
-    //   this._objectDataManager.getObjectData('player2')
-    // )
-    // this._entityManager.addEntity(
-    //   'player2',
-    //   this._entityFactory.createPlayerEntity()
-    // )
   }
 
   reloadEngine(gameData: IGameData) {
