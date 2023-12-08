@@ -22,6 +22,8 @@ import Tilemap from '../../tech/tile_map/Tilemap'
 import Camera from '../../tech/camera/Camera'
 import EntityManager2 from '../../tech/entity_component/EntityManager2'
 import { EntityDependencyListBuilder } from '../entity/builder/EntityDependencyListBuilder'
+import EntityCreatorBuilder from '../entity/EntityCreatorBuilder'
+import EntityCreator from '../entity/EntityCreator'
 
 export default class EngineFactory {
   private readonly _renderer: IRendererV2
@@ -43,6 +45,7 @@ export default class EngineFactory {
   private _keyUpHandler: (event: KeyboardEvent) => void
   protected _engineConfig?: IEngineConfig
   private readonly _camera: ICamera
+  private readonly _entityCreator: EntityCreator
 
   get renderer(): IRendererV2 {
     return this._renderer
@@ -59,6 +62,15 @@ export default class EngineFactory {
     this._keyUpHandler = (event: KeyboardEvent) => {
       this._input.handleKeyUp(event.key)
     }
+    this._entityCreator = new EntityCreatorBuilder()
+      .withDependencyBuilder(this._dependencyBuilder)
+      .withEntityManager(this._entityManager)
+      .withObjectDataManager(this._objectDataManager)
+      .withLogger(this._logger)
+      .withTileMap(this._tileMap)
+      .withRenderer(this._renderer)
+      .withInput(this._input)
+      .build()
   }
 
   createEngine(gameData: IGameData) {
@@ -98,27 +110,7 @@ export default class EngineFactory {
   }
 
   private createEntities() {
-    this._dependencyBuilder.setLogger(this._logger)
-    this._dependencyBuilder.setTileMap(this._tileMap)
-    this._entityManager.addEntity('map', this._entityFactory.createMapEntity())
-
-    this._dependencyBuilder.setRenderer(this._renderer)
-    this._dependencyBuilder.setObjectData(
-      this._objectDataManager.getObjectData('object')
-    )
-    this._entityManager.addEntity(
-      'object',
-      this._entityFactory.createObjectEntity()
-    )
-
-    this._dependencyBuilder.setInput(this._input)
-    this._dependencyBuilder.setObjectData(
-      this._objectDataManager.getObjectData('player1')
-    )
-    this._entityManager.addEntity(
-      'player1',
-      this._entityFactory.createPlayerEntity()
-    )
+    this._entityCreator.createEntities()
   }
 
   reloadEngine(gameData: IGameData) {
