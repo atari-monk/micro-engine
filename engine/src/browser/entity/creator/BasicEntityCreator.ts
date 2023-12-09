@@ -7,9 +7,9 @@ import {
   IRendererV2,
   ITilemap,
 } from 'engine_api'
-import EntityFactory from './builder/EntityFactory'
+import EntityFactory from '../builder/EntityFactory'
 
-export default class EntityCreator {
+export default class BasicEntityCreator {
   protected _dependencyBuilder: IEntityDependencyListBuilder
   protected _entityManager: IEntityManager
   protected _objectDataManager: IObjectDataManager

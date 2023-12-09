@@ -7,8 +7,8 @@ import {
   IRendererV2,
   ITilemap,
 } from 'engine_api'
-import EntityCreator from './EntityCreator'
-import { EntityFactoryBuilder } from './EntityFactoryBuilder'
+import BasicEntityCreator from './BasicEntityCreator'
+import { EntityFactoryBuilder } from '../builder/EntityFactoryBuilder'
 
 export default class EntityCreatorBuilder {
   protected _dependencyBuilder!: IEntityDependencyListBuilder
@@ -61,12 +61,12 @@ export default class EntityCreatorBuilder {
     return this
   }
 
-  build(): EntityCreator {
+  build(): BasicEntityCreator {
     const entityFactory = this._entityFactoryBuilder
       .withDependencyBuilder(this._dependencyBuilder)
       .build()
 
-    return new EntityCreator(
+    return new BasicEntityCreator(
       this._dependencyBuilder,
       this._entityManager,
       this._objectDataManager,

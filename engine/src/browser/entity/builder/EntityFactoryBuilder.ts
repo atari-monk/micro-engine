@@ -1,6 +1,6 @@
 import { IEntityDependencyListBuilder } from 'engine_api'
-import EntityFactory from './builder/EntityFactory'
-import { EntityDependencyListBuilder } from './builder/EntityDependencyListBuilder'
+import EntityFactory from './EntityFactory'
+import { EntityDependencyListBuilder } from './EntityDependencyListBuilder'
 
 export class EntityFactoryBuilder {
   private _dependencyBuilder: IEntityDependencyListBuilder =

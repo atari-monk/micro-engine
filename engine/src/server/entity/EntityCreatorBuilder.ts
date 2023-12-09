@@ -1,6 +1,6 @@
 import ObjectEntity from '../../browser/entity/ObjectEntity'
 import PlayerEntity from '../../browser/entity/PlayerEntity'
-import { default as EntityCreatorBuilderBase } from './../../browser/entity/EntityCreatorBuilder'
+import { default as EntityCreatorBuilderBase } from '../../browser/entity/creator/EntityCreatorBuilder'
 import EntityCreator from './EntityCreator'
 import ObjectEntityBuilder from './builder/ObjectEntityBuilder'
 import PlayerEntityBuilder from './builder/PlayerEntityBuilder'

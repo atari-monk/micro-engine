@@ -22,8 +22,8 @@ import Tilemap from '../../tech/tile_map/Tilemap'
 import Camera from '../../tech/camera/Camera'
 import EntityManager2 from '../../tech/entity_component/EntityManager2'
 import { EntityDependencyListBuilder } from '../entity/builder/EntityDependencyListBuilder'
-import EntityCreatorBuilder from '../entity/EntityCreatorBuilder'
-import EntityCreator from '../entity/EntityCreator'
+import EntityCreatorBuilder from '../entity/creator/EntityCreatorBuilder'
+import BasicEntityCreator from '../entity/creator/BasicEntityCreator'
 
 export default class EngineFactory {
   private readonly _renderer: IRendererV2
@@ -45,7 +45,7 @@ export default class EngineFactory {
   private _keyUpHandler: (event: KeyboardEvent) => void
   protected _engineConfig?: IEngineConfig
   private readonly _camera: ICamera
-  private readonly _entityCreator: EntityCreator
+  private readonly _entityCreator: BasicEntityCreator
 
   get renderer(): IRendererV2 {
     return this._renderer
@@ -84,7 +84,7 @@ export default class EngineFactory {
     this._camera.load(gameData.tileMapData)
     this._tileMap.load(gameData.tileMapData)
     this.loadObjectData(gameData.objectData.getAllObjectData())
-    this.createEntities()
+    this._entityCreator.createEntities()
   }
 
   private createEngineConfig() {
@@ -107,10 +107,6 @@ export default class EngineFactory {
     for (const [key, value] of Object.entries(data)) {
       this._objectDataManager.addObjectData(key, value)
     }
-  }
-
-  private createEntities() {
-    this._entityCreator.createEntities()
   }
 
   reloadEngine(gameData: IGameData) {

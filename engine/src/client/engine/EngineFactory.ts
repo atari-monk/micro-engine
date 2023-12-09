@@ -92,7 +92,7 @@ export default class EngineFactory {
     this._camera.load(gameData.tileMapData)
     this._tileMap.load(gameData.tileMapData)
     this.loadObjectData(gameData.objectData.getAllObjectData())
-    this.createEntities()
+    this._entityCreator.createEntities()
   }
 
   private createEngineConfig() {
@@ -116,10 +116,6 @@ export default class EngineFactory {
     for (const [key, value] of Object.entries(data)) {
       this._objectDataManager.addObjectData(key, value)
     }
-  }
-
-  private createEntities() {
-    this._entityCreator.createEntities()
   }
 
   reloadEngine(gameData: IGameData) {

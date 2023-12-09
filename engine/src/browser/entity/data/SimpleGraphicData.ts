@@ -1,8 +1,8 @@
 import { IObject, IRendererV2 } from 'engine_api'
-import Vector2 from '../../math/vector/Vector2'
-import ObjectDataManager from './ObjectDataManager'
+import Vector2 from '../../../math/vector/Vector2'
+import ObjectDataManager from '../ObjectDataManager'
 
-export default class ObjectDataFactory extends ObjectDataManager {
+export default class SimpleGraphicData extends ObjectDataManager {
   constructor(private readonly _renderer: IRendererV2) {
     super()
     this.createData()

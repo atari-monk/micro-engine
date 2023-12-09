@@ -1,4 +1,4 @@
-import { default as EntityCreatorBase } from './../../browser/entity/EntityCreator'
+import { default as EntityCreatorBase } from '../../browser/entity/creator/BasicEntityCreator'
 
 export default class EntityCreator extends EntityCreatorBase {
   protected setupObjectEntity(entityName: string, objectDataKey: string) {
