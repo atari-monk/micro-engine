@@ -95,3 +95,5 @@ export { default as ITilemapDataFactory } from './tech/tile_map/ITilemapDataFact
 //ui_manager
 export { default as IUIElement } from './tech/ui_manager/IUIElement'
 export { default as IUIManager } from './tech/ui_manager/IUIManager'
+//utils
+export { default as IMapManager } from './utils/IMapManager'

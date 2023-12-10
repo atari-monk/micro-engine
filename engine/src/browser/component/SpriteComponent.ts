@@ -1,7 +1,8 @@
-import { IAnimationConfig, IComponent, IObject, IRendererV2 } from 'engine_api'
+import { IAnimationConfig, IObject, IRendererV2 } from 'engine_api'
 import { SpriteAnimator } from '../../tech/sprite/SpriteAnimator'
+import Component from '../../tech/entity_component/Component'
 
-export default class SpriteComponent implements IComponent {
+export default class SpriteComponent extends Component {
   private sprite: SpriteAnimator
 
   constructor(
@@ -9,6 +10,7 @@ export default class SpriteComponent implements IComponent {
     private readonly _object: IObject,
     animations: IAnimationConfig[]
   ) {
+    super('SpriteComponent')
     this.sprite = new SpriteAnimator(animations)
   }
 

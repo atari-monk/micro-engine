@@ -1,11 +1,11 @@
 import { IEntityManager, ILogger, IResult } from 'engine_api'
-import EntityManager2 from '../../tech/entity_component/EntityManager2'
+import MapEntityManager from '../../tech/entity_component/MapEntityManager'
 import ObjectComponent from '../../browser/component/ObjectComponent'
 import GameFrameDto from '../../multi/dtos/GameFrameDto'
 import { IClientPlayerManager as IPlayerManager } from 'engine_api/client'
 
 export default class PlayerManager
-  extends EntityManager2
+  extends MapEntityManager
   implements IPlayerManager
 {
   constructor(

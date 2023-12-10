@@ -13,6 +13,7 @@ export default class SimpleGraphicData extends ObjectDataManager {
 
     this.addObjectData('object', {
       id: '',
+      name: '',
       color: 'green',
       position: new Vector2(center.x + 150, center.y + 150),
       size: new Vector2(150, 50),
@@ -21,6 +22,7 @@ export default class SimpleGraphicData extends ObjectDataManager {
 
     this.addObjectData('player1', {
       id: '',
+      name: '',
       color: 'red',
       position: new Vector2(center.x, center.y + 150),
       size: new Vector2(50, 150),
@@ -29,6 +31,7 @@ export default class SimpleGraphicData extends ObjectDataManager {
 
     this.addObjectData('player2', {
       id: '',
+      name: '',
       color: 'blue',
       position: new Vector2(center.x + 150, center.y + 150),
       size: new Vector2(50, 150),

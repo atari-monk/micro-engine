@@ -1,19 +1,19 @@
-import { Entity, Component, LogManager } from 'engine'
+import { Entity, Component } from 'engine'
 
 describe('Entity and Component tests', () => {
   test('Entity can add a component', () => {
     const entity = new Entity()
-    const component = new Component()
+    const component = new Component('name')
 
     entity.addComponent(component)
 
-    expect(entity['_list']).toContain(component)
+    expect(entity['_list'].get('name')).toBeInstanceOf(Component)
   })
 
   test('Entity update calls update on all components', () => {
     const entity = new Entity()
-    const component1 = new Component()
-    const component2 = new Component()
+    const component1 = new Component('name1')
+    const component2 = new Component('name2')
 
     entity.addComponent(component1)
     entity.addComponent(component2)
@@ -23,14 +23,17 @@ describe('Entity and Component tests', () => {
 
     entity.update(0)
 
-    expect(updateSpy1).toHaveBeenCalled()
-    expect(updateSpy2).toHaveBeenCalled()
+    console.log('updateSpy1 calls:', updateSpy1.mock.calls)
+    console.log('updateSpy2 calls:', updateSpy2.mock.calls)
+
+    expect(updateSpy1).toHaveBeenCalledTimes(1)
+    expect(updateSpy2).toHaveBeenCalledTimes(1)
   })
 
   test('Entity render calls render on all components', () => {
     const entity = new Entity()
-    const component1 = new Component()
-    const component2 = new Component()
+    const component1 = new Component('name1')
+    const component2 = new Component('name2')
 
     entity.addComponent(component1)
     entity.addComponent(component2)
@@ -40,7 +43,10 @@ describe('Entity and Component tests', () => {
 
     entity.render(0)
 
-    expect(renderSpy1).toHaveBeenCalled()
-    expect(renderSpy2).toHaveBeenCalled()
+    console.log('renderSpy1 calls:', renderSpy1.mock.calls)
+    console.log('renderSpy2 calls:', renderSpy2.mock.calls)
+
+    expect(renderSpy1).toHaveBeenCalledTimes(1)
+    expect(renderSpy2).toHaveBeenCalledTimes(1)
   })
 })

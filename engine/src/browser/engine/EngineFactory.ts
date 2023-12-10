@@ -20,7 +20,7 @@ import EntityFactory from '../entity/builder/EntityFactory'
 import ObjectDataManager from '../entity/ObjectDataManager'
 import Tilemap from '../../tech/tile_map/Tilemap'
 import Camera from '../../tech/camera/Camera'
-import EntityManager2 from '../../tech/entity_component/EntityManager2'
+import MapEntityManager from '../../tech/entity_component/MapEntityManager'
 import { EntityDependencyListBuilder } from '../entity/builder/EntityDependencyListBuilder'
 import EntityCreatorBuilder from '../entity/creator/EntityCreatorBuilder'
 import BasicEntityCreator from '../entity/creator/BasicEntityCreator'
@@ -36,7 +36,7 @@ export default class EngineFactory {
   protected readonly _entityFactory: EntityFactory = new EntityFactory(
     this._dependencyBuilder
   )
-  protected readonly _entityManager: IEntityManager = new EntityManager2(
+  protected readonly _entityManager: IEntityManager = new MapEntityManager(
     this._logger
   )
   protected _gameLoop: IGameLoop

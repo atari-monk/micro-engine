@@ -1,4 +1,4 @@
-import EntityManager from '../../tech/entity_component/EntityManager'
+import RecordEntityManager from '../../tech/entity_component/RecordEntityManager'
 import ObjectComponent from '../../browser/component/ObjectComponent'
 import MovementComponent from '../component/MovementComponent'
 import { ClientsDto, ILogger, InputDto } from 'engine_api'
@@ -6,8 +6,8 @@ import GameFrameDto from '../../multi/dtos/GameFrameDto'
 import ObjectDto from '../../multi/dtos/ObjectDto'
 import { IServerPlayerManager as IPlayerManager } from 'engine_api/server'
 
-export default class PlayerManager
-  extends EntityManager
+export default class RecordPlayerManager
+  extends RecordEntityManager
   implements IPlayerManager
 {
   constructor(protected readonly _logger: ILogger) {

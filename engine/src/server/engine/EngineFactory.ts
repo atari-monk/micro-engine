@@ -16,8 +16,8 @@ import { RendererMock } from '../../tech/renderer/RendererMock'
 import Tilemap from '../../tech/tile_map/Tilemap'
 import Engine from './Engine'
 import GameLoop from '../game_loop/GameLoop'
-import EntityManager2 from '../../tech/entity_component/EntityManager2'
-import PlayerManager2 from '../entity/PlayerManager2'
+import MapEntityManager from '../../tech/entity_component/MapEntityManager'
+import MapPlayerManager from '../entity/MapPlayerManager'
 import { EntityDependencyListBuilder } from '../../browser/entity/builder/EntityDependencyListBuilder'
 import EntityCreator from '../entity/EntityCreator'
 import EntityCreatorBuilder from '../entity/EntityCreatorBuilder'
@@ -29,10 +29,10 @@ export default class EngineFactory {
     new ObjectDataManager()
   protected readonly _dependencyBuilder: IEntityDependencyListBuilder =
     new EntityDependencyListBuilder()
-  private readonly _entityManager: IEntityManager = new EntityManager2(
+  private readonly _entityManager: IEntityManager = new MapEntityManager(
     this._logger
   )
-  private readonly _playerManager: IPlayerManager = new PlayerManager2(
+  private readonly _playerManager: IPlayerManager = new MapPlayerManager(
     this._logger
   )
   private _gameLoop: GameLoop

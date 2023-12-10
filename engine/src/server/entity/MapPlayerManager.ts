@@ -4,10 +4,10 @@ import ObjectComponent from '../../browser/component/ObjectComponent'
 import MovementComponent from '../component/MovementComponent'
 import GameFrameDto from '../../multi/dtos/GameFrameDto'
 import ObjectDto from '../../multi/dtos/ObjectDto'
-import EntityManager2 from '../../tech/entity_component/EntityManager2'
+import MapEntityManager from '../../tech/entity_component/MapEntityManager'
 
-export default class PlayerManager2
-  extends EntityManager2
+export default class MapPlayerManager
+  extends MapEntityManager
   implements IPlayerManager
 {
   constructor(protected readonly _logger: ILogger) {

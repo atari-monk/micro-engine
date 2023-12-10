@@ -29,11 +29,11 @@ export { default as ObjectEntity } from './browser/entity/ObjectEntity'
 export { default as PlayerEntity } from './browser/entity/PlayerEntity'
 //entity-component
 export { default as Component } from './tech/entity_component/Component'
-export { default as EntityManager } from './tech/entity_component/EntityManager'
-export { default as EntityManager2 } from './tech/entity_component/EntityManager2'
+export { default as RecordEntityManager } from './tech/entity_component/RecordEntityManager'
+export { default as MapEntityManager } from './tech/entity_component/MapEntityManager'
 export { default as Entity } from './tech/entity_component/Entity'
 //entity-server
-export { default as PlayerManager } from './server/entity/PlayerManager'
+export { default as PlayerManager } from './server/entity/RecordPlayerManager'
 //event_system
 export { default as EventSystem } from './tech/event_system/EventSystem'
 //game_loop
@@ -75,3 +75,4 @@ export { default as Tilemap } from './tech/tile_map/Tilemap'
 export { default as UIManager } from './tech/ui_manager/UIManager'
 //utils
 export { default as WaitUtility } from './utils/WaitUtility'
+export { default as MapManager } from './utils/MapManager'

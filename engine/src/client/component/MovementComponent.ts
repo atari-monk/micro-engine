@@ -1,11 +1,7 @@
-import {
-  Direction,
-  IComponent,
-  IInputManager,
-  InputDto,
-} from 'engine_api'
+import { Direction, IInputManager, InputDto } from 'engine_api'
+import Component from '../../tech/entity_component/Component'
 
-export default class MovementComponent implements IComponent {
+export default class MovementComponent extends Component {
   private readonly _keyActions: { [key: string]: () => void }
   private _inputDto: InputDto = new InputDto()
   private _keyToDirectionMap: { [key: string]: Direction } = {
@@ -20,6 +16,7 @@ export default class MovementComponent implements IComponent {
   }
 
   constructor(input: IInputManager) {
+    super('MovementComponent')
     this._keyActions = {
       ArrowLeft: () => {
         this._inputDto.addDirection(Direction.Left)

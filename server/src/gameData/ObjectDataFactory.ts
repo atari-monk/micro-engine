@@ -12,6 +12,7 @@ export default class ObjectDataFactory extends ObjectDataManager {
 
     this.addObjectData('object', {
       id: '',
+      name: '',
       color: 'yellow',
       position: new Vector2(550, 400),
       size: new Vector2(70, 50),
@@ -20,6 +21,7 @@ export default class ObjectDataFactory extends ObjectDataManager {
 
     this.addObjectData('player', {
       id: '',
+      name: '',
       color: 'pink',
       position: new Vector2(center.x, center.y + 330),
       size: new Vector2(50, 150),

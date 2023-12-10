@@ -24,7 +24,7 @@ import RendererV2 from '../../tech/renderer/RendererV2'
 import Camera from '../../tech/camera/Camera'
 import Engine from './Engine'
 import PlayerManager from '../entity/PlayerManager'
-import EntityManager2 from '../../tech/entity_component/EntityManager2'
+import MapEntityManager from '../../tech/entity_component/MapEntityManager'
 import { EntityDependencyListBuilder } from '../../browser/entity/builder/EntityDependencyListBuilder'
 import EntityCreator from '../entity/EntityCreator'
 import EntityCreatorBuilder from '../entity/EntityCreatorBuilder'
@@ -40,7 +40,7 @@ export default class EngineFactory {
   private readonly _entityFactory: EntityFactory = new EntityFactory(
     this._dependencyBuilder
   )
-  private readonly _entityManager: IEntityManager = new EntityManager2(
+  private readonly _entityManager: IEntityManager = new MapEntityManager(
     this._logger
   )
   private readonly _playerManager: IPlayerManager = new PlayerManager(

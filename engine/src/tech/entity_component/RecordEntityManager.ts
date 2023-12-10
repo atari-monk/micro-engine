@@ -1,28 +1,28 @@
 import { IEntity, IEntityManager, ILogger } from 'engine_api'
 
-export default class EntityManager2 implements IEntityManager {
-  protected _list: Map<string, IEntity> = new Map()
+export default class RecordEntityManager implements IEntityManager {
+  protected _list: Record<string, IEntity> = {}
 
   constructor(protected readonly _logger: ILogger) {}
 
   addEntity(name: string, entity: IEntity): void {
-    this._list.set(name, entity)
+    this._list[name] = entity
   }
 
   removeEntity(name: string): void {
-    this._list.delete(name)
+    delete this._list[name]
   }
 
   removeAllEntities(): void {
-    this._list.clear()
+    this._list = {}
   }
 
   getEntityCount(): number {
-    return this._list.size
+    return Object.keys(this._list).length
   }
 
   getEntity(name: string): IEntity {
-    const entity = this._list.get(name)
+    const entity = this._list[name]
 
     if (!entity) {
       const message = `Entity name: '${name}' not found!`
@@ -34,14 +34,14 @@ export default class EntityManager2 implements IEntityManager {
   }
 
   updateEntities(dt: number): void {
-    for (const entity of this._list.values()) {
+    Object.values(this._list).forEach((entity: IEntity) => {
       entity.update(dt)
-    }
+    })
   }
 
   renderEntities(dt: number): void {
-    for (const entity of this._list.values()) {
+    Object.values(this._list).forEach((entity: IEntity) => {
       entity.render(dt)
-    }
+    })
   }
 }
