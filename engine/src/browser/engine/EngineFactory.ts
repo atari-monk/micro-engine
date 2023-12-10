@@ -17,7 +17,7 @@ import RendererV2 from '../../tech/renderer/RendererV2'
 import Engine from './Engine'
 import InputManager from '../../tech/input_manager/InputManager'
 import EntityFactory from '../entity/builder/EntityFactory'
-import ObjectDataManager from '../entity/ObjectDataManager'
+import ObjectDataManagerOnRecord from '../entity/ObjectDataManager'
 import Tilemap from '../../tech/tile_map/Tilemap'
 import Camera from '../../tech/camera/Camera'
 import MapEntityManager from '../../tech/entity_component/MapEntityManager'
@@ -30,7 +30,7 @@ export default class EngineFactory {
   private readonly _input: InputManager = new InputManager()
   private readonly _logger: ILogger = new LogManager(LogLevel.INFO)
   private readonly _objectDataManager: IObjectDataManager =
-    new ObjectDataManager()
+    new ObjectDataManagerOnRecord()
   protected readonly _dependencyBuilder: IEntityDependencyListBuilder =
     new EntityDependencyListBuilder()
   protected readonly _entityFactory: EntityFactory = new EntityFactory(
@@ -83,7 +83,7 @@ export default class EngineFactory {
     this.subscribeKeyboardEvents()
     this._camera.load(gameData.tileMapData)
     this._tileMap.load(gameData.tileMapData)
-    this.loadObjectData(gameData.objectData.getAllObjectData())
+    this.loadObjectData(gameData.objectData.getAll())
     this._entityCreator.createEntities()
   }
 
@@ -105,7 +105,7 @@ export default class EngineFactory {
 
   private loadObjectData(data: Record<string, IObject>) {
     for (const [key, value] of Object.entries(data)) {
-      this._objectDataManager.addObjectData(key, value)
+      this._objectDataManager.add(key, value)
     }
   }
 
@@ -117,7 +117,7 @@ export default class EngineFactory {
   private resetEngine() {
     this.unsubscribeKeyboardEvents()
     this._input.unsubscribeAll('KeyDown')
-    this._objectDataManager.removeAllObjectData()
+    this._objectDataManager.removeAll()
     this._entityManager.removeAllEntities()
   }
 

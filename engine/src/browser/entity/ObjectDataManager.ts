@@ -1,25 +1,34 @@
 import { IObject, IObjectDataManager } from 'engine_api'
 
-export default class ObjectDataManager implements IObjectDataManager {
+export default class ObjectDataManagerOnRecord implements IObjectDataManager {
   private objectData: Record<string, IObject> = {}
 
-  addObjectData(name: string, config: IObject) {
+  add(name: string, config: IObject) {
     this.objectData[name] = config
   }
 
-  getObjectData(name: string): IObject {
+  get(name: string): IObject | undefined {
     return this.objectData[name]
   }
 
-  getAllObjectData(): Record<string, IObject> {
-    return this.objectData
+  getStrict(name: string): IObject {
+    return (
+      this.objectData[name] ??
+      (() => {
+        throw new Error(`Object with name '${name}' not found!`)
+      })
+    )
   }
 
-  removeObjectData(name: string) {
+  getAll(): Record<string, IObject> {
+    return { ...this.objectData }
+  }
+
+  remove(name: string) {
     delete this.objectData[name]
   }
 
-  removeAllObjectData() {
+  removeAll() {
     this.objectData = {}
   }
 }

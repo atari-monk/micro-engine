@@ -56,7 +56,7 @@ export default class BasicEntityCreator {
   protected setupObjectEntity(entityName: string, objectDataKey: string) {
     this._dependencyBuilder.setRenderer(this._renderer)
     this._dependencyBuilder.setObjectData(
-      this._objectDataManager.getObjectData(objectDataKey)
+      this._objectDataManager.getStrict(objectDataKey)
     )
     this._entityManager.addEntity(
       entityName,
@@ -67,7 +67,7 @@ export default class BasicEntityCreator {
   protected setupPlayerEntity(entityName: string, objectDataKey: string) {
     this._dependencyBuilder.setInput(this._input)
     this._dependencyBuilder.setObjectData(
-      this._objectDataManager.getObjectData(objectDataKey)
+      this._objectDataManager.getStrict(objectDataKey)
     )
     this._entityManager.addEntity(
       entityName,

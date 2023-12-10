@@ -1,9 +1,10 @@
 import IObject from '../../browser/component/IObject'
 
 export default interface IObjectDataManager {
-  addObjectData(name: string, config: IObject): void
-  getObjectData(name: string): IObject
-  getAllObjectData(): Record<string, IObject>
-  removeObjectData(name: string): void
-  removeAllObjectData(): void
+  add(name: string, config: IObject): void
+  get(name: string): IObject | undefined
+  getStrict(name: string): IObject
+  getAll(): Record<string, IObject>
+  remove(name: string): void
+  removeAll(): void
 }

@@ -41,7 +41,7 @@ export class SpriteEntityCreator extends BasicEntityCreator {
   protected setupObjectEntity(entityName: string, objectDataKey: string) {
     this._dependencyBuilder.setAnimationConfig(this._animConfig)
     this._dependencyBuilder.setObjectData(
-      this._objectDataManager.getObjectData(objectDataKey)
+      this._objectDataManager.getStrict(objectDataKey)
     )
     this._entityManager.addEntity(
       entityName,

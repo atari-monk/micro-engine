@@ -1,8 +1,8 @@
 import { IObject, IRendererV2 } from 'engine_api'
 import Vector2 from '../../../math/vector/Vector2'
-import ObjectDataManager from '../ObjectDataManager'
+import ObjectDataManagerOnRecord from '../ObjectDataManager'
 
-export default class SimpleGraphicData extends ObjectDataManager {
+export default class SimpleGraphicData extends ObjectDataManagerOnRecord {
   constructor(private readonly _renderer: IRendererV2) {
     super()
     this.createData()
@@ -11,7 +11,7 @@ export default class SimpleGraphicData extends ObjectDataManager {
   private createData() {
     const center = this._renderer.getCenter()
 
-    this.addObjectData('object', {
+    this.add('object', {
       id: '',
       name: '',
       color: 'green',
@@ -20,7 +20,7 @@ export default class SimpleGraphicData extends ObjectDataManager {
       speed: new Vector2(),
     } as IObject)
 
-    this.addObjectData('player1', {
+    this.add('player1', {
       id: '',
       name: '',
       color: 'red',
@@ -29,7 +29,7 @@ export default class SimpleGraphicData extends ObjectDataManager {
       speed: new Vector2(100, 100),
     } as IObject)
 
-    this.addObjectData('player2', {
+    this.add('player2', {
       id: '',
       name: '',
       color: 'blue',

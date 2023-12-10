@@ -3,7 +3,7 @@ import { default as EntityCreatorBase } from '../../browser/entity/creator/Basic
 export default class EntityCreator extends EntityCreatorBase {
   protected setupObjectEntity(entityName: string, objectDataKey: string) {
     this._dependencyBuilder.setObjectData(
-      this._objectDataManager.getObjectData(objectDataKey)
+      this._objectDataManager.getStrict(objectDataKey)
     )
     this._entityManager.addEntity(
       entityName,
@@ -13,7 +13,7 @@ export default class EntityCreator extends EntityCreatorBase {
 
   protected setupPlayerEntity(entityName: string, objectDataKey: string) {
     this._dependencyBuilder.setObjectData(
-      this._objectDataManager.getObjectData(objectDataKey)
+      this._objectDataManager.getStrict(objectDataKey)
     )
     this._entityManager.addEntity(
       entityName,

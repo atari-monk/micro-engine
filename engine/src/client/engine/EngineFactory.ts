@@ -16,7 +16,7 @@ import {
 } from 'engine_api/client'
 import { GameLoop } from '../game_loop/GameLoop'
 import EntityFactory from '../../browser/entity/builder/EntityFactory'
-import ObjectDataManager from '../../browser/entity/ObjectDataManager'
+import ObjectDataManagerOnRecord from '../../browser/entity/ObjectDataManager'
 import InputManager from '../../tech/input_manager/InputManager'
 import LogManager from '../../tech/log_manager/LogManager'
 import Tilemap from '../../tech/tile_map/Tilemap'
@@ -34,7 +34,7 @@ export default class EngineFactory {
   private readonly _input: InputManager = new InputManager()
   private readonly _logger: ILogger = new LogManager(LogLevel.INFO)
   private readonly _objectDataManager: IObjectDataManager =
-    new ObjectDataManager()
+    new ObjectDataManagerOnRecord()
   protected readonly _dependencyBuilder: IEntityDependencyListBuilder =
     new EntityDependencyListBuilder()
   private readonly _entityFactory: EntityFactory = new EntityFactory(
@@ -91,7 +91,7 @@ export default class EngineFactory {
     this.subscribeKeyboardEvents()
     this._camera.load(gameData.tileMapData)
     this._tileMap.load(gameData.tileMapData)
-    this.loadObjectData(gameData.objectData.getAllObjectData())
+    this.loadObjectData(gameData.objectData.getAll())
     this._entityCreator.createEntities()
   }
 
@@ -114,7 +114,7 @@ export default class EngineFactory {
 
   private loadObjectData(data: Record<string, IObject>) {
     for (const [key, value] of Object.entries(data)) {
-      this._objectDataManager.addObjectData(key, value)
+      this._objectDataManager.add(key, value)
     }
   }
 
@@ -126,7 +126,7 @@ export default class EngineFactory {
   private resetEngine() {
     this.unsubscribeKeyboardEvents()
     this._input.unsubscribeAll('KeyDown')
-    this._objectDataManager.removeAllObjectData()
+    this._objectDataManager.removeAll()
     this._entityManager.removeAllEntities()
   }
 
