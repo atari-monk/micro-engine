@@ -3,7 +3,8 @@ import {
   IEntityManager,
   IInputManager,
   ILogger,
-  IObjectDataManager,
+  IManager,
+  IObject,
   IRendererV2,
   ITilemap,
 } from 'engine_api'
@@ -13,7 +14,7 @@ import { EntityFactoryBuilder } from '../builder/EntityFactoryBuilder'
 export default class EntityCreatorBuilder {
   protected _dependencyBuilder!: IEntityDependencyListBuilder
   protected _entityManager!: IEntityManager
-  protected _objectDataManager!: IObjectDataManager
+  protected _objectDataManager!: IManager<IObject>
   protected _entityFactoryBuilder: EntityFactoryBuilder =
     new EntityFactoryBuilder()
   protected _logger!: ILogger
@@ -31,7 +32,7 @@ export default class EntityCreatorBuilder {
     return this
   }
 
-  withObjectDataManager(objectDataManager: IObjectDataManager): this {
+  withObjectDataManager(objectDataManager: IManager<IObject>): this {
     this._objectDataManager = objectDataManager
     return this
   }

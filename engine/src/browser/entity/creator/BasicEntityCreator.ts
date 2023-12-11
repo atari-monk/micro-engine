@@ -3,7 +3,8 @@ import {
   IEntityManager,
   IInputManager,
   ILogger,
-  IObjectDataManager,
+  IManager,
+  IObject,
   IRendererV2,
   ITilemap,
 } from 'engine_api'
@@ -12,7 +13,7 @@ import EntityFactory from '../builder/EntityFactory'
 export default class BasicEntityCreator {
   protected _dependencyBuilder: IEntityDependencyListBuilder
   protected _entityManager: IEntityManager
-  protected _objectDataManager: IObjectDataManager
+  protected _objectDataManager: IManager<IObject>
   protected _entityFactory: EntityFactory
   protected _logger: ILogger
   protected _tileMap: ITilemap
@@ -22,7 +23,7 @@ export default class BasicEntityCreator {
   constructor(
     dependencyBuilder: IEntityDependencyListBuilder,
     entityManager: IEntityManager,
-    objectDataManager: IObjectDataManager,
+    objectDataManager: IManager<IObject>,
     entityFactory: EntityFactory,
     logger: ILogger,
     tileMap: ITilemap,

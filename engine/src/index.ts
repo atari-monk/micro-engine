@@ -24,7 +24,8 @@ export { default as ServerEngineFactory } from './server/engine/EngineFactory'
 //entity
 export { default as EntityFactory } from './browser/entity/builder/EntityFactory'
 export { default as SimpleGraphicData } from './browser/entity/data/SimpleGraphicData'
-export { default as ObjectDataManager } from './browser/entity/ObjectDataManager'
+export { default as ObjectDataManagerOnMap } from './browser/entity/ObjectDataManagerOnMap'
+export { default as ObjectDataManagerOnRecord } from './browser/entity/ObjectDataManagerOnRecord'
 export { default as ObjectEntity } from './browser/entity/ObjectEntity'
 export { default as PlayerEntity } from './browser/entity/PlayerEntity'
 //entity-component

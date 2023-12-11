@@ -1,7 +1,7 @@
 import { IObject, IRendererV2 } from 'engine_api'
-import { ObjectDataManager, Vector2 } from 'engine'
+import { ObjectDataManagerOnMap, Vector2 } from 'engine'
 
-export default class ObjectDataFactory extends ObjectDataManager {
+export default class ObjectDataFactory extends ObjectDataManagerOnMap {
   constructor(private readonly _renderer: IRendererV2) {
     super()
     this.createData()
@@ -10,7 +10,7 @@ export default class ObjectDataFactory extends ObjectDataManager {
   createData() {
     const center = this._renderer.getCenter()
 
-    this.addObjectData('object', {
+    this.add('object', {
       id: '',
       name: '',
       color: 'yellow',
@@ -19,7 +19,7 @@ export default class ObjectDataFactory extends ObjectDataManager {
       speed: new Vector2(10, 10),
     } as IObject)
 
-    this.addObjectData('player', {
+    this.add('player', {
       id: '',
       name: '',
       color: 'pink',

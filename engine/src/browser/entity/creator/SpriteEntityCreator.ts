@@ -1,12 +1,13 @@
 import {
   IEntityDependencyListBuilder,
   IEntityManager,
-  IObjectDataManager,
+  IManager,
   ILogger,
   ITilemap,
   IRendererV2,
   IInputManager,
   IAnimationConfig,
+  IObject,
 } from 'engine_api'
 import BasicEntityCreator from './BasicEntityCreator'
 import EntityFactory from '../builder/EntityFactory'
@@ -17,7 +18,7 @@ export class SpriteEntityCreator extends BasicEntityCreator {
   constructor(
     dependencyBuilder: IEntityDependencyListBuilder,
     entityManager: IEntityManager,
-    objectDataManager: IObjectDataManager,
+    objectDataManager: IManager<IObject>,
     entityFactory: EntityFactory,
     logger: ILogger,
     tileMap: ITilemap,

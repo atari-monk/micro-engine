@@ -1,4 +1,4 @@
-export default interface IMapManager<T> {
+export default interface IManager<T> {
   get count(): number
   add(name: string, object: T): void
   remove(name: string): void
@@ -6,4 +6,5 @@ export default interface IMapManager<T> {
   get(name: string): T | undefined
   getStrict(name: string): T
   getWithStatus(name: string): { found: boolean; object?: T }
+  forEach(callback: (name: string, object: T) => void): void
 }

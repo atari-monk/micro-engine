@@ -1,7 +1,7 @@
-import { ILogger, IMapManager } from 'engine_api'
+import { ILogger, IManager } from 'engine_api'
 import LogManagerSingleton from '../tech/log_manager/LogManagerSingleton'
 
-export default class MapManager<T> implements IMapManager<T> {
+export default class MapManager<T> implements IManager<T> {
   protected _list: Map<string, T> = new Map<string, T>()
 
   get count(): number {
@@ -65,5 +65,11 @@ export default class MapManager<T> implements IMapManager<T> {
     }
 
     return { found: !!object, object }
+  }
+
+  forEach(callback: (name: string, object: T) => void): void {
+    this._list.forEach((object, name) => {
+      callback(name, object)
+    })
   }
 }

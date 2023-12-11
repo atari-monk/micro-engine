@@ -6,7 +6,7 @@ import {
   IGameData,
   ILogger,
   IObject,
-  IObjectDataManager,
+  IManager,
   IRendererV2,
   LogLevel,
 } from 'engine_api'
@@ -16,7 +16,7 @@ import {
 } from 'engine_api/client'
 import { GameLoop } from '../game_loop/GameLoop'
 import EntityFactory from '../../browser/entity/builder/EntityFactory'
-import ObjectDataManagerOnRecord from '../../browser/entity/ObjectDataManager'
+import ObjectDataManagerOnMap from '../../browser/entity/ObjectDataManagerOnMap'
 import InputManager from '../../tech/input_manager/InputManager'
 import LogManager from '../../tech/log_manager/LogManager'
 import Tilemap from '../../tech/tile_map/Tilemap'
@@ -33,8 +33,8 @@ export default class EngineFactory {
   private readonly _renderer: IRendererV2
   private readonly _input: InputManager = new InputManager()
   private readonly _logger: ILogger = new LogManager(LogLevel.INFO)
-  private readonly _objectDataManager: IObjectDataManager =
-    new ObjectDataManagerOnRecord()
+  private readonly _objectDataManager: IManager<IObject> =
+    new ObjectDataManagerOnMap()
   protected readonly _dependencyBuilder: IEntityDependencyListBuilder =
     new EntityDependencyListBuilder()
   private readonly _entityFactory: EntityFactory = new EntityFactory(
@@ -91,7 +91,7 @@ export default class EngineFactory {
     this.subscribeKeyboardEvents()
     this._camera.load(gameData.tileMapData)
     this._tileMap.load(gameData.tileMapData)
-    this.loadObjectData(gameData.objectData.getAll())
+    this.loadObjectData(gameData.objectData)
     this._entityCreator.createEntities()
   }
 
@@ -112,10 +112,10 @@ export default class EngineFactory {
     document.addEventListener('keyup', this._keyUpHandler)
   }
 
-  private loadObjectData(data: Record<string, IObject>) {
-    for (const [key, value] of Object.entries(data)) {
-      this._objectDataManager.add(key, value)
-    }
+  private loadObjectData(objectDataManager: IManager<IObject>) {
+    objectDataManager.forEach((name, object) => {
+      this._objectDataManager.add(name, object)
+    })
   }
 
   reloadEngine(gameData: IGameData) {

@@ -16,7 +16,6 @@ export { default as ICollisionDetector } from './tech/collision_detector/ICollis
 export { default as IConfigOptions } from './tech/config_manager/IConfigOptions'
 export { default as IConfigurationManager } from './tech/config_manager/IConfigurationManager'
 //entity
-export { default as IObjectDataManager } from './tech/entity/IObjectDataManager'
 //entity_component
 export { default as IComponent } from './tech/entity_component/IComponent'
 export { default as IEntity } from './tech/entity_component/IEntity'
@@ -96,4 +95,4 @@ export { default as ITilemapDataFactory } from './tech/tile_map/ITilemapDataFact
 export { default as IUIElement } from './tech/ui_manager/IUIElement'
 export { default as IUIManager } from './tech/ui_manager/IUIManager'
 //utils
-export { default as IMapManager } from './utils/IMapManager'
+export { default as IManager } from './utils/IManager'

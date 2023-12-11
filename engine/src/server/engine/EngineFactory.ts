@@ -1,16 +1,16 @@
 import {
   ILogger,
   LogLevel,
-  IObjectDataManager,
   IEntityManager,
   IObject,
   IGameData,
   IRendererV2,
   IGameServerApi,
   IEntityDependencyListBuilder,
+  IManager,
 } from 'engine_api'
 import { IServerPlayerManager as IPlayerManager } from 'engine_api/server'
-import ObjectDataManagerOnRecord from '../../browser/entity/ObjectDataManager'
+import ObjectDataManagerOnMap from '../../browser/entity/ObjectDataManagerOnMap'
 import LogManager from '../../tech/log_manager/LogManager'
 import { RendererMock } from '../../tech/renderer/RendererMock'
 import Tilemap from '../../tech/tile_map/Tilemap'
@@ -25,8 +25,8 @@ import EntityCreatorBuilder from '../entity/EntityCreatorBuilder'
 export default class EngineFactory {
   private readonly _renderer: IRendererV2
   private readonly _logger: ILogger = new LogManager(LogLevel.INFO)
-  private readonly _objectDataManager: IObjectDataManager =
-    new ObjectDataManagerOnRecord()
+  private readonly _objectDataManager: IManager<IObject> =
+    new ObjectDataManagerOnMap()
   protected readonly _dependencyBuilder: IEntityDependencyListBuilder =
     new EntityDependencyListBuilder()
   private readonly _entityManager: IEntityManager = new MapEntityManager(
@@ -70,14 +70,14 @@ export default class EngineFactory {
 
   private InitializeEngine(gameData: IGameData) {
     this._tileMap.load(gameData.tileMapData)
-    this.loadObjectData(gameData.objectData.getAll())
+    this.loadObjectData(gameData.objectData)
     this._entityCreator.createEntities()
   }
 
-  private loadObjectData(data: Record<string, IObject>) {
-    for (const [key, value] of Object.entries(data)) {
-      this._objectDataManager.add(key, value)
-    }
+  private loadObjectData(objectDataManager: IManager<IObject>) {
+    objectDataManager.forEach((name, object) => {
+      this._objectDataManager.add(name, object)
+    })
   }
 
   reloadEngine(gameData: IGameData) {
