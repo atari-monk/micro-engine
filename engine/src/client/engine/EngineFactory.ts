@@ -44,8 +44,8 @@ export default class EngineFactory {
     this._logger
   )
   private readonly _playerManager: IPlayerManager = new PlayerManager(
-    this._logger,
-    this._entityManager
+    this._entityManager,
+    this._logger
   )
   private _gameLoop: GameLoop
   private readonly _tileMap: Tilemap

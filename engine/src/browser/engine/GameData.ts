@@ -5,7 +5,7 @@ import {
   IRendererV2,
   ITilemapDataFactory,
 } from 'engine_api'
-import SimpleGraphicData from '../entity/data/SimpleGraphicData'
+import ObjectData from '../entity/data/ObjectData'
 import TilemapDataFactory from '../../tech/tile_map/TilemapDataFactory'
 
 export default class GameData implements IGameData {
@@ -13,7 +13,7 @@ export default class GameData implements IGameData {
   public tileMapData: ITilemapDataFactory
 
   constructor(private readonly _renderer: IRendererV2) {
-    this.objectData = new SimpleGraphicData(this._renderer)
+    this.objectData = new ObjectData(this._renderer)
     this.tileMapData = new TilemapDataFactory()
   }
 }

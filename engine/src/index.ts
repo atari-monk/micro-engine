@@ -23,7 +23,7 @@ export { default as ServerEngine } from './server/engine/Engine'
 export { default as ServerEngineFactory } from './server/engine/EngineFactory'
 //entity
 export { default as EntityFactory } from './browser/entity/builder/EntityFactory'
-export { default as SimpleGraphicData } from './browser/entity/data/SimpleGraphicData'
+export { default as ObjectData } from './browser/entity/data/ObjectData'
 export { default as ObjectDataManager } from './browser/entity/ObjectDataManager'
 export { default as ObjectEntity } from './browser/entity/ObjectEntity'
 export { default as PlayerEntity } from './browser/entity/PlayerEntity'

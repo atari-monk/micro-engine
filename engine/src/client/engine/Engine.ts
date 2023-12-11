@@ -70,14 +70,14 @@ export default class Engine implements IEngineClientApi {
   }
 
   updateCallback = (dt: number) => {
-    this._entityManager.updateEntities(dt)
+    this._entityManager.update(dt)
   }
 
   renderCallback = (dt: number) => {
     this._renderer.clearCanvas()
     this._renderer.fillCanvas('rgba(87, 40, 145, 0.8)')
     if (this._playerPosition) this._camera.setPosition(this._playerPosition)
-    this._entityManager.renderEntities(dt)
+    this._entityManager.render(dt)
     this._renderer.resetTranslation()
   }
 

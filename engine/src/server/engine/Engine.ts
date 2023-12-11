@@ -30,7 +30,7 @@ export default class Engine implements IEngineServerApi {
   }
 
   updateCallback = (dt: number) => {
-    this._entityManager.updateEntities(dt)
+    this._entityManager.update(dt)
   }
 
   startEngine() {
