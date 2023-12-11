@@ -50,12 +50,12 @@ export default class Engine implements IEngineServerApi {
   }
 
   getPlayerCount() {
-    return this._playerManager.getEntityCount()
+    return this._playerManager.count
   }
 
   addPlayer(socketId: string) {
     this._logger.log('Adding player to server engine')
-    const count = this._playerManager.getEntityCount()
+    const count = this._playerManager.count
 
     if (count >= 2) {
       return {
@@ -65,7 +65,7 @@ export default class Engine implements IEngineServerApi {
     }
 
     const playerKey = `player${count + 1}`
-    const player = this._entityManager.getEntity(playerKey)
+    const player = this._entityManager.getStrict(playerKey)
 
     if (!player) {
       return {
@@ -85,7 +85,7 @@ export default class Engine implements IEngineServerApi {
     }
 
     playerObject!.id = socketId
-    this._playerManager.addEntity(playerKey, player)
+    this._playerManager.add(playerKey, player)
     return {
       isDone: true,
       message: `Server Engine added player on key: ${playerKey}, id: ${socketId}`,

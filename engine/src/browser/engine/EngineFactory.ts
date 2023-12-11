@@ -17,10 +17,10 @@ import RendererV2 from '../../tech/renderer/RendererV2'
 import Engine from './Engine'
 import InputManager from '../../tech/input_manager/InputManager'
 import EntityFactory from '../entity/builder/EntityFactory'
-import ObjectDataManagerOnMap from '../entity/ObjectDataManagerOnMap'
+import ObjectDataManager from '../entity/ObjectDataManager'
 import Tilemap from '../../tech/tile_map/Tilemap'
 import Camera from '../../tech/camera/Camera'
-import MapEntityManager from '../../tech/entity_component/MapEntityManager'
+import EntityManager from '../../tech/entity_component/EntityManager'
 import { EntityDependencyListBuilder } from '../entity/builder/EntityDependencyListBuilder'
 import EntityCreatorBuilder from '../entity/creator/EntityCreatorBuilder'
 import BasicEntityCreator from '../entity/creator/BasicEntityCreator'
@@ -30,13 +30,13 @@ export default class EngineFactory {
   private readonly _input: InputManager = new InputManager()
   private readonly _logger: ILogger = new LogManager(LogLevel.INFO)
   private readonly _objectDataManager: IManager<IObject> =
-    new ObjectDataManagerOnMap()
+    new ObjectDataManager()
   protected readonly _dependencyBuilder: IEntityDependencyListBuilder =
     new EntityDependencyListBuilder()
   protected readonly _entityFactory: EntityFactory = new EntityFactory(
     this._dependencyBuilder
   )
-  protected readonly _entityManager: IEntityManager = new MapEntityManager(
+  protected readonly _entityManager: IEntityManager = new EntityManager(
     this._logger
   )
   protected _gameLoop: IGameLoop
@@ -118,7 +118,7 @@ export default class EngineFactory {
     this.unsubscribeKeyboardEvents()
     this._input.unsubscribeAll('KeyDown')
     this._objectDataManager.removeAll()
-    this._entityManager.removeAllEntities()
+    this._entityManager.removeAll()
   }
 
   private unsubscribeKeyboardEvents(): void {

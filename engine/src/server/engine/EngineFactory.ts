@@ -10,14 +10,14 @@ import {
   IManager,
 } from 'engine_api'
 import { IServerPlayerManager as IPlayerManager } from 'engine_api/server'
-import ObjectDataManagerOnMap from '../../browser/entity/ObjectDataManagerOnMap'
+import ObjectDataManager from '../../browser/entity/ObjectDataManager'
 import LogManager from '../../tech/log_manager/LogManager'
 import { RendererMock } from '../../tech/renderer/RendererMock'
 import Tilemap from '../../tech/tile_map/Tilemap'
 import Engine from './Engine'
 import GameLoop from '../game_loop/GameLoop'
-import MapEntityManager from '../../tech/entity_component/MapEntityManager'
-import MapPlayerManager from '../entity/MapPlayerManager'
+import EntityManager from '../../tech/entity_component/EntityManager'
+import PlayerManager from '../entity/PlayerManager'
 import { EntityDependencyListBuilder } from '../../browser/entity/builder/EntityDependencyListBuilder'
 import EntityCreator from '../entity/EntityCreator'
 import EntityCreatorBuilder from '../entity/EntityCreatorBuilder'
@@ -26,13 +26,13 @@ export default class EngineFactory {
   private readonly _renderer: IRendererV2
   private readonly _logger: ILogger = new LogManager(LogLevel.INFO)
   private readonly _objectDataManager: IManager<IObject> =
-    new ObjectDataManagerOnMap()
+    new ObjectDataManager()
   protected readonly _dependencyBuilder: IEntityDependencyListBuilder =
     new EntityDependencyListBuilder()
-  private readonly _entityManager: IEntityManager = new MapEntityManager(
+  private readonly _entityManager: IEntityManager = new EntityManager(
     this._logger
   )
-  private readonly _playerManager: IPlayerManager = new MapPlayerManager(
+  private readonly _playerManager: IPlayerManager = new PlayerManager(
     this._logger
   )
   private _gameLoop: GameLoop
@@ -87,6 +87,6 @@ export default class EngineFactory {
 
   private resetEngine() {
     this._objectDataManager.removeAll()
-    this._entityManager.removeAllEntities()
+    this._entityManager.removeAll()
   }
 }

@@ -83,7 +83,7 @@ export default class Engine implements IEngineClientApi {
 
   startEngine() {
     this._logger.debug(`Starting Engine`)
-    this._player = this._entityManager.getEntity('player1')
+    this._player = this._entityManager.getStrict('player1')
     this._playerPosition =
       this._player.getComponentByType<ObjectComponent>(
         ObjectComponent

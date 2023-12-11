@@ -1,67 +1,73 @@
 import { IEntityManager, ILogger, IResult } from 'engine_api'
-import MapEntityManager from '../../tech/entity_component/MapEntityManager'
+import EntityManager from '../../tech/entity_component/EntityManager'
 import ObjectComponent from '../../browser/component/ObjectComponent'
 import GameFrameDto from '../../multi/dtos/GameFrameDto'
 import { IClientPlayerManager as IPlayerManager } from 'engine_api/client'
 
 export default class PlayerManager
-  extends MapEntityManager
+  extends EntityManager
   implements IPlayerManager
 {
-  constructor(
-    protected readonly _logger: ILogger,
-    private _entityManager: IEntityManager
-  ) {
-    super(_logger)
+  constructor(private _entityManager: IEntityManager, logger?: ILogger) {
+    super(logger)
   }
 
-  getPlayer1Id() {
-    const player = this.getEntity('player1')
+  getPlayer1Id(): string {
+    const player = this.get('player1')
     const playerObj =
-      player.getComponentByType<ObjectComponent>(ObjectComponent)
-    return playerObj.id
+      player?.getComponentByType<ObjectComponent>(ObjectComponent)
+    return playerObj?.id ?? ''
   }
 
-  addPlayer(socketId: string) {
-    for (const player of this._list.values()) {
+  addPlayer(socketId: string): IResult {
+    for (const player of this.values()) {
       const object = player.getComponentByType<ObjectComponent>(ObjectComponent)
-      if (object.id === socketId)
+      if (object?.id === socketId) {
         return {
           isDone: false,
-          message: `Player already on list`,
-        } as IResult
+          message: 'Player already on the list',
+        }
+      }
     }
 
-    const count = this.getEntityCount()
+    const count = this.count
     if (count >= 2) {
       return {
         isDone: false,
         message: `Number of players is ${count}. Server and clients at capacity`,
-      } as IResult
+      }
     }
 
     const playerKey = `player${count + 1}`
-    const player = this._entityManager.getEntity(playerKey)
+    const player = this._entityManager.getStrict(playerKey)
     const playerObject =
-      player.getComponentByType<ObjectComponent>(ObjectComponent)
-    playerObject.id = socketId
-    this.addEntity(playerKey, player)
+      player?.getComponentByType<ObjectComponent>(ObjectComponent)
+    if (playerObject) {
+      playerObject.id = socketId
+      this.add(playerKey, player)
+      return {
+        isDone: true,
+        message: `Client Engine added player on key: ${playerKey}, id: ${socketId}`,
+      }
+    }
+
     return {
-      isDone: true,
-      message: `Client Engine added player on key: ${playerKey}, id: ${socketId}`,
-    } as IResult
+      isDone: false,
+      message: `Failed to add player. Entity not found for key: ${playerKey}`,
+    }
   }
 
   updatePlayer(gameFrameDto: GameFrameDto): void {
     gameFrameDto.players.forEach((playerDto) => {
-      for (const player of this._list.values()) {
+      for (const player of this.values()) {
         const object =
           player.getComponentByType<ObjectComponent>(ObjectComponent)
-        if (playerDto.id !== object.id) continue
-        this._logger.debug(
-          `updatePlayer: (${playerDto.position.x}, ${playerDto.position.y})`
-        )
-        object.position.setValues(playerDto.position)
+        if (playerDto.id === object?.id) {
+          this.logDebug(
+            `updatePlayer: (${playerDto.position.x}, ${playerDto.position.y})`
+          )
+          object?.position.setValues(playerDto.position)
+        }
       }
     })
   }

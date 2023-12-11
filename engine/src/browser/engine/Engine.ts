@@ -49,7 +49,7 @@ export default class Engine {
 
   startEngine() {
     this._logger.log(`Starting Engine`)
-    this._player = this._entityManager.getEntity('player1')
+    this._player = this._entityManager.getStrict('player1')
     this._playerPosition =
       this._player?.getComponentByType<ObjectComponent>(
         ObjectComponent

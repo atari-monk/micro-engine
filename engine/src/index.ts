@@ -24,17 +24,16 @@ export { default as ServerEngineFactory } from './server/engine/EngineFactory'
 //entity
 export { default as EntityFactory } from './browser/entity/builder/EntityFactory'
 export { default as SimpleGraphicData } from './browser/entity/data/SimpleGraphicData'
-export { default as ObjectDataManagerOnMap } from './browser/entity/ObjectDataManagerOnMap'
-export { default as ObjectDataManagerOnRecord } from './browser/entity/ObjectDataManagerOnRecord'
+export { default as ObjectDataManager } from './browser/entity/ObjectDataManager'
 export { default as ObjectEntity } from './browser/entity/ObjectEntity'
 export { default as PlayerEntity } from './browser/entity/PlayerEntity'
 //entity-component
 export { default as Component } from './tech/entity_component/Component'
-export { default as RecordEntityManager } from './tech/entity_component/RecordEntityManager'
-export { default as MapEntityManager } from './tech/entity_component/MapEntityManager'
+export { default as EntityManager } from './tech/entity_component/EntityManager'
+export { default as MapManager } from './tech/entity_component/MapManager'
 export { default as Entity } from './tech/entity_component/Entity'
 //entity-server
-export { default as PlayerManager } from './server/entity/RecordPlayerManager'
+export { default as PlayerManager } from './server/entity/PlayerManager'
 //event_system
 export { default as EventSystem } from './tech/event_system/EventSystem'
 //game_loop
@@ -76,4 +75,3 @@ export { default as Tilemap } from './tech/tile_map/Tilemap'
 export { default as UIManager } from './tech/ui_manager/UIManager'
 //utils
 export { default as WaitUtility } from './utils/WaitUtility'
-export { default as MapManager } from './utils/MapManager'

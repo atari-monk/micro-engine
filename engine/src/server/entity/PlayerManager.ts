@@ -4,20 +4,20 @@ import ObjectComponent from '../../browser/component/ObjectComponent'
 import MovementComponent from '../component/MovementComponent'
 import GameFrameDto from '../../multi/dtos/GameFrameDto'
 import ObjectDto from '../../multi/dtos/ObjectDto'
-import MapEntityManager from '../../tech/entity_component/MapEntityManager'
+import EntityManager from '../../tech/entity_component/EntityManager'
 
-export default class MapPlayerManager
-  extends MapEntityManager
+export default class PlayerManager
+  extends EntityManager
   implements IPlayerManager
 {
-  constructor(protected readonly _logger: ILogger) {
-    super(_logger)
+  constructor(logger?: ILogger) {
+    super(logger)
   }
 
   setPlayerInput(inputDto: InputDto) {
     let found = false
     const message = `setPlayerInput: ${inputDto.id} ${inputDto.direction}`
-    for (const entity of this._list.values()) {
+    for (const entity of this.values()) {
       const object = entity.getComponentByType<ObjectComponent>(ObjectComponent)
       if (object.id !== inputDto.id) {
         continue
@@ -27,7 +27,7 @@ export default class MapPlayerManager
 
       movement.inputDto = inputDto
       found = true
-      this._logger.debug(message)
+      this.logDebug(message)
       break
     }
     if (!found) {
@@ -37,9 +37,9 @@ export default class MapPlayerManager
 
   getGameFrameDto() {
     const dto = new GameFrameDto()
-    for (const entity of this._list.values()) {
+    for (const entity of this.values()) {
       const object = entity.getComponentByType<ObjectComponent>(ObjectComponent)
-      this._logger.debug(`${object.position.x}, ${object.position.y}`)
+      this.logDebug(`${object.position.x}, ${object.position.y}`)
       dto.addPlayer(object.id, new ObjectDto(object))
     }
     return dto
@@ -47,7 +47,7 @@ export default class MapPlayerManager
 
   getClientsDto() {
     const dto = new ClientsDto()
-    for (const entity of this._list.values()) {
+    for (const entity of this.values()) {
       dto.clients.push(
         entity.getComponentByType<ObjectComponent>(ObjectComponent).id
       )

@@ -44,7 +44,7 @@ export class SpriteEntityCreator extends BasicEntityCreator {
     this._dependencyBuilder.setObjectData(
       this._objectDataManager.getStrict(objectDataKey)
     )
-    this._entityManager.addEntity(
+    this._entityManager.add(
       entityName,
       this._entityFactory.createObjectEntity()
     )

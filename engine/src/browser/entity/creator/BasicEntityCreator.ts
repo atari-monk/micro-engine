@@ -51,7 +51,7 @@ export default class BasicEntityCreator {
   protected setupMapEntity() {
     this._dependencyBuilder.setLogger(this._logger)
     this._dependencyBuilder.setTileMap(this._tileMap)
-    this._entityManager.addEntity('map', this._entityFactory.createMapEntity())
+    this._entityManager.add('map', this._entityFactory.createMapEntity())
   }
 
   protected setupObjectEntity(entityName: string, objectDataKey: string) {
@@ -59,7 +59,7 @@ export default class BasicEntityCreator {
     this._dependencyBuilder.setObjectData(
       this._objectDataManager.getStrict(objectDataKey)
     )
-    this._entityManager.addEntity(
+    this._entityManager.add(
       entityName,
       this._entityFactory.createObjectEntity()
     )
@@ -70,7 +70,7 @@ export default class BasicEntityCreator {
     this._dependencyBuilder.setObjectData(
       this._objectDataManager.getStrict(objectDataKey)
     )
-    this._entityManager.addEntity(
+    this._entityManager.add(
       entityName,
       this._entityFactory.createPlayerEntity()
     )

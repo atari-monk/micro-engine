@@ -1,14 +1,19 @@
 import { ILogger, IManager } from 'engine_api'
-import LogManagerSingleton from '../tech/log_manager/LogManagerSingleton'
+import ManagerLogger from './ManagerLogger'
 
-export default class MapManager<T> implements IManager<T> {
-  protected _list: Map<string, T> = new Map<string, T>()
+export default class MapManager<T>
+  extends ManagerLogger
+  implements IManager<T>
+{
+  private _list: Map<string, T> = new Map<string, T>()
 
   get count(): number {
     return this._list.size
   }
 
-  constructor(private _logger: ILogger = LogManagerSingleton.getLogger()) {}
+  constructor(logger?: ILogger) {
+    super(logger)
+  }
 
   add(name: string, object: T): void {
     if (this._list.has(name)) {
@@ -24,18 +29,6 @@ export default class MapManager<T> implements IManager<T> {
 
   removeAll(): void {
     this._list = new Map<string, T>()
-  }
-
-  protected getAlreadyExistsMessage(name: string) {
-    return `Object with name '${name}' already exists!`
-  }
-
-  protected getNotFoundMessage(name: string) {
-    return `Object with name '${name}' not found!`
-  }
-
-  logError(message: string): void {
-    this._logger.error(message)
   }
 
   get(name: string): T | undefined {
@@ -71,5 +64,9 @@ export default class MapManager<T> implements IManager<T> {
     this._list.forEach((object, name) => {
       callback(name, object)
     })
+  }
+
+  protected values(): IterableIterator<T> {
+    return this._list.values()
   }
 }

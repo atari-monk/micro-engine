@@ -16,7 +16,7 @@ import {
 } from 'engine_api/client'
 import { GameLoop } from '../game_loop/GameLoop'
 import EntityFactory from '../../browser/entity/builder/EntityFactory'
-import ObjectDataManagerOnMap from '../../browser/entity/ObjectDataManagerOnMap'
+import ObjectDataManager from '../../browser/entity/ObjectDataManager'
 import InputManager from '../../tech/input_manager/InputManager'
 import LogManager from '../../tech/log_manager/LogManager'
 import Tilemap from '../../tech/tile_map/Tilemap'
@@ -24,7 +24,7 @@ import RendererV2 from '../../tech/renderer/RendererV2'
 import Camera from '../../tech/camera/Camera'
 import Engine from './Engine'
 import PlayerManager from '../entity/PlayerManager'
-import MapEntityManager from '../../tech/entity_component/MapEntityManager'
+import EntityManager from '../../tech/entity_component/EntityManager'
 import { EntityDependencyListBuilder } from '../../browser/entity/builder/EntityDependencyListBuilder'
 import EntityCreator from '../entity/EntityCreator'
 import EntityCreatorBuilder from '../entity/EntityCreatorBuilder'
@@ -34,13 +34,13 @@ export default class EngineFactory {
   private readonly _input: InputManager = new InputManager()
   private readonly _logger: ILogger = new LogManager(LogLevel.INFO)
   private readonly _objectDataManager: IManager<IObject> =
-    new ObjectDataManagerOnMap()
+    new ObjectDataManager()
   protected readonly _dependencyBuilder: IEntityDependencyListBuilder =
     new EntityDependencyListBuilder()
   private readonly _entityFactory: EntityFactory = new EntityFactory(
     this._dependencyBuilder
   )
-  private readonly _entityManager: IEntityManager = new MapEntityManager(
+  private readonly _entityManager: IEntityManager = new EntityManager(
     this._logger
   )
   private readonly _playerManager: IPlayerManager = new PlayerManager(
@@ -127,7 +127,7 @@ export default class EngineFactory {
     this.unsubscribeKeyboardEvents()
     this._input.unsubscribeAll('KeyDown')
     this._objectDataManager.removeAll()
-    this._entityManager.removeAllEntities()
+    this._entityManager.removeAll()
   }
 
   private unsubscribeKeyboardEvents(): void {

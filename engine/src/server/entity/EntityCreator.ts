@@ -5,7 +5,7 @@ export default class EntityCreator extends EntityCreatorBase {
     this._dependencyBuilder.setObjectData(
       this._objectDataManager.getStrict(objectDataKey)
     )
-    this._entityManager.addEntity(
+    this._entityManager.add(
       entityName,
       this._entityFactory.createObjectEntity()
     )
@@ -15,7 +15,7 @@ export default class EntityCreator extends EntityCreatorBase {
     this._dependencyBuilder.setObjectData(
       this._objectDataManager.getStrict(objectDataKey)
     )
-    this._entityManager.addEntity(
+    this._entityManager.add(
       entityName,
       this._entityFactory.createPlayerEntity()
     )

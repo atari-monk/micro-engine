@@ -26,8 +26,8 @@ export class GameLoop {
 
   load(clientId: string) {
     console.log('Load GameLoop clientId: ', clientId)
-    const player1 = this._entityManager.getEntity('player1')
-    const player2 = this._entityManager.getEntity('player2')
+    const player1 = this._entityManager.getStrict('player1')
+    const player2 = this._entityManager.getStrict('player2')
     const player1Id =
       player1.getComponentByType<ObjectComponent>(ObjectComponent)?.id
     const player2Id =

@@ -1,25 +1,40 @@
 import { IEntityManager, IEntity } from 'engine_api'
-import { EntityMock } from './EntityMock'
 
 export class EntityManagerMock implements IEntityManager {
-  addEntity(name: string, entity: IEntity): void {}
-
-  getAll(): Map<string, IEntity> {
-    throw new Error('Method not implemented.')
-  }
-  getAllAsRecord(): Record<string, IEntity> {
+  get count(): number {
     throw new Error('Method not implemented.')
   }
 
-  getEntityCount(): number {
-    return 0
-  }
-  getEntity(name: string): IEntity {
-    return new EntityMock()
+  add(name: string, object: IEntity): void {
+    throw new Error('Method not implemented.')
   }
 
-  removeEntity(name: string): void {}
-  removeAllEntities(): void {}
+  remove(name: string): void {
+    throw new Error('Method not implemented.')
+  }
+
+  removeAll(): void {
+    throw new Error('Method not implemented.')
+  }
+
+  get(name: string): IEntity | undefined {
+    throw new Error('Method not implemented.')
+  }
+
+  getStrict(name: string): IEntity {
+    throw new Error('Method not implemented.')
+  }
+
+  getWithStatus(name: string): {
+    found: boolean
+    object?: IEntity | undefined
+  } {
+    throw new Error('Method not implemented.')
+  }
+
+  forEach(callback: (name: string, object: IEntity) => void): void {
+    throw new Error('Method not implemented.')
+  }
 
   updateEntities(dt: number): void {}
   renderEntities(dt: number): void {}
