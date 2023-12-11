@@ -1,15 +1,7 @@
+import IManager from './IManager'
 import IEntity from './IEntity'
 
-export default interface IEntityManager {
-  addEntity(name: string, entity: IEntity): void
-
-  removeEntity(name: string): void
-  removeAllEntities(): void
-
-  getEntityCount(): number
-  getEntity(name: string): IEntity
-  getEntity(name: string): IEntity
-
+export default interface IEntityManager extends IManager<IEntity> {
   updateEntities(dt: number): void
   renderEntities(dt: number): void
 }

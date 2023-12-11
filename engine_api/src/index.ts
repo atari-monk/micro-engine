@@ -23,6 +23,7 @@ export { default as IEntityBuilder } from './tech/entity/IEntityBuilder'
 export { default as IEntityDependencyListBuilder } from './tech/entity/IEntityDependencyListBuilder'
 export { default as IEntityManager } from './tech/entity_component/IEntityManager'
 export { default as ILogable } from './tech/entity_component/ILogable'
+export { default as IManager } from './tech/entity_component/IManager'
 export { default as IRenderable } from './tech/entity_component/IRenderable'
 export { default as IUpdateable } from './tech/entity_component/IUpdateable'
 //event_system
@@ -94,5 +95,3 @@ export { default as ITilemapDataFactory } from './tech/tile_map/ITilemapDataFact
 //ui_manager
 export { default as IUIElement } from './tech/ui_manager/IUIElement'
 export { default as IUIManager } from './tech/ui_manager/IUIManager'
-//utils
-export { default as IManager } from './utils/IManager'

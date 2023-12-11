@@ -1,5 +1,5 @@
 import ITilemapDataFactory from '../../tech/tile_map/ITilemapDataFactory'
-import IManager from '../../utils/IManager'
+import IManager from '../../tech/entity_component/IManager'
 import IObject from '../component/IObject'
 
 export default interface IGameData {
