@@ -1,23 +1,22 @@
 import { AnimationType, IAnimationConfig } from 'engine_api'
+import Vector2 from '../../../math/vector/Vector2'
 
 const ballSprite = './assets/ball.png'
 
-const idle = {
+const idle: IAnimationConfig = {
   imagePath: ballSprite,
   frameCount: 20,
   frameDuration: 100,
-  frameWidth: 80,
-  frameHeight: 40,
+  frameSize: new Vector2(80, 40),
   animationType: AnimationType.Sequential,
-} as unknown as IAnimationConfig
+}
 
-const rotate = {
+const rotate: IAnimationConfig = {
   imagePath: ballSprite,
   frameCount: 20,
   frameDuration: 100,
-  frameWidth: 80,
-  frameHeight: 40,
+  frameSize: new Vector2(80, 40),
   animationType: AnimationType.Sequential,
-} as unknown as IAnimationConfig
+}
 
 export const ballAnimations: IAnimationConfig[] = [idle, rotate]

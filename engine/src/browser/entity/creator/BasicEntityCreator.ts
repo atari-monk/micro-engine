@@ -23,16 +23,16 @@ export default class BasicEntityCreator {
   constructor(
     dependencyBuilder: IEntityDependencyListBuilder,
     entityManager: IEntityManager,
-    objectDataManager: IManager<IObject>,
     entityFactory: EntityFactory,
     logger: ILogger,
     tileMap: ITilemap,
     renderer: IRendererV2,
-    input: IInputManager
+    input: IInputManager,
+    objectDataManager?: IManager<IObject>
   ) {
     this._dependencyBuilder = dependencyBuilder
     this._entityManager = entityManager
-    this._objectDataManager = objectDataManager
+    this._objectDataManager = objectDataManager!
     this._entityFactory = entityFactory
     this._logger = logger
     this._tileMap = tileMap

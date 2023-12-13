@@ -5,6 +5,7 @@ import MapEntityBuilder from './MapEntitBuilder'
 import ProtoObjectEntityBuilder from './ProtoObjectEntityBuilder'
 import MapEntity from '../MapEntity'
 import PlayerEntityBuilder from './PlayerEntityBuilder'
+import SpriteObjectEntityBuilder from './SpriteObjectEntityBuilder'
 
 export default class EntityFactory {
   private _mapEntityBuilder: IEntityBuilder<MapEntity>
@@ -26,7 +27,7 @@ export default class EntityFactory {
       MapEntity,
       this._dependencyBuilder
     )
-    this._objectEntityBuilder = new ProtoObjectEntityBuilder(
+    this._objectEntityBuilder = new SpriteObjectEntityBuilder(
       ObjectEntity,
       this._dependencyBuilder
     )

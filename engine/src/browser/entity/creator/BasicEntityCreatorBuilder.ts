@@ -11,7 +11,7 @@ import {
 import BasicEntityCreator from './BasicEntityCreator'
 import { EntityFactoryBuilder } from '../builder/EntityFactoryBuilder'
 
-export default class EntityCreatorBuilder {
+export default class BasicEntityCreatorBuilder {
   protected _dependencyBuilder!: IEntityDependencyListBuilder
   protected _entityManager!: IEntityManager
   protected _objectDataManager!: IManager<IObject>
@@ -70,12 +70,12 @@ export default class EntityCreatorBuilder {
     return new BasicEntityCreator(
       this._dependencyBuilder,
       this._entityManager,
-      this._objectDataManager,
       entityFactory,
       this._logger,
       this._tileMap,
       this._renderer,
-      this._input
+      this._input,
+      this._objectDataManager
     )
   }
 }

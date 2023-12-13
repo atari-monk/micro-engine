@@ -1,7 +1,7 @@
 import { IObject, IRendererV2 } from 'engine_api'
-import { ObjectDataManagerOnMap, Vector2 } from 'engine'
+import { ObjectDataManager, Vector2 } from 'engine'
 
-export default class ObjectDataFactory extends ObjectDataManagerOnMap {
+export default class ObjectDataFactory extends ObjectDataManager {
   constructor(private readonly _renderer: IRendererV2) {
     super()
     this.createData()

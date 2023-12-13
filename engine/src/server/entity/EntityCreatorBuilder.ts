@@ -1,11 +1,11 @@
 import ObjectEntity from '../../browser/entity/ObjectEntity'
 import PlayerEntity from '../../browser/entity/PlayerEntity'
-import { default as EntityCreatorBuilderBase } from '../../browser/entity/creator/EntityCreatorBuilder'
+import { default as BasicEntityCreatorBuilder } from '../../browser/entity/creator/BasicEntityCreatorBuilder'
 import EntityCreator from './EntityCreator'
 import ObjectEntityBuilder from './builder/ObjectEntityBuilder'
 import PlayerEntityBuilder from './builder/PlayerEntityBuilder'
 
-export default class EntityCreatorBuilder extends EntityCreatorBuilderBase {
+export default class EntityCreatorBuilder extends BasicEntityCreatorBuilder {
   build(): EntityCreator {
     const entityFactory = this._entityFactoryBuilder
       .withDependencyBuilder(this._dependencyBuilder)
@@ -23,12 +23,12 @@ export default class EntityCreatorBuilder extends EntityCreatorBuilderBase {
     return new EntityCreator(
       this._dependencyBuilder,
       this._entityManager,
-      this._objectDataManager,
       entityFactory,
       this._logger,
       this._tileMap,
       this._renderer,
-      this._input
+      this._input,
+      this._objectDataManager
     )
   }
 }

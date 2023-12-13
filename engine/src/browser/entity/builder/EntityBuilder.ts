@@ -10,7 +10,7 @@ export default class EntityBuilder<T extends IEntity>
   protected entity!: T
 
   constructor(
-    private readonly _entityType: new () => T,
+    private readonly _entityType: { new (): T },
     protected readonly _dependencyBuilder: IEntityDependencyListBuilder
   ) {}
 

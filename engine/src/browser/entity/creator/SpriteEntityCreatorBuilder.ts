@@ -1,14 +1,14 @@
-import { IAnimationConfig } from 'engine_api'
+import { IManager, ISprite } from 'engine_api'
 import SpriteObjectEntityBuilder from '../builder/SpriteObjectEntityBuilder'
 import ObjectEntity from '../ObjectEntity'
-import EntityCreatorBuilder from './EntityCreatorBuilder'
+import BasicEntityCreatorBuilder from './BasicEntityCreatorBuilder'
 import { SpriteEntityCreator } from './SpriteEntityCreator'
 
-export class SpriteEntityCreatorBuilder extends EntityCreatorBuilder {
-  protected _animations!: IAnimationConfig[]
+export class SpriteEntityCreatorBuilder extends BasicEntityCreatorBuilder {
+  protected _spriteDataManager!: IManager<ISprite>
 
-  withAnimations(animations: IAnimationConfig[]): this {
-    this._animations = animations
+  withSpriteDataManager(spriteDataManager: IManager<ISprite>): this {
+    this._spriteDataManager = spriteDataManager
     return this
   }
 
@@ -25,13 +25,12 @@ export class SpriteEntityCreatorBuilder extends EntityCreatorBuilder {
     return new SpriteEntityCreator(
       this._dependencyBuilder,
       this._entityManager,
-      this._objectDataManager,
+      this._spriteDataManager,
       entityFactory,
       this._logger,
       this._tileMap,
       this._renderer,
-      this._input,
-      this._animations
+      this._input
     )
   }
 }

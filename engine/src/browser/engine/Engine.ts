@@ -49,11 +49,11 @@ export default class Engine {
 
   startEngine() {
     this._logger.log(`Starting Engine`)
-    this._player = this._entityManager.getStrict('player1')
-    this._playerPosition =
-      this._player?.getComponentByType<ObjectComponent>(
-        ObjectComponent
-      )?.position
+    // this._player = this._entityManager.getStrict('player1')
+    // this._playerPosition =
+    //   this._player?.getComponentByType<ObjectComponent>(
+    //     ObjectComponent
+    //   )?.position
     this._logger.log(`Subscribe To Update`)
     this._gameLoop.subscribeToUpdate(this.updateCallback)
     this._logger.log(`Subscribe To Render`)

@@ -2,6 +2,7 @@ import { EngineFactory, GameData } from 'engine'
 import './css/styles.css'
 import ObjectDataFactory from './gameData/ObjectDataFactory'
 import TilemapDataFactory from './gameData/TilemapDataFactory'
+import './../assets/ball.png'
 
 const engineFactory = new EngineFactory('canvas')
 

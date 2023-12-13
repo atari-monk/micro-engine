@@ -10,6 +10,7 @@ import {
   IManager,
   IRendererV2,
   LogLevel,
+  ISprite,
 } from 'engine_api'
 import GameLoop from '../../tech/game_loop/GameLoop'
 import LogManager from '../../tech/log_manager/LogManager'
@@ -22,8 +23,11 @@ import Tilemap from '../../tech/tile_map/Tilemap'
 import Camera from '../../tech/camera/Camera'
 import EntityManager from '../../tech/entity_component/EntityManager'
 import { EntityDependencyListBuilder } from '../entity/builder/EntityDependencyListBuilder'
-import EntityCreatorBuilder from '../entity/creator/EntityCreatorBuilder'
+import BasicEntityCreatorBuilder from '../entity/creator/BasicEntityCreatorBuilder'
 import BasicEntityCreator from '../entity/creator/BasicEntityCreator'
+import { SpriteEntityCreator } from '../entity/creator/SpriteEntityCreator'
+import { SpriteEntityCreatorBuilder } from '../entity/creator/SpriteEntityCreatorBuilder'
+import SpriteDataManager from '../entity/SpriteDataManager'
 
 export default class EngineFactory {
   private readonly _renderer: IRendererV2
@@ -31,6 +35,8 @@ export default class EngineFactory {
   private readonly _logger: ILogger = new LogManager(LogLevel.INFO)
   private readonly _objectDataManager: IManager<IObject> =
     new ObjectDataManager()
+  private readonly _spriteDataManager: IManager<ISprite> =
+    new SpriteDataManager()
   protected readonly _dependencyBuilder: IEntityDependencyListBuilder =
     new EntityDependencyListBuilder()
   protected readonly _entityFactory: EntityFactory = new EntityFactory(
@@ -46,6 +52,7 @@ export default class EngineFactory {
   protected _engineConfig?: IEngineConfig
   private readonly _camera: ICamera
   private readonly _entityCreator: BasicEntityCreator
+  private readonly _spriteEntityCreator: SpriteEntityCreator
 
   get renderer(): IRendererV2 {
     return this._renderer
@@ -62,10 +69,19 @@ export default class EngineFactory {
     this._keyUpHandler = (event: KeyboardEvent) => {
       this._input.handleKeyUp(event.key)
     }
-    this._entityCreator = new EntityCreatorBuilder()
+    this._entityCreator = new BasicEntityCreatorBuilder()
       .withDependencyBuilder(this._dependencyBuilder)
       .withEntityManager(this._entityManager)
       .withObjectDataManager(this._objectDataManager)
+      .withLogger(this._logger)
+      .withTileMap(this._tileMap)
+      .withRenderer(this._renderer)
+      .withInput(this._input)
+      .build()
+    this._spriteEntityCreator = new SpriteEntityCreatorBuilder()
+      .withDependencyBuilder(this._dependencyBuilder)
+      .withEntityManager(this._entityManager)
+      .withSpriteDataManager(this._spriteDataManager)
       .withLogger(this._logger)
       .withTileMap(this._tileMap)
       .withRenderer(this._renderer)
@@ -84,7 +100,9 @@ export default class EngineFactory {
     this._camera.load(gameData.tileMapData)
     this._tileMap.load(gameData.tileMapData)
     this.loadObjectData(gameData.objectData)
-    this._entityCreator.createEntities()
+    this.loadSpriteData(gameData.spriteData)
+    //this._entityCreator.createEntities()
+    this._spriteEntityCreator.createEntities()
   }
 
   private createEngineConfig() {
@@ -106,6 +124,12 @@ export default class EngineFactory {
   private loadObjectData(objectDataManager: IManager<IObject>) {
     objectDataManager.forEach((name, object) => {
       this._objectDataManager.add(name, object)
+    })
+  }
+
+  private loadSpriteData(spriteDataManager: IManager<ISprite>) {
+    spriteDataManager.forEach((name, sprite) => {
+      this._spriteDataManager.add(name, sprite)
     })
   }
 
