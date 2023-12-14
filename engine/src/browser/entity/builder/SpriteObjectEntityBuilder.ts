@@ -1,43 +1,34 @@
-import EntityBuilder from './EntityBuilder'
+import { IRendererV2, ISprite } from 'engine_api'
 import ObjectComponent from '../../component/ObjectComponent'
 import SpriteComponent from '../../component/SpriteComponent'
-import { IEntityDependencyListBuilder } from 'engine_api'
 import ObjectEntity from '../ObjectEntity'
+import EntityBuilder from './EntityBuilder'
 
-export default class SpriteObjectEntityBuilder extends EntityBuilder<ObjectEntity> {
-  constructor(
-    entityType: new () => ObjectEntity,
-    dependencyBuilder: IEntityDependencyListBuilder
-  ) {
-    super(entityType, dependencyBuilder)
+export default class SpriteObjectEntityBuilder extends EntityBuilder {
+  private _renderer?: IRendererV2
+
+  withRenderer(renderer: IRendererV2): this {
+    this._renderer = renderer
+    return this
   }
 
-  assertComponentDependencies(): void {
-    const getMessage = (propName: string, entityName = 'SpriteObjectEntity') =>
-      `${propName} must be set before building ${entityName} entity.`
+  build(objectData: ISprite): ObjectEntity {
+    if (this._logger === undefined) throw new Error('Logger not set!')
+    if (!this._renderer) throw new Error('Renderer not set!')
+    if (!objectData) throw new Error('ObjectData not set!')
 
-    if (!this._dependencyBuilder.objectData) {
-      throw new Error(getMessage('objectData'))
-    }
-
-    if (!this._dependencyBuilder.renderer) {
-      throw new Error(getMessage('renderer'))
-    }
-
-    if (!this._dependencyBuilder.animConfig) {
-      throw new Error(getMessage('animConfig'))
-    }
-  }
-
-  buildComponents() {
-    const object = new ObjectComponent(this._dependencyBuilder.objectData)
-    const render = new SpriteComponent(
-      this._dependencyBuilder.renderer,
-      object,
-      this._dependencyBuilder.animConfig
+    const entity = new ObjectEntity()
+    entity.logger = this._logger
+    const objectComponent = new ObjectComponent(objectData.object)
+    entity.addComponent(objectComponent)
+    entity.addComponent(
+      new SpriteComponent(
+        this._renderer,
+        objectComponent,
+        objectData.animations
+      )
     )
 
-    this.entity.addComponent(object)
-    this.entity.addComponent(render)
+    return entity
   }
 }

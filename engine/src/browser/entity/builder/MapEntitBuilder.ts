@@ -1,28 +1,24 @@
+import { ITilemap } from 'engine_api'
 import MapEntity from '../MapEntity'
 import MapComponent from '../../component/MapComponent'
 import EntityBuilder from './EntityBuilder'
-import { IEntityDependencyListBuilder } from 'engine_api'
 
-export default class MapEntityBuilder extends EntityBuilder<MapEntity> {
-  constructor(
-    entityType: new () => MapEntity,
-    dependencyBuilder: IEntityDependencyListBuilder
-  ) {
-    super(entityType, dependencyBuilder)
+export default class MapEntityBuilder extends EntityBuilder {
+  private _tileMap?: ITilemap
+
+  withTileMap(tileMap: ITilemap): this {
+    this._tileMap = tileMap
+    return this
   }
 
-  assertComponentDependencies(): void {
-    const getMessage = (propName: string, entityName = 'Map') =>
-      `${propName} must be set before building ${entityName} entity.`
+  build(): MapEntity {
+    if (this._logger === undefined) throw new Error('Logger not set!')
+    if (this._tileMap === undefined) throw new Error('Tile map not set!')
 
-    if (!this._dependencyBuilder.tileMap) {
-      throw new Error(getMessage('tileMap'))
-    }
-  }
+    const entity = new MapEntity()
+    entity.logger = this._logger
+    entity.addComponent(new MapComponent(this._tileMap))
 
-  buildComponents() {
-    const map = new MapComponent(this._dependencyBuilder.tileMap)
-
-    this.entity.addComponent(map)
+    return entity
   }
 }

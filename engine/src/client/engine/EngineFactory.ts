@@ -1,6 +1,5 @@
 import {
   ICamera,
-  IEntityDependencyListBuilder,
   IEntityManager,
   IGameClientApi,
   IGameData,
@@ -15,8 +14,7 @@ import {
   IClientPlayerManager as IPlayerManager,
 } from 'engine_api/client'
 import { GameLoop } from '../game_loop/GameLoop'
-import EntityFactory from '../../browser/entity/builder/EntityFactory'
-import ObjectDataManager from '../../browser/entity/ObjectDataManager'
+import ObjectDataManager from '../../browser/entity/manager/ObjectDataManager'
 import InputManager from '../../tech/input_manager/InputManager'
 import LogManager from '../../tech/log_manager/LogManager'
 import Tilemap from '../../tech/tile_map/Tilemap'
@@ -25,9 +23,7 @@ import Camera from '../../tech/camera/Camera'
 import Engine from './Engine'
 import PlayerManager from '../entity/PlayerManager'
 import EntityManager from '../../tech/entity_component/EntityManager'
-import { EntityDependencyListBuilder } from '../../browser/entity/builder/EntityDependencyListBuilder'
-import EntityCreator from '../entity/EntityCreator'
-import EntityCreatorBuilder from '../entity/EntityCreatorBuilder'
+import SimpleEntityCreator from '../entity/SimpleEntityCreator'
 
 export default class EngineFactory {
   private readonly _renderer: IRendererV2
@@ -35,11 +31,6 @@ export default class EngineFactory {
   private readonly _logger: ILogger = new LogManager(LogLevel.INFO)
   private readonly _objectDataManager: IManager<IObject> =
     new ObjectDataManager()
-  protected readonly _dependencyBuilder: IEntityDependencyListBuilder =
-    new EntityDependencyListBuilder()
-  private readonly _entityFactory: EntityFactory = new EntityFactory(
-    this._dependencyBuilder
-  )
   private readonly _entityManager: IEntityManager = new EntityManager(
     this._logger
   )
@@ -53,7 +44,7 @@ export default class EngineFactory {
   private _keyUpHandler: (event: KeyboardEvent) => void
   private _engineConfig?: IEngineConfig
   private readonly _camera: ICamera
-  private readonly _entityCreator: EntityCreator
+  private readonly _entityCreator: SimpleEntityCreator
 
   get renderer(): IRendererV2 {
     return this._renderer
@@ -70,15 +61,20 @@ export default class EngineFactory {
     this._keyUpHandler = (event: KeyboardEvent) => {
       this._input.handleKeyUp(event.key)
     }
-    this._entityCreator = new EntityCreatorBuilder()
-      .withDependencyBuilder(this._dependencyBuilder)
-      .withEntityManager(this._entityManager)
-      .withObjectDataManager(this._objectDataManager)
+    this._entityCreator = new SimpleEntityCreator(
+      this._entityManager,
+      this._objectDataManager
+    )
+    this._entityCreator.mapEntityBuilder
       .withLogger(this._logger)
       .withTileMap(this._tileMap)
+    this._entityCreator.objectEntityBuilder
+      .withLogger(this._logger)
       .withRenderer(this._renderer)
-      .withInput(this._input)
-      .build()
+    this._entityCreator.playerEntityBuilder
+      .withLogger(this._logger)
+      .withRenderer(this._renderer)
+      .withInputManager(this._input)
   }
 
   createEngine(gameData: IGameData) {

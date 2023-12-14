@@ -1,6 +1,6 @@
 import { IObject, IRendererV2, ISprite } from 'engine_api'
 import Vector2 from '../../../math/vector/Vector2'
-import SpriteDataManager from '../SpriteDataManager'
+import SpriteDataManager from '../manager/SpriteDataManager'
 import { ballAnimations } from './ballSprite'
 
 export class SpriteData extends SpriteDataManager {
@@ -12,7 +12,7 @@ export class SpriteData extends SpriteDataManager {
   private createData() {
     const center = this._renderer.getCenter()
 
-    this.add('object', {
+    this.add('object2', {
       object: {
         id: '',
         name: '',

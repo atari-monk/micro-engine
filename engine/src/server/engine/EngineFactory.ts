@@ -6,11 +6,10 @@ import {
   IGameData,
   IRendererV2,
   IGameServerApi,
-  IEntityDependencyListBuilder,
   IManager,
 } from 'engine_api'
 import { IServerPlayerManager as IPlayerManager } from 'engine_api/server'
-import ObjectDataManager from '../../browser/entity/ObjectDataManager'
+import ObjectDataManager from '../../browser/entity/manager/ObjectDataManager'
 import LogManager from '../../tech/log_manager/LogManager'
 import { RendererMock } from '../../tech/renderer/RendererMock'
 import Tilemap from '../../tech/tile_map/Tilemap'
@@ -18,17 +17,13 @@ import Engine from './Engine'
 import GameLoop from '../game_loop/GameLoop'
 import EntityManager from '../../tech/entity_component/EntityManager'
 import PlayerManager from '../entity/PlayerManager'
-import { EntityDependencyListBuilder } from '../../browser/entity/builder/EntityDependencyListBuilder'
-import EntityCreator from '../entity/EntityCreator'
-import EntityCreatorBuilder from '../entity/EntityCreatorBuilder'
+import SimpleEntityCreator from '../entity/SimpleEntityCreator'
 
 export default class EngineFactory {
   private readonly _renderer: IRendererV2
   private readonly _logger: ILogger = new LogManager(LogLevel.INFO)
   private readonly _objectDataManager: IManager<IObject> =
     new ObjectDataManager()
-  protected readonly _dependencyBuilder: IEntityDependencyListBuilder =
-    new EntityDependencyListBuilder()
   private readonly _entityManager: IEntityManager = new EntityManager(
     this._logger
   )
@@ -37,7 +32,7 @@ export default class EngineFactory {
   )
   private _gameLoop: GameLoop
   private readonly _tileMap: Tilemap
-  private readonly _entityCreator: EntityCreator
+  private readonly _entityCreator: SimpleEntityCreator
 
   get renderer(): IRendererV2 {
     return this._renderer
@@ -47,14 +42,15 @@ export default class EngineFactory {
     this._renderer = new RendererMock()
     this._tileMap = new Tilemap(this._renderer)
     this._gameLoop = new GameLoop(this._serverApi, this._playerManager)
-    this._entityCreator = new EntityCreatorBuilder()
-      .withDependencyBuilder(this._dependencyBuilder)
-      .withEntityManager(this._entityManager)
-      .withObjectDataManager(this._objectDataManager)
+    this._entityCreator = new SimpleEntityCreator(
+      this._entityManager,
+      this._objectDataManager
+    )
+    this._entityCreator.mapEntityBuilder
       .withLogger(this._logger)
       .withTileMap(this._tileMap)
-      .withRenderer(this._renderer)
-      .build()
+    this._entityCreator.objectEntityBuilder.withLogger(this._logger)
+    this._entityCreator.playerEntityBuilder.withLogger(this._logger)
   }
 
   createEngine(gameData: IGameData) {

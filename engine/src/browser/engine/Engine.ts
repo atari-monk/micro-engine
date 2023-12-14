@@ -49,17 +49,21 @@ export default class Engine {
 
   startEngine() {
     this._logger.log(`Starting Engine`)
-    // this._player = this._entityManager.getStrict('player1')
-    // this._playerPosition =
-    //   this._player?.getComponentByType<ObjectComponent>(
-    //     ObjectComponent
-    //   )?.position
+    this.setupCamera()
     this._logger.log(`Subscribe To Update`)
     this._gameLoop.subscribeToUpdate(this.updateCallback)
     this._logger.log(`Subscribe To Render`)
     this._gameLoop.subscribeToRender(this.renderCallback)
     this._logger.log(`Starting Game Loop`)
     this._gameLoop.startLoop()
+  }
+
+  private setupCamera() {
+    this._player = this._entityManager.getStrict('player1')
+    this._playerPosition =
+      this._player?.getComponentByType<ObjectComponent>(
+        ObjectComponent
+      )?.position
   }
 
   stopEngine() {

@@ -1,6 +1,6 @@
 import { IObject, IRendererV2 } from 'engine_api'
 import Vector2 from '../../../math/vector/Vector2'
-import ObjectDataManager from '../ObjectDataManager'
+import ObjectDataManager from '../manager/ObjectDataManager'
 
 export default class ObjectData extends ObjectDataManager {
   constructor(private readonly _renderer: IRendererV2) {

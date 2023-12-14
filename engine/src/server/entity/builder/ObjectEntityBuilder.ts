@@ -1,28 +1,18 @@
-import { IEntityDependencyListBuilder } from 'engine_api'
+import { IObject } from 'engine_api'
 import EntityBuilder from '../../../browser/entity/builder/EntityBuilder'
 import ObjectEntity from '../../../browser/entity/ObjectEntity'
 import ObjectComponent from '../../../browser/component/ObjectComponent'
 
-export default class ObjectEntityBuilder extends EntityBuilder<ObjectEntity> {
-  constructor(
-    entityType: new () => ObjectEntity,
-    dependencyBuilder: IEntityDependencyListBuilder
-  ) {
-    super(entityType, dependencyBuilder)
-  }
+export default class ObjectEntityBuilder extends EntityBuilder {
+  build(objectData: IObject): ObjectEntity {
+    if (!this._logger) throw new Error('Logger not set!')
+    if (!objectData) throw new Error('ObjectData not set!')
 
-  assertComponentDependencies(): void {
-    const getMessage = (propName: string, entityName = 'ProtoObjectEntity') =>
-      `${propName} must be set before building ${entityName} entity.`
+    const entity = new ObjectEntity()
+    entity.logger = this._logger
+    const objectComponent = new ObjectComponent(objectData)
+    entity.addComponent(objectComponent)
 
-    if (!this._dependencyBuilder.objectData) {
-      throw new Error(getMessage('objectData'))
-    }
-  }
-
-  buildComponents() {
-    const object = new ObjectComponent(this._dependencyBuilder.objectData)
-
-    this.entity.addComponent(object)
+    return entity
   }
 }

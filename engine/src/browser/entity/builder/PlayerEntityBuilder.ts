@@ -1,46 +1,39 @@
-import EntityBuilder from './EntityBuilder'
+import { IInputManager, IObject, IRendererV2 } from 'engine_api'
 import ObjectComponent from '../../component/ObjectComponent'
 import PlayerEntity from '../PlayerEntity'
 import RenderComponent from '../../component/RenderComponent'
 import MovementComponent from '../../component/MovementComponent'
-import { IEntityDependencyListBuilder } from 'engine_api'
+import EntityBuilder from './EntityBuilder'
 
-export default class PlayerEntityBuilder extends EntityBuilder<PlayerEntity> {
-  constructor(
-    entityType: new () => PlayerEntity,
-    dependencyBuilder: IEntityDependencyListBuilder
-  ) {
-    super(entityType, dependencyBuilder)
+export default class PlayerEntityBuilder extends EntityBuilder {
+  protected _renderer?: IRendererV2
+  protected _input?: IInputManager
+
+  withRenderer(renderer: IRendererV2): this {
+    this._renderer = renderer
+    return this
   }
 
-  assertComponentDependencies(): void {
-    const getMessage = (propName: string, entityName = 'Player') =>
-      `${propName} must be set before building ${entityName} entity.`
-
-    if (!this._dependencyBuilder.objectData) {
-      throw new Error(getMessage('objectData'))
-    }
-
-    if (!this._dependencyBuilder.renderer) {
-      throw new Error(getMessage('renderer'))
-    }
-
-    if (!this._dependencyBuilder.input) {
-      throw new Error(getMessage('input'))
-    }
+  withInputManager(input: IInputManager): this {
+    this._input = input
+    return this
   }
 
-  buildComponents() {
-    const object = new ObjectComponent(this._dependencyBuilder.objectData)
-    const render = new RenderComponent(object, this._dependencyBuilder.renderer)
-    const move = new MovementComponent(
-      object,
-      this._dependencyBuilder.input,
-      this._dependencyBuilder.logger
+  build(objectData: IObject): PlayerEntity {
+    if (!this._logger) throw new Error('Logger not set!')
+    if (!this._renderer) throw new Error('Renderer not set!')
+    if (!this._input) throw new Error('InputManager not set!')
+    if (!objectData) throw new Error('ObjectData not set!')
+
+    const entity = new PlayerEntity()
+    entity.logger = this._logger
+    const objectComponent = new ObjectComponent(objectData)
+    entity.addComponent(objectComponent)
+    entity.addComponent(new RenderComponent(objectComponent, this._renderer))
+    entity.addComponent(
+      new MovementComponent(objectComponent!, this._input!, this._logger!)
     )
 
-    this.entity.addComponent(object)
-    this.entity.addComponent(render)
-    this.entity.addComponent(move)
+    return entity
   }
 }
