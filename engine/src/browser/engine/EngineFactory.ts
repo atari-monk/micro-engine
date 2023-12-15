@@ -22,7 +22,7 @@ import Camera from '../../tech/camera/Camera'
 import EntityManager from '../../tech/entity_component/EntityManager'
 import SimpleEntityCreator from '../entity/creator/SimpleEntityCreator'
 import SpriteDataManager from '../entity/manager/SpriteDataManager'
-import { SpriteEntityCreator } from '../entity/creator/SpriteEntityCreator'
+import SpriteEntityCreator from '../entity/creator/SpriteEntityCreator'
 
 export default class EngineFactory {
   private readonly _renderer: IRendererV2
@@ -32,9 +32,7 @@ export default class EngineFactory {
     new ObjectDataManager()
   private readonly _spriteDataManager: IManager<ISprite> =
     new SpriteDataManager()
-  protected readonly _entityManager: IEntityManager = new EntityManager(
-    this._logger
-  )
+  protected readonly _entityManager: IEntityManager = new EntityManager()
   protected _gameLoop: IGameLoop
   private readonly _tileMap: Tilemap
   private _keyDownHandler: (event: KeyboardEvent) => void
@@ -49,10 +47,13 @@ export default class EngineFactory {
   }
 
   constructor(canvasId: string) {
+    this._entityManager.logger = this._logger
     this._renderer = new RendererV2(canvasId)
-    this._tileMap = new Tilemap(this._renderer)
-    this._camera = new Camera(this._renderer)
-    this._gameLoop = new GameLoop(this._entityManager)
+    this._tileMap = new Tilemap()
+    this._tileMap.renderer = this._renderer
+    this._camera = new Camera()
+    this._camera.renderer = this._renderer
+    this._gameLoop = new GameLoop()
     this._keyDownHandler = (event: KeyboardEvent) => {
       this._input.handleKeyDown(event.key)
     }

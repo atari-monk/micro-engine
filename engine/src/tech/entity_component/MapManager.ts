@@ -11,10 +11,6 @@ export default class MapManager<T>
     return this._list.size
   }
 
-  constructor(logger?: ILogger) {
-    super(logger)
-  }
-
   add(name: string, object: T): void {
     if (this._list.has(name)) {
       this.logError(this.getAlreadyExistsMessage(name))

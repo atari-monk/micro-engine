@@ -1,12 +1,12 @@
-import { ITilemap } from 'engine_api'
+import { ITileMap } from 'engine_api'
 import MapEntity from '../MapEntity'
 import MapComponent from '../../component/MapComponent'
 import EntityBuilder from './EntityBuilder'
 
 export default class MapEntityBuilder extends EntityBuilder {
-  private _tileMap?: ITilemap
+  private _tileMap?: ITileMap
 
-  withTileMap(tileMap: ITilemap): this {
+  withTileMap(tileMap: ITileMap): this {
     this._tileMap = tileMap
     return this
   }

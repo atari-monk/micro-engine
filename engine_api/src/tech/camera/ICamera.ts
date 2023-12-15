@@ -1,7 +1,9 @@
 import IVector2 from '../../math/vector/IImmutableVector2'
-import ITilemapDataFactory from '../tile_map/ITilemapDataFactory'
+import IRendererV2 from '../renderer/IRendererV2'
+import ITileMapDataFactory from '../tile_map/ITileMapDataFactory'
 
 export default interface ICamera {
-  load(tileMap: ITilemapDataFactory): void
+  set renderer(renderer: IRendererV2)
+  load(tileMap: ITileMapDataFactory): void
   setPosition(position: IVector2): void
 }

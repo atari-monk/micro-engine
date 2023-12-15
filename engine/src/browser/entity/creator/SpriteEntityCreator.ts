@@ -3,7 +3,7 @@ import MapEntityBuilder from '../builder/MapEntitBuilder'
 import PlayerEntityBuilder from '../builder/PlayerEntityBuilder'
 import SpriteObjectEntityBuilder from '../builder/SpriteObjectEntityBuilder'
 
-export class SpriteEntityCreator {
+export default class SpriteEntityCreator {
   mapEntityBuilder: MapEntityBuilder
   objectEntityBuilder: SpriteObjectEntityBuilder
   playerEntityBuilder: PlayerEntityBuilder

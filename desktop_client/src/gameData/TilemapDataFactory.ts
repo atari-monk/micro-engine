@@ -1,12 +1,7 @@
-import {
-  IImmutableVector2,
-  ITile,
-  ITilemapDataFactory,
-  IVector2,
-} from 'engine_api'
+import { IImmutableVector2, ITile, ITileMapDataFactory } from 'engine_api'
 import { ImmutableVector2 } from 'engine'
 
-export default class TilemapDataFactory implements ITilemapDataFactory {
+export default class TileMapDataFactory implements ITileMapDataFactory {
   private readonly _resolution = new ImmutableVector2(1920, 1080)
   private readonly _tileSize = new ImmutableVector2(20, 20)
   private readonly _mapOffset = new ImmutableVector2(0, 330)

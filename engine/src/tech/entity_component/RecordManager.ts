@@ -14,10 +14,6 @@ export default class RecordManager<T>
     return Object.keys(this._list).length
   }
 
-  constructor(logger?: ILogger) {
-    super(logger)
-  }
-
   add(name: string, config: T) {
     this._list[name] = config
   }

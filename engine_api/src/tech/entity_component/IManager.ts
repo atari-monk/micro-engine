@@ -1,4 +1,6 @@
-export default interface IManager<T> {
+import ILogable from './ILogable'
+
+export default interface IManager<T> extends ILogable {
   get count(): number
   add(name: string, object: T): void
   remove(name: string): void

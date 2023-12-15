@@ -24,12 +24,8 @@ export default class EngineFactory {
   private readonly _logger: ILogger = new LogManager(LogLevel.INFO)
   private readonly _objectDataManager: IManager<IObject> =
     new ObjectDataManager()
-  private readonly _entityManager: IEntityManager = new EntityManager(
-    this._logger
-  )
-  private readonly _playerManager: IPlayerManager = new PlayerManager(
-    this._logger
-  )
+  private readonly _entityManager: IEntityManager = new EntityManager()
+  private readonly _playerManager: IPlayerManager = new PlayerManager()
   private _gameLoop: GameLoop
   private readonly _tileMap: Tilemap
   private readonly _entityCreator: SimpleEntityCreator
@@ -40,7 +36,7 @@ export default class EngineFactory {
 
   constructor(private readonly _serverApi: IGameServerApi) {
     this._renderer = new RendererMock()
-    this._tileMap = new Tilemap(this._renderer)
+    this._tileMap = new Tilemap()
     this._gameLoop = new GameLoop(this._serverApi, this._playerManager)
     this._entityCreator = new SimpleEntityCreator(
       this._entityManager,

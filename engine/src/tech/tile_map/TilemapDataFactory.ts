@@ -1,8 +1,8 @@
-import { IImmutableVector2, ITile, ITilemapDataFactory } from 'engine_api'
+import { IImmutableVector2, ITile, ITileMapDataFactory } from 'engine_api'
 import Vector2 from '../../math/vector/Vector2'
 import ImmutableVector2 from '../../math/vector/ImmutableVector2'
 
-export default class TilemapDataFactory implements ITilemapDataFactory {
+export default class TilemapDataFactory implements ITileMapDataFactory {
   private readonly _mapOffset = new ImmutableVector2(0, 150)
 
   get mapOffset(): IImmutableVector2 {

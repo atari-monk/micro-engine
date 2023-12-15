@@ -31,12 +31,9 @@ export default class EngineFactory {
   private readonly _logger: ILogger = new LogManager(LogLevel.INFO)
   private readonly _objectDataManager: IManager<IObject> =
     new ObjectDataManager()
-  private readonly _entityManager: IEntityManager = new EntityManager(
-    this._logger
-  )
+  private readonly _entityManager: IEntityManager = new EntityManager()
   private readonly _playerManager: IPlayerManager = new PlayerManager(
-    this._entityManager,
-    this._logger
+    this._entityManager
   )
   private _gameLoop: GameLoop
   private readonly _tileMap: Tilemap
@@ -52,8 +49,10 @@ export default class EngineFactory {
 
   constructor(canvasId: string, private readonly _clientApi: IGameClientApi) {
     this._renderer = new RendererV2(canvasId)
-    this._tileMap = new Tilemap(this._renderer)
-    this._camera = new Camera(this._renderer)
+    this._tileMap = new Tilemap()
+    this._tileMap.renderer = this._renderer
+    this._camera = new Camera()
+    this._camera.renderer = this._renderer
     this._gameLoop = new GameLoop(this._entityManager, this._clientApi)
     this._keyDownHandler = (event: KeyboardEvent) => {
       this._input.handleKeyDown(event.key)

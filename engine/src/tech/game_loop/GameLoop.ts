@@ -1,9 +1,4 @@
-import {
-  IGameLoop,
-  IUpdateCallback,
-  IRenderCallback,
-  IEntityManager,
-} from 'engine_api'
+import { IGameLoop, IUpdateCallback, IRenderCallback } from 'engine_api'
 
 export default class GameLoop implements IGameLoop {
   private animationFrameId: number | null = null
@@ -11,8 +6,6 @@ export default class GameLoop implements IGameLoop {
   private updateCallbacks: IUpdateCallback[] = []
   private renderCallbacks: IRenderCallback[] = []
   private paused: boolean = false
-
-  constructor(protected readonly _entityManager: IEntityManager) {}
 
   startLoop(): void {
     this.paused = false

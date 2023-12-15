@@ -1,4 +1,4 @@
-import { IEntityManager, ILogger, IResult } from 'engine_api'
+import { IEntityManager, IResult } from 'engine_api'
 import EntityManager from '../../tech/entity_component/EntityManager'
 import ObjectComponent from '../../browser/component/ObjectComponent'
 import GameFrameDto from '../../multi/dtos/GameFrameDto'
@@ -8,8 +8,8 @@ export default class PlayerManager
   extends EntityManager
   implements IPlayerManager
 {
-  constructor(private _entityManager: IEntityManager, logger?: ILogger) {
-    super(logger)
+  constructor(private _entityManager: IEntityManager) {
+    super()
   }
 
   getPlayer1Id(): string {

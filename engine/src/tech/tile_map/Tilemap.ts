@@ -1,19 +1,24 @@
 import {
   IRendererV2,
   ITile,
-  ITilemap,
-  ITilemapDataFactory,
+  ITileMap,
+  ITileMapDataFactory,
   IVector2,
 } from 'engine_api'
 import Vector2 from '../../math/vector/Vector2'
 
-export default class Tilemap implements ITilemap {
+export default class Tilemap implements ITileMap {
   private map: number[][]
   private tiles: ITile[]
   private _tilePositions: IVector2[][]
   private _zeroTile: ITile
+  private _renderer!: IRendererV2
 
-  constructor(private readonly _renderer: IRendererV2) {
+  set renderer(renderer: IRendererV2) {
+    this._renderer = renderer
+  }
+
+  constructor() {
     this.map = []
     this.tiles = []
     this._tilePositions = []
@@ -25,7 +30,7 @@ export default class Tilemap implements ITilemap {
     }
   }
 
-  load(mapFactory: ITilemapDataFactory) {
+  load(mapFactory: ITileMapDataFactory) {
     this.map = mapFactory.createMap()
     this.tiles = mapFactory.createTiles()
 
@@ -35,6 +40,7 @@ export default class Tilemap implements ITilemap {
           new Vector2(x * this.tiles[0].size.x, y * this.tiles[0].size.y)
       )
     )
+    if (!this._renderer) throw new Error('renderer must be set in TileMap !')
   }
 
   render(dt: number): void {

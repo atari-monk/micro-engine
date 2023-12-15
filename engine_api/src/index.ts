@@ -88,8 +88,8 @@ export { default as IGenericState } from './tech/state_manager/IGenericState'
 export { default as IStateManager } from './tech/state_manager/IStateManager'
 //tile_map
 export { default as ITile } from './tech/tile_map/ITile'
-export { default as ITilemap } from './tech/tile_map/ITilemap'
-export { default as ITilemapDataFactory } from './tech/tile_map/ITilemapDataFactory'
+export { default as ITileMap } from './tech/tile_map/ITileMap'
+export { default as ITileMapDataFactory } from './tech/tile_map/ITileMapDataFactory'
 //ui_manager
 export { default as IUIElement } from './tech/ui_manager/IUIElement'
 export { default as IUIManager } from './tech/ui_manager/IUIManager'

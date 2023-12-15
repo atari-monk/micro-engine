@@ -10,10 +10,6 @@ export default class PlayerManager
   extends EntityManager
   implements IPlayerManager
 {
-  constructor(logger?: ILogger) {
-    super(logger)
-  }
-
   setPlayerInput(inputDto: InputDto) {
     let found = false
     const message = `setPlayerInput: ${inputDto.id} ${inputDto.direction}`

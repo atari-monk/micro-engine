@@ -5,10 +5,6 @@ export default class EntityManager
   extends MapManager<IEntity>
   implements IEntityManager
 {
-  constructor(logger?: ILogger) {
-    super(logger)
-  }
-
   update(dt: number): void {
     for (const entity of this.values()) {
       entity.update(dt)
