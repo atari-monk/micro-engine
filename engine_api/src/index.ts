@@ -19,8 +19,6 @@ export { default as IConfigurationManager } from './tech/config_manager/IConfigu
 //entity_component
 export { default as IComponent } from './tech/entity_component/IComponent'
 export { default as IEntity } from './tech/entity_component/IEntity'
-export { default as IEntityBuilder } from './tech/entity/IEntityBuilder'
-export { default as IEntityDependencyListBuilder } from './tech/entity/IEntityDependencyListBuilder'
 export { default as IEntityManager } from './tech/entity_component/IEntityManager'
 export { default as ILogable } from './tech/entity_component/ILogable'
 export { default as IManager } from './tech/entity_component/IManager'
