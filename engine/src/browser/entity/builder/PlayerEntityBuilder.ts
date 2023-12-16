@@ -1,11 +1,20 @@
-import { IInputManager, IObject, IRendererV2 } from 'engine_api'
+import {
+  IDataEntityBuilder,
+  IInputManager,
+  IObject,
+  IRendererV2,
+} from 'engine_api'
 import ObjectComponent from '../../component/ObjectComponent'
 import PlayerEntity from '../PlayerEntity'
 import RenderComponent from '../../component/RenderComponent'
 import MovementComponent from '../../component/MovementComponent'
 import EntityBuilder from './EntityBuilder'
+import { IPlayerEntityBuilder } from './EntityBuilderAPI'
 
-export default class PlayerEntityBuilder extends EntityBuilder {
+export default class PlayerEntityBuilder
+  extends EntityBuilder
+  implements IDataEntityBuilder<PlayerEntity, IObject>, IPlayerEntityBuilder
+{
   protected _renderer?: IRendererV2
   protected _input?: IInputManager
 

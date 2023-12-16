@@ -1,21 +1,21 @@
 import {
   IAnimationConfig,
   IObject,
-  IRendererV2,
   IEntityDataModel,
+  IImmutableVector2,
 } from 'engine_api'
 import Vector2 from '../../../math/vector/Vector2'
 import EntityDataManager from '../EntityDataManager'
 import { ballAnimations } from './ballSprite'
 
 export class EntityData extends EntityDataManager {
-  constructor(private readonly _renderer: IRendererV2) {
+  constructor(private readonly _center: IImmutableVector2) {
     super()
     this.createData()
   }
 
   private createData() {
-    const center = this._renderer.getCenter()
+    const center = this._center
 
     this.add('object', {
       object: {

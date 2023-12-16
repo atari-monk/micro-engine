@@ -1,19 +1,13 @@
-import { EngineDirector, GameData, RendererV2 } from 'engine'
+import { EngineDirector, GameData } from 'engine'
 import './css/styles.css'
 import ObjectDataFactory from './gameData/ObjectDataFactory'
 import TileMapDataFactory from './gameData/TileMapDataFactory'
 import './../assets/ball.png'
-import { IRendererV2 } from 'engine_api'
-
-// const engineFactory = new EngineFactory('canvas')
 
 // const gameData = new GameData(engineFactory.renderer)
 // const gameData2 = new GameData(engineFactory.renderer)
 // gameData2.objectData = new ObjectDataFactory(engineFactory.renderer)
 // gameData2.tileMapData = new TileMapDataFactory()
-
-// let engine = engineFactory.createEngine(gameData)
-// engine.startEngine()
 
 // document.addEventListener('keydown', (event: KeyboardEvent) => {
 //   if (event.key.toLowerCase() === 'o') {
@@ -28,9 +22,6 @@ import { IRendererV2 } from 'engine_api'
 //   }
 // })
 
-const renderer: IRendererV2 = new RendererV2('canvas')
-const engineDirector = new EngineDirector()
-const gameData = new GameData(renderer)
-let engine = engineDirector.createEngine(renderer)
-engine.initialize(gameData)
+const engine = new EngineDirector().createEngine('canvas')
+engine.initialize(new GameData(engine.getScreenCenter()))
 engine.start()

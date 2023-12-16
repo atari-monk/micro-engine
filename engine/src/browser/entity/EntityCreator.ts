@@ -1,19 +1,24 @@
 import {
-  IEntityCreator,
   IEntityManager,
   IManager,
   IEntityDataModel,
+  IEntityBuilder,
+  IObject,
+  IDataEntityBuilder,
 } from 'engine_api'
-import MapEntityBuilder from './builder/MapEntitBuilder'
-import PlayerEntityBuilder from './builder/PlayerEntityBuilder'
-import SpriteObjectEntityBuilder from './builder/SpriteObjectEntityBuilder'
-import ObjectEntityBuilder from './builder/ObjectEntityBuilder'
+import MapEntity from './MapEntity'
+import ObjectEntity from './ObjectEntity'
+import PlayerEntity from './PlayerEntity'
+import IEntityCreatorWithBuilders from './IEntityCreatorWithBuilders'
 
-export default class EntityCreator implements IEntityCreator {
-  mapEntityBuilder: MapEntityBuilder
-  objectEntityBuilder: ObjectEntityBuilder
-  spriteObjectEntityBuilder: SpriteObjectEntityBuilder
-  playerEntityBuilder: PlayerEntityBuilder
+export default class EntityCreator implements IEntityCreatorWithBuilders {
+  private _mapEntityBuilder!: IEntityBuilder<MapEntity>
+  private _objectEntityBuilder!: IDataEntityBuilder<ObjectEntity, IObject>
+  private _spriteObjectEntityBuilder!: IDataEntityBuilder<
+    ObjectEntity,
+    IEntityDataModel
+  >
+  private _playerEntityBuilder!: IDataEntityBuilder<PlayerEntity, IObject>
 
   private _entityManager!: IEntityManager
   private _dataManager!: IManager<IEntityDataModel>
@@ -26,11 +31,29 @@ export default class EntityCreator implements IEntityCreator {
     this._dataManager = dataManager
   }
 
-  constructor() {
-    this.mapEntityBuilder = new MapEntityBuilder()
-    this.objectEntityBuilder = new ObjectEntityBuilder()
-    this.spriteObjectEntityBuilder = new SpriteObjectEntityBuilder()
-    this.playerEntityBuilder = new PlayerEntityBuilder()
+  set mapEntityBuilder(mapEntityBuilder: IEntityBuilder<MapEntity>) {
+    this._mapEntityBuilder = mapEntityBuilder
+  }
+
+  set objectEntityBuilder(
+    objectEntityBuilder: IDataEntityBuilder<ObjectEntity, IObject>
+  ) {
+    this._objectEntityBuilder = objectEntityBuilder
+  }
+
+  set spriteObjectEntityBuilder(
+    spriteObjectEntityBuilder: IDataEntityBuilder<
+      ObjectEntity,
+      IEntityDataModel
+    >
+  ) {
+    this._spriteObjectEntityBuilder = spriteObjectEntityBuilder
+  }
+
+  set playerEntityBuilder(
+    playerEntityBuilder: IDataEntityBuilder<PlayerEntity, IObject>
+  ) {
+    this._playerEntityBuilder = playerEntityBuilder
   }
 
   createEntities() {
@@ -38,7 +61,7 @@ export default class EntityCreator implements IEntityCreator {
       throw new Error('entityManager must be set in EntityCreator !')
     if (!this._dataManager)
       throw new Error('dataManager must be set in EntityCreator !')
-    this._entityManager.add('map', this.mapEntityBuilder.build())
+    this._entityManager.add('map', this._mapEntityBuilder.build())
     this.createObjectEntity('object', 'object')
     this.createPlayerEntity('player1', 'player1')
     this.createSpriteObjectEntity('object2', 'object2')
@@ -47,7 +70,7 @@ export default class EntityCreator implements IEntityCreator {
   private createObjectEntity(entityKey: string, dataKey: string) {
     this._entityManager.add(
       entityKey,
-      this.objectEntityBuilder.build(
+      this._objectEntityBuilder.build(
         this._dataManager.getStrict(dataKey).object
       )
     )
@@ -56,14 +79,16 @@ export default class EntityCreator implements IEntityCreator {
   private createSpriteObjectEntity(entityKey: string, dataKey: string) {
     this._entityManager.add(
       entityKey,
-      this.spriteObjectEntityBuilder.build(this._dataManager.getStrict(dataKey))
+      this._spriteObjectEntityBuilder.build(
+        this._dataManager.getStrict(dataKey)
+      )
     )
   }
 
   private createPlayerEntity(entityKey: string, dataKey: string) {
     this._entityManager.add(
       entityKey,
-      this.playerEntityBuilder.build(
+      this._playerEntityBuilder.build(
         this._dataManager.getStrict(dataKey).object
       )
     )

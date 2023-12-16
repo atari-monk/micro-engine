@@ -1,8 +1,8 @@
 import {
   IEntityDataModel,
   IGameData,
+  IImmutableVector2,
   IManager,
-  IRendererV2,
   ITileMapDataFactory,
 } from 'engine_api'
 import TilemapDataFactory from '../../tech/tile_map/TilemapDataFactory'
@@ -12,8 +12,8 @@ export default class GameData implements IGameData {
   public entityData: IManager<IEntityDataModel>
   public tileMapData: ITileMapDataFactory
 
-  constructor(private readonly _renderer: IRendererV2) {
-    this.entityData = new EntityData(this._renderer)
+  constructor(center: IImmutableVector2) {
+    this.entityData = new EntityData(center)
     this.tileMapData = new TilemapDataFactory()
   }
 }

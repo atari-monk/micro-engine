@@ -129,4 +129,8 @@ export default class Engine {
     this._entityDataManager.removeAll()
     this._entityManager.removeAll()
   }
+
+  getScreenCenter() {
+    return this._renderer.getCenter()
+  }
 }

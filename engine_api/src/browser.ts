@@ -4,5 +4,14 @@ export { default as IEntityDataModel } from './browser/component/IEntityDataMode
 export { default as IObject } from './browser/component/IObject'
 //engine
 export { default as IGameData } from './browser/engine/IGameData'
-//
-export { default as IEntityCreator } from './browser/IEntityCreator'
+//entity
+//builder
+export { default as IEntityBuilder } from './browser/entity/builder/IEntityBuilder'
+export { default as IDataEntityBuilder } from './browser/entity/builder/IDataEntityBuilder'
+export { default as IEntityCreator } from './browser/entity/IEntityCreator'
+export {
+  IWithLogger,
+  IWithTileMap,
+  IWithRenderer,
+  IWithInputManager,
+} from './browser/entity/builder/WithBuilderMethodsAPI'
