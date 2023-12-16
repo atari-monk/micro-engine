@@ -1,4 +1,4 @@
-import { IRendererV2, ISprite } from 'engine_api'
+import { IRendererV2, IEntityDataModel } from 'engine_api'
 import ObjectComponent from '../../component/ObjectComponent'
 import SpriteComponent from '../../component/SpriteComponent'
 import ObjectEntity from '../ObjectEntity'
@@ -12,7 +12,7 @@ export default class SpriteObjectEntityBuilder extends EntityBuilder {
     return this
   }
 
-  build(objectData: ISprite): ObjectEntity {
+  build(objectData: IEntityDataModel): ObjectEntity {
     if (this._logger === undefined) throw new Error('Logger not set!')
     if (!this._renderer) throw new Error('Renderer not set!')
     if (!objectData) throw new Error('ObjectData not set!')

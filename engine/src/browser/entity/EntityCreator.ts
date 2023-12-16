@@ -1,8 +1,13 @@
-import { IEntityCreator, IEntityManager, IManager, ISprite } from 'engine_api'
-import MapEntityBuilder from '../builder/MapEntitBuilder'
-import PlayerEntityBuilder from '../builder/PlayerEntityBuilder'
-import SpriteObjectEntityBuilder from '../builder/SpriteObjectEntityBuilder'
-import ObjectEntityBuilder from '../builder/ObjectEntityBuilder'
+import {
+  IEntityCreator,
+  IEntityManager,
+  IManager,
+  IEntityDataModel,
+} from 'engine_api'
+import MapEntityBuilder from './builder/MapEntitBuilder'
+import PlayerEntityBuilder from './builder/PlayerEntityBuilder'
+import SpriteObjectEntityBuilder from './builder/SpriteObjectEntityBuilder'
+import ObjectEntityBuilder from './builder/ObjectEntityBuilder'
 
 export default class EntityCreator implements IEntityCreator {
   mapEntityBuilder: MapEntityBuilder
@@ -11,13 +16,13 @@ export default class EntityCreator implements IEntityCreator {
   playerEntityBuilder: PlayerEntityBuilder
 
   private _entityManager!: IEntityManager
-  private _dataManager!: IManager<ISprite>
+  private _dataManager!: IManager<IEntityDataModel>
 
   set entityManager(entityManager: IEntityManager) {
     this._entityManager = entityManager
   }
 
-  set dataManager(dataManager: IManager<ISprite>) {
+  set dataManager(dataManager: IManager<IEntityDataModel>) {
     this._dataManager = dataManager
   }
 

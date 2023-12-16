@@ -1,4 +1,4 @@
-import { EngineDirector, EngineFactory, GameData, RendererV2 } from 'engine'
+import { EngineDirector, GameData, RendererV2 } from 'engine'
 import './css/styles.css'
 import ObjectDataFactory from './gameData/ObjectDataFactory'
 import TileMapDataFactory from './gameData/TileMapDataFactory'

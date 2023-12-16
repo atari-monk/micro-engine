@@ -1,9 +1,14 @@
-import { IAnimationConfig, IObject, IRendererV2, ISprite } from 'engine_api'
+import {
+  IAnimationConfig,
+  IObject,
+  IRendererV2,
+  IEntityDataModel,
+} from 'engine_api'
 import Vector2 from '../../../math/vector/Vector2'
-import SpriteDataManager from '../manager/SpriteDataManager'
+import EntityDataManager from '../EntityDataManager'
 import { ballAnimations } from './ballSprite'
 
-export class SpriteData extends SpriteDataManager {
+export class EntityData extends EntityDataManager {
   constructor(private readonly _renderer: IRendererV2) {
     super()
     this.createData()
@@ -58,6 +63,6 @@ export class SpriteData extends SpriteDataManager {
         speed: new Vector2(),
       } as IObject,
       animations: ballAnimations,
-    } as ISprite)
+    } as IEntityDataModel)
   }
 }

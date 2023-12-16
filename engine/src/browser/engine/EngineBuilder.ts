@@ -7,18 +7,18 @@ import {
   ILogger,
   IManager,
   IRendererV2,
-  ISprite,
+  IEntityDataModel,
   ITileMap,
 } from 'engine_api'
-import Engine2 from './Engine2'
-import EntityCreator from '../entity/creator/EntityCreator'
+import Engine from './Engine'
+import EntityCreator from '../entity/EntityCreator'
 
 export default class EngineBuilder {
   private _logger!: ILogger
   private _gameLoop!: IGameLoop
   private _renderer!: IRendererV2
   private _input!: IInputManager
-  private _entityDataManager!: IManager<ISprite>
+  private _entityDataManager!: IManager<IEntityDataModel>
   private _entityManager!: IEntityManager
   private _camera!: ICamera
   private _tileMap!: ITileMap
@@ -44,7 +44,7 @@ export default class EngineBuilder {
     return this
   }
 
-  withEntityDataManager(entityDataManager: IManager<ISprite>) {
+  withEntityDataManager(entityDataManager: IManager<IEntityDataModel>) {
     this._entityDataManager = entityDataManager
     return this
   }
@@ -87,7 +87,7 @@ export default class EngineBuilder {
       .withLogger(this._logger)
       .withRenderer(this._renderer)
       .withInputManager(this._input)
-    return new Engine2(
+    return new Engine(
       this._logger,
       this._gameLoop,
       this._renderer,

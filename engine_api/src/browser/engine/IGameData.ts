@@ -1,10 +1,8 @@
 import ITileMapDataFactory from '../../tech/tile_map/ITileMapDataFactory'
 import IManager from '../../tech/entity_component/IManager'
-import IObject from '../component/IObject'
-import ISprite from '../component/ISprite'
+import IEntityDataModel from '../component/IEntityDataModel'
 
 export default interface IGameData {
-  objectData: IManager<IObject>
-  spriteData: IManager<ISprite>
+  entityData: IManager<IEntityDataModel>
   tileMapData: ITileMapDataFactory
 }
