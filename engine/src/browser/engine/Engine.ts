@@ -16,20 +16,20 @@ import {
 import ObjectComponent from '../component/ObjectComponent'
 
 export default class Engine {
-  private readonly _logger: ILogger
-  private readonly _gameLoop: IGameLoop
-  private readonly _renderer: IRendererV2
-  private readonly _input: IInputManager
-  private _keyDownHandler!: (event: KeyboardEvent) => void
-  private _keyUpHandler!: (event: KeyboardEvent) => void
-  private readonly _entityDataManager: IManager<IEntityDataModel>
-  private readonly _entityManager: IEntityManager
-  private readonly _camera: ICamera
-  private readonly _tileMap: ITileMap
-  private readonly _entityCreator: IEntityCreator
+  protected readonly _logger: ILogger
+  protected readonly _gameLoop: IGameLoop
+  protected readonly _renderer: IRendererV2
+  protected readonly _input: IInputManager
+  protected _keyDownHandler!: (event: KeyboardEvent) => void
+  protected _keyUpHandler!: (event: KeyboardEvent) => void
+  protected readonly _entityDataManager: IManager<IEntityDataModel>
+  protected readonly _entityManager: IEntityManager
+  protected readonly _camera: ICamera
+  protected readonly _tileMap: ITileMap
+  protected readonly _entityCreator: IEntityCreator
 
-  private _player?: IEntity
-  private _playerPosition?: IVector2
+  protected _player: IEntity = {} as IEntity
+  protected _playerPosition: IVector2 = {} as IVector2
 
   constructor(
     logger: ILogger,
@@ -53,6 +53,14 @@ export default class Engine {
     this._entityCreator = entityCreator
   }
 
+  initialize(gameData: IGameData) {
+    this.subscribeKeyboardEvents()
+    this._camera.load(gameData.tileMapData)
+    this._tileMap.load(gameData.tileMapData)
+    this.loadEntityData(gameData.entityData)
+    this._entityCreator.createEntities()
+  }
+
   private subscribeKeyboardEvents() {
     this._keyDownHandler = (event: KeyboardEvent) => {
       this._input.handleKeyDown(event.key)
@@ -64,15 +72,24 @@ export default class Engine {
     document.addEventListener('keyup', this._keyUpHandler)
   }
 
-  private unsubscribeKeyboardEvents(): void {
-    document.removeEventListener('keydown', this._keyDownHandler)
-    document.removeEventListener('keyup', this._keyUpHandler)
-  }
-
   private loadEntityData(dataManager: IManager<IEntityDataModel>) {
     dataManager.forEach((name, sprite) => {
       this._entityDataManager.add(name, sprite)
     })
+  }
+
+  start() {
+    this._logger.log(`Starting Engine`)
+    this.setupCamera()
+    this._gameLoop.subscribeToUpdate(this.update)
+    this._gameLoop.subscribeToRender(this.render)
+    this._gameLoop.startLoop()
+  }
+
+  private setupCamera() {
+    this._player = this._entityManager.getStrict('player1')
+    this._playerPosition =
+      this._player.getComponentByType<ObjectComponent>(ObjectComponent).position
   }
 
   private update = (dt: number) => {
@@ -87,35 +104,13 @@ export default class Engine {
     this._renderer.resetTranslation()
   }
 
-  private setupCamera() {
-    this._player = this._entityManager.getStrict('player1')
-    this._playerPosition =
-      this._player.getComponentByType<ObjectComponent>(ObjectComponent).position
-  }
-
-  initialize(gameData: IGameData) {
-    this.subscribeKeyboardEvents()
-    this._camera.load(gameData.tileMapData)
-    this._tileMap.load(gameData.tileMapData)
-    this.loadEntityData(gameData.entityData)
-    this._entityCreator.createEntities()
-  }
-
-  start() {
-    this._logger.log(`Starting Engine`)
-    this.setupCamera()
-    this._gameLoop.subscribeToUpdate(this.update)
-    this._gameLoop.subscribeToRender(this.render)
-    this._gameLoop.startLoop()
-  }
-
   stop() {
     this._logger.log(`Stoping Engine`)
     this._gameLoop.stopLoop()
     this._gameLoop.unsubscribeFromRender(this.render)
     this._gameLoop.unsubscribeFromUpdate(this.update)
-    this._player = undefined
-    this._playerPosition = undefined
+    this._player = {} as IEntity
+    this._playerPosition = {} as IVector2
   }
 
   reloadEngine(gameData: IGameData) {
@@ -128,6 +123,11 @@ export default class Engine {
     this._input.unsubscribeAll('KeyDown')
     this._entityDataManager.removeAll()
     this._entityManager.removeAll()
+  }
+
+  private unsubscribeKeyboardEvents(): void {
+    document.removeEventListener('keydown', this._keyDownHandler)
+    document.removeEventListener('keyup', this._keyUpHandler)
   }
 
   getScreenCenter() {

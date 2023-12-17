@@ -1,109 +1,74 @@
-// import {
-//   ICamera,
-//   IEngineClientApi,
-//   IEntityManager,
-//   IEntity,
-//   IGameLoop,
-//   IInputManager,
-//   ILogger,
-//   IRendererV2,
-//   IVector2,
-//   IGameFrameDto,
-//   IResult,
-// } from 'engine_api'
-// import {
-//   IClientPlayerManager as IPlayerManager,
-// } from 'engine_api/client'
-// import ObjectComponent from '../../browser/component/ObjectComponent'
-// import { GameLoop } from '../game_loop/GameLoop'
+import {
+  ICamera,
+  IEngineClientApi,
+  IEntityManager,
+  IGameLoop,
+  IInputManager,
+  ILogger,
+  IRendererV2,
+  IGameFrameDto,
+  IResult,
+  IEntityDataModel,
+  IManager,
+  ITileMap,
+  IEntityCreator,
+} from 'engine_api'
+import { IClientPlayerManager as IPlayerManager } from 'engine_api/client'
+import { GameLoop } from '../game_loop/GameLoop'
+import { default as EngineBase } from './../../browser/engine/Engine'
 
-// export default class Engine implements IEngineClientApi {
-//   private readonly _gameLoop: IGameLoop
-//   private readonly _renderer: IRendererV2
-//   private readonly _logger: ILogger
-//   private readonly _input: IInputManager
-//   private _entityManager: IEntityManager
-//   private readonly _playerManager: IPlayerManager
-//   private readonly _camera: ICamera
-//   private _player: IEntity = {} as IEntity
-//   private _playerPosition?: IVector2
-//   private _clientId: string = ''
+export default class Engine extends EngineBase implements IEngineClientApi {
+  private readonly _playerManager: IPlayerManager
 
-//   set clientId(id: string) {
-//     this._clientId = id
-//   }
+  private _clientId: string = ''
 
-//   get clientId(): string {
-//     return this._clientId
-//   }
+  set clientId(id: string) {
+    this._clientId = id
+  }
 
-//   constructor(private readonly _engineConfig: IClientEngineConfig) {
-//     this._logger = this._engineConfig.logger
-//     this._logger.debug(`Logger`)
-//     this._logger.debug(`Game Loop`)
-//     this._gameLoop = this._engineConfig.gameLoop
-//     this._logger.debug(`Renderer`)
-//     this._renderer = this._engineConfig.renderer
-//     this._logger.debug(`Input`)
-//     this._input = this._engineConfig.input
-//     this._logger.debug(`Entities Manager`)
-//     this._entityManager = this._engineConfig.entityManager
-//     this._playerManager = this._engineConfig.playerManager
-//     this._camera = this._engineConfig.camera
-//   }
+  get clientId(): string {
+    return this._clientId
+  }
 
-//   addPlayer(socketId: string): IResult {
-//     return this._playerManager.addPlayer(socketId)
-//   }
+  constructor(
+    logger: ILogger,
+    gameLoop: IGameLoop,
+    renderer: IRendererV2,
+    input: IInputManager,
+    entityDataManager: IManager<IEntityDataModel>,
+    entityManager: IEntityManager,
+    camera: ICamera,
+    tileMap: ITileMap,
+    entityCreator: IEntityCreator,
+    playerManager: IPlayerManager
+  ) {
+    super(
+      logger,
+      gameLoop,
+      renderer,
+      input,
+      entityDataManager,
+      entityManager,
+      camera,
+      tileMap,
+      entityCreator
+    )
+    this._playerManager = playerManager
+  }
 
-//   getPlayer1Id(): string {
-//     return this._playerManager.getPlayer1Id()
-//   }
+  addPlayer(socketId: string): IResult {
+    return this._playerManager.addPlayer(socketId)
+  }
 
-//   updatePlayer(gameFrameDTO: IGameFrameDto): void {
-//     this._playerManager.updatePlayer(gameFrameDTO)
-//   }
+  getPlayer1Id(): string {
+    return this._playerManager.getPlayer1Id()
+  }
 
-//   loadGameLoop() {
-//     ;(this._gameLoop as GameLoop).load(this.clientId)
-//   }
+  updatePlayer(gameFrameDTO: IGameFrameDto): void {
+    this._playerManager.updatePlayer(gameFrameDTO)
+  }
 
-//   updateCallback = (dt: number) => {
-//     this._entityManager.update(dt)
-//   }
-
-//   renderCallback = (dt: number) => {
-//     this._renderer.clearCanvas()
-//     this._renderer.fillCanvas('rgba(87, 40, 145, 0.8)')
-//     if (this._playerPosition) this._camera.setPosition(this._playerPosition)
-//     this._entityManager.render(dt)
-//     this._renderer.resetTranslation()
-//   }
-
-//   startEngine() {
-//     this._logger.debug(`Starting Engine`)
-//     this._player = this._entityManager.getStrict('player1')
-//     this._playerPosition =
-//       this._player.getComponentByType<ObjectComponent>(
-//         ObjectComponent
-//       )?.position
-//     this._logger.debug(`Subscribe To Update`)
-//     this._gameLoop.subscribeToUpdate(this.updateCallback)
-//     this._logger.debug(`Subscribe To Render`)
-//     this._gameLoop.subscribeToRender(this.renderCallback)
-//     this._logger.debug(`Starting Game Loop`)
-//     this._gameLoop.startLoop()
-//   }
-
-//   stopEngine() {
-//     this._logger.debug(`Stoping Engine`)
-//     this._logger.debug(`Stoping Game Loop`)
-//     this._gameLoop.stopLoop()
-//     this._logger.debug(`Unsubscribe From Render`)
-//     this._gameLoop.unsubscribeFromRender(this.renderCallback)
-//     this._logger.debug(`Unsubscribe From Update`)
-//     this._gameLoop.unsubscribeFromUpdate(this.updateCallback)
-//     this._player = {} as IEntity
-//     this._playerPosition = undefined
-//   }
-// }
+  loadGameLoop() {
+    ;(this._gameLoop as GameLoop).load(this.clientId)
+  }
+}

@@ -34,7 +34,7 @@ export default class GameServer implements IGameServerApi {
     this._app.use(cors())
   }
 
-  startServer() {
+  start() {
     this._httpServer.listen(this._port, () => {
       console.log(`Server is running on port ${this._port}`)
     })

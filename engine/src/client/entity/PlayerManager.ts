@@ -8,21 +8,23 @@ export default class PlayerManager
   extends EntityManager
   implements IPlayerManager
 {
-  constructor(private _entityManager: IEntityManager) {
-    super()
+  private _entityManager!: IEntityManager
+
+  set entityManager(entityManager: IEntityManager) {
+    this._entityManager = entityManager
   }
 
   getPlayer1Id(): string {
-    const player = this.get('player1')
+    const player = this.getStrict('player1')
     const playerObj =
-      player?.getComponentByType<ObjectComponent>(ObjectComponent)
-    return playerObj?.id ?? ''
+      player.getComponentByType<ObjectComponent>(ObjectComponent)
+    return playerObj.id ?? ''
   }
 
   addPlayer(socketId: string): IResult {
     for (const player of this.values()) {
       const object = player.getComponentByType<ObjectComponent>(ObjectComponent)
-      if (object?.id === socketId) {
+      if (object.id === socketId) {
         return {
           isDone: false,
           message: 'Player already on the list',
@@ -41,7 +43,7 @@ export default class PlayerManager
     const playerKey = `player${count + 1}`
     const player = this._entityManager.getStrict(playerKey)
     const playerObject =
-      player?.getComponentByType<ObjectComponent>(ObjectComponent)
+      player.getComponentByType<ObjectComponent>(ObjectComponent)
     if (playerObject) {
       playerObject.id = socketId
       this.add(playerKey, player)
@@ -62,11 +64,11 @@ export default class PlayerManager
       for (const player of this.values()) {
         const object =
           player.getComponentByType<ObjectComponent>(ObjectComponent)
-        if (playerDto.id === object?.id) {
+        if (playerDto.id === object.id) {
           this.logDebug(
             `updatePlayer: (${playerDto.position.x}, ${playerDto.position.y})`
           )
-          object?.position.setValues(playerDto.position)
+          object.position.setValues(playerDto.position)
         }
       }
     })

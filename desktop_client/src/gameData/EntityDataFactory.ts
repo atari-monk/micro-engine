@@ -1,7 +1,7 @@
 import { IAnimationConfig, IObject, IRendererV2 } from 'engine_api'
 import { EntityDataManager, Vector2 } from 'engine'
 
-export default class ObjectDataFactory extends EntityDataManager {
+export default class EntityDataFactory extends EntityDataManager {
   constructor(private readonly _renderer: IRendererV2) {
     super()
     this.createData()

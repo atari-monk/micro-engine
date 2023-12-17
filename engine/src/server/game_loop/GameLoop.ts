@@ -4,14 +4,20 @@ import { IServerPlayerManager as IPlayerManager } from 'engine_api/server'
 export default class GameLoop {
   private updateCallbacks: IUpdateCallback[] = []
   private paused: boolean = false
-  private fps: number = 30
+  private fps: number = 25
   private frameInterval: number = 1000 / this.fps
   private lastFrameTime: number = 0
 
-  constructor(
-    private readonly _serverApi: IGameServerApi,
-    private readonly _playerManager: IPlayerManager
-  ) {}
+  private _serverApi!: IGameServerApi
+  private _playerManager!: IPlayerManager
+
+  set serverApi(serverApi: IGameServerApi) {
+    this._serverApi = serverApi
+  }
+
+  set playerManager(playerManager: IPlayerManager) {
+    this._playerManager = playerManager
+  }
 
   startLoop(): void {
     this.paused = false

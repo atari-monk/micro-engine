@@ -1,52 +1,80 @@
 import {
   IEngineServerApi,
+  IEntityCreator,
+  IEntityDataModel,
   IEntityManager,
+  IGameData,
   IGameServerApi,
   ILogger,
+  IManager,
+  IRendererV2,
   IResult,
+  ITileMap,
   InputDto,
 } from 'engine_api'
 import { IServerPlayerManager as IPlayerManager } from 'engine_api/server'
-import GameLoop from '../game_loop/GameLoop'
 import ObjectComponent from '../../browser/component/ObjectComponent'
+import GameLoop from '../game_loop/GameLoop'
 
 export default class Engine implements IEngineServerApi {
   private readonly _logger: ILogger
-  private readonly _entityManager: IEntityManager
-  private readonly _playerManager: IPlayerManager
   private readonly _gameLoop: GameLoop
+  private readonly _entityDataManager: IManager<IEntityDataModel>
+  private readonly _entityManager: IEntityManager
+  private readonly _tileMap: ITileMap
+  private readonly _renderer: IRendererV2
+  private readonly _entityCreator: IEntityCreator
+  private readonly _playerManager: IPlayerManager
+  private readonly _serverApi: IGameServerApi
 
   constructor(
     logger: ILogger,
+    gameLoop: GameLoop,
+    entityDataManager: IManager<IEntityDataModel>,
     entityManager: IEntityManager,
     playerManager: IPlayerManager,
-    gameLoop: GameLoop,
-    private readonly _serverApi: IGameServerApi
+    tileMap: ITileMap,
+    renderer: IRendererV2,
+    entityCreator: IEntityCreator,
+    serverApi: IGameServerApi
   ) {
     this._logger = logger
-    this._entityManager = entityManager
-    this._playerManager = playerManager
     this._gameLoop = gameLoop
+    this._entityDataManager = entityDataManager
+    this._entityManager = entityManager
+    this._tileMap = tileMap
+    this._renderer = renderer
+    this._entityCreator = entityCreator
+    this._playerManager = playerManager
+    this._serverApi = serverApi
   }
 
-  updateCallback = (dt: number) => {
-    this._entityManager.update(dt)
+  initialize(gameData: IGameData) {
+    this._tileMap.load(gameData.tileMapData)
+    this.loadEntityData(gameData.entityData)
+    this._entityCreator.createEntities()
   }
 
-  startEngine() {
+  private loadEntityData(dataManager: IManager<IEntityDataModel>) {
+    dataManager.forEach((name, sprite) => {
+      this._entityDataManager.add(name, sprite)
+    })
+  }
+
+  start() {
     this._logger.log(`Starting Engine`)
-    this._logger.log(`Subscribe To Update`)
-    this._gameLoop.subscribeToUpdate(this.updateCallback)
-    this._logger.log(`Starting Game Loop`)
+    this._gameLoop.subscribeToUpdate(this.update)
     this._gameLoop.startLoop()
   }
 
-  stopEngine() {
+  private update = (dt: number) => {
+    this._entityManager.update(dt)
+  }
+
+  stop() {
     this._logger.log(`Stoping Engine`)
-    this._logger.log(`Stoping Game Loop`)
     this._gameLoop.stopLoop()
-    this._logger.log(`Unsubscribe From Update`)
-    this._gameLoop.unsubscribeFromUpdate(this.updateCallback)
+    this._gameLoop.unsubscribeFromUpdate(this.update)
   }
 
   getPlayerCount() {
@@ -100,5 +128,9 @@ export default class Engine implements IEngineServerApi {
 
   passClientInputToPlayerMovementComponent(inputDto: InputDto): void {
     this._playerManager.setPlayerInput(inputDto)
+  }
+
+  getScreenCenter() {
+    return this._renderer.getCenter()
   }
 }

@@ -33,6 +33,6 @@
     }
   ],
   "settings": {
-    "liveServer.settings.multiRootWorkspaceName": "desktop_client"
+    "liveServer.settings.multiRootWorkspaceName": "multi_desktop_client"
   }
 }

@@ -39,10 +39,17 @@ export default class PlayerEntityBuilder
     const objectComponent = new ObjectComponent(objectData)
     entity.addComponent(objectComponent)
     entity.addComponent(new RenderComponent(objectComponent, this._renderer))
+    this.addMovementComponent(entity, objectComponent)
+
+    return entity
+  }
+
+  protected addMovementComponent(
+    entity: PlayerEntity,
+    objectComponent: ObjectComponent
+  ) {
     entity.addComponent(
       new MovementComponent(objectComponent!, this._input!, this._logger!)
     )
-
-    return entity
   }
 }

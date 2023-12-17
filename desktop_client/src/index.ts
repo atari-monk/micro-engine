@@ -1,6 +1,6 @@
 import { EngineDirector, GameData } from 'engine'
 import './css/styles.css'
-import ObjectDataFactory from './gameData/ObjectDataFactory'
+import EntityDataFactory from './gameData/EntityDataFactory'
 import TileMapDataFactory from './gameData/TileMapDataFactory'
 import './../assets/ball.png'
 

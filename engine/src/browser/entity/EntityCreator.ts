@@ -12,7 +12,7 @@ import PlayerEntity from './PlayerEntity'
 import IEntityCreatorWithBuilders from './IEntityCreatorWithBuilders'
 
 export default class EntityCreator implements IEntityCreatorWithBuilders {
-  private _mapEntityBuilder!: IEntityBuilder<MapEntity>
+  protected _mapEntityBuilder!: IEntityBuilder<MapEntity>
   private _objectEntityBuilder!: IDataEntityBuilder<ObjectEntity, IObject>
   private _spriteObjectEntityBuilder!: IDataEntityBuilder<
     ObjectEntity,
@@ -20,8 +20,8 @@ export default class EntityCreator implements IEntityCreatorWithBuilders {
   >
   private _playerEntityBuilder!: IDataEntityBuilder<PlayerEntity, IObject>
 
-  private _entityManager!: IEntityManager
-  private _dataManager!: IManager<IEntityDataModel>
+  protected _entityManager!: IEntityManager
+  protected _dataManager!: IManager<IEntityDataModel>
 
   set entityManager(entityManager: IEntityManager) {
     this._entityManager = entityManager
@@ -63,11 +63,11 @@ export default class EntityCreator implements IEntityCreatorWithBuilders {
       throw new Error('dataManager must be set in EntityCreator !')
     this._entityManager.add('map', this._mapEntityBuilder.build())
     this.createObjectEntity('object', 'object')
-    this.createPlayerEntity('player1', 'player1')
     this.createSpriteObjectEntity('object2', 'object2')
+    this.createPlayerEntity('player1', 'player1')
   }
 
-  private createObjectEntity(entityKey: string, dataKey: string) {
+  protected createObjectEntity(entityKey: string, dataKey: string) {
     this._entityManager.add(
       entityKey,
       this._objectEntityBuilder.build(
@@ -76,7 +76,7 @@ export default class EntityCreator implements IEntityCreatorWithBuilders {
     )
   }
 
-  private createSpriteObjectEntity(entityKey: string, dataKey: string) {
+  protected createSpriteObjectEntity(entityKey: string, dataKey: string) {
     this._entityManager.add(
       entityKey,
       this._spriteObjectEntityBuilder.build(
@@ -85,7 +85,7 @@ export default class EntityCreator implements IEntityCreatorWithBuilders {
     )
   }
 
-  private createPlayerEntity(entityKey: string, dataKey: string) {
+  protected createPlayerEntity(entityKey: string, dataKey: string) {
     this._entityManager.add(
       entityKey,
       this._playerEntityBuilder.build(

@@ -1,41 +1,62 @@
 import {
-  ICamera,
-  IEntityManager,
-  IGameLoop,
-  IInputManager,
   ILogger,
+  IEntityManager,
+  IGameServerApi,
   IManager,
-  IRendererV2,
   IEntityDataModel,
   ITileMap,
+  IRendererV2,
 } from 'engine_api'
+import IPlayerManager from 'engine_api/server/entity/IPlayerManager'
+import IEntityCreatorWithBuilders from '../../browser/entity/IEntityCreatorWithBuilders'
+import { IMapEntityBuilder } from '../../browser/entity/builder/EntityBuilderAPI'
 import Engine from './Engine'
-import IEntityCreatorWithBuilders from '../entity/IEntityCreatorWithBuilders'
 import {
-  IMapEntityBuilder,
   IObjectEntityBuilder,
   IPlayerEntityBuilder,
-  ISpriteObjectEntityBuilder,
 } from '../entity/builder/EntityBuilderAPI'
+import GameLoop from '../game_loop/GameLoop'
 
 export default class EngineBuilder {
   protected _logger!: ILogger
-  protected _gameLoop!: IGameLoop
-  protected _renderer!: IRendererV2
-  protected _input!: IInputManager
-  protected _entityDataManager!: IManager<IEntityDataModel>
   protected _entityManager!: IEntityManager
-  protected _camera!: ICamera
+  protected _playerManager!: IPlayerManager
+  protected _entityDataManager!: IManager<IEntityDataModel>
   protected _tileMap!: ITileMap
+  protected _renderer!: IRendererV2
+  protected _gameLoop!: GameLoop
   protected _entityCreator!: IEntityCreatorWithBuilders
+  protected _serverApi!: IGameServerApi
 
   withLogger(logger: ILogger) {
     this._logger = logger
     return this
   }
 
-  withGameLoop(gameLoop: IGameLoop) {
+  withGameServerApi(serverApi: IGameServerApi) {
+    this._serverApi = serverApi
+    return this
+  }
+
+  withPlayerManager(playerManager: IPlayerManager) {
+    if (!this._logger) {
+      throw new Error(this.getError('Logger', 'Player Manager'))
+    }
+    this._playerManager = playerManager
+    this._playerManager.logger = this._logger
+    return this
+  }
+
+  withGameLoop(gameLoop: GameLoop) {
+    if (!this._serverApi) {
+      throw new Error(this.getError('Server Api', 'Game Loop'))
+    }
+    if (!this._playerManager) {
+      throw new Error(this.getError('Player Manager', 'Game Loop'))
+    }
     this._gameLoop = gameLoop
+    this._gameLoop.serverApi = this._serverApi
+    this._gameLoop.playerManager = this._playerManager
     return this
   }
 
@@ -44,8 +65,12 @@ export default class EngineBuilder {
     return this
   }
 
-  withInput(input: IInputManager) {
-    this._input = input
+  withTileMap(tileMap: ITileMap) {
+    if (!this._renderer) {
+      throw new Error(this.getError('Renderer', 'Tile Map'))
+    }
+    this._tileMap = tileMap
+    this._tileMap.renderer = this._renderer
     return this
   }
 
@@ -67,29 +92,10 @@ export default class EngineBuilder {
     return this
   }
 
-  withCamera(camera: ICamera) {
-    if (!this._renderer) {
-      throw new Error(this.getError('Renderer', 'Camera'))
-    }
-    this._camera = camera
-    this._camera.renderer = this._renderer
-    return this
-  }
-
-  withTileMap(tileMap: ITileMap) {
-    if (!this._renderer) {
-      throw new Error(this.getError('Renderer', 'Tile Map'))
-    }
-    this._tileMap = tileMap
-    this._tileMap.renderer = this._renderer
-    return this
-  }
-
   withEntityCreator(
     entityCreator: IEntityCreatorWithBuilders,
     mapEntityBuilder: IMapEntityBuilder,
     objectEntityBuilder: IObjectEntityBuilder,
-    spriteObjectEntityBuilder: ISpriteObjectEntityBuilder,
     playerEntityBuilder: IPlayerEntityBuilder
   ) {
     if (!this._entityDataManager) {
@@ -104,16 +110,12 @@ export default class EngineBuilder {
     this._entityCreator.mapEntityBuilder = mapEntityBuilder
       .withLogger(this._logger)
       .withTileMap(this._tileMap)
-    this._entityCreator.objectEntityBuilder = objectEntityBuilder
-      .withLogger(this._logger)
-      .withRenderer(this._renderer)
-    this._entityCreator.spriteObjectEntityBuilder = spriteObjectEntityBuilder
-      .withLogger(this._logger)
-      .withRenderer(this._renderer)
-    this._entityCreator.playerEntityBuilder = playerEntityBuilder
-      .withLogger(this._logger)
-      .withRenderer(this._renderer)
-      .withInputManager(this._input)
+    this._entityCreator.objectEntityBuilder = objectEntityBuilder.withLogger(
+      this._logger
+    )
+    this._entityCreator.playerEntityBuilder = playerEntityBuilder.withLogger(
+      this._logger
+    )
     return this
   }
 
@@ -121,13 +123,13 @@ export default class EngineBuilder {
     if (
       !this._logger ||
       !this._gameLoop ||
-      !this._renderer ||
-      !this._input ||
       !this._entityDataManager ||
       !this._entityManager ||
-      !this._camera ||
       !this._tileMap ||
-      !this._entityCreator
+      !this._renderer ||
+      !this._entityCreator ||
+      !this._playerManager ||
+      !this._serverApi
     ) {
       throw new Error(
         'All dependencies must be set before building the engine.'
@@ -136,13 +138,13 @@ export default class EngineBuilder {
     return new Engine(
       this._logger,
       this._gameLoop,
-      this._renderer,
-      this._input,
       this._entityDataManager,
       this._entityManager,
-      this._camera,
+      this._playerManager,
       this._tileMap,
-      this._entityCreator
+      this._renderer,
+      this._entityCreator,
+      this._serverApi
     )
   }
 }
