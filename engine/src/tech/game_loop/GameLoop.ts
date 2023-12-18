@@ -7,22 +7,22 @@ export default class GameLoop implements IGameLoop {
   private renderCallbacks: IRenderCallback[] = []
   private paused: boolean = false
 
-  startLoop(): void {
+  start(): void {
     this.paused = false
     this.loop()
   }
 
-  stopLoop(): void {
+  stop(): void {
     if (this.animationFrameId !== null) {
       cancelAnimationFrame(this.animationFrameId)
     }
   }
 
-  pauseLoop(): void {
+  pause(): void {
     this.paused = true
   }
 
-  resumeLoop(): void {
+  resume(): void {
     this.paused = false
     this.loop()
   }
@@ -48,19 +48,19 @@ export default class GameLoop implements IGameLoop {
     this.animationFrameId = requestAnimationFrame(this.loop)
   }
 
-  subscribeToUpdate(callback: IUpdateCallback): void {
+  subscribeUpdate(callback: IUpdateCallback): void {
     this.updateCallbacks.push(callback)
   }
 
-  unsubscribeFromUpdate(callback: IUpdateCallback): void {
+  unsubscribeUpdate(callback: IUpdateCallback): void {
     this.updateCallbacks = this.updateCallbacks.filter((cb) => cb !== callback)
   }
 
-  subscribeToRender(callback: IRenderCallback): void {
+  subscribeRender(callback: IRenderCallback): void {
     this.renderCallbacks.push(callback)
   }
 
-  unsubscribeFromRender(callback: IRenderCallback): void {
+  unsubscribeRender(callback: IRenderCallback): void {
     this.renderCallbacks = this.renderCallbacks.filter((cb) => cb !== callback)
   }
 }

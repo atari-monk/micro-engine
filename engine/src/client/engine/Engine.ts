@@ -2,7 +2,6 @@ import {
   ICamera,
   IEngineClientApi,
   IEntityManager,
-  IGameLoop,
   IInputManager,
   ILogger,
   IRendererV2,
@@ -13,12 +12,15 @@ import {
   ITileMap,
   IEntityCreator,
 } from 'engine_api'
-import { IClientPlayerManager as IPlayerManager } from 'engine_api/client'
-import { GameLoop } from '../game_loop/GameLoop'
+import {
+  IClientPlayerManager as IPlayerManager,
+  IClientGameLoop as IGameLoop,
+} from 'engine_api/client'
 import { default as EngineBase } from './../../browser/engine/Engine'
 
 export default class Engine extends EngineBase implements IEngineClientApi {
   private readonly _playerManager: IPlayerManager
+  private readonly _clientGameLoop: IGameLoop
 
   private _clientId: string = ''
 
@@ -32,7 +34,7 @@ export default class Engine extends EngineBase implements IEngineClientApi {
 
   constructor(
     logger: ILogger,
-    gameLoop: IGameLoop,
+    clientGameLoop: IGameLoop,
     renderer: IRendererV2,
     input: IInputManager,
     entityDataManager: IManager<IEntityDataModel>,
@@ -44,7 +46,7 @@ export default class Engine extends EngineBase implements IEngineClientApi {
   ) {
     super(
       logger,
-      gameLoop,
+      clientGameLoop,
       renderer,
       input,
       entityDataManager,
@@ -54,6 +56,7 @@ export default class Engine extends EngineBase implements IEngineClientApi {
       entityCreator
     )
     this._playerManager = playerManager
+    this._clientGameLoop = clientGameLoop
   }
 
   addPlayer(socketId: string): IResult {
@@ -69,6 +72,6 @@ export default class Engine extends EngineBase implements IEngineClientApi {
   }
 
   loadGameLoop() {
-    ;(this._gameLoop as GameLoop).load(this.clientId)
+    this._clientGameLoop.load(this.clientId)
   }
 }

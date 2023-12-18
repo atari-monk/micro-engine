@@ -1,6 +1,5 @@
-import { LogLevel } from 'engine_api'
+import { IGameClientApi, LogLevel } from 'engine_api'
 import LogManager from '../../tech/log_manager/LogManager'
-import GameLoop from '../../tech/game_loop/GameLoop'
 import InputManager from '../../tech/input_manager/InputManager'
 import EntityManager from '../../tech/entity_component/EntityManager'
 import Camera from '../../tech/camera/Camera'
@@ -14,16 +13,18 @@ import EngineBuilder from './EngineBuilder'
 import PlayerEntityBuilder from '../entity/builder/PlayerEntityBuilder'
 import PlayerManager from '../entity/PlayerManager'
 import EntityCreator from '../entity/EntityCreator'
+import GameLoop from '../game_loop/GameLoop'
 
 export default class EngineDirector {
-  createEngine(canvasId: string) {
+  createEngine(canvasId: string, gameClientApi: IGameClientApi) {
     const engine = new EngineBuilder()
       .withLogger(new LogManager(LogLevel.DEBUG))
+      .withGameClientApi(gameClientApi)
+      .withEntityDataManager(new EntityDataManager())
+      .withEntityManager(new EntityManager())
       .withGameLoop(new GameLoop())
       .withRenderer(new RendererV2(canvasId))
       .withInput(new InputManager())
-      .withEntityDataManager(new EntityDataManager())
-      .withEntityManager(new EntityManager())
       .withCamera(new Camera())
       .withTileMap(new Tilemap())
       .withEntityCreator(

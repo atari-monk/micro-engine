@@ -7,6 +7,7 @@ import {
   ITileMap,
   IRendererV2,
 } from 'engine_api'
+import { IServerGameLoop as IGameLoop } from 'engine_api'
 import IPlayerManager from 'engine_api/server/entity/IPlayerManager'
 import IEntityCreatorWithBuilders from '../../browser/entity/IEntityCreatorWithBuilders'
 import { IMapEntityBuilder } from '../../browser/entity/builder/EntityBuilderAPI'
@@ -15,7 +16,6 @@ import {
   IObjectEntityBuilder,
   IPlayerEntityBuilder,
 } from '../entity/builder/EntityBuilderAPI'
-import GameLoop from '../game_loop/GameLoop'
 
 export default class EngineBuilder {
   protected _logger!: ILogger
@@ -24,7 +24,7 @@ export default class EngineBuilder {
   protected _entityDataManager!: IManager<IEntityDataModel>
   protected _tileMap!: ITileMap
   protected _renderer!: IRendererV2
-  protected _gameLoop!: GameLoop
+  protected _gameLoop!: IGameLoop
   protected _entityCreator!: IEntityCreatorWithBuilders
   protected _serverApi!: IGameServerApi
 
@@ -47,7 +47,7 @@ export default class EngineBuilder {
     return this
   }
 
-  withGameLoop(gameLoop: GameLoop) {
+  withGameLoop(gameLoop: IGameLoop) {
     if (!this._serverApi) {
       throw new Error(this.getError('Server Api', 'Game Loop'))
     }

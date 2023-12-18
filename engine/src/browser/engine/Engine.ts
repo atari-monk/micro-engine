@@ -81,9 +81,9 @@ export default class Engine {
   start() {
     this._logger.log(`Starting Engine`)
     this.setupCamera()
-    this._gameLoop.subscribeToUpdate(this.update)
-    this._gameLoop.subscribeToRender(this.render)
-    this._gameLoop.startLoop()
+    this._gameLoop.subscribeUpdate(this.update)
+    this._gameLoop.subscribeRender(this.render)
+    this._gameLoop.start()
   }
 
   private setupCamera() {
@@ -106,9 +106,9 @@ export default class Engine {
 
   stop() {
     this._logger.log(`Stoping Engine`)
-    this._gameLoop.stopLoop()
-    this._gameLoop.unsubscribeFromRender(this.render)
-    this._gameLoop.unsubscribeFromUpdate(this.update)
+    this._gameLoop.stop()
+    this._gameLoop.unsubscribeRender(this.render)
+    this._gameLoop.unsubscribeUpdate(this.update)
     this._player = {} as IEntity
     this._playerPosition = {} as IVector2
   }

@@ -12,13 +12,13 @@ import {
   ITileMap,
   InputDto,
 } from 'engine_api'
+import { IServerGameLoop as IGameLoop } from 'engine_api/server'
 import { IServerPlayerManager as IPlayerManager } from 'engine_api/server'
 import ObjectComponent from '../../browser/component/ObjectComponent'
-import GameLoop from '../game_loop/GameLoop'
 
 export default class Engine implements IEngineServerApi {
   private readonly _logger: ILogger
-  private readonly _gameLoop: GameLoop
+  private readonly _gameLoop: IGameLoop
   private readonly _entityDataManager: IManager<IEntityDataModel>
   private readonly _entityManager: IEntityManager
   private readonly _tileMap: ITileMap
@@ -29,7 +29,7 @@ export default class Engine implements IEngineServerApi {
 
   constructor(
     logger: ILogger,
-    gameLoop: GameLoop,
+    gameLoop: IGameLoop,
     entityDataManager: IManager<IEntityDataModel>,
     entityManager: IEntityManager,
     playerManager: IPlayerManager,
@@ -63,8 +63,8 @@ export default class Engine implements IEngineServerApi {
 
   start() {
     this._logger.log(`Starting Engine`)
-    this._gameLoop.subscribeToUpdate(this.update)
-    this._gameLoop.startLoop()
+    this._gameLoop.subscribeUpdate(this.update)
+    this._gameLoop.start()
   }
 
   private update = (dt: number) => {
@@ -73,8 +73,8 @@ export default class Engine implements IEngineServerApi {
 
   stop() {
     this._logger.log(`Stoping Engine`)
-    this._gameLoop.stopLoop()
-    this._gameLoop.unsubscribeFromUpdate(this.update)
+    this._gameLoop.stop()
+    this._gameLoop.unsubscribeUpdate(this.update)
   }
 
   getPlayerCount() {

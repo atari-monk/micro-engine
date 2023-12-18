@@ -1,7 +1,8 @@
 import { IGameServerApi, IUpdateCallback } from 'engine_api'
 import { IServerPlayerManager as IPlayerManager } from 'engine_api/server'
+import IGameLoop from 'engine_api/server/game_loop/IGameLoop'
 
-export default class GameLoop {
+export default class GameLoop implements IGameLoop {
   private updateCallbacks: IUpdateCallback[] = []
   private paused: boolean = false
   private fps: number = 25
@@ -19,19 +20,19 @@ export default class GameLoop {
     this._playerManager = playerManager
   }
 
-  startLoop(): void {
+  start(): void {
     this.paused = false
     this.lastFrameTime = performance.now()
     this.loop()
   }
 
-  stopLoop(): void {}
+  stop(): void {}
 
-  pauseLoop(): void {
+  pause(): void {
     this.paused = true
   }
 
-  resumeLoop(): void {
+  resume(): void {
     this.paused = false
     this.lastFrameTime = performance.now()
     this.loop()
@@ -58,11 +59,11 @@ export default class GameLoop {
     setTimeout(this.loop, this.frameInterval)
   }
 
-  subscribeToUpdate(callback: IUpdateCallback): void {
+  subscribeUpdate(callback: IUpdateCallback): void {
     this.updateCallbacks.push(callback)
   }
 
-  unsubscribeFromUpdate(callback: IUpdateCallback): void {
+  unsubscribeUpdate(callback: IUpdateCallback): void {
     this.updateCallbacks = this.updateCallbacks.filter((cb) => cb !== callback)
   }
 

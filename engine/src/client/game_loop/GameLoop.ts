@@ -8,8 +8,9 @@ import {
 } from 'engine_api'
 import MovementComponent from '../component/MovementComponent'
 import ObjectComponent from '../../browser/component/ObjectComponent'
+import IGameLoop from 'engine_api/client/game_loop/IGameLoop'
 
-export class GameLoop {
+export default class GameLoop implements IGameLoop {
   private animationFrameId: number | null = null
   private lastFrameTime: number = 0
   private updateCallbacks: IUpdateCallback[] = []
@@ -19,10 +20,16 @@ export class GameLoop {
   private _player?: IEntity
   private _inputDto: InputDto | undefined
 
-  constructor(
-    private readonly _entityManager: IEntityManager,
-    private readonly _clientApi: IGameClientApi
-  ) {}
+  private _entityManager!: IEntityManager
+  private _clientApi!: IGameClientApi
+
+  set entityManager(entityManager: IEntityManager) {
+    this._entityManager = entityManager
+  }
+
+  set clientApi(clientApi: IGameClientApi) {
+    this._clientApi = clientApi
+  }
 
   load(clientId: string) {
     console.log('Load GameLoop clientId: ', clientId)
@@ -46,22 +53,22 @@ export class GameLoop {
       )?.inputDto
   }
 
-  startLoop(): void {
+  start(): void {
     this.paused = false
     this.loop()
   }
 
-  stopLoop(): void {
+  stop(): void {
     if (this.animationFrameId !== null) {
       cancelAnimationFrame(this.animationFrameId)
     }
   }
 
-  pauseLoop(): void {
+  pause(): void {
     this.paused = true
   }
 
-  resumeLoop(): void {
+  resume(): void {
     this.paused = false
     this.loop()
   }
@@ -95,19 +102,19 @@ export class GameLoop {
     }
   }
 
-  subscribeToUpdate(callback: IUpdateCallback): void {
+  subscribeUpdate(callback: IUpdateCallback): void {
     this.updateCallbacks.push(callback)
   }
 
-  unsubscribeFromUpdate(callback: IUpdateCallback): void {
+  unsubscribeUpdate(callback: IUpdateCallback): void {
     this.updateCallbacks = this.updateCallbacks.filter((cb) => cb !== callback)
   }
 
-  subscribeToRender(callback: IRenderCallback): void {
+  subscribeRender(callback: IRenderCallback): void {
     this.renderCallbacks.push(callback)
   }
 
-  unsubscribeFromRender(callback: IRenderCallback): void {
+  unsubscribeRender(callback: IRenderCallback): void {
     this.renderCallbacks = this.renderCallbacks.filter((cb) => cb !== callback)
   }
 }

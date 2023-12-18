@@ -26,7 +26,7 @@ import './../assets/ball.png'
 
 const gameClient = new GameClient('http://localhost:3001/')
 
-const engine = new EngineDirector().createEngine('canvas')
+const engine = new EngineDirector().createEngine('canvas', gameClient)
 engine.initialize(new GameData(engine.getScreenCenter()))
 
 gameClient.loadEngine(engine)
