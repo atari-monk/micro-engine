@@ -8,11 +8,11 @@ import ObjectComponent from '../../component/ObjectComponent'
 import PlayerEntity from '../PlayerEntity'
 import RenderComponent from '../../component/RenderComponent'
 import MovementComponent from '../../component/MovementComponent'
-import EntityBuilder from './EntityBuilder'
+import EntityBuilderBase from './EntityBuilderBase'
 import { IPlayerEntityBuilder } from './EntityBuilderAPI'
 
 export default class PlayerEntityBuilder
-  extends EntityBuilder
+  extends EntityBuilderBase
   implements IDataEntityBuilder<PlayerEntity, IObject>, IPlayerEntityBuilder
 {
   protected _renderer?: IRendererV2

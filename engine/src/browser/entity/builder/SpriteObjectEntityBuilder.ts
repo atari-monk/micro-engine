@@ -2,11 +2,11 @@ import { IRendererV2, IEntityDataModel, IDataEntityBuilder } from 'engine_api'
 import ObjectComponent from '../../component/ObjectComponent'
 import SpriteComponent from '../../component/SpriteComponent'
 import ObjectEntity from '../ObjectEntity'
-import EntityBuilder from './EntityBuilder'
+import EntityBuilderBase from './EntityBuilderBase'
 import { ISpriteObjectEntityBuilder } from './EntityBuilderAPI'
 
 export default class SpriteObjectEntityBuilder
-  extends EntityBuilder
+  extends EntityBuilderBase
   implements
     IDataEntityBuilder<ObjectEntity, IEntityDataModel>,
     ISpriteObjectEntityBuilder

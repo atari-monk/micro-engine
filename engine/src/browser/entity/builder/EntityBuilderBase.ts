@@ -1,6 +1,6 @@
 import { ILogger } from 'engine_api'
 
-export default class EntityBuilder {
+export default class EntityBuilderBase {
   protected _logger?: ILogger
 
   withLogger(logger: ILogger): this {

@@ -1,12 +1,12 @@
 import { IDataEntityBuilder, IObject, IRendererV2 } from 'engine_api'
 import RenderComponent from '../../component/RenderComponent'
 import ObjectEntity from '../ObjectEntity'
-import EntityBuilder from './EntityBuilder'
+import EntityBuilderBase from './EntityBuilderBase'
 import ObjectComponent from '../../component/ObjectComponent'
 import { IObjectEntityBuilder } from './EntityBuilderAPI'
 
 export default class ObjectEntityBuilder
-  extends EntityBuilder
+  extends EntityBuilderBase
   implements IDataEntityBuilder<ObjectEntity, IObject>, IObjectEntityBuilder
 {
   private _renderer?: IRendererV2

@@ -1,12 +1,12 @@
 import { IDataEntityBuilder, IObject } from 'engine_api'
-import EntityBuilder from '../../../browser/entity/builder/EntityBuilder'
+import EntityBuilderBase from '../../../browser/entity/builder/EntityBuilderBase'
 import PlayerEntity from '../../../browser/entity/PlayerEntity'
 import ObjectComponent from '../../../browser/component/ObjectComponent'
 import MovementComponent from '../../component/MovementComponent'
 import { IPlayerEntityBuilder } from './EntityBuilderAPI'
 
 export default class PlayerEntityBuilder
-  extends EntityBuilder
+  extends EntityBuilderBase
   implements IDataEntityBuilder<PlayerEntity, IObject>, IPlayerEntityBuilder
 {
   build(objectData: IObject): PlayerEntity {
