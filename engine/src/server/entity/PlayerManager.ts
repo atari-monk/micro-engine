@@ -1,6 +1,6 @@
 import { ClientsDto, ILogger, InputDto } from 'engine_api'
 import { IServerPlayerManager as IPlayerManager } from 'engine_api/server'
-import ObjectComponent from '../../browser/component/ObjectComponent'
+import ObjectComponent from '../../tech/component/ObjectComponent'
 import MovementComponent from '../component/MovementComponent'
 import GameFrameDto from '../../multi/dtos/GameFrameDto'
 import ObjectDto from '../../multi/dtos/ObjectDto'

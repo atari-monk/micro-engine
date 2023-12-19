@@ -14,7 +14,7 @@ import {
 } from 'engine_api'
 import { IServerGameLoop as IGameLoop } from 'engine_api/server'
 import { IServerPlayerManager as IPlayerManager } from 'engine_api/server'
-import ObjectComponent from '../../browser/component/ObjectComponent'
+import ObjectComponent from '../../tech/component/ObjectComponent'
 
 export default class Engine implements IEngineServerApi {
   private readonly _logger: ILogger

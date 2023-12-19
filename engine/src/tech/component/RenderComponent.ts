@@ -1,5 +1,5 @@
 import { IObject, IRendererV2 } from 'engine_api'
-import Component from '../../tech/entity_component/Component'
+import Component from '../entity_component/Component'
 
 export default class RenderComponent extends Component {
   constructor(

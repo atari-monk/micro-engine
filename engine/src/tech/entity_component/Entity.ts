@@ -2,7 +2,7 @@ import { IComponent, IEntity, ILogger } from 'engine_api'
 
 export default class Entity implements IEntity {
   private _list = new Map<string, IComponent>()
-  protected _logger!: ILogger
+  protected _logger?: ILogger
 
   set logger(logger: ILogger) {
     this._logger = logger
@@ -21,7 +21,7 @@ export default class Entity implements IEntity {
 
     if (!component) {
       const message = `Component of type ${componentName} not found.`
-      this._logger.error(message)
+      this._logger?.error(message)
       throw new Error(message)
     }
 

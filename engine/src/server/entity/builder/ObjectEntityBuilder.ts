@@ -1,7 +1,7 @@
 import { IDataEntityBuilder, IObject } from 'engine_api'
 import EntityBuilderBase from '../../../browser/entity/builder/EntityBuilderBase'
-import ObjectEntity from '../../../browser/entity/ObjectEntity'
-import ObjectComponent from '../../../browser/component/ObjectComponent'
+import ObjectEntity from '../../../tech/entity/ObjectEntity'
+import ObjectComponent from '../../../tech/component/ObjectComponent'
 import { IObjectEntityBuilder } from './EntityBuilderAPI'
 
 export default class ObjectEntityBuilder

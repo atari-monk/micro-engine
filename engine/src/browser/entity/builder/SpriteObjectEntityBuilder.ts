@@ -1,7 +1,7 @@
 import { IRendererV2, IEntityDataModel, IDataEntityBuilder } from 'engine_api'
-import ObjectComponent from '../../component/ObjectComponent'
-import SpriteComponent from '../../component/SpriteComponent'
-import ObjectEntity from '../ObjectEntity'
+import ObjectComponent from '../../../tech/component/ObjectComponent'
+import SpriteComponent from '../../../tech/component/SpriteComponent'
+import ObjectEntity from '../../../tech/entity/ObjectEntity'
 import EntityBuilderBase from './EntityBuilderBase'
 import { ISpriteObjectEntityBuilder } from './EntityBuilderAPI'
 

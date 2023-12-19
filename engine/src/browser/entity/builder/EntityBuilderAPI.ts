@@ -8,9 +8,9 @@ import {
   IWithRenderer,
   IWithTileMap,
 } from 'engine_api'
-import MapEntity from '../MapEntity'
-import ObjectEntity from '../ObjectEntity'
-import PlayerEntity from '../PlayerEntity'
+import MapEntity from '../../../tech/entity/MapEntity'
+import ObjectEntity from '../../../tech/entity/ObjectEntity'
+import PlayerEntity from '../../../tech/entity/PlayerEntity'
 
 export interface IMapEntityBuilder
   extends IEntityBuilder<MapEntity>,

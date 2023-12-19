@@ -1,7 +1,7 @@
 import { IDataEntityBuilder, IObject } from 'engine_api'
 import EntityBuilderBase from '../../../browser/entity/builder/EntityBuilderBase'
-import PlayerEntity from '../../../browser/entity/PlayerEntity'
-import ObjectComponent from '../../../browser/component/ObjectComponent'
+import PlayerEntity from '../../../tech/entity/PlayerEntity'
+import ObjectComponent from '../../../tech/component/ObjectComponent'
 import MovementComponent from '../../component/MovementComponent'
 import { IPlayerEntityBuilder } from './EntityBuilderAPI'
 

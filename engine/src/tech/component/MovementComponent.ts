@@ -1,5 +1,5 @@
 import { IInputManager, ILogger, IObject } from 'engine_api'
-import Component from '../../tech/entity_component/Component'
+import Component from '../entity_component/Component'
 
 export default class MovementComponent extends Component {
   private readonly _keyActions: { [key: string]: () => void }

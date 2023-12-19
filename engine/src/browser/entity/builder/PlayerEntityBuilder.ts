@@ -4,10 +4,10 @@ import {
   IObject,
   IRendererV2,
 } from 'engine_api'
-import ObjectComponent from '../../component/ObjectComponent'
-import PlayerEntity from '../PlayerEntity'
-import RenderComponent from '../../component/RenderComponent'
-import MovementComponent from '../../component/MovementComponent'
+import ObjectComponent from '../../../tech/component/ObjectComponent'
+import PlayerEntity from '../../../tech/entity/PlayerEntity'
+import RenderComponent from '../../../tech/component/RenderComponent'
+import MovementComponent from '../../../tech/component/MovementComponent'
 import EntityBuilderBase from './EntityBuilderBase'
 import { IPlayerEntityBuilder } from './EntityBuilderAPI'
 

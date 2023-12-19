@@ -7,7 +7,7 @@ import {
   IRenderCallback,
 } from 'engine_api'
 import MovementComponent from '../component/MovementComponent'
-import ObjectComponent from '../../browser/component/ObjectComponent'
+import ObjectComponent from '../../tech/component/ObjectComponent'
 import IGameLoop from 'engine_api/client/game_loop/IGameLoop'
 
 export default class GameLoop implements IGameLoop {

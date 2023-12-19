@@ -1,6 +1,6 @@
 import { ITileMap } from 'engine_api'
-import MapEntity from '../MapEntity'
-import MapComponent from '../../component/MapComponent'
+import MapEntity from '../../../tech/entity/MapEntity'
+import MapComponent from '../../../tech/component/MapComponent'
 import EntityBuilderBase from './EntityBuilderBase'
 import { IMapEntityBuilder } from './EntityBuilderAPI'
 

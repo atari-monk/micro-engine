@@ -1,6 +1,6 @@
 import { IObject, IVector2 } from 'engine_api'
 import Vector2 from '../../math/vector/Vector2'
-import Component from '../../tech/entity_component/Component'
+import Component from '../entity_component/Component'
 
 export default class ObjectComponent extends Component implements IObject {
   public id: string

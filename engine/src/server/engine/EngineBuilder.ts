@@ -6,6 +6,7 @@ import {
   IEntityDataModel,
   ITileMap,
   IRendererV2,
+  IEntityCreator,
 } from 'engine_api'
 import { IServerGameLoop as IGameLoop } from 'engine_api'
 import IPlayerManager from 'engine_api/server/entity/IPlayerManager'
@@ -25,7 +26,7 @@ export default class EngineBuilder {
   protected _tileMap!: ITileMap
   protected _renderer!: IRendererV2
   protected _gameLoop!: IGameLoop
-  protected _entityCreator!: IEntityCreatorWithBuilders
+  protected _entityCreator!: IEntityCreator
   protected _serverApi!: IGameServerApi
 
   withLogger(logger: ILogger) {
@@ -104,18 +105,18 @@ export default class EngineBuilder {
     if (!this._entityManager) {
       throw new Error(this.getError('Entity Manager', 'Entity Creator'))
     }
-    this._entityCreator = entityCreator
-    this._entityCreator.dataManager = this._entityDataManager
-    this._entityCreator.entityManager = this._entityManager
-    this._entityCreator.mapEntityBuilder = mapEntityBuilder
+    entityCreator.dataManager = this._entityDataManager
+    entityCreator.entityManager = this._entityManager
+    entityCreator.mapEntityBuilder = mapEntityBuilder
       .withLogger(this._logger)
       .withTileMap(this._tileMap)
-    this._entityCreator.objectEntityBuilder = objectEntityBuilder.withLogger(
+    entityCreator.objectEntityBuilder = objectEntityBuilder.withLogger(
       this._logger
     )
-    this._entityCreator.playerEntityBuilder = playerEntityBuilder.withLogger(
+    entityCreator.playerEntityBuilder = playerEntityBuilder.withLogger(
       this._logger
     )
+    this._entityCreator = entityCreator
     return this
   }
 

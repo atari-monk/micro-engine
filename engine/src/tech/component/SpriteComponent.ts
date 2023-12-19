@@ -1,6 +1,6 @@
 import { IAnimationConfig, IObject, IRendererV2 } from 'engine_api'
-import { SpriteAnimator } from '../../tech/sprite/SpriteAnimator'
-import Component from '../../tech/entity_component/Component'
+import { SpriteAnimator } from '../sprite/SpriteAnimator'
+import Component from '../entity_component/Component'
 
 export default class SpriteComponent extends Component {
   private sprite: SpriteAnimator

@@ -1,8 +1,8 @@
 import { IDataEntityBuilder, IObject, IRendererV2 } from 'engine_api'
-import RenderComponent from '../../component/RenderComponent'
-import ObjectEntity from '../ObjectEntity'
+import RenderComponent from '../../../tech/component/RenderComponent'
+import ObjectEntity from '../../../tech/entity/ObjectEntity'
 import EntityBuilderBase from './EntityBuilderBase'
-import ObjectComponent from '../../component/ObjectComponent'
+import ObjectComponent from '../../../tech/component/ObjectComponent'
 import { IObjectEntityBuilder } from './EntityBuilderAPI'
 
 export default class ObjectEntityBuilder

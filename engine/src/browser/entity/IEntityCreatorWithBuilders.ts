@@ -5,9 +5,9 @@ import {
   IDataEntityBuilder,
   IEntityDataModel,
 } from 'engine_api'
-import MapEntity from './MapEntity'
-import ObjectEntity from './ObjectEntity'
-import PlayerEntity from './PlayerEntity'
+import MapEntity from '../../tech/entity/MapEntity'
+import ObjectEntity from '../../tech/entity/ObjectEntity'
+import PlayerEntity from '../../tech/entity/PlayerEntity'
 
 export default interface IEntityCreatorWithBuilders extends IEntityCreator {
   set mapEntityBuilder(mapEntityBuilder: IEntityBuilder<MapEntity>)

@@ -1,5 +1,5 @@
-import ObjectComponent from '../../../browser/component/ObjectComponent'
-import PlayerEntity from '../../../browser/entity/PlayerEntity'
+import ObjectComponent from '../../../tech/component/ObjectComponent'
+import PlayerEntity from '../../../tech/entity/PlayerEntity'
 import { default as PlayerEntityBuilderBase } from '../../../browser/entity/builder/PlayerEntityBuilder'
 import MovementComponent from '../../component/MovementComponent'
 
