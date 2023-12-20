@@ -1,5 +1,5 @@
 import { IObject, IObjectDto, IVector2 } from 'engine_api'
-import Vector2 from '../../math/vector/Vector2'
+import Vector2 from '../math/vector/Vector2'
 
 export default class ObjectDto implements IObjectDto {
   public id: string

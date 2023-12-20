@@ -1,7 +1,7 @@
 import { Direction, IInputManager, InputDto } from 'engine_api'
-import Component from '../../tech/entity_component/Component'
+import Component from '../entity_component/Component'
 
-export default class MovementComponent extends Component {
+export default class ClientMovementComponent extends Component {
   private readonly _keyActions: { [key: string]: () => void }
   private _inputDto: InputDto = new InputDto()
   private _keyToDirectionMap: { [key: string]: Direction } = {

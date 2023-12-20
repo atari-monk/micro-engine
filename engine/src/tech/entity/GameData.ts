@@ -5,8 +5,8 @@ import {
   IManager,
   ITileMapDataFactory,
 } from 'engine_api'
-import TilemapDataFactory from '../../tech/tile_map/TilemapDataFactory'
-import { EntityData } from '../entity/data/EntityData'
+import TilemapDataFactory from '../tile_map/TilemapDataFactory'
+import { EntityData } from './data/EntityData'
 
 export default class GameData implements IGameData {
   public entityData: IManager<IEntityDataModel>

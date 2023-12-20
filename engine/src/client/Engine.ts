@@ -16,7 +16,7 @@ import {
   IClientPlayerManager as IPlayerManager,
   IClientGameLoop as IGameLoop,
 } from 'engine_api/client'
-import { default as EngineBase } from './../../browser/engine/Engine'
+import { default as EngineBase } from '../single/Engine'
 
 export default class Engine extends EngineBase implements IEngineClientApi {
   private readonly _playerManager: IPlayerManager

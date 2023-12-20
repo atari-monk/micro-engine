@@ -6,8 +6,8 @@ import {
   IUpdateCallback,
   IRenderCallback,
 } from 'engine_api'
-import MovementComponent from '../component/MovementComponent'
-import ObjectComponent from '../../tech/component/ObjectComponent'
+import ClientMovementComponent from '../tech/component/ClientMovementComponent'
+import ObjectComponent from '../tech/component/ObjectComponent'
 import IGameLoop from 'engine_api/client/game_loop/IGameLoop'
 
 export default class GameLoop implements IGameLoop {
@@ -47,10 +47,9 @@ export default class GameLoop implements IGameLoop {
       this._player = player2
       console.log('Player2 was chosen')
     }
-    this._inputDto =
-      this._player?.getComponentByType<MovementComponent>(
-        MovementComponent
-      )?.inputDto
+    this._inputDto = this._player?.getComponentByType<ClientMovementComponent>(
+      ClientMovementComponent
+    )?.inputDto
   }
 
   start(): void {

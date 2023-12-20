@@ -1,6 +1,6 @@
 import { IImmutableVector2, IVector2 } from 'engine_api'
-import { Operation } from './Operation'
-import { operationMap } from './operationMap'
+import { MathOperation } from './MathOperation'
+import { mathOperationMap } from './mathOperationMap'
 
 export default class Vector2 implements IVector2 {
   public x: number
@@ -17,10 +17,10 @@ export default class Vector2 implements IVector2 {
 
   private operate(
     { x = 0, y = 0 }: IVector2 | { x: number; y: number } = { x: 0, y: 0 },
-    operation: Operation = 'add'
+    operation: MathOperation = 'add'
   ): this {
-    this.x = operationMap[operation](this.x, x)
-    this.y = operationMap[operation](this.y, y)
+    this.x = mathOperationMap[operation](this.x, x)
+    this.y = mathOperationMap[operation](this.y, y)
 
     return this
   }

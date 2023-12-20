@@ -1,7 +1,7 @@
 import { IEntityManager, IResult } from 'engine_api'
-import EntityManager from '../../tech/entity_component/EntityManager'
-import ObjectComponent from '../../tech/component/ObjectComponent'
-import GameFrameDto from '../../multi/dtos/GameFrameDto'
+import EntityManager from '../tech/entity_component/EntityManager'
+import ObjectComponent from '../tech/component/ObjectComponent'
+import GameFrameDto from '../dto/GameFrameDto'
 import { IClientPlayerManager as IPlayerManager } from 'engine_api/client'
 
 export default class PlayerManager

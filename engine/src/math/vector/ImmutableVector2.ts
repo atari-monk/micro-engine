@@ -1,6 +1,6 @@
 import { IImmutableVector2 } from 'engine_api'
-import { Operation } from './Operation';
-import { operationMap } from './operationMap';
+import { MathOperation } from './MathOperation'
+import { mathOperationMap } from './mathOperationMap'
 
 export default class ImmutableVector2 implements IImmutableVector2 {
   constructor(public readonly x: number = 0, public readonly y: number = 0) {}
@@ -10,17 +10,17 @@ export default class ImmutableVector2 implements IImmutableVector2 {
       x: 0,
       y: 0,
     },
-    operation: Operation = 'add'
+    operation: MathOperation = 'add'
   ): ImmutableVector2 {
     return new ImmutableVector2(
-      operationMap[operation](this.x, x),
-      operationMap[operation](this.y, y)
+      mathOperationMap[operation](this.x, x),
+      mathOperationMap[operation](this.y, y)
     )
   }
 
   operate(
     { x = 0, y = 0 }: IImmutableVector2 | { x?: number; y?: number } = {},
-    operation: Operation = 'add'
+    operation: MathOperation = 'add'
   ): ImmutableVector2 {
     return this.operateWithImmutableVector({ x, y }, operation)
   }

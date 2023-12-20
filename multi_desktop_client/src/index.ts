@@ -3,7 +3,7 @@ import './css/styles.css'
 import EntityDataFactory from './gameData/EntityDataFactory'
 import TilemapDataFactory from './gameData/TilemapDataFactory'
 import GameClient from './client-lib/GameClient'
-import EngineDirector from 'engine/client/engine/EngineDirector'
+import EngineDirector from 'engine/client/EngineDirector'
 import './../assets/ball.png'
 
 // const gameData = new GameData(engineFactory.renderer)

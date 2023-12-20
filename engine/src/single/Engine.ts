@@ -13,7 +13,7 @@ import {
   ITileMap,
   IVector2,
 } from 'engine_api'
-import ObjectComponent from '../../tech/component/ObjectComponent'
+import ObjectComponent from '../tech/component/ObjectComponent'
 
 export default class Engine {
   protected readonly _logger: ILogger

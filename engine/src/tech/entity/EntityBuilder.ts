@@ -9,18 +9,18 @@ import {
   IRendererV2,
   ITileMap,
 } from 'engine_api'
-import MapComponent from '../../tech/component/MapComponent'
-import ObjectComponent from '../../tech/component/ObjectComponent'
-import RenderComponent from '../../tech/component/RenderComponent'
-import MovementComponent from '../../tech/component/MovementComponent'
-import SpriteComponent from '../../tech/component/SpriteComponent'
+import MapComponent from '../component/MapComponent'
+import ObjectComponent from '../component/ObjectComponent'
+import RenderComponent from '../component/RenderComponent'
+import MovementComponent from '../component/MovementComponent'
+import SpriteComponent from '../component/SpriteComponent'
 import { OperationMap } from '../../utils/operation/OperationMap'
 import { Operation } from '../../utils/operation/Operation'
 import AssertHelper from '../../utils/AssertionHelper'
+import ClientMovementComponent from '../component/ClientMovementComponent'
 
 export default class EntityBuilder implements IEntityBuilder {
-  private _entity!: IEntity
-  private _logger!: ILogger
+  protected _entity!: IEntity
   private _renderer!: IRendererV2
   private _entityData!: IEntityDataModel
   private _operationMap: OperationMap = new OperationMap()
@@ -44,16 +44,16 @@ export default class EntityBuilder implements IEntityBuilder {
     this._assert.assertField('_entity')
   }
 
-  private assertLogger(): void {
-    this._assert.assertField('_logger')
-  }
-
   private assertRenderer(): void {
     this._assert.assertField('_renderer')
   }
 
   private assertEntityData(): void {
     this._assert.assertField('_entityData')
+  }
+
+  private assertNestedLogger(): void {
+    this._assert.assertNested('_entity', 'logger')
   }
 
   withEntity<T extends IEntity>(entity: T) {
@@ -64,7 +64,6 @@ export default class EntityBuilder implements IEntityBuilder {
   withLogger(logger: ILogger): this {
     this.assertEntity()
     this._entity.logger = logger
-    this._logger = logger
     return this
   }
 
@@ -101,14 +100,17 @@ export default class EntityBuilder implements IEntityBuilder {
   }
 
   withMovementComponent(input: IInputManager): this {
-    this.assertLogger()
     this._entity.addComponent(
       new MovementComponent(
         this._entity.getComponentByType<ObjectComponent>(ObjectComponent),
-        input,
-        this._logger
+        input
       )
     )
+    return this
+  }
+
+  withClientMovementComponent(input: IInputManager): this {
+    this._entity.addComponent(new ClientMovementComponent(input))
     return this
   }
 
@@ -127,6 +129,7 @@ export default class EntityBuilder implements IEntityBuilder {
 
   build(entityDataKey: string, entityKey: string) {
     this.assertEntity()
+    this.assertNestedLogger()
     this.executeOperations(entityDataKey)
     this._entityManager.add(entityKey, this._entity)
   }

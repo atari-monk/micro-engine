@@ -1,10 +1,10 @@
-import { IInputManager, ILogger, IObject } from 'engine_api'
+import { IInputManager, IObject } from 'engine_api'
 import Component from '../entity_component/Component'
 
 export default class MovementComponent extends Component {
   private readonly _keyActions: { [key: string]: () => void }
 
-  constructor(object: IObject, input: IInputManager, logger: ILogger) {
+  constructor(object: IObject, input: IInputManager) {
     super('MovementComponent')
     this._keyActions = {
       ArrowLeft: () => {

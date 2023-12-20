@@ -11,10 +11,10 @@ import {
   IEntityCreator,
 } from 'engine_api'
 import Engine from './Engine'
-import EntityBuilder from '../entity/EntityBuilder'
-import MapEntity from '../../tech/entity/MapEntity'
-import ObjectEntity from '../../tech/entity/ObjectEntity'
-import PlayerEntity from '../../tech/entity/PlayerEntity'
+import EntityBuilder from '../tech/entity/EntityBuilder'
+import MapEntity from '../tech/entity/MapEntity'
+import ObjectEntity from '../tech/entity/ObjectEntity'
+import PlayerEntity from '../tech/entity/PlayerEntity'
 
 export default class EngineBuilder {
   protected _logger!: ILogger
@@ -142,14 +142,18 @@ export default class EngineBuilder {
       )
       .recordOperation(() => playerEntityBuilder.withObjectComponent())
       .recordOperation(() => playerEntityBuilder.withRenderComponent())
-      .recordOperation(() =>
-        playerEntityBuilder.withMovementComponent(this._input)
-      )
+    this.addPlayerMovementComponent(playerEntityBuilder)
 
     entityCreator.addBuilder('player', playerEntityBuilder)
 
     this._entityCreator = entityCreator
     return this
+  }
+
+  addPlayerMovementComponent(playerEntityBuilder: EntityBuilder) {
+    playerEntityBuilder.recordOperation(() =>
+      playerEntityBuilder.withMovementComponent(this._input)
+    )
   }
 
   build() {

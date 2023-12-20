@@ -7,7 +7,11 @@ export default class EntityCreator implements IEntityCreator {
     this.builders.set(key, builder)
   }
 
-  private build(key: string, entityDataKey?: string, entityKey?: string): void {
+  protected build(
+    key: string,
+    entityDataKey?: string,
+    entityKey?: string
+  ): void {
     const builder = this.builders.get(key)
     if (!builder) throw new Error(`Builder with key '${key}' not found.`)
     builder.build(entityDataKey ?? key, entityKey ?? key)

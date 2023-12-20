@@ -1,9 +1,4 @@
-import {
-  IAnimationConfig,
-  IObject,
-  IEntityDataModel,
-  IImmutableVector2,
-} from 'engine_api'
+import { IAnimationConfig, IImmutableVector2 } from 'engine_api'
 import Vector2 from '../../../math/vector/Vector2'
 import EntityDataManager from '../EntityDataManager'
 import { ballAnimations } from './ballSprite'
@@ -25,7 +20,7 @@ export class EntityData extends EntityDataManager {
         position: new Vector2(center.x + 150, center.y + 150),
         size: new Vector2(150, 50),
         speed: new Vector2(),
-      } as IObject,
+      },
       animations: {} as IAnimationConfig[],
     })
 
@@ -37,7 +32,7 @@ export class EntityData extends EntityDataManager {
         position: new Vector2(center.x, center.y + 150),
         size: new Vector2(50, 150),
         speed: new Vector2(100, 100),
-      } as IObject,
+      },
       animations: {} as IAnimationConfig[],
     })
 
@@ -49,7 +44,7 @@ export class EntityData extends EntityDataManager {
         position: new Vector2(center.x + 150, center.y + 150),
         size: new Vector2(50, 150),
         speed: new Vector2(100, 100),
-      } as IObject,
+      },
       animations: {} as IAnimationConfig[],
     })
 
@@ -61,8 +56,8 @@ export class EntityData extends EntityDataManager {
         position: new Vector2(center.x + 150, center.y + 150),
         size: new Vector2(150, 50),
         speed: new Vector2(),
-      } as IObject,
+      },
       animations: ballAnimations,
-    } as IEntityDataModel)
+    })
   }
 }
