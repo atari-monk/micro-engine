@@ -3,14 +3,11 @@ import LogManager from '../../tech/log_manager/LogManager'
 import EngineBuilder from './EngineBuilder'
 import EntityManager from '../../tech/entity_component/EntityManager'
 import Tilemap from '../../tech/tile_map/Tilemap'
-import ObjectEntityBuilder from '../entity/builder/ObjectEntityBuilder'
-import PlayerEntityBuilder from '../entity/builder/PlayerEntityBuilder'
 import EntityDataManager from '../../browser/entity/EntityDataManager'
-import MapEntityBuilder from '../../browser/entity/builder/MapEntitBuilder'
-import EntityCreator from '../entity/EntityCreator'
 import PlayerManager from '../entity/PlayerManager'
 import { RendererMock } from '../../tech/renderer/RendererMock'
 import GameLoop from '../game_loop/GameLoop'
+import EntityCreator from '../entity/EntityCreator'
 
 export default class EngineDirector {
   createEngine(serverApi: IGameServerApi) {
@@ -23,12 +20,7 @@ export default class EngineDirector {
       .withEntityManager(new EntityManager())
       .withRenderer(new RendererMock())
       .withTileMap(new Tilemap())
-      .withEntityCreator(
-        new EntityCreator(),
-        new MapEntityBuilder(),
-        new ObjectEntityBuilder(),
-        new PlayerEntityBuilder()
-      )
+      .withEntityCreator(new EntityCreator())
       .build()
     return engine
   }

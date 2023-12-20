@@ -11,18 +11,10 @@ import {
   IEntityCreator,
 } from 'engine_api'
 import Engine from './Engine'
-import IEntityCreatorWithBuilders from '../entity/IEntityCreatorWithBuilders'
-import {
-  IMapEntityBuilder,
-  IObjectEntityBuilder,
-  IPlayerEntityBuilder,
-  ISpriteObjectEntityBuilder,
-} from '../entity/builder/EntityBuilderAPI'
-import EntityBuilder from '../entity/builder/EntityBuilder'
+import EntityBuilder from '../entity/EntityBuilder'
 import MapEntity from '../../tech/entity/MapEntity'
 import ObjectEntity from '../../tech/entity/ObjectEntity'
 import PlayerEntity from '../../tech/entity/PlayerEntity'
-import IEntityCreatorWithBuilders2 from '../entity/IEntityCreatorWithBuilders2'
 
 export default class EngineBuilder {
   protected _logger!: ILogger
@@ -91,94 +83,60 @@ export default class EngineBuilder {
     return this
   }
 
-  withEntityCreator(
-    entityCreator: IEntityCreatorWithBuilders,
-    mapEntityBuilder: IMapEntityBuilder,
-    objectEntityBuilder: IObjectEntityBuilder,
-    spriteObjectEntityBuilder: ISpriteObjectEntityBuilder,
-    playerEntityBuilder: IPlayerEntityBuilder
-  ) {
-    if (!this._entityDataManager) {
-      throw new Error(this.getError('Entity Data Manager', 'Entity Creator'))
-    }
-    if (!this._entityManager) {
-      throw new Error(this.getError('Entity Manager', 'Entity Creator'))
-    }
-    entityCreator.dataManager = this._entityDataManager
-    entityCreator.entityManager = this._entityManager
-    entityCreator.mapEntityBuilder = mapEntityBuilder
-      .withLogger(this._logger)
-      .withTileMap(this._tileMap)
-    entityCreator.objectEntityBuilder = objectEntityBuilder
-      .withLogger(this._logger)
-      .withRenderer(this._renderer)
-    entityCreator.spriteObjectEntityBuilder = spriteObjectEntityBuilder
-      .withLogger(this._logger)
-      .withRenderer(this._renderer)
-    entityCreator.playerEntityBuilder = playerEntityBuilder
-      .withLogger(this._logger)
-      .withRenderer(this._renderer)
-      .withInputManager(this._input)
-    this._entityCreator = entityCreator
-    return this
-  }
-
-  withEntityCreator2(entityCreator: IEntityCreatorWithBuilders2) {
-    if (!this._entityDataManager) {
-      throw new Error(this.getError('Entity Data Manager', 'Entity Creator'))
-    }
-    if (!this._entityManager) {
-      throw new Error(this.getError('Entity Manager', 'Entity Creator'))
-    }
+  withEntityCreator(entityCreator: IEntityCreator) {
     const mapEntityBuilder = new EntityBuilder(
       this._entityDataManager,
       this._entityManager
     )
+      .withEntity(new MapEntity())
+      .withLogger(this._logger)
+      .withMapComponent(this._tileMap)
+
+    entityCreator.addBuilder('map', mapEntityBuilder)
 
     const objectEntityBuilder = new EntityBuilder(
       this._entityDataManager,
       this._entityManager
     )
-
-    const spriteObjectEntityBuilder = new EntityBuilder(
-      this._entityDataManager,
-      this._entityManager
-    )
-
-    const playerEntityBuilder = new EntityBuilder(
-      this._entityDataManager,
-      this._entityManager
-    )
-
-    mapEntityBuilder
-      .withEntity(new MapEntity())
-      .withLogger(this._logger)
-      .recordOperation(() => mapEntityBuilder.withMapComponent(this._tileMap))
-
-    objectEntityBuilder
       .withEntity(new ObjectEntity())
       .withLogger(this._logger)
       .withRenderer(this._renderer)
+
+    objectEntityBuilder
       .recordOperation((dataKey) =>
         objectEntityBuilder.withEntityData(dataKey!)
       )
       .recordOperation(() => objectEntityBuilder.withObjectComponent())
       .recordOperation(() => objectEntityBuilder.withRenderComponent())
 
-    spriteObjectEntityBuilder
+    entityCreator.addBuilder('object', objectEntityBuilder)
+
+    const spriteObjectEntityBuilder = new EntityBuilder(
+      this._entityDataManager,
+      this._entityManager
+    )
       .withEntity(new ObjectEntity())
       .withLogger(this._logger)
       .withRenderer(this._renderer)
+
+    spriteObjectEntityBuilder
       .recordOperation((dataKey) =>
         spriteObjectEntityBuilder.withEntityData(dataKey!)
       )
       .recordOperation(() => spriteObjectEntityBuilder.withObjectComponent())
       .recordOperation(() => spriteObjectEntityBuilder.withSpriteComponent())
 
-    playerEntityBuilder
+    entityCreator.addBuilder('spriteObject', spriteObjectEntityBuilder)
+
+    const playerEntityBuilder = new EntityBuilder(
+      this._entityDataManager,
+      this._entityManager
+    )
       .withEntity(new PlayerEntity())
       .withLogger(this._logger)
       .withRenderer(this._renderer)
+
+    playerEntityBuilder
       .recordOperation((dataKey) =>
         playerEntityBuilder.withEntityData(dataKey!)
       )
@@ -188,10 +146,8 @@ export default class EngineBuilder {
         playerEntityBuilder.withMovementComponent(this._input)
       )
 
-    entityCreator.mapEntityBuilder = mapEntityBuilder
-    entityCreator.objectEntityBuilder = objectEntityBuilder
-    entityCreator.spriteObjectEntityBuilder = spriteObjectEntityBuilder
-    entityCreator.playerEntityBuilder = playerEntityBuilder
+    entityCreator.addBuilder('player', playerEntityBuilder)
+
     this._entityCreator = entityCreator
     return this
   }

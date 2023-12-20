@@ -6,14 +6,10 @@ import Camera from '../../tech/camera/Camera'
 import Tilemap from '../../tech/tile_map/Tilemap'
 import RendererV2 from '../../tech/renderer/RendererV2'
 import EntityDataManager from '../../browser/entity/EntityDataManager'
-import MapEntityBuilder from '../../browser/entity/builder/MapEntitBuilder'
-import ObjectEntityBuilder from '../../browser/entity/builder/ObjectEntityBuilder'
-import SpriteObjectEntityBuilder from '../../browser/entity/builder/SpriteObjectEntityBuilder'
 import EngineBuilder from './EngineBuilder'
-import PlayerEntityBuilder from '../entity/builder/PlayerEntityBuilder'
-import PlayerManager from '../entity/PlayerManager'
-import EntityCreator from '../entity/EntityCreator'
 import GameLoop from '../game_loop/GameLoop'
+import EntityCreator from '../../browser/entity/EntityCreator'
+import PlayerManager from '../entity/PlayerManager'
 
 export default class EngineDirector {
   createEngine(canvasId: string, gameClientApi: IGameClientApi) {
@@ -27,13 +23,7 @@ export default class EngineDirector {
       .withInput(new InputManager())
       .withCamera(new Camera())
       .withTileMap(new Tilemap())
-      .withEntityCreator(
-        new EntityCreator(),
-        new MapEntityBuilder(),
-        new ObjectEntityBuilder(),
-        new SpriteObjectEntityBuilder(),
-        new PlayerEntityBuilder()
-      )
+      .withEntityCreator(new EntityCreator())
       .withPlayerManager(new PlayerManager())
       .build()
     return engine

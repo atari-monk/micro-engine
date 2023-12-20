@@ -7,13 +7,8 @@ import EntityManager from '../../tech/entity_component/EntityManager'
 import Camera from '../../tech/camera/Camera'
 import EntityDataManager from '../entity/EntityDataManager'
 import Tilemap from '../../tech/tile_map/Tilemap'
-import EntityCreator from '../entity/EntityCreator'
-import MapEntityBuilder from '../entity/builder/MapEntitBuilder'
-import ObjectEntityBuilder from '../entity/builder/ObjectEntityBuilder'
-import SpriteObjectEntityBuilder from '../entity/builder/SpriteObjectEntityBuilder'
-import PlayerEntityBuilder from '../entity/builder/PlayerEntityBuilder'
 import RendererV2 from '../../tech/renderer/RendererV2'
-import EntityCreator2 from '../entity/EntityCreator2'
+import EntityCreator from '../entity/EntityCreator'
 
 export default class EngineDirector {
   createEngine(canvasId: string) {
@@ -26,14 +21,7 @@ export default class EngineDirector {
       .withEntityManager(new EntityManager())
       .withCamera(new Camera())
       .withTileMap(new Tilemap())
-      //   .withEntityCreator(
-      //     new EntityCreator(),
-      //     new MapEntityBuilder(),
-      //     new ObjectEntityBuilder(),
-      //     new SpriteObjectEntityBuilder(),
-      //     new PlayerEntityBuilder()
-      //   )
-      .withEntityCreator2(new EntityCreator2())
+      .withEntityCreator(new EntityCreator())
       .build()
     return engine
   }
