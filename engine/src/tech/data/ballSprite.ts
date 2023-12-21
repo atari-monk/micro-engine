@@ -14,7 +14,7 @@ const idle: IAnimationConfig = {
 const rotate: IAnimationConfig = {
   imagePath: ballSprite,
   frameCount: 20,
-  frameDuration: 100,
+  frameDuration: .05,
   frameSize: new Vector2(80, 40),
   animationType: AnimationType.Sequential,
 }

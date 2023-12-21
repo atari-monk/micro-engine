@@ -1,6 +1,7 @@
 import { IEntity, IState } from 'engine_api'
 import Component from '../entity_component/Component'
 import IdleState from './IdleState'
+import MoveState from './MoveState'
 
 export default class StateComponent extends Component {
   private _owner: IEntity
@@ -9,7 +10,8 @@ export default class StateComponent extends Component {
   constructor(owner: IEntity) {
     super('StateComponent')
     this._owner = owner
-    this._state = new IdleState()
+    this._state = new MoveState()
+    this._state.enter(owner)
   }
 
   update(): void {

@@ -136,6 +136,7 @@ export default class EngineBuilder {
         .withEntityData(dataKey!)
         .withObjectComponent()
         .withSpriteComponent()
+        .withStateComponent()
     )
     entityCreator.addBuilder('spriteObject', builder)
   }

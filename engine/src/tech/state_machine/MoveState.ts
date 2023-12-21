@@ -1,7 +1,7 @@
 import { IEntity, IState } from 'engine_api'
 import SpriteComponent from '../component/SpriteComponent'
 
-export default class IdleState implements IState {
+export default class MoveState implements IState {
   enter(entity: IEntity): void {
     const sprite = entity.getComponentByType<SpriteComponent>(SpriteComponent)
     sprite.switchAnimation(1)

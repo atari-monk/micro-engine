@@ -19,6 +19,7 @@ import { Operation } from '../../utils/operation/Operation'
 import AssertHelper from '../../utils/AssertionHelper'
 import ClientMovementComponent from '../component/ClientMovementComponent'
 import ServerMovementComponent from '../component/ServerMovementComponent'
+import StateComponent from '../state_machine/StateComponent'
 
 export default class EntityBuilder implements IEntityBuilder {
   protected _entity!: IEntity
@@ -134,6 +135,11 @@ export default class EntityBuilder implements IEntityBuilder {
         this._entityData.animations
       )
     )
+    return this
+  }
+
+  withStateComponent() {
+    this._entity.addComponent(new StateComponent(this._entity))
     return this
   }
 
