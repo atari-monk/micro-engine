@@ -7,11 +7,12 @@ $pack = "$libName-1.0.0.tgz"
 $lib = $RepoPath + $build + $pack
 
 $targetProjects = @(
-  "$RepoPath\engine_node_tests\",
-  "$RepoPath\engine_jsdom_tests\",
+  "$RepoPath\server\",
   "$RepoPath\desktop_client\",
   "$RepoPath\multi_desktop_client\",
-  "$RepoPath\server\"
+  "$RepoPath\mobile_ball_game\",
+  "$RepoPath\engine_node_tests\",
+  "$RepoPath\engine_jsdom_tests\"
 )
 
 Build-Lib

@@ -90,7 +90,6 @@ export { default as IAnimationConfig } from './tech/sprite/IAnimationConfig'
 export { default as IAnimationFrame } from './tech/sprite/IAnimationFrame'
 //state_machine
 export { default as IState } from './tech/state_machine/IState'
-export { default as State } from './tech/state_machine/State'
 //state_manager
 export { default as IGenericState } from './tech/state_manager/IGenericState'
 export { default as IStateManager } from './tech/state_manager/IStateManager'

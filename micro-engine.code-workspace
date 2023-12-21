@@ -9,12 +9,8 @@
       "path": "engine"
     },
     {
-      "name": "engine_node_tests",
-      "path": "engine_node_tests"
-    },
-    {
-      "name": "engine_jsdom_tests",
-      "path": "engine_jsdom_tests"
+      "name": "server",
+      "path": "server"
     },
     {
       "name": "desktop_client",
@@ -25,14 +21,22 @@
       "path": "multi_desktop_client"
     },
     {
-      "name": "server",
-      "path": "server"
+      "name": "mobile_ball_game",
+      "path": "mobile_ball_game"
+    },
+    {
+      "name": "engine_node_tests",
+      "path": "engine_node_tests"
+    },
+    {
+      "name": "engine_jsdom_tests",
+      "path": "engine_jsdom_tests"
     },
     {
       "path": "."
     }
   ],
   "settings": {
-    "liveServer.settings.multiRootWorkspaceName": "desktop_client"
+    "liveServer.settings.multiRootWorkspaceName": "mobile_ball_game"
   }
 }
