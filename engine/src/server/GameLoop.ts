@@ -1,6 +1,8 @@
 import { IGameServerApi, IUpdateCallback } from 'engine_api'
-import { IServerPlayerManager as IPlayerManager } from 'engine_api/server'
-import IGameLoop from 'engine_api/server/game_loop/IGameLoop'
+import {
+  IServerGameLoop as IGameLoop,
+  IServerPlayerManager as IPlayerManager,
+} from 'engine_api/server'
 
 export default class GameLoop implements IGameLoop {
   private updateCallbacks: IUpdateCallback[] = []

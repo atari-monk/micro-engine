@@ -12,12 +12,24 @@ export class EntityData extends EntityDataManager {
   private createData() {
     const center = this._center
 
-    this.add('object', {
+    this.add('object1', {
       object: {
         id: '',
         name: '',
         color: 'green',
         position: new Vector2(center.x + 150, center.y + 150),
+        size: new Vector2(150, 50),
+        speed: new Vector2(),
+      },
+      animations: {} as IAnimationConfig[],
+    })
+
+    this.add('object2', {
+      object: {
+        id: '',
+        name: '',
+        color: 'yellow',
+        position: new Vector2(center.x + 150, center.y - 150),
         size: new Vector2(150, 50),
         speed: new Vector2(),
       },
@@ -48,7 +60,7 @@ export class EntityData extends EntityDataManager {
       animations: {} as IAnimationConfig[],
     })
 
-    this.add('object2', {
+    this.add('object3', {
       object: {
         id: '',
         name: '',

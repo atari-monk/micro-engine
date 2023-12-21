@@ -1,7 +1,7 @@
 import { Direction, IObject, InputDto } from 'engine_api'
-import Component from '../../tech/entity_component/Component'
+import Component from '../entity_component/Component'
 
-export default class MovementComponent extends Component {
+export default class ServerMovementComponent extends Component {
   private _inputDto: InputDto = new InputDto()
   private readonly _keyActions: { [key in Direction]: (dt: number) => void }
 
@@ -10,7 +10,7 @@ export default class MovementComponent extends Component {
   }
 
   constructor(private _object: IObject) {
-    super('MovementComponent')
+    super('ServerMovementComponent')
     this._keyActions = {
       [Direction.Up]: (dt) => {
         this._object.position.y -= Math.round(this._object.speed.y * dt)

@@ -1,9 +1,8 @@
-import { GameData } from 'engine'
+import { GameData, ClientEngineDirector } from 'engine'
 import './css/styles.css'
 import EntityDataFactory from './gameData/EntityDataFactory'
 import TilemapDataFactory from './gameData/TilemapDataFactory'
 import GameClient from './client-lib/GameClient'
-import EngineDirector from 'engine/client/EngineDirector'
 import './../assets/ball.png'
 
 // const gameData = new GameData(engineFactory.renderer)
@@ -26,7 +25,7 @@ import './../assets/ball.png'
 
 const gameClient = new GameClient('http://localhost:3001/')
 
-const engine = new EngineDirector().createEngine('canvas', gameClient)
+const engine = new ClientEngineDirector().createEngine('canvas', gameClient)
 engine.initialize(new GameData(engine.getScreenCenter()))
 
 gameClient.loadEngine(engine)

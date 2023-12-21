@@ -1,30 +1,26 @@
-import { IGameClientApi, LogLevel } from 'engine_api'
+import { IGameServerApi, LogLevel } from 'engine_api'
 import LogManager from '../tech/log_manager/LogManager'
-import InputManager from '../tech/input_manager/InputManager'
-import EntityManager from '../tech/entity_component/EntityManager'
-import Camera from '../tech/camera/Camera'
-import Tilemap from '../tech/tile_map/Tilemap'
-import RendererV2 from '../tech/renderer/RendererV2'
-import EntityDataManager from '../tech/entity/EntityDataManager'
-import GameLoop from './GameLoop'
-import PlayerManager from './PlayerManager'
-import EntityCreator from './EntityCreator'
 import EngineBuilder from './EngineBuilder'
+import EntityManager from '../tech/entity_component/EntityManager'
+import Tilemap from '../tech/tile_map/Tilemap'
+import EntityDataManager from '../tech/entity/EntityDataManager'
+import PlayerManager from './PlayerManager'
+import { RendererMock } from '../tech/renderer/RendererMock'
+import GameLoop from './GameLoop'
+import EntityCreator from './EntityCreator'
 
 export default class EngineDirector {
-  createEngine(canvasId: string, gameClientApi: IGameClientApi) {
+  createEngine(serverApi: IGameServerApi) {
     return new EngineBuilder()
       .withLogger(new LogManager(LogLevel.DEBUG))
-      .withGameClientApi(gameClientApi)
+      .withGameServerApi(serverApi)
+      .withPlayerManager(new PlayerManager())
+      .withServerGameLoop(new GameLoop())
       .withEntityDataManager(new EntityDataManager())
       .withEntityManager(new EntityManager())
-      .withClientGameLoop(new GameLoop())
-      .withRenderer(new RendererV2(canvasId))
-      .withInput(new InputManager())
-      .withCamera(new Camera())
+      .withRenderer(new RendererMock())
       .withTileMap(new Tilemap())
       .withEntityCreator(new EntityCreator())
-      .withPlayerManager(new PlayerManager())
-      .buildClientEngine()
+      .buildServerEngine()
   }
 }

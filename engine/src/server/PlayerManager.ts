@@ -1,10 +1,10 @@
 import { ClientsDto, ILogger, InputDto } from 'engine_api'
 import { IServerPlayerManager as IPlayerManager } from 'engine_api/server'
-import ObjectComponent from '../../tech/component/ObjectComponent'
-import MovementComponent from '../component/MovementComponent'
-import GameFrameDto from '../../dto/GameFrameDto'
-import ObjectDto from '../../dto/ObjectDto'
-import EntityManager from '../../tech/entity_component/EntityManager'
+import ObjectComponent from '../tech/component/ObjectComponent'
+import ServerMovementComponent from '../tech/component/ServerMovementComponent'
+import GameFrameDto from '../dto/GameFrameDto'
+import ObjectDto from '../dto/ObjectDto'
+import EntityManager from '../tech/entity_component/EntityManager'
 
 export default class PlayerManager
   extends EntityManager
@@ -18,8 +18,9 @@ export default class PlayerManager
       if (object.id !== inputDto.id) {
         continue
       }
-      const movement =
-        entity.getComponentByType<MovementComponent>(MovementComponent)
+      const movement = entity.getComponentByType<ServerMovementComponent>(
+        ServerMovementComponent
+      )
 
       movement.inputDto = inputDto
       found = true

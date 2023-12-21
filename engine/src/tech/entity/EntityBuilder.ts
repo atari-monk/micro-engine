@@ -18,6 +18,7 @@ import { OperationMap } from '../../utils/operation/OperationMap'
 import { Operation } from '../../utils/operation/Operation'
 import AssertHelper from '../../utils/AssertionHelper'
 import ClientMovementComponent from '../component/ClientMovementComponent'
+import ServerMovementComponent from '../component/ServerMovementComponent'
 
 export default class EntityBuilder implements IEntityBuilder {
   protected _entity!: IEntity
@@ -56,8 +57,8 @@ export default class EntityBuilder implements IEntityBuilder {
     this._assert.assertNested('_entity', 'logger')
   }
 
-  withEntity<T extends IEntity>(entity: T) {
-    this._entity = entity
+  withEntity<T extends IEntity>(entityFunction: () => T) {
+    this._entity = entityFunction()
     return this
   }
 
@@ -114,6 +115,15 @@ export default class EntityBuilder implements IEntityBuilder {
     return this
   }
 
+  withServerMovementComponent(): this {
+    this._entity.addComponent(
+      new ServerMovementComponent(
+        this._entity.getComponentByType<ObjectComponent>(ObjectComponent)
+      )
+    )
+    return this
+  }
+
   withSpriteComponent() {
     this.assertRenderer()
     this.assertEntityData()
@@ -128,9 +138,9 @@ export default class EntityBuilder implements IEntityBuilder {
   }
 
   build(entityDataKey: string, entityKey: string) {
+    this.executeOperations(entityDataKey)
     this.assertEntity()
     this.assertNestedLogger()
-    this.executeOperations(entityDataKey)
     this._entityManager.add(entityKey, this._entity)
   }
 }

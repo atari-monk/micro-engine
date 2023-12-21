@@ -16,7 +16,7 @@ export default class ClientMovementComponent extends Component {
   }
 
   constructor(input: IInputManager) {
-    super('MovementComponent')
+    super('ClientMovementComponent')
     this._keyActions = {
       ArrowLeft: () => {
         this._inputDto.addDirection(Direction.Left)

@@ -18,9 +18,10 @@ export default class EntityCreator implements IEntityCreator {
   }
 
   createEntities() {
-    this.build('map')
-    this.build('object')
-    this.build('spriteObject', 'object2', 'object2')
+    this.build('map', '', 'map1')
+    this.build('object', 'object1', 'object1')
+    this.build('object', 'object2', 'object2')
+    this.build('spriteObject', 'object3', 'object3')
     this.build('player', 'player1', 'player1')
   }
 }

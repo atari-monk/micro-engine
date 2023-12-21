@@ -17,7 +17,7 @@ export default class EngineBuilder extends EngineBuilderBase {
     return this
   }
 
-  withGameLoop(gameLoop: IGameLoop) {
+  withClientGameLoop(gameLoop: IGameLoop) {
     if (!this._gameClientApi) {
       throw new Error(this.getError('Game Client Api', 'Game Loop'))
     }
@@ -30,7 +30,7 @@ export default class EngineBuilder extends EngineBuilderBase {
     return this
   }
 
-  addPlayerMovementComponent(playerEntityBuilder: EntityBuilder) {
+  withPlayerMovementComponent(playerEntityBuilder: EntityBuilder) {
     playerEntityBuilder.recordOperation(() =>
       playerEntityBuilder.withClientMovementComponent(this._input)
     )
@@ -49,7 +49,7 @@ export default class EngineBuilder extends EngineBuilderBase {
     return this
   }
 
-  build() {
+  buildClientEngine() {
     if (
       !this._logger ||
       !this._clientGameLoop ||

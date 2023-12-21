@@ -5,7 +5,7 @@ export { default as EntityDataManager } from './tech/entity/EntityDataManager'
 //client
 export { default as ClientEngineDirector } from './client/EngineDirector'
 //server
-export { default as ServerEngineDirector } from './server/engine/EngineDirector'
+export { default as ServerEngineDirector } from './server/EngineDirector'
 //math
 export { default as Vector2 } from './math/vector/Vector2'
 export { default as ImmutableVector2 } from './math/vector/ImmutableVector2'
