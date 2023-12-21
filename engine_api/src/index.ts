@@ -1,4 +1,3 @@
-export * from './browser'
 export * from './server'
 export * from './client'
 //tech
@@ -15,7 +14,13 @@ export { default as ICollisionDetector } from './tech/collision_detector/ICollis
 //config_manager
 export { default as IConfigOptions } from './tech/config_manager/IConfigOptions'
 export { default as IConfigurationManager } from './tech/config_manager/IConfigurationManager'
+//data
+export { default as IEntityDataModel } from './tech/data/IEntityDataModel'
+export { default as IObject } from './tech/data/IObject'
+export { default as IGameData } from './tech/data/IGameData'
 //entity
+export { default as IEntityBuilder } from './tech/entity/IEntityBuilder'
+export { default as IEntityCreator } from './tech/entity/IEntityCreator'
 //entity_component
 export { default as IComponent } from './tech/entity_component/IComponent'
 export { default as IEntity } from './tech/entity_component/IEntity'

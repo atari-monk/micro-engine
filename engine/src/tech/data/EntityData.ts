@@ -1,6 +1,6 @@
 import { IAnimationConfig, IImmutableVector2 } from 'engine_api'
-import Vector2 from '../../../math/vector/Vector2'
-import EntityDataManager from '../EntityDataManager'
+import Vector2 from '../../math/vector/Vector2'
+import EntityDataManager from '../entity/EntityDataManager'
 import { ballAnimations } from './ballSprite'
 
 export class EntityData extends EntityDataManager {

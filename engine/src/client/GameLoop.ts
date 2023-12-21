@@ -5,10 +5,10 @@ import {
   InputDto,
   IUpdateCallback,
   IRenderCallback,
+  IClientGameLoop as IGameLoop,
 } from 'engine_api'
 import ClientMovementComponent from '../tech/component/ClientMovementComponent'
 import ObjectComponent from '../tech/component/ObjectComponent'
-import IGameLoop from 'engine_api/client/game_loop/IGameLoop'
 
 export default class GameLoop implements IGameLoop {
   private animationFrameId: number | null = null

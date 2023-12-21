@@ -1,5 +1,5 @@
 import { AnimationType, IAnimationConfig } from 'engine_api'
-import Vector2 from '../../../math/vector/Vector2'
+import Vector2 from '../../math/vector/Vector2'
 
 const ballSprite = './assets/ball.png'
 

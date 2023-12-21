@@ -1,6 +1,6 @@
-import IGameServerApi from '../../multi/IGameServerApi'
-import IUpdateCallback from '../../tech/game_loop/IUpdateCallback'
-import IPlayerManager from '../entity/IPlayerManager'
+import IGameServerApi from '../multi/IGameServerApi'
+import IUpdateCallback from '../tech/game_loop/IUpdateCallback'
+import IPlayerManager from './IPlayerManager'
 
 export default interface IGameLoop {
   set serverApi(serverApi: IGameServerApi)

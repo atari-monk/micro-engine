@@ -159,7 +159,7 @@ export default class EngineBuilder {
   }
 
   protected withPlayerMovementComponent(builder: EntityBuilder) {
-    builder.recordOperation(() => builder)
+    builder.recordOperation(() => builder.withMovementComponent(this._input))
   }
 
   build() {

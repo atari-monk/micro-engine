@@ -1,6 +1,9 @@
-import { IGameServerApi, IEntityCreator } from 'engine_api'
-import { IServerGameLoop as IGameLoop } from 'engine_api'
-import IPlayerManager from 'engine_api/server/entity/IPlayerManager'
+import {
+  IGameServerApi,
+  IEntityCreator,
+  IServerGameLoop as IGameLoop,
+  IServerPlayerManager as IPlayerManager,
+} from 'engine_api'
 import Engine from './Engine'
 import { default as EngineBuilderBase } from '../single/EngineBuilder'
 import EntityBuilder from '../tech/entity/EntityBuilder'
