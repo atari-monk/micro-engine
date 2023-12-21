@@ -60,6 +60,7 @@ export default class EngineBuilder extends EngineBuilderBase {
       !this._camera ||
       !this._tileMap ||
       !this._entityCreator ||
+      !this._configManager ||
       !this._playerManager
     ) {
       throw new Error(
@@ -76,6 +77,7 @@ export default class EngineBuilder extends EngineBuilderBase {
       this._camera,
       this._tileMap,
       this._entityCreator,
+      this._configManager,
       this._playerManager
     )
   }

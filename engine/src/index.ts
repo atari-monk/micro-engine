@@ -12,3 +12,4 @@ export { default as EngineDirector } from './single/EngineDirector'
 //tech
 export { default as GameData } from './tech/data/GameData'
 export { default as EntityDataManager } from './tech/entity/EntityDataManager'
+export { default as IEngineConfigOptions } from './tech/config_manager/IEngineConfigOptions'

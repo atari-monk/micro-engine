@@ -1,10 +1,10 @@
 import { IImmutableVector2, ITile, ITileMapDataFactory } from 'engine_api'
 import { ImmutableVector2 } from 'engine'
 
-export default class TilemapDataFactory implements ITileMapDataFactory {
-  private readonly _resolution = new ImmutableVector2(1920, 1080)
+export default class TileMapData implements ITileMapDataFactory {
+  private readonly _resolution = new ImmutableVector2(740, 360)
   private readonly _tileSize = new ImmutableVector2(20, 20)
-  private readonly _mapOffset = new ImmutableVector2(0, 330)
+  private readonly _mapOffset = new ImmutableVector2(0, 0)
 
   get mapOffset(): IImmutableVector2 {
     return this._mapOffset
@@ -63,7 +63,7 @@ export default class TilemapDataFactory implements ITileMapDataFactory {
 
   createMap(): number[][] {
     const tableSize = this._resolution.divide(this._tileSize)
-    console.log('tableSize', tableSize)
+    //console.log('tableSize', tableSize)
     const table = this.generateTable(tableSize, 3)
     this.fillRow(table, tableSize.y - 1, 1)
     this.fillRow(table, tableSize.y - 2, 1)

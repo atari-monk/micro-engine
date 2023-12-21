@@ -12,8 +12,10 @@ import {
   IEntityDataModel,
   ITileMap,
   IVector2,
+  IConfigurationManager,
 } from 'engine_api'
 import ObjectComponent from '../tech/component/ObjectComponent'
+import IEngineConfigOptions from '../tech/config_manager/IEngineConfigOptions'
 
 export default class Engine {
   protected readonly _logger: ILogger
@@ -27,9 +29,14 @@ export default class Engine {
   protected readonly _camera: ICamera
   protected readonly _tileMap: ITileMap
   protected readonly _entityCreator: IEntityCreator
+  protected readonly _configManager: IConfigurationManager<IEngineConfigOptions>
 
   protected _player: IEntity = {} as IEntity
   protected _playerPosition: IVector2 = {} as IVector2
+
+  get configManager() {
+    return this._configManager
+  }
 
   constructor(
     logger: ILogger,
@@ -40,7 +47,8 @@ export default class Engine {
     entityManager: IEntityManager,
     camera: ICamera,
     tileMap: ITileMap,
-    entityCreator: IEntityCreator
+    entityCreator: IEntityCreator,
+    configManager: IConfigurationManager<IEngineConfigOptions>
   ) {
     this._logger = logger
     this._gameLoop = gameLoop
@@ -51,6 +59,7 @@ export default class Engine {
     this._camera = camera
     this._tileMap = tileMap
     this._entityCreator = entityCreator
+    this._configManager = configManager
   }
 
   initialize(gameData: IGameData) {
@@ -99,7 +108,8 @@ export default class Engine {
   private render = (dt: number) => {
     this._renderer.clearCanvas()
     this._renderer.fillCanvas('rgba(87, 40, 145, 1)')
-    if (this._playerPosition) this._camera.setPosition(this._playerPosition)
+    if (this._playerPosition && this._configManager.getConfig().enableCamera)
+      this._camera.setPosition(this._playerPosition)
     this._entityManager.render(dt)
     this._renderer.resetTranslation()
   }

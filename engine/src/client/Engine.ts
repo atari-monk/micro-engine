@@ -11,12 +11,14 @@ import {
   IManager,
   ITileMap,
   IEntityCreator,
+  IConfigurationManager,
 } from 'engine_api'
 import {
   IClientPlayerManager as IPlayerManager,
   IClientGameLoop as IGameLoop,
 } from 'engine_api/client'
 import { default as EngineBase } from '../single/Engine'
+import IEngineConfigOptions from '../tech/config_manager/IEngineConfigOptions'
 
 export default class Engine extends EngineBase implements IEngineClientApi {
   private readonly _playerManager: IPlayerManager
@@ -42,6 +44,7 @@ export default class Engine extends EngineBase implements IEngineClientApi {
     camera: ICamera,
     tileMap: ITileMap,
     entityCreator: IEntityCreator,
+    configManager: IConfigurationManager<IEngineConfigOptions>,
     playerManager: IPlayerManager
   ) {
     super(
@@ -53,7 +56,8 @@ export default class Engine extends EngineBase implements IEngineClientApi {
       entityManager,
       camera,
       tileMap,
-      entityCreator
+      entityCreator,
+      configManager
     )
     this._playerManager = playerManager
     this._clientGameLoop = clientGameLoop

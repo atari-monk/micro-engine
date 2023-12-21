@@ -24,6 +24,7 @@ export default class EngineDirector {
       .withCamera(new Camera())
       .withTileMap(new Tilemap())
       .withEntityCreator(new EntityCreator())
+      .withEngineConfigOptions()
       .withPlayerManager(new PlayerManager())
       .buildClientEngine()
   }
