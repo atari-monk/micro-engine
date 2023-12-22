@@ -33,6 +33,7 @@ export default class Engine {
 
   protected _player: IEntity = {} as IEntity
   protected _playerPosition: IVector2 = {} as IVector2
+  protected _config: IEngineConfigOptions = {} as IEngineConfigOptions
 
   get configManager() {
     return this._configManager
@@ -89,7 +90,8 @@ export default class Engine {
 
   start() {
     this._logger.log(`Starting Engine`)
-    this.setupCamera()
+    this._config = this._configManager.getConfig()
+    if (this._config.enableCamera) this.setupCamera()
     this._gameLoop.subscribeUpdate(this.update)
     this._gameLoop.subscribeRender(this.render)
     this._gameLoop.start()
@@ -108,10 +110,10 @@ export default class Engine {
   private render = (dt: number) => {
     this._renderer.clearCanvas()
     this._renderer.fillCanvas('rgba(87, 40, 145, 1)')
-    if (this._playerPosition && this._configManager.getConfig().enableCamera)
+    if (this._config.enableCamera && this._playerPosition)
       this._camera.setPosition(this._playerPosition)
     this._entityManager.render(dt)
-    this._renderer.resetTranslation()
+    if (this._config.enableCamera) this._renderer.resetTranslation()
   }
 
   stop() {
