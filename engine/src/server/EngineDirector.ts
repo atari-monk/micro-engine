@@ -7,7 +7,7 @@ import EntityDataManager from '../tech/entity/EntityDataManager'
 import PlayerManager from './PlayerManager'
 import { RendererMock } from '../tech/renderer/RendererMock'
 import GameLoop from './GameLoop'
-import EntityCreator from './EntityCreator'
+import EntityCreator from '../tech/entity/creator/EntityCreator'
 
 export default class EngineDirector {
   createEngine(serverApi: IGameServerApi) {

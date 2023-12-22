@@ -36,6 +36,18 @@ module.exports = () => {
             },
           ],
         },
+        {
+          test: /\.json$/,
+          type: 'javascript/auto', // Added for webpack 5 compatibility
+          use: [
+            {
+              loader: 'file-loader',
+              options: {
+                name: 'data/[name].[ext]',
+              },
+            },
+          ],
+        },
       ],
     },
     plugins: [

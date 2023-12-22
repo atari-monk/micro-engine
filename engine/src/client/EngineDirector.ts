@@ -8,8 +8,8 @@ import RendererV2 from '../tech/renderer/RendererV2'
 import EntityDataManager from '../tech/entity/EntityDataManager'
 import GameLoop from './GameLoop'
 import PlayerManager from './PlayerManager'
-import EntityCreator from './EntityCreator'
 import EngineBuilder from './EngineBuilder'
+import EntityCreator from '../tech/entity/creator/EntityCreator'
 
 export default class EngineDirector {
   createEngine(canvasId: string, gameClientApi: IGameClientApi) {

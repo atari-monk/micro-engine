@@ -8,7 +8,7 @@ import Camera from '../tech/camera/Camera'
 import EntityDataManager from '../tech/entity/EntityDataManager'
 import Tilemap from '../tech/tile_map/Tilemap'
 import RendererV2 from '../tech/renderer/RendererV2'
-import EntityCreator from '../tech/entity/EntityCreator'
+import EntityCreator from '../tech/entity/creator/EntityCreator'
 
 export default class EngineDirector {
   createEngine(canvasId: string) {

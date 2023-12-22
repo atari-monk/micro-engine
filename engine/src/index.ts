@@ -15,3 +15,6 @@ export { default as EntityDataManager } from './tech/entity/EntityDataManager'
 export { default as IEngineConfigOptions } from './tech/config_manager/IEngineConfigOptions'
 export { default as IMasterEngineConfigOptions } from './tech/config_manager/IMasterEngineConfigOptions'
 export { default as ConfigManager } from './tech/config_manager/ConfigManager'
+//utils
+export { default as DataLoader } from './utils/data_loader/DataLoader'
+export { default as JsObjectDataLoader } from './utils/data_loader/JsObjectDataLoader'

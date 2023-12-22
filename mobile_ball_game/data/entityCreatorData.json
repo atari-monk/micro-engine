@@ -1,0 +1,32 @@
+[
+  {
+    "builder": "map",
+    "entityDataKey": "",
+    "entityKey": "map1"
+  },
+  {
+    "builder": "object",
+    "entityDataKey": "object1",
+    "entityKey": "object1"
+  },
+  {
+    "builder": "object",
+    "entityDataKey": "object2",
+    "entityKey": "object2"
+  },
+  {
+    "builder": "spriteObject",
+    "entityDataKey": "object3",
+    "entityKey": "object3"
+  },
+  {
+    "builder": "player",
+    "entityDataKey": "player1",
+    "entityKey": "player1"
+  },
+  {
+    "builder": "player",
+    "entityDataKey": "player2",
+    "entityKey": "player2"
+  }
+]

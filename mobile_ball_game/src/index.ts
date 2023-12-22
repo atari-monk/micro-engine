@@ -1,3 +1,4 @@
+import { IImmutableVector2 } from 'engine_api'
 import {
   GameData,
   ClientEngineDirector,
@@ -11,7 +12,8 @@ import EntityData from './data/EntityData'
 import TileMapData from './data/TileMapData'
 import './css/styles.css'
 import './../assets/ball.png'
-import { IImmutableVector2 } from 'engine_api'
+import './../data/entityCreatorData.json'
+import './../data/entityData.json'
 
 const config = getMasterConfig()
 if (config.singlePlayerMode) {
@@ -30,29 +32,31 @@ function getMasterConfig() {
   return configManager.getConfig()
 }
 
-function setupSinglePlayerMode() {
+async function setupSinglePlayerMode() {
   const engine = new EngineDirector().createEngine('canvas')
   engine.configManager.updateConfig({
     enableCamera: false,
   } as IEngineConfigOptions)
-  engine.initialize(getGameData(engine.getScreenCenter()))
+  engine.initialize(await getGameData(engine.getScreenCenter()))
   engine.start()
 }
 
-function getGameData(center: IImmutableVector2) {
-  const gameData = new GameData(center)
-  gameData.entityData = new EntityData(center)
+async function getGameData(center: IImmutableVector2) {
+  const gameData = new GameData()
+  const entityData = new EntityData(center)
+  await entityData.createData(false)
+  gameData.entityData = entityData
   gameData.tileMapData = new TileMapData()
   return gameData
 }
 
-function setupMultiPlayerMode() {
+async function setupMultiPlayerMode() {
   const gameClient = new GameClient('http://localhost:3001/')
   const engine = new ClientEngineDirector().createEngine('canvas', gameClient)
   engine.configManager.updateConfig({
     enableCamera: true,
   } as IEngineConfigOptions)
-  engine.initialize(getGameData(engine.getScreenCenter()))
+  engine.initialize(await getGameData(engine.getScreenCenter()))
   gameClient.loadEngine(engine)
   engine.start()
 }
