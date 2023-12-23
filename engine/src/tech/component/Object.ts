@@ -6,8 +6,9 @@ export const createZeroObj = (): IObject => {
     id: '',
     name: '',
     color: 'black',
-    position: new Vector2(0, 0),
-    size: new Vector2(0, 0),
-    speed: new Vector2(0, 0),
+    position: new Vector2(),
+    size: new Vector2(),
+    speed: new Vector2(),
+    spriteOffset: new Vector2(),
   } as IObject
 }

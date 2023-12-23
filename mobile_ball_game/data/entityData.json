@@ -15,6 +15,10 @@
       "speed": {
         "x": 0,
         "y": 0
+      },
+      "spriteOffset": {
+        "x": 0,
+        "y": 0
       }
     },
     "animations": {}
@@ -35,6 +39,10 @@
       "speed": {
         "x": 0,
         "y": 0
+      },
+      "spriteOffset": {
+        "x": 0,
+        "y": 0
       }
     },
     "animations": {}
@@ -45,8 +53,8 @@
       "name": "",
       "color": "red",
       "position": {
-        "x": 220,
-        "y": 105
+        "x": 230,
+        "y": 125
       },
       "size": {
         "x": 40,
@@ -55,6 +63,10 @@
       "speed": {
         "x": 10,
         "y": 10
+      },
+      "spriteOffset": {
+        "x": -16,
+        "y": -20
       }
     },
     "animations": [
@@ -87,7 +99,7 @@
       "color": "blue",
       "position": {
         "x": 470,
-        "y": 105
+        "y": 125
       },
       "size": {
         "x": 40,
@@ -96,6 +108,10 @@
       "speed": {
         "x": 10,
         "y": 10
+      },
+      "spriteOffset": {
+        "x": -20,
+        "y": -20
       }
     },
     "animations": [
@@ -127,16 +143,20 @@
       "name": "",
       "color": "",
       "position": {
-        "x": 345,
-        "y": 155
+        "x": 357.5,
+        "y": 167.5
       },
       "size": {
-        "x": 30,
-        "y": 30
+        "x": 25,
+        "y": 25
       },
       "speed": {
         "x": 0,
         "y": 0
+      },
+      "spriteOffset": {
+        "x": -22,
+        "y": -6
       }
     },
     "animations": [

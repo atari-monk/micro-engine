@@ -21,8 +21,8 @@ export default class SpriteComponent extends Component {
   render(dt: number) {
     this.sprite.draw(
       this._renderer.ctx,
-      this._object.position.x - 20,
-      this._object.position.y - 20
+      this._object.position.x + this._object.spriteOffset.x,
+      this._object.position.y + this._object.spriteOffset.y
     )
   }
 

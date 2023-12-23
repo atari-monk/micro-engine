@@ -1,9 +1,9 @@
-import { ICollisionCallback, ICollisionDetector, IGameObject } from 'engine_api'
+import { ICollisionCallback, ICollisionDetector, IObject } from 'engine_api'
 
 export default class CollisionDetector implements ICollisionDetector {
   private collisionCallbacks: ICollisionCallback[] = []
 
-  checkCollision(object1: IGameObject, object2: IGameObject): void {
+  checkCollision(object1: IObject, object2: IObject): void {
     const isColliding =
       object1.position.x < object2.position.x + object2.size.x &&
       object1.position.x + object1.size.x > object2.position.x &&

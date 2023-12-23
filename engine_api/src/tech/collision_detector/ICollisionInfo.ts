@@ -1,6 +1,6 @@
-import IGameObject from './IGameObject'
+import IObject from '../data/IObject'
 
 export default interface ICollisionInfo {
-  object1: IGameObject
-  object2: IGameObject
+  object1: IObject
+  object2: IObject
 }

@@ -7,7 +7,6 @@ export { default as IAnimationManager } from './tech/animation_manager/IAnimatio
 //camera
 export { default as ICamera } from './tech/camera/ICamera'
 //collision_detector
-export { default as IGameObject } from './tech/collision_detector/IGameObject'
 export { default as ICollisionInfo } from './tech/collision_detector/ICollisionInfo'
 export { default as ICollisionCallback } from './tech/collision_detector/ICollisionCallback'
 export { default as ICollisionDetector } from './tech/collision_detector/ICollisionDetector'
