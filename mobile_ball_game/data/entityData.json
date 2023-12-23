@@ -5,7 +5,7 @@
       "name": "",
       "color": "red",
       "position": {
-        "x": 0,
+        "x": 1,
         "y": 105
       },
       "size": {
@@ -25,7 +25,7 @@
       "name": "",
       "color": "blue",
       "position": {
-        "x": 690,
+        "x": 689,
         "y": 105
       },
       "size": {
@@ -49,15 +49,36 @@
         "y": 105
       },
       "size": {
-        "x": 50,
-        "y": 150
+        "x": 40,
+        "y": 110
       },
       "speed": {
-        "x": 100,
-        "y": 100
+        "x": 10,
+        "y": 10
       }
     },
-    "animations": {}
+    "animations": [
+      {
+        "imagePath": "./assets/red-player.png",
+        "frameCount": 20,
+        "frameDuration": 0.05,
+        "frameSize": {
+          "x": 80,
+          "y": 160
+        },
+        "animationType": 1
+      },
+      {
+        "imagePath": "./assets/red-player.png",
+        "frameCount": 17,
+        "frameDuration": 0.05,
+        "frameSize": {
+          "x": 80,
+          "y": 160
+        },
+        "animationType": 1
+      }
+    ]
   },
   "player2": {
     "object": {
@@ -69,15 +90,36 @@
         "y": 105
       },
       "size": {
-        "x": 50,
-        "y": 150
+        "x": 40,
+        "y": 110
       },
       "speed": {
-        "x": 100,
-        "y": 100
+        "x": 10,
+        "y": 10
       }
     },
-    "animations": {}
+    "animations": [
+      {
+        "imagePath": "./assets/blue-player.png",
+        "frameCount": 20,
+        "frameDuration": 0.05,
+        "frameSize": {
+          "x": 80,
+          "y": 160
+        },
+        "animationType": 1
+      },
+      {
+        "imagePath": "./assets/blue-player.png",
+        "frameCount": 17,
+        "frameDuration": 0.05,
+        "frameSize": {
+          "x": 80,
+          "y": 160
+        },
+        "animationType": 1
+      }
+    ]
   },
   "object3": {
     "object": {
@@ -85,12 +127,12 @@
       "name": "",
       "color": "",
       "position": {
-        "x": 370,
-        "y": 180
+        "x": 345,
+        "y": 155
       },
       "size": {
-        "x": 50,
-        "y": 50
+        "x": 30,
+        "y": 30
       },
       "speed": {
         "x": 0,
@@ -100,8 +142,8 @@
     "animations": [
       {
         "imagePath": "./assets/ball.png",
-        "frameCount": 20,
-        "frameDuration": 100,
+        "frameCount": 1,
+        "frameDuration": 10,
         "frameSize": {
           "x": 80,
           "y": 40

@@ -2,8 +2,14 @@ import { IImmutableVector2, IRendererV2 } from 'engine_api'
 import ImmutableVector2 from '../../math/vector/ImmutableVector2'
 
 export class RendererMock implements IRendererV2 {
+  drawFrame(
+    position: IImmutableVector2,
+    size: IImmutableVector2,
+    color: string,
+    lineWidth: number
+  ): void {}
   get ctx(): CanvasRenderingContext2D {
-    throw new Error('Method not implemented.')
+    return {} as CanvasRenderingContext2D
   }
   clearCanvas(): void {}
   drawRect(

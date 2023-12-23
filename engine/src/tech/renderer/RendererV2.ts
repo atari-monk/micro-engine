@@ -12,6 +12,17 @@ export default class RendererV2 extends BaseRenderer implements IRendererV2 {
     this.context.fillRect(position.x, position.y, size.x, size.y)
   }
 
+  drawFrame(
+    position: IVector2,
+    size: IVector2,
+    color: string,
+    lineWidth: number
+  ): void {
+    this.context.strokeStyle = color
+    this.context.lineWidth = lineWidth
+    this.context.strokeRect(position.x, position.y, size.x, size.y)
+  }
+
   save() {
     this.context.save()
   }

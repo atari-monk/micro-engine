@@ -63,7 +63,6 @@ export default class TileMapData implements ITileMapDataFactory {
 
   createMap(): number[][] {
     const tableSize = this._resolution.divide(this._tileSize)
-    //console.log('tableSize', tableSize)
     const table = this.generateTable(tableSize, 3)
     this.fillRow(table, tableSize.y - 1, 1)
     this.fillRow(table, tableSize.y - 2, 1)

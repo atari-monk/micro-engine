@@ -12,6 +12,8 @@ import EntityData from './data/EntityData'
 import TileMapData from './data/TileMapData'
 import './css/styles.css'
 import './../assets/ball.png'
+import './../assets/red-player.png'
+import './../assets/blue-player.png'
 import './../data/entityCreatorData.json'
 import './../data/entityData.json'
 
