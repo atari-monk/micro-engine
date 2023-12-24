@@ -14,11 +14,9 @@ import {
 } from 'engine_api'
 import Engine from './Engine'
 import EntityBuilder from '../tech/entity/EntityBuilder'
-import MapEntity from '../tech/entity/MapEntity'
-import ObjectEntity from '../tech/entity/ObjectEntity'
-import PlayerEntity from '../tech/entity/PlayerEntity'
 import IEngineConfigOptions from '../tech/config_manager/IEngineConfigOptions'
 import ConfigManager from '../tech/config_manager/ConfigManager'
+import Entity from '../tech/entity_component/Entity'
 
 export default class EngineBuilder {
   protected _logger!: ILogger
@@ -105,7 +103,7 @@ export default class EngineBuilder {
     )
     builder.recordOperation(() => {
       builder
-        .withEntity(() => new MapEntity())
+        .withEntity(() => new Entity())
         .withLogger(this._logger)
         .withMapComponent(this._tileMap)
     })
@@ -119,7 +117,7 @@ export default class EngineBuilder {
     )
     builder.recordOperation((dataKey) => {
       builder
-        .withEntity(() => new ObjectEntity())
+        .withEntity(() => new Entity())
         .withLogger(this._logger)
         .withRenderer(this._renderer)
         .withEntityData(dataKey!)
@@ -136,7 +134,7 @@ export default class EngineBuilder {
     )
     builder.recordOperation((dataKey) =>
       builder
-        .withEntity(() => new ObjectEntity())
+        .withEntity(() => new Entity())
         .withLogger(this._logger)
         .withRenderer(this._renderer)
         .withEntityData(dataKey!)
@@ -155,7 +153,7 @@ export default class EngineBuilder {
     )
     builder.recordOperation((dataKey) =>
       builder
-        .withEntity(() => new PlayerEntity())
+        .withEntity(() => new Entity())
         .withLogger(this._logger)
         .withRenderer(this._renderer)
         .withCollisionDetector(this._collisionDetector)

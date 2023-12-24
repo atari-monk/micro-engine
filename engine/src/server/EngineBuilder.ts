@@ -7,8 +7,7 @@ import {
 import Engine from './Engine'
 import { default as EngineBuilderBase } from '../single/EngineBuilder'
 import EntityBuilder from '../tech/entity/EntityBuilder'
-import ObjectEntity from '../tech/entity/ObjectEntity'
-import PlayerEntity from '../tech/entity/PlayerEntity'
+import Entity from '../tech/entity_component/Entity'
 
 export default class EngineBuilder extends EngineBuilderBase {
   private _playerManager!: IPlayerManager
@@ -57,7 +56,7 @@ export default class EngineBuilder extends EngineBuilderBase {
     )
     builder.recordOperation((dataKey) =>
       builder
-        .withEntity(() => new ObjectEntity())
+        .withEntity(() => new Entity())
         .withLogger(this._logger)
         .withEntityData(dataKey!)
         .withObjectComponent()
@@ -72,7 +71,7 @@ export default class EngineBuilder extends EngineBuilderBase {
     )
     builder.recordOperation((dataKey) =>
       builder
-        .withEntity(() => new PlayerEntity())
+        .withEntity(() => new Entity())
         .withLogger(this._logger)
         .withEntityData(dataKey!)
         .withObjectComponent()
