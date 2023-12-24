@@ -61,6 +61,7 @@ export default class EngineBuilder extends EngineBuilderBase {
       !this._tileMap ||
       !this._entityCreator ||
       !this._configManager ||
+      !this._collisionDetector ||
       !this._playerManager
     ) {
       throw new Error(
@@ -78,6 +79,7 @@ export default class EngineBuilder extends EngineBuilderBase {
       this._tileMap,
       this._entityCreator,
       this._configManager,
+      this._collisionDetector,
       this._playerManager
     )
   }

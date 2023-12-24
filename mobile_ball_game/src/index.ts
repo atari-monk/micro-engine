@@ -6,6 +6,8 @@ import {
   EngineDirector,
   IMasterEngineConfigOptions,
   IEngineConfigOptions,
+  CollisionComponent,
+  ObjectComponent,
 } from 'engine'
 import GameClient from './client-lib/GameClient'
 import EntityData from './data/EntityData'
@@ -39,6 +41,13 @@ async function setupSinglePlayerMode() {
   engine.configManager.updateConfig({
     enableCamera: false,
   } as IEngineConfigOptions)
+  engine.afterCreateEntitiesCallback = (entityManager) => {
+    const ball = entityManager.getStrict('object3')
+    const player = entityManager.getStrict('player1')
+    const collider =
+      player.getComponentByType<CollisionComponent>(CollisionComponent)
+    collider.object2 = ball.getComponentByType<ObjectComponent>(ObjectComponent)
+  }
   engine.initialize(await getGameData(engine.getScreenCenter()))
   engine.start()
 }

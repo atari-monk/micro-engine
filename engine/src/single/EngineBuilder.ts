@@ -10,6 +10,7 @@ import {
   ITileMap,
   IEntityCreator,
   IConfigurationManager,
+  ICollisionDetector,
 } from 'engine_api'
 import Engine from './Engine'
 import EntityBuilder from '../tech/entity/EntityBuilder'
@@ -30,6 +31,7 @@ export default class EngineBuilder {
   protected _tileMap!: ITileMap
   protected _entityCreator!: IEntityCreator
   protected _configManager!: IConfigurationManager<IEngineConfigOptions>
+  protected _collisionDetector!: ICollisionDetector
 
   withLogger(logger: ILogger) {
     this._logger = logger
@@ -156,11 +158,13 @@ export default class EngineBuilder {
         .withEntity(() => new PlayerEntity())
         .withLogger(this._logger)
         .withRenderer(this._renderer)
+        .withCollisionDetector(this._collisionDetector)
         .withEntityData(dataKey!)
         .withObjectComponent()
         .withRenderComponent()
         .withSpriteComponent()
         .withStateComponent()
+        .withCollisionComponent()
     )
     this.withPlayerMovementComponent(builder)
     entityCreator.addBuilder('player', builder)
@@ -178,6 +182,11 @@ export default class EngineBuilder {
     return this
   }
 
+  withCollisionDetector(collisionDetector: ICollisionDetector) {
+    this._collisionDetector = collisionDetector
+    return this
+  }
+
   build() {
     if (
       !this._logger ||
@@ -189,7 +198,8 @@ export default class EngineBuilder {
       !this._camera ||
       !this._tileMap ||
       !this._entityCreator ||
-      !this._configManager
+      !this._configManager ||
+      !this._collisionDetector
     ) {
       throw new Error(
         'All dependencies must be set before building the engine.'
@@ -205,7 +215,8 @@ export default class EngineBuilder {
       this._camera,
       this._tileMap,
       this._entityCreator,
-      this._configManager
+      this._configManager,
+      this._collisionDetector
     )
   }
 }

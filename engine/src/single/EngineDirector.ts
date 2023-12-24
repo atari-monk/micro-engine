@@ -9,6 +9,7 @@ import EntityDataManager from '../tech/entity/EntityDataManager'
 import Tilemap from '../tech/tile_map/Tilemap'
 import RendererV2 from '../tech/renderer/RendererV2'
 import EntityCreator from '../tech/entity/creator/EntityCreator'
+import CollisionDetector from '../tech/collision_detector/CollisionDetector'
 
 export default class EngineDirector {
   createEngine(canvasId: string) {
@@ -23,6 +24,7 @@ export default class EngineDirector {
       .withTileMap(new Tilemap())
       .withEntityCreator(new EntityCreator())
       .withEngineConfigOptions()
+      .withCollisionDetector(new CollisionDetector())
       .build()
     return engine
   }

@@ -13,6 +13,7 @@ import {
   ITileMap,
   IVector2,
   IConfigurationManager,
+  ICollisionDetector,
 } from 'engine_api'
 import ObjectComponent from '../tech/component/ObjectComponent'
 import IEngineConfigOptions from '../tech/config_manager/IEngineConfigOptions'
@@ -30,6 +31,10 @@ export default class Engine {
   protected readonly _tileMap: ITileMap
   protected readonly _entityCreator: IEntityCreator
   protected readonly _configManager: IConfigurationManager<IEngineConfigOptions>
+  protected readonly _collisionDetector: ICollisionDetector
+  private _afterCreateEntitiesCallback: (
+    entityManager: IEntityManager
+  ) => void = () => {}
 
   protected _player: IEntity = {} as IEntity
   protected _playerPosition: IVector2 = {} as IVector2
@@ -37,6 +42,12 @@ export default class Engine {
 
   get configManager() {
     return this._configManager
+  }
+
+  set afterCreateEntitiesCallback(
+    callback: (entityManager: IEntityManager) => void
+  ) {
+    this._afterCreateEntitiesCallback = callback
   }
 
   constructor(
@@ -49,7 +60,8 @@ export default class Engine {
     camera: ICamera,
     tileMap: ITileMap,
     entityCreator: IEntityCreator,
-    configManager: IConfigurationManager<IEngineConfigOptions>
+    configManager: IConfigurationManager<IEngineConfigOptions>,
+    collisionDetector: ICollisionDetector
   ) {
     this._logger = logger
     this._gameLoop = gameLoop
@@ -61,14 +73,16 @@ export default class Engine {
     this._tileMap = tileMap
     this._entityCreator = entityCreator
     this._configManager = configManager
+    this._collisionDetector = collisionDetector
   }
 
-  initialize(gameData: IGameData) {
+  async initialize(gameData: IGameData) {
     this.subscribeKeyboardEvents()
     this._camera.load(gameData.tileMapData)
     this._tileMap.load(gameData.tileMapData)
     this.loadEntityData(gameData.entityData)
-    this._entityCreator.createEntities()
+    await this._entityCreator.createEntities()
+    this._afterCreateEntitiesCallback(this._entityManager)
   }
 
   private subscribeKeyboardEvents() {

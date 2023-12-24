@@ -1,4 +1,5 @@
 import {
+  ICollisionDetector,
   IEntity,
   IEntityBuilder,
   IEntityDataModel,
@@ -20,6 +21,7 @@ import AssertHelper from '../../utils/AssertionHelper'
 import ClientMovementComponent from '../component/ClientMovementComponent'
 import ServerMovementComponent from '../component/ServerMovementComponent'
 import StateComponent from '../state_machine/StateComponent'
+import CollisionComponent from '../component/CollisionComponent'
 
 export default class EntityBuilder implements IEntityBuilder {
   protected _entity!: IEntity
@@ -27,6 +29,7 @@ export default class EntityBuilder implements IEntityBuilder {
   private _entityData!: IEntityDataModel
   private _operationMap: OperationMap = new OperationMap()
   private _assert: AssertHelper = new AssertHelper(this)
+  private _collisionDetector!: ICollisionDetector
 
   constructor(
     private readonly _dataManager: IManager<IEntityDataModel>,
@@ -48,6 +51,10 @@ export default class EntityBuilder implements IEntityBuilder {
 
   private assertRenderer(): void {
     this._assert.assertField('_renderer')
+  }
+
+  private assertCollisionDetector(): void {
+    this._assert.assertField('_collisionDetector')
   }
 
   private assertEntityData(): void {
@@ -141,6 +148,18 @@ export default class EntityBuilder implements IEntityBuilder {
   withStateComponent() {
     this._entity.addComponent(new StateComponent(this._entity))
     return this
+  }
+
+  withCollisionDetector(collisionDetector: ICollisionDetector) {
+    this._collisionDetector = collisionDetector
+    return this
+  }
+
+  withCollisionComponent() {
+    this.assertCollisionDetector()
+    this._entity.addComponent(
+      new CollisionComponent(this._entity, this._collisionDetector)
+    )
   }
 
   build(entityDataKey: string, entityKey: string) {
