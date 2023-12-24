@@ -6,6 +6,7 @@ import {
 } from 'engine_api'
 import Component from '../entity_component/Component'
 import ObjectComponent from './ObjectComponent'
+import CollisionHandlerComponent from './CollisionHandlerComponent'
 
 export default class CollisionComponent extends Component {
   private _object2!: IObject
@@ -19,7 +20,13 @@ export default class CollisionComponent extends Component {
     private readonly _collisionDetector: ICollisionDetector
   ) {
     super('CollisionComponent')
-    this._collisionDetector.subscribeToCollisions(this.onCollision.bind(this))
+    const collisionHandler =
+      this._entity.getComponentByType<CollisionHandlerComponent>(
+        CollisionHandlerComponent
+      )
+    this._collisionDetector.subscribeToCollisions(
+      collisionHandler.handleCollision.bind(this)
+    )
   }
 
   update(dt: number) {
@@ -30,8 +37,4 @@ export default class CollisionComponent extends Component {
   }
 
   render(dt: number) {}
-
-  private onCollision(collisionInfo: ICollisionInfo) {
-    console.log('Collision occurred:', collisionInfo)
-  }
 }

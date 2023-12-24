@@ -9,6 +9,7 @@ export const createZeroObj = (): IObject => {
     position: new Vector2(),
     size: new Vector2(),
     speed: new Vector2(),
+    mass: 0,
     spriteOffset: new Vector2(),
   } as IObject
 }

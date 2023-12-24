@@ -7,5 +7,6 @@ export default interface IObject {
   size: IVector2
   color: string
   speed: IVector2
+  mass: number
   spriteOffset: IVector2
 }

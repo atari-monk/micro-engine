@@ -8,6 +8,7 @@ export default class ObjectComponent extends Component implements IObject {
   public size: IVector2
   public color: string
   public speed: IVector2
+  public mass: number
   public spriteOffset: IVector2
 
   constructor(objData: IObject) {
@@ -18,6 +19,7 @@ export default class ObjectComponent extends Component implements IObject {
     this.color = objData.color
     this.speed = Vector2.fromObject(objData.speed)
     this.spriteOffset = Vector2.fromObject(objData.spriteOffset)
+    this.mass = objData.mass
   }
 
   update(dt: number) {}

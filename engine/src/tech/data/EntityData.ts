@@ -21,6 +21,7 @@ export class EntityData extends EntityDataManager {
         size: new Vector2(150, 50),
         speed: new Vector2(),
         spriteOffset: new Vector2(),
+        mass: 0,
       },
       animations: {} as IAnimationConfig[],
     })
@@ -34,6 +35,7 @@ export class EntityData extends EntityDataManager {
         size: new Vector2(150, 50),
         speed: new Vector2(),
         spriteOffset: new Vector2(),
+        mass: 0,
       },
       animations: {} as IAnimationConfig[],
     })
@@ -47,6 +49,7 @@ export class EntityData extends EntityDataManager {
         size: new Vector2(50, 150),
         speed: new Vector2(100, 100),
         spriteOffset: new Vector2(),
+        mass: 0,
       },
       animations: {} as IAnimationConfig[],
     })
@@ -60,6 +63,7 @@ export class EntityData extends EntityDataManager {
         size: new Vector2(50, 150),
         speed: new Vector2(100, 100),
         spriteOffset: new Vector2(),
+        mass: 0,
       },
       animations: {} as IAnimationConfig[],
     })
@@ -73,6 +77,7 @@ export class EntityData extends EntityDataManager {
         size: new Vector2(150, 50),
         speed: new Vector2(),
         spriteOffset: new Vector2(),
+        mass: 0,
       },
       animations: ballAnimations,
     })

@@ -22,6 +22,7 @@ import ClientMovementComponent from '../component/ClientMovementComponent'
 import ServerMovementComponent from '../component/ServerMovementComponent'
 import StateComponent from '../state_machine/StateComponent'
 import CollisionComponent from '../component/CollisionComponent'
+import CollisionHandlerComponent from '../component/CollisionHandlerComponent'
 
 export default class EntityBuilder implements IEntityBuilder {
   protected _entity!: IEntity
@@ -160,6 +161,12 @@ export default class EntityBuilder implements IEntityBuilder {
     this._entity.addComponent(
       new CollisionComponent(this._entity, this._collisionDetector)
     )
+    return this
+  }
+
+  withCollisionHandlerComponent() {
+    this._entity.addComponent(new CollisionHandlerComponent())
+    return this
   }
 
   build(entityDataKey: string, entityKey: string) {

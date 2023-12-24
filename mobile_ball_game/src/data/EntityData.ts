@@ -35,6 +35,7 @@ export default class EntityData extends EntityDataManager {
               object.spriteOffset.x,
               object.spriteOffset.y
             ),
+            mass: object.mass,
           },
         })
       })
@@ -56,6 +57,7 @@ export default class EntityData extends EntityDataManager {
         size: new Vector2(150, 50),
         speed: new Vector2(),
         spriteOffset: new Vector2(),
+        mass: 0,
       },
       animations: {} as IAnimationConfig[],
     })
@@ -69,6 +71,7 @@ export default class EntityData extends EntityDataManager {
         size: new Vector2(150, 50),
         speed: new Vector2(),
         spriteOffset: new Vector2(),
+        mass: 0,
       },
       animations: {} as IAnimationConfig[],
     })
@@ -82,6 +85,7 @@ export default class EntityData extends EntityDataManager {
         size: new Vector2(50, 150),
         speed: new Vector2(100, 100),
         spriteOffset: new Vector2(),
+        mass: 70,
       },
       animations: {} as IAnimationConfig[],
     })
@@ -95,6 +99,7 @@ export default class EntityData extends EntityDataManager {
         size: new Vector2(50, 150),
         speed: new Vector2(100, 100),
         spriteOffset: new Vector2(),
+        mass: 70,
       },
       animations: {} as IAnimationConfig[],
     })
@@ -108,6 +113,7 @@ export default class EntityData extends EntityDataManager {
         size: new Vector2(150, 50),
         speed: new Vector2(),
         spriteOffset: new Vector2(),
+        mass: 1,
       },
       animations: ballAnimations,
     })

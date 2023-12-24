@@ -19,7 +19,8 @@
       "spriteOffset": {
         "x": 0,
         "y": 0
-      }
+      },
+      "mass": 0
     },
     "animations": {}
   },
@@ -43,7 +44,8 @@
       "spriteOffset": {
         "x": 0,
         "y": 0
-      }
+      },
+      "mass": 0
     },
     "animations": {}
   },
@@ -67,7 +69,8 @@
       "spriteOffset": {
         "x": -16,
         "y": -20
-      }
+      },
+      "mass": 70
     },
     "animations": [
       {
@@ -112,7 +115,8 @@
       "spriteOffset": {
         "x": -20,
         "y": -20
-      }
+      },
+      "mass": 70
     },
     "animations": [
       {
@@ -157,7 +161,8 @@
       "spriteOffset": {
         "x": -22,
         "y": -6
-      }
+      },
+      "mass": 1
     },
     "animations": [
       {

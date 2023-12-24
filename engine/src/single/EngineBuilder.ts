@@ -162,6 +162,7 @@ export default class EngineBuilder {
         .withRenderComponent()
         .withSpriteComponent()
         .withStateComponent()
+        .withCollisionHandlerComponent()
         .withCollisionComponent()
     )
     this.withPlayerMovementComponent(builder)
