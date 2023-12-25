@@ -1,5 +1,5 @@
-import { CollisionDetector, Vector2 } from 'engine'
-import { IGameObject, ICollisionInfo } from 'engine_api'
+import { CollisionDetector, Vector2, getObjectZero } from 'engine'
+import { IObject, ICollisionInfo } from 'engine_api'
 
 describe('CollisionDetector', () => {
   let collisionDetector: CollisionDetector
@@ -12,14 +12,12 @@ describe('CollisionDetector', () => {
   })
 
   test('should detect collision and invoke callback', () => {
-    const object1: IGameObject = {
-      position: new Vector2(10, 10),
-      size: new Vector2(20, 20),
-    }
-    const object2: IGameObject = {
-      position: new Vector2(15, 15),
-      size: new Vector2(20, 20),
-    }
+    const object1: IObject = getObjectZero()
+    object1.position = new Vector2(10, 10)
+    object1.size = new Vector2(20, 20)
+    const object2: IObject = getObjectZero()
+    object2.position = new Vector2(15, 15)
+    object2.size = new Vector2(20, 20)
 
     collisionDetector.checkCollision(object1, object2)
 
@@ -28,14 +26,12 @@ describe('CollisionDetector', () => {
   })
 
   test('should not detect collision when objects do not collide', () => {
-    const object1: IGameObject = {
-      position: new Vector2(10, 10),
-      size: new Vector2(20, 20),
-    }
-    const object2: IGameObject = {
-      position: new Vector2(50, 50),
-      size: new Vector2(20, 20),
-    }
+    const object1: IObject = getObjectZero()
+    object1.position = new Vector2(10, 10)
+    object1.size = new Vector2(20, 20)
+    const object2: IObject = getObjectZero()
+    object2.position = new Vector2(50, 50)
+    object2.size = new Vector2(20, 20)
 
     collisionDetector.checkCollision(object1, object2)
 

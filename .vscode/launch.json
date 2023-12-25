@@ -15,6 +15,21 @@
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
       "cwd": "${workspaceFolder}/engine_node_tests"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "vector2.test",
+      "program": "${workspaceFolder}/engine_node_tests/node_modules/jest/bin/jest.js",
+      "args": [
+        "--runInBand",
+        "--no-cache",
+        "--detectOpenHandles",
+        "src/vector2.test.ts"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "cwd": "${workspaceFolder}/engine_node_tests"
     }
   ]
 }

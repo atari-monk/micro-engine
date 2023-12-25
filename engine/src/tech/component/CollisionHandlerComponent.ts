@@ -3,11 +3,11 @@ import Component from '../entity_component/Component'
 import Vector2 from '../../math/vector/Vector2'
 
 export default class CollisionHandlerComponent extends Component {
-  //coefficient of restitution (COR) for a soccer ball
-  private ballCOR: number = 0.7
+  private _cor: number
 
   constructor() {
     super('CollisionHandlerComponent')
+    this._cor = 0.7
   }
 
   handleCollision(collisionInfo: ICollisionInfo) {
@@ -23,11 +23,11 @@ export default class CollisionHandlerComponent extends Component {
 
     const newObj1Velocity = velocity1
       .add(relativeVelocity.multiply(obj1MassFactor))
-      .multiply(this.ballCOR)
-
+      .multiply(this._cor)
+    
     const newObj2Velocity = velocity2
       .subtract(relativeVelocity.multiply(obj2MassFactor))
-      .multiply(this.ballCOR)
+      .multiply(this._cor)
 
     object1.speed = Vector2.fromObject(newObj1Velocity)
     object2.speed = Vector2.fromObject(newObj2Velocity)

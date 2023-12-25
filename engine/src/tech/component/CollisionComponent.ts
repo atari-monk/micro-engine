@@ -1,9 +1,4 @@
-import {
-  ICollisionDetector,
-  ICollisionInfo,
-  IEntity,
-  IObject,
-} from 'engine_api'
+import { ICollisionDetector, IEntity, IObject } from 'engine_api'
 import Component from '../entity_component/Component'
 import ObjectComponent from './ObjectComponent'
 import CollisionHandlerComponent from './CollisionHandlerComponent'
@@ -20,12 +15,11 @@ export default class CollisionComponent extends Component {
     private readonly _collisionDetector: ICollisionDetector
   ) {
     super('CollisionComponent')
-    const collisionHandler =
-      this._entity.getComponentByType<CollisionHandlerComponent>(
-        CollisionHandlerComponent
-      )
+    const collisionHandlerComponent = this._entity.getComponentByType(
+      CollisionHandlerComponent
+    )
     this._collisionDetector.subscribeToCollisions(
-      collisionHandler.handleCollision.bind(this)
+      collisionHandlerComponent.handleCollision.bind(collisionHandlerComponent)
     )
   }
 

@@ -23,6 +23,7 @@ import ServerMovementComponent from '../component/ServerMovementComponent'
 import StateComponent from '../state_machine/StateComponent'
 import CollisionComponent from '../component/CollisionComponent'
 import CollisionHandlerComponent from '../component/CollisionHandlerComponent'
+import { KinematicsComponent } from '../component/KinematicsComponent'
 
 export default class EntityBuilder implements IEntityBuilder {
   protected _entity!: IEntity
@@ -166,6 +167,11 @@ export default class EntityBuilder implements IEntityBuilder {
 
   withCollisionHandlerComponent() {
     this._entity.addComponent(new CollisionHandlerComponent())
+    return this
+  }
+
+  withKinematicsComponent() {
+    this._entity.addComponent(new KinematicsComponent(this._entity))
     return this
   }
 

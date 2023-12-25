@@ -1,7 +1,7 @@
 import { IObject } from 'engine_api'
 import Vector2 from '../../math/vector/Vector2'
 
-export const createZeroObj = (): IObject => {
+export const getObjectZero = (): IObject => {
   return {
     id: '',
     name: '',

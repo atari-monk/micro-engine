@@ -88,6 +88,26 @@ const runVectorTests = (Vector: new (x: number, y: number) => any) => {
     expect(x).toEqual(7)
     expect(y).toEqual(11)
   })
+
+  describe('Vector2.fromObject', () => {
+    it('should return a new instance with the same values', () => {
+      const inputVector = new Vector2(1, 2)
+
+      const result = Vector2.fromObject(inputVector)
+
+      expect(result).toBeInstanceOf(Vector2)
+      expect(result.x).toBe(inputVector.x)
+      expect(result.y).toBe(inputVector.y)
+
+      inputVector.x = 10
+      inputVector.y = 10
+
+      expect(result.x).toBe(1)
+      expect(result.y).toBe(2)
+      expect(inputVector.x).toBe(10)
+      expect(inputVector.y).toBe(10)
+    })
+  })
 }
 
 describe('Vector2', () => {

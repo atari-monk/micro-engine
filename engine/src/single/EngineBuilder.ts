@@ -142,6 +142,7 @@ export default class EngineBuilder {
         .withRenderComponent()
         .withSpriteComponent()
         .withStateComponent()
+        .withKinematicsComponent()
     )
     entityCreator.addBuilder('spriteObject', builder)
   }
