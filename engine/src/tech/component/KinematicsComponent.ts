@@ -1,6 +1,7 @@
 import { IEntity, IObject } from 'engine_api'
 import Component from '../entity_component/Component'
 import ObjectComponent from './ObjectComponent'
+import Vector2 from '../../math/vector/Vector2'
 
 export class KinematicsComponent extends Component {
   private _object: IObject
@@ -12,7 +13,7 @@ export class KinematicsComponent extends Component {
   }
 
   update(dt: number) {
-    this._object.speed.multiply(this.frictionCoefficient)
-    this._object.position.add(this._object.speed.multiply(dt))
+    //this._object.speed.multiply(this.frictionCoefficient)
+    this._object.position.add(Vector2.getNew(this._object.speed).multiply(dt))
   }
 }

@@ -1,8 +1,4 @@
-import {
-  IAnimationConfig,
-  AnimationType,
-  IAnimationFrame,
-} from 'engine_api'
+import { IAnimationConfig, AnimationType, IAnimationFrame } from 'engine_api'
 import Vector2 from '../../math/vector/Vector2'
 
 export class SpriteAnimator {
@@ -36,7 +32,7 @@ export class SpriteAnimator {
           i * config.frameSize.x,
           animIndex * config.frameSize.y
         ),
-        frameSize: Vector2.fromObject(config.frameSize),
+        frameSize: Vector2.getNew(config.frameSize),
       } as IAnimationFrame)
     }
     return frames

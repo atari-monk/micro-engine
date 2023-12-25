@@ -14,11 +14,11 @@ export default class ObjectComponent extends Component implements IObject {
   constructor(objData: IObject) {
     super('ObjectComponent')
     this.id = objData.id
-    this.position = Vector2.fromObject(objData.position)
-    this.size = Vector2.fromObject(objData.size)
+    this.position = Vector2.getNew(objData.position)
+    this.size = Vector2.getNew(objData.size)
     this.color = objData.color
-    this.speed = Vector2.fromObject(objData.speed)
-    this.spriteOffset = Vector2.fromObject(objData.spriteOffset)
+    this.speed = Vector2.getNew(objData.speed)
+    this.spriteOffset = Vector2.getNew(objData.spriteOffset)
     this.mass = objData.mass
   }
 

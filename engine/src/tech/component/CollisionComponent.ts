@@ -4,6 +4,7 @@ import ObjectComponent from './ObjectComponent'
 import CollisionHandlerComponent from './CollisionHandlerComponent'
 
 export default class CollisionComponent extends Component {
+  private _object1!: IObject
   private _object2!: IObject
 
   set object2(object: IObject) {
@@ -15,6 +16,10 @@ export default class CollisionComponent extends Component {
     private readonly _collisionDetector: ICollisionDetector
   ) {
     super('CollisionComponent')
+    this._object1 = this._entity.getComponentByType(ObjectComponent)
+  }
+
+  setCollisionHandler() {
     const collisionHandlerComponent = this._entity.getComponentByType(
       CollisionHandlerComponent
     )
@@ -25,9 +30,7 @@ export default class CollisionComponent extends Component {
 
   update(dt: number) {
     if (!this._object2) return
-    const object1 =
-      this._entity.getComponentByType<ObjectComponent>(ObjectComponent)
-    this._collisionDetector.checkCollision(object1, this._object2)
+    this._collisionDetector.checkCollision(this._object1, this._object2)
   }
 
   render(dt: number) {}

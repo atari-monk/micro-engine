@@ -4,6 +4,8 @@ export default class CollisionDetector implements ICollisionDetector {
   private collisionCallbacks: ICollisionCallback[] = []
 
   checkCollision(object1: IObject, object2: IObject): void {
+    if (!object1 || !object2) return
+
     const isColliding =
       object1.position.x < object2.position.x + object2.size.x &&
       object1.position.x + object1.size.x > object2.position.x &&

@@ -30,6 +30,21 @@
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
       "cwd": "${workspaceFolder}/engine_node_tests"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "immutableVector2.test",
+      "program": "${workspaceFolder}/engine_node_tests/node_modules/jest/bin/jest.js",
+      "args": [
+        "--runInBand",
+        "--no-cache",
+        "--detectOpenHandles",
+        "src/immutableVector2.test.ts"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "cwd": "${workspaceFolder}/engine_node_tests"
     }
   ]
 }

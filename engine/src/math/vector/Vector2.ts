@@ -11,7 +11,7 @@ export default class Vector2 implements IVector2 {
     this.y = y
   }
 
-  static fromObject(vector: IVector2) {
+  static getNew(vector: IVector2) {
     return new Vector2(vector.x, vector.y)
   }
 

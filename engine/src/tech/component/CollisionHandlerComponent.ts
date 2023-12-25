@@ -4,6 +4,7 @@ import Vector2 from '../../math/vector/Vector2'
 
 export default class CollisionHandlerComponent extends Component {
   private _cor: number
+  private _collisionCooldown: boolean = false
 
   constructor() {
     super('CollisionHandlerComponent')
@@ -11,25 +12,38 @@ export default class CollisionHandlerComponent extends Component {
   }
 
   handleCollision(collisionInfo: ICollisionInfo) {
-    const object1 = collisionInfo.object1
-    const object2 = collisionInfo.object2
-    const velocity1 = Vector2.fromObject(object1.speed)
-    const velocity2 = Vector2.fromObject(object2.speed)
+    if (this._collisionCooldown) {
+      return
+    }
 
-    const relativeVelocity = velocity2.subtract(velocity1)
+    const obj1 = collisionInfo.object1
+    const obj2 = collisionInfo.object2
 
-    const obj1MassFactor = (2 * object2.mass) / (object1.mass + object2.mass)
-    const obj2MassFactor = (2 * object1.mass) / (object1.mass + object2.mass)
+    const v1 = Vector2.getNew(obj1.speed)
+    const v2 = Vector2.getNew(obj2.speed)
+    const relativeV = v2.subtract(v1)
 
-    const newObj1Velocity = velocity1
-      .add(relativeVelocity.multiply(obj1MassFactor))
+    const obj1MassFactor = (2 * obj2.mass) / (obj1.mass + obj2.mass)
+    const obj2MassFactor = (2 * obj1.mass) / (obj1.mass + obj2.mass)
+
+    const newObj1Velocity = Vector2.getNew(obj1.speed)
+      .add(Vector2.getNew(relativeV).multiply(obj1MassFactor))
       .multiply(this._cor)
-    
-    const newObj2Velocity = velocity2
-      .subtract(relativeVelocity.multiply(obj2MassFactor))
+
+    const newObj2Velocity = Vector2.getNew(obj2.speed)
+      .subtract(Vector2.getNew(relativeV).multiply(obj2MassFactor))
       .multiply(this._cor)
 
-    object1.speed = Vector2.fromObject(newObj1Velocity)
-    object2.speed = Vector2.fromObject(newObj2Velocity)
+    //obj1.speed.setValues(newObj1Velocity)
+    obj2.speed.setValues(newObj2Velocity)
+
+    console.log(obj1.color, obj2.mass)
+    console.log(obj2.speed.x, obj2.speed.y)
+
+    this._collisionCooldown = true
+
+    setTimeout(() => {
+      this._collisionCooldown = false
+    }, 2000)
   }
 }
