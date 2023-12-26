@@ -14,4 +14,5 @@ export default interface IVector2 {
   length(): number
   squaredLength(): number
   normalize(): this
+  equals(v: IVector2): boolean
 }

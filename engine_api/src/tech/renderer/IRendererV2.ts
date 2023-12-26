@@ -1,4 +1,5 @@
 import IVector2 from '../../math/vector/IImmutableVector2'
+import IObject from '../data/IObject'
 
 export default interface IRendererV2 {
   get ctx(): CanvasRenderingContext2D
@@ -16,4 +17,5 @@ export default interface IRendererV2 {
   restore(): void
   getCenter(): IVector2
   fillCanvas(color: string): void
+  drawObject(object: IObject): void
 }

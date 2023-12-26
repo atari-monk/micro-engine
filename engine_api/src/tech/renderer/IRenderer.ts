@@ -7,5 +7,4 @@ export default interface IRenderer {
     height: number,
     color: string
   ): void
-  // Add more drawing methods as needed (circles, images, etc.)
 }

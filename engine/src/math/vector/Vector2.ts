@@ -71,6 +71,10 @@ export default class Vector2 implements IVector2 {
     return this
   }
 
+  equals(v: IVector2) {
+    return this.x === v.x && this.y === v.y
+  }
+
   static zero(): Vector2 {
     return new Vector2()
   }

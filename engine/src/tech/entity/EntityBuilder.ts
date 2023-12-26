@@ -24,6 +24,8 @@ import StateComponent from '../state_machine/StateComponent'
 import CollisionComponent from '../component/CollisionComponent'
 import CollisionHandlerComponent from '../component/CollisionHandlerComponent'
 import { KinematicsComponent } from '../component/KinematicsComponent'
+import LimitMoveComponent from '../component/LimitMoveComponent'
+import Vector2 from '../../math/vector/Vector2'
 
 export default class EntityBuilder implements IEntityBuilder {
   protected _entity!: IEntity
@@ -103,7 +105,7 @@ export default class EntityBuilder implements IEntityBuilder {
     this.assertRenderer()
     this._entity.addComponent(
       new RenderComponent(
-        this._entity.getComponentByType<ObjectComponent>(ObjectComponent),
+        this._entity.getComponentByType(ObjectComponent),
         this._renderer
       )
     )
@@ -113,7 +115,7 @@ export default class EntityBuilder implements IEntityBuilder {
   withMovementComponent(input: IInputManager): this {
     this._entity.addComponent(
       new MovementComponent(
-        this._entity.getComponentByType<ObjectComponent>(ObjectComponent),
+        this._entity.getComponentByType(ObjectComponent),
         input
       )
     )
@@ -128,7 +130,7 @@ export default class EntityBuilder implements IEntityBuilder {
   withServerMovementComponent(): this {
     this._entity.addComponent(
       new ServerMovementComponent(
-        this._entity.getComponentByType<ObjectComponent>(ObjectComponent)
+        this._entity.getComponentByType(ObjectComponent)
       )
     )
     return this
@@ -140,7 +142,7 @@ export default class EntityBuilder implements IEntityBuilder {
     this._entity.addComponent(
       new SpriteComponent(
         this._renderer,
-        this._entity.getComponentByType<ObjectComponent>(ObjectComponent),
+        this._entity.getComponentByType(ObjectComponent),
         this._entityData.animations
       )
     )
@@ -172,6 +174,16 @@ export default class EntityBuilder implements IEntityBuilder {
 
   withKinematicsComponent() {
     this._entity.addComponent(new KinematicsComponent(this._entity))
+    return this
+  }
+
+  withLimitMoveComponent() {
+    this._entity.addComponent(
+      new LimitMoveComponent(
+        new Vector2(740, 360),
+        this._entity.getComponentByType(ObjectComponent)
+      )
+    )
     return this
   }
 

@@ -165,6 +165,7 @@ export default class EngineBuilder {
         .withStateComponent()
         .withCollisionHandlerComponent()
         .withCollisionComponent()
+        .withLimitMoveComponent()
     )
     this.withPlayerMovementComponent(builder)
     entityCreator.addBuilder('player', builder)

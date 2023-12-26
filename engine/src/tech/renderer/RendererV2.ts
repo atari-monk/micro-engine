@@ -1,4 +1,4 @@
-import { IRendererV2, IVector2 } from 'engine_api'
+import { IObject, IRendererV2, IVector2 } from 'engine_api'
 import BaseRenderer from './BaseRenderer'
 import Vector2 from '../../math/vector/Vector2'
 
@@ -46,5 +46,38 @@ export default class RendererV2 extends BaseRenderer implements IRendererV2 {
   fillCanvas(color: string): void {
     this.context.fillStyle = color
     this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
+  }
+
+  drawObject(object: IObject): void {
+    this.drawCollisionBox(object)
+    const arrowScale = 5
+    const arrowEnd = new Vector2(
+      object.position.x + object.velocity.x * arrowScale,
+      object.position.y + object.velocity.y * arrowScale
+    )
+
+    this.context.beginPath()
+    this.context.moveTo(object.position.x, object.position.y)
+    this.context.lineTo(arrowEnd.x, arrowEnd.y)
+    this.context.strokeStyle = object.color
+    this.context.lineWidth = 2
+    this.context.stroke()
+
+    const centerSize = 3
+    this.context.fillStyle = object.color
+    this.context.fillRect(
+      object.position.x - centerSize / 2,
+      object.position.y - centerSize / 2,
+      centerSize,
+      centerSize
+    )
+  }
+
+  private drawCollisionBox(object: IObject, fill = false) {
+    if (fill) {
+      this.drawRect(object.position, object.size, object.color)
+    } else {
+      this.drawFrame(object.position, object.size, object.color, 2)
+    }
   }
 }

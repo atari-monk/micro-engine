@@ -12,16 +12,6 @@ export default class RenderComponent extends Component {
   update(dt: number) {}
 
   render(dt: number) {
-    // this._renderer.drawRect(
-    //   this._object.position,
-    //   this._object.size,
-    //   this._object.color
-    // )
-    this._renderer.drawFrame(
-      this._object.position,
-      this._object.size,
-      this._object.color,
-      2
-    )
+    this._renderer.drawObject(this._object)
   }
 }
