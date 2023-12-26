@@ -8,7 +8,8 @@ export const getObjectZero = (): IObject => {
     color: 'black',
     position: new Vector2(),
     size: new Vector2(),
-    speed: new Vector2(),
+    moveStep: new Vector2(),
+    velocity: new Vector2(),
     mass: 0,
     spriteOffset: new Vector2(),
   } as IObject

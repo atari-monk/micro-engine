@@ -6,14 +6,16 @@ export default class ObjectDto implements IObjectDto {
   public position: IVector2
   public size: IVector2
   public color: string
-  public speed: IVector2
+  public moveStep: IVector2
+  public velocity: IVector2
 
-  constructor(objectComponent: IObject) {
-    this.id = objectComponent.id
-    this.position = objectComponent.position
-    this.size = objectComponent.size
-    this.color = objectComponent.color
-    this.speed = objectComponent.speed
+  constructor(objData: IObject) {
+    this.id = objData.id
+    this.position = objData.position
+    this.size = objData.size
+    this.color = objData.color
+    this.moveStep = objData.moveStep
+    this.velocity = objData.velocity
   }
 
   static fromData(data: {
@@ -21,15 +23,17 @@ export default class ObjectDto implements IObjectDto {
     position: IVector2
     size: IVector2
     color: string
-    speed: IVector2
+    moveStep: IVector2
+    velocity: IVector2
   }): ObjectDto {
-    const objectDTO = new ObjectDto({} as IObject)
-    objectDTO.id = data.id
-    objectDTO.position = new Vector2(data.position.x, data.position.y)
-    objectDTO.size = data.size
-    objectDTO.color = data.color
-    objectDTO.speed = data.speed
-    return objectDTO
+    const dto = new ObjectDto({} as IObject)
+    dto.id = data.id
+    dto.position = new Vector2(data.position.x, data.position.y)
+    dto.size = data.size
+    dto.color = data.color
+    dto.moveStep = data.moveStep
+    dto.velocity = data.velocity
+    return dto
   }
 
   toData(): {
@@ -37,14 +41,16 @@ export default class ObjectDto implements IObjectDto {
     position: IVector2
     size: IVector2
     color: string
-    speed: IVector2
+    moveStep: IVector2
+    velocity: IVector2
   } {
     return {
       id: this.id,
       position: this.position,
       size: this.size,
       color: this.color,
-      speed: this.speed,
+      moveStep: this.moveStep,
+      velocity: this.velocity,
     }
   }
 }

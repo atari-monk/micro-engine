@@ -12,7 +12,11 @@
         "x": 50,
         "y": 150
       },
-      "speed": {
+      "moveStep": {
+        "x": 0,
+        "y": 0
+      },
+      "velocity": {
         "x": 0,
         "y": 0
       },
@@ -37,7 +41,11 @@
         "x": 50,
         "y": 150
       },
-      "speed": {
+      "moveStep": {
+        "x": 0,
+        "y": 0
+      },
+      "velocity": {
         "x": 0,
         "y": 0
       },
@@ -62,8 +70,12 @@
         "x": 40,
         "y": 110
       },
-      "speed": {
+      "moveStep": {
         "x": 10,
+        "y": 10
+      },
+      "velocity": {
+        "x": 0,
         "y": 0
       },
       "spriteOffset": {
@@ -108,8 +120,12 @@
         "x": 40,
         "y": 110
       },
-      "speed": {
-        "x": -10,
+      "moveStep": {
+        "x": 10,
+        "y": 10
+      },
+      "velocity": {
+        "x": 0,
         "y": 0
       },
       "spriteOffset": {
@@ -154,7 +170,11 @@
         "x": 25,
         "y": 25
       },
-      "speed": {
+      "moveStep": {
+        "x": 0,
+        "y": 0
+      },
+      "velocity": {
         "x": 0,
         "y": 0
       },

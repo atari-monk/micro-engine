@@ -8,16 +8,20 @@ export default class MovementComponent extends Component {
     super('MovementComponent')
     this._keyActions = {
       ArrowLeft: () => {
-        object.position.x -= object.speed.x
+        object.velocity.x = -object.moveStep.x
+        object.position.x += object.velocity.x
       },
       ArrowRight: () => {
-        object.position.x += object.speed.x
+        object.velocity.x = object.moveStep.x
+        object.position.x += object.velocity.x
       },
       ArrowUp: () => {
-        object.position.y -= object.speed.y
+        object.velocity.y = -object.moveStep.y
+        object.position.y += object.velocity.y
       },
       ArrowDown: () => {
-        object.position.y += object.speed.y
+        object.velocity.y = object.moveStep.y
+        object.position.y += object.velocity.y
       },
     }
 

@@ -5,13 +5,15 @@ export default interface IObjectDto {
   position: IVector2
   size: IVector2
   color: string
-  speed: IVector2
+  moveStep: IVector2
+  velocity: IVector2
 
   toData(): {
     id: string
     position: IVector2
     size: IVector2
     color: string
-    speed: IVector2
+    moveStep: IVector2
+    velocity: IVector2
   }
 }

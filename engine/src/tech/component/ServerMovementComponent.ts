@@ -13,16 +13,16 @@ export default class ServerMovementComponent extends Component {
     super('ServerMovementComponent')
     this._keyActions = {
       [Direction.Up]: (dt) => {
-        this._object.position.y -= Math.round(this._object.speed.y * dt)
+        this._object.position.y -= Math.round(this._object.moveStep.y * dt)
       },
       [Direction.Down]: (dt) => {
-        this._object.position.y += Math.round(this._object.speed.y * dt)
+        this._object.position.y += Math.round(this._object.moveStep.y * dt)
       },
       [Direction.Left]: (dt) => {
-        this._object.position.x -= Math.round(this._object.speed.x * dt)
+        this._object.position.x -= Math.round(this._object.moveStep.x * dt)
       },
       [Direction.Right]: (dt) => {
-        this._object.position.x += Math.round(this._object.speed.x * dt)
+        this._object.position.x += Math.round(this._object.moveStep.x * dt)
       },
     }
   }

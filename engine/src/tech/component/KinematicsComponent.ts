@@ -14,6 +14,8 @@ export class KinematicsComponent extends Component {
 
   update(dt: number) {
     //this._object.speed.multiply(this.frictionCoefficient)
-    this._object.position.add(Vector2.getNew(this._object.speed).multiply(dt))
+    this._object.position.add(
+      Vector2.getNew(this._object.velocity).multiply(dt)
+    )
   }
 }
