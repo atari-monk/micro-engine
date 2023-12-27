@@ -19,7 +19,7 @@ export { default as ConfigManager } from './tech/config_manager/ConfigManager'
 export { default as CollisionComponent } from './tech/component/CollisionComponent'
 export { default as ObjectComponent } from './tech/component/ObjectComponent'
 //for tests
-export { default as CollisionDetector } from './tech/collision_detector/CollisionDetector'
+export { default as CollisionDetector } from './tech/collision_detector/TopLeftCollisionDetector'
 export { default as Entity } from './tech/entity_component/Entity'
 export { default as Component } from './tech/entity_component/Component'
 export { default as EventSystem } from './tech/event_system/EventSystem'

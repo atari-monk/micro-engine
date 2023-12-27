@@ -10,13 +10,16 @@ export default class LimitMoveComponent extends Component {
   }
 
   update(dt: number) {
+    const halfWidth = this._object.size.x / 2
+    const halfHeight = this._object.size.y / 2
+
     const newX = Math.max(
-      0,
-      Math.min(this._limitSize.x - this._object.size.x, this._object.position.x)
+      halfWidth,
+      Math.min(this._limitSize.x - halfWidth, this._object.position.x)
     )
     const newY = Math.max(
-      0,
-      Math.min(this._limitSize.y - this._object.size.y, this._object.position.y)
+      halfHeight,
+      Math.min(this._limitSize.y - halfHeight, this._object.position.y)
     )
 
     this._object.position.x = newX

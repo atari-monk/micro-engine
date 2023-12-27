@@ -58,7 +58,7 @@ async function setupSinglePlayerMode() {
 async function getGameData(center: IImmutableVector2) {
   const gameData = new GameData()
   const entityData = new EntityData(center)
-  await entityData.createData(false)
+  await entityData.createData()
   gameData.entityData = entityData
   gameData.tileMapData = new TileMapData()
   return gameData

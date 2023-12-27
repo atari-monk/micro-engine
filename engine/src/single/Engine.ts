@@ -13,10 +13,10 @@ import {
   ITileMap,
   IVector2,
   IConfigurationManager,
-  ICollisionDetector,
 } from 'engine_api'
 import ObjectComponent from '../tech/component/ObjectComponent'
 import IEngineConfigOptions from '../tech/config_manager/IEngineConfigOptions'
+import CollisionManager from '../tech/collision_detector/CollisionManager'
 
 export default class Engine {
   protected readonly _logger: ILogger
@@ -31,7 +31,7 @@ export default class Engine {
   protected readonly _tileMap: ITileMap
   protected readonly _entityCreator: IEntityCreator
   protected readonly _configManager: IConfigurationManager<IEngineConfigOptions>
-  protected readonly _collisionDetector: ICollisionDetector
+  protected readonly _collisionManager: CollisionManager
   private _afterCreateEntitiesCallback: (
     entityManager: IEntityManager
   ) => void = () => {}
@@ -61,7 +61,7 @@ export default class Engine {
     tileMap: ITileMap,
     entityCreator: IEntityCreator,
     configManager: IConfigurationManager<IEngineConfigOptions>,
-    collisionDetector: ICollisionDetector
+    collisionManager: CollisionManager
   ) {
     this._logger = logger
     this._gameLoop = gameLoop
@@ -73,7 +73,7 @@ export default class Engine {
     this._tileMap = tileMap
     this._entityCreator = entityCreator
     this._configManager = configManager
-    this._collisionDetector = collisionDetector
+    this._collisionManager = collisionManager
   }
 
   async initialize(gameData: IGameData) {

@@ -10,6 +10,8 @@ import GameLoop from './GameLoop'
 import PlayerManager from './PlayerManager'
 import EngineBuilder from './EngineBuilder'
 import EntityCreator from '../tech/entity/creator/EntityCreator'
+import CenterCollisionDetector from '../tech/collision_detector/CenterCollisionDetector'
+import CollisionManager from '../tech/collision_detector/CollisionManager'
 
 export default class EngineDirector {
   createEngine(canvasId: string, gameClientApi: IGameClientApi) {
@@ -23,8 +25,9 @@ export default class EngineDirector {
       .withInput(new InputManager())
       .withCamera(new Camera())
       .withTileMap(new Tilemap())
-      .withEntityCreator(new EntityCreator())
       .withEngineConfigOptions()
+      .withCollisionManager(new CollisionManager(new CenterCollisionDetector()))
+      .withEntityCreator(new EntityCreator())
       .withPlayerManager(new PlayerManager())
       .buildClientEngine()
   }

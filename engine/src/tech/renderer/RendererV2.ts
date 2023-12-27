@@ -7,20 +7,50 @@ export default class RendererV2 extends BaseRenderer implements IRendererV2 {
     super(canvasId)
   }
 
-  drawRect(position: IVector2, size: IVector2, color: string): void {
+  drawRect(topLeft: IVector2, size: IVector2, color: string = 'yellow'): void {
     this.context.fillStyle = color
-    this.context.fillRect(position.x, position.y, size.x, size.y)
+    this.context.fillRect(topLeft.x, topLeft.y, size.x, size.y)
+  }
+
+  drawRectAroundPoint(
+    center: IVector2,
+    size: IVector2,
+    color: string = 'yellow'
+  ): void {
+    this.context.fillStyle = color
+    this.context.fillRect(
+      center.x - size.x / 2,
+      center.y - size.y / 2,
+      size.x,
+      size.y
+    )
   }
 
   drawFrame(
-    position: IVector2,
+    topLeft: IVector2,
     size: IVector2,
-    color: string,
-    lineWidth: number
+    color: string = 'yellow',
+    lineWidth: number = 2
   ): void {
     this.context.strokeStyle = color
     this.context.lineWidth = lineWidth
-    this.context.strokeRect(position.x, position.y, size.x, size.y)
+    this.context.strokeRect(topLeft.x, topLeft.y, size.x, size.y)
+  }
+
+  drawFrameAroundPoint(
+    center: IVector2,
+    size: IVector2,
+    color: string = 'yellow',
+    lineWidth: number = 2
+  ): void {
+    this.context.strokeStyle = color
+    this.context.lineWidth = lineWidth
+    this.context.strokeRect(
+      center.x - size.x / 2,
+      center.y - size.y / 2,
+      size.x,
+      size.y
+    )
   }
 
   save() {
@@ -63,21 +93,20 @@ export default class RendererV2 extends BaseRenderer implements IRendererV2 {
     this.context.lineWidth = 2
     this.context.stroke()
 
-    const centerSize = 3
-    this.context.fillStyle = object.color
-    this.context.fillRect(
-      object.position.x - centerSize / 2,
-      object.position.y - centerSize / 2,
-      centerSize,
-      centerSize
-    )
+    this.drawPoint(object.position)
+  }
+
+  private drawPoint(point: IVector2, halfSize: number = 1.5, color = 'yellow') {
+    const size = halfSize * 2
+    this.context.fillStyle = color
+    this.context.fillRect(point.x - halfSize, point.y - halfSize, size, size)
   }
 
   private drawCollisionBox(object: IObject, fill = false) {
     if (fill) {
-      this.drawRect(object.position, object.size, object.color)
+      this.drawRectAroundPoint(object.position, object.size, object.color)
     } else {
-      this.drawFrame(object.position, object.size, object.color, 2)
+      this.drawFrameAroundPoint(object.position, object.size, object.color)
     }
   }
 }

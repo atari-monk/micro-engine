@@ -5,6 +5,7 @@ import {
 } from 'engine_api'
 import { EntityDataManager, JsObjectDataLoader, Vector2 } from 'engine'
 import { ballAnimations } from './ballSprite'
+import { bluePlayerAnimations, redPlayerAnimations } from './playerSprite'
 
 export default class EntityData extends EntityDataManager {
   private _dataLoader = new JsObjectDataLoader<IEntityDataModel>(
@@ -15,7 +16,7 @@ export default class EntityData extends EntityDataManager {
     super()
   }
 
-  async createData(fromCode = true, saveData = false) {
+  async createData(fromCode = false, saveData = false) {
     if (fromCode) {
       this.createDataByCode()
     } else {
@@ -53,9 +54,9 @@ export default class EntityData extends EntityDataManager {
       object: {
         id: '',
         name: '',
-        color: 'green',
-        position: new Vector2(center.x + 150, center.y + 150),
-        size: new Vector2(150, 50),
+        color: 'red',
+        position: new Vector2(26, center.y),
+        size: new Vector2(50, 150),
         moveStep: new Vector2(),
         velocity: new Vector2(),
         spriteOffset: new Vector2(),
@@ -68,9 +69,9 @@ export default class EntityData extends EntityDataManager {
       object: {
         id: '',
         name: '',
-        color: 'yellow',
-        position: new Vector2(center.x + 150, center.y - 150),
-        size: new Vector2(150, 50),
+        color: 'blue',
+        position: new Vector2(740 - 26, center.y),
+        size: new Vector2(50, 150),
         moveStep: new Vector2(),
         velocity: new Vector2(),
         spriteOffset: new Vector2(),
@@ -84,14 +85,14 @@ export default class EntityData extends EntityDataManager {
         id: '',
         name: '',
         color: 'red',
-        position: new Vector2(center.x - 50 - 100, center.y - 75),
-        size: new Vector2(50, 150),
-        moveStep: new Vector2(100, 100),
+        position: new Vector2(center.x - 100, center.y),
+        size: new Vector2(40, 110),
+        moveStep: new Vector2(50, 50),
         velocity: new Vector2(),
-        spriteOffset: new Vector2(),
+        spriteOffset: new Vector2(-36, -75),
         mass: 70,
       },
-      animations: {} as IAnimationConfig[],
+      animations: redPlayerAnimations,
     })
 
     this.add('player2', {
@@ -99,26 +100,26 @@ export default class EntityData extends EntityDataManager {
         id: '',
         name: '',
         color: 'blue',
-        position: new Vector2(center.x + 100, center.y - 75),
-        size: new Vector2(50, 150),
-        moveStep: new Vector2(100, 100),
+        position: new Vector2(center.x + 100, center.y),
+        size: new Vector2(40, 110),
+        moveStep: new Vector2(50, 50),
         velocity: new Vector2(),
-        spriteOffset: new Vector2(),
+        spriteOffset: new Vector2(-40, -75),
         mass: 70,
       },
-      animations: {} as IAnimationConfig[],
+      animations: bluePlayerAnimations,
     })
 
     this.add('object3', {
       object: {
         id: '',
         name: '',
-        color: '',
+        color: 'purple',
         position: new Vector2(center.x, center.y),
-        size: new Vector2(150, 50),
+        size: new Vector2(25, 25),
         moveStep: new Vector2(),
         velocity: new Vector2(),
-        spriteOffset: new Vector2(),
+        spriteOffset: new Vector2(-35, -19),
         mass: 1,
       },
       animations: ballAnimations,

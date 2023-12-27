@@ -1,6 +1,6 @@
 import { ICollisionCallback, ICollisionDetector, IObject } from 'engine_api'
 
-export default class CollisionDetector implements ICollisionDetector {
+export default class TopLeftCollisionDetector implements ICollisionDetector {
   private collisionCallbacks: ICollisionCallback[] = []
 
   checkCollision(object1: IObject, object2: IObject): void {

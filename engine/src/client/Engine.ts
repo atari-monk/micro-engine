@@ -12,7 +12,6 @@ import {
   ITileMap,
   IEntityCreator,
   IConfigurationManager,
-  ICollisionDetector,
 } from 'engine_api'
 import {
   IClientPlayerManager as IPlayerManager,
@@ -20,6 +19,7 @@ import {
 } from 'engine_api/client'
 import { default as EngineBase } from '../single/Engine'
 import IEngineConfigOptions from '../tech/config_manager/IEngineConfigOptions'
+import CollisionManager from '../tech/collision_detector/CollisionManager'
 
 export default class Engine extends EngineBase implements IEngineClientApi {
   private readonly _playerManager: IPlayerManager
@@ -46,7 +46,7 @@ export default class Engine extends EngineBase implements IEngineClientApi {
     tileMap: ITileMap,
     entityCreator: IEntityCreator,
     configManager: IConfigurationManager<IEngineConfigOptions>,
-    collisionDetector: ICollisionDetector,
+    collisionManager: CollisionManager,
     playerManager: IPlayerManager
   ) {
     super(
@@ -60,7 +60,7 @@ export default class Engine extends EngineBase implements IEngineClientApi {
       tileMap,
       entityCreator,
       configManager,
-      collisionDetector
+      collisionManager
     )
     this._playerManager = playerManager
     this._clientGameLoop = clientGameLoop

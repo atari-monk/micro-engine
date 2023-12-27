@@ -44,6 +44,6 @@ export default class CollisionHandlerComponent extends Component {
 
     setTimeout(() => {
       this._collisionCooldown = false
-    }, 2000)
+    }, 200)
   }
 }

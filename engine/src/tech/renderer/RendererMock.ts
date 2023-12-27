@@ -2,9 +2,18 @@ import { IImmutableVector2, IObject, IRendererV2 } from 'engine_api'
 import ImmutableVector2 from '../../math/vector/ImmutableVector2'
 
 export class RendererMock implements IRendererV2 {
-  drawObject(object: IObject): void {
-    throw new Error('Method not implemented.')
-  }
+  drawRect(
+    topLeft: IImmutableVector2,
+    size: IImmutableVector2,
+    color: string
+  ): void {}
+  drawFrameAroundPoint(
+    center: IImmutableVector2,
+    size: IImmutableVector2,
+    color: string,
+    lineWidth: number
+  ): void {}
+  drawObject(object: IObject): void {}
   drawFrame(
     position: IImmutableVector2,
     size: IImmutableVector2,
@@ -15,7 +24,7 @@ export class RendererMock implements IRendererV2 {
     return {} as CanvasRenderingContext2D
   }
   clearCanvas(): void {}
-  drawRect(
+  drawRectAroundPoint(
     position: IImmutableVector2,
     size: IImmutableVector2,
     color: string

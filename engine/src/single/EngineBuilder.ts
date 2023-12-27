@@ -10,13 +10,13 @@ import {
   ITileMap,
   IEntityCreator,
   IConfigurationManager,
-  ICollisionDetector,
 } from 'engine_api'
 import Engine from './Engine'
 import EntityBuilder from '../tech/entity/EntityBuilder'
 import IEngineConfigOptions from '../tech/config_manager/IEngineConfigOptions'
 import ConfigManager from '../tech/config_manager/ConfigManager'
 import Entity from '../tech/entity_component/Entity'
+import CollisionManager from '../tech/collision_detector/CollisionManager'
 
 export default class EngineBuilder {
   protected _logger!: ILogger
@@ -29,7 +29,7 @@ export default class EngineBuilder {
   protected _tileMap!: ITileMap
   protected _entityCreator!: IEntityCreator
   protected _configManager!: IConfigurationManager<IEngineConfigOptions>
-  protected _collisionDetector!: ICollisionDetector
+  protected _collisionManager!: CollisionManager
 
   withLogger(logger: ILogger) {
     this._logger = logger
@@ -158,7 +158,7 @@ export default class EngineBuilder {
         .withEntity(() => new Entity())
         .withLogger(this._logger)
         .withRenderer(this._renderer)
-        .withCollisionDetector(this._collisionDetector)
+        .withCollisionDetector(this._collisionManager.getCollisionDetector())
         .withEntityData(dataKey!)
         .withObjectComponent()
         .withRenderComponent()
@@ -184,8 +184,8 @@ export default class EngineBuilder {
     return this
   }
 
-  withCollisionDetector(collisionDetector: ICollisionDetector) {
-    this._collisionDetector = collisionDetector
+  withCollisionManager(collisionManager: CollisionManager) {
+    this._collisionManager = collisionManager
     return this
   }
 
@@ -201,7 +201,7 @@ export default class EngineBuilder {
       !this._tileMap ||
       !this._entityCreator ||
       !this._configManager ||
-      !this._collisionDetector
+      !this._collisionManager
     ) {
       throw new Error(
         'All dependencies must be set before building the engine.'
@@ -218,7 +218,7 @@ export default class EngineBuilder {
       this._tileMap,
       this._entityCreator,
       this._configManager,
-      this._collisionDetector
+      this._collisionManager
     )
   }
 }
