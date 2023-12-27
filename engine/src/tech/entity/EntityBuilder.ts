@@ -26,6 +26,7 @@ import CollisionHandlerComponent from '../component/CollisionHandlerComponent'
 import { KinematicsComponent } from '../component/KinematicsComponent'
 import LimitMoveComponent from '../component/LimitMoveComponent'
 import Vector2 from '../../math/vector/Vector2'
+import BouncingBallComponent from '../component/BouncingBallComponent'
 
 export default class EntityBuilder implements IEntityBuilder {
   protected _entity!: IEntity
@@ -185,6 +186,16 @@ export default class EntityBuilder implements IEntityBuilder {
       )
     )
     return this
+  }
+
+  withBouncingBallComponent() {
+     this._entity.addComponent(
+       new BouncingBallComponent(
+         new Vector2(740, 360),
+         this._entity.getComponentByType(ObjectComponent)
+       )
+     )
+     return this
   }
 
   build(entityDataKey: string, entityKey: string) {
