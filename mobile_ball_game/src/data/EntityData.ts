@@ -32,7 +32,7 @@ export default class EntityData extends EntityDataManager {
             position: new Vector2(object.position.x, object.position.y),
             size: new Vector2(object.size.x, object.size.y),
             moveStep: new Vector2(object.moveStep.x, object.moveStep.y),
-            velocity: new Vector2(object.moveStep.x, object.moveStep.y),
+            velocity: new Vector2(object.velocity.x, object.velocity.y),
             spriteOffset: new Vector2(
               object.spriteOffset.x,
               object.spriteOffset.y
@@ -50,7 +50,7 @@ export default class EntityData extends EntityDataManager {
   private createDataByCode() {
     const center = this._center
 
-    this.add('object1', {
+    this.add('leftGate', {
       object: {
         id: '',
         name: '',
@@ -65,7 +65,7 @@ export default class EntityData extends EntityDataManager {
       animations: {} as IAnimationConfig[],
     })
 
-    this.add('object2', {
+    this.add('rightGate', {
       object: {
         id: '',
         name: '',
@@ -110,7 +110,7 @@ export default class EntityData extends EntityDataManager {
       animations: bluePlayerAnimations,
     })
 
-    this.add('object3', {
+    this.add('ball', {
       object: {
         id: '',
         name: '',

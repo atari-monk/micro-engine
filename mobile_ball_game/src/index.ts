@@ -42,7 +42,7 @@ async function setupSinglePlayerMode() {
     enableCamera: false,
   } as IEngineConfigOptions)
   engine.afterCreateEntitiesCallback = (entityManager) => {
-    const ball = entityManager.getStrict('object3')
+    const ball = entityManager.getStrict('ball')
     const player1 = entityManager.getStrict('player1')
     const player2 = entityManager.getStrict('player2')
     const collider1 = player1.getComponentByType(CollisionComponent)

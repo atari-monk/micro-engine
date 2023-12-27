@@ -21,7 +21,7 @@ export default class ObjectComponent extends Component implements IObject {
     this.moveStep = Vector2.getNew(objData.moveStep)
     this.spriteOffset = Vector2.getNew(objData.spriteOffset)
     this.mass = objData.mass
-    this.velocity = objData.velocity
+    this.velocity = Vector2.getNew(objData.velocity)
   }
 
   update(dt: number) {}

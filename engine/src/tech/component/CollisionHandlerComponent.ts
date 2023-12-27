@@ -37,8 +37,8 @@ export default class CollisionHandlerComponent extends Component {
     //obj1.velocity.setValues(newObj1Velocity)
     obj2.velocity.setValues(newObj2Velocity)
 
-    console.log(obj1.color, obj2.mass)
-    console.log(obj2.velocity.x, obj2.velocity.y)
+    //console.log(obj1.color, obj2.mass)
+    //console.log(obj2.velocity.x, obj2.velocity.y)
 
     this._collisionCooldown = true
 

@@ -6,18 +6,18 @@
   },
   {
     "builder": "object",
-    "entityDataKey": "object1",
-    "entityKey": "object1"
+    "entityDataKey": "leftGate",
+    "entityKey": "leftGate"
   },
   {
     "builder": "object",
-    "entityDataKey": "object2",
-    "entityKey": "object2"
+    "entityDataKey": "rightGate",
+    "entityKey": "rightGate"
   },
   {
     "builder": "spriteObject",
-    "entityDataKey": "object3",
-    "entityKey": "object3"
+    "entityDataKey": "ball",
+    "entityKey": "ball"
   },
   {
     "builder": "player",

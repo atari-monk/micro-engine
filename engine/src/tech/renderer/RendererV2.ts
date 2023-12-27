@@ -80,7 +80,7 @@ export default class RendererV2 extends BaseRenderer implements IRendererV2 {
 
   drawObject(object: IObject): void {
     this.drawCollisionBox(object)
-    const arrowScale = 5
+    const arrowScale = 3
     const arrowEnd = new Vector2(
       object.position.x + object.velocity.x * arrowScale,
       object.position.y + object.velocity.y * arrowScale

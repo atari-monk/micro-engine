@@ -1,5 +1,5 @@
 {
-  "object1": {
+  "leftGate": {
     "object": {
       "id": "",
       "name": "",
@@ -28,7 +28,7 @@
     },
     "animations": {}
   },
-  "object2": {
+  "rightGate": {
     "object": {
       "id": "",
       "name": "",
@@ -71,11 +71,11 @@
         "y": 110
       },
       "moveStep": {
-        "x": 50,
-        "y": 50
+        "x": 10,
+        "y": 10
       },
       "velocity": {
-        "x": 0,
+        "x": 10,
         "y": 0
       },
       "spriteOffset": {
@@ -121,11 +121,11 @@
         "y": 110
       },
       "moveStep": {
-        "x": 50,
-        "y": 50
+        "x": -10,
+        "y": 10
       },
       "velocity": {
-        "x": 0,
+        "x": -10,
         "y": 0
       },
       "spriteOffset": {
@@ -157,7 +157,7 @@
       }
     ]
   },
-  "object3": {
+  "ball": {
     "object": {
       "id": "",
       "name": "",
