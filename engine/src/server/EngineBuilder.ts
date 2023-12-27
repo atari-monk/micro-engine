@@ -42,7 +42,6 @@ export default class EngineBuilder extends EngineBuilderBase {
   }
 
   withEntityCreator(entityCreator: IEntityCreator) {
-    this.withMapEntityBuilder(entityCreator)
     this.withObjectEntityBuilder(entityCreator)
     this.withPlayerEntityBuilder(entityCreator)
     this._entityCreator = entityCreator

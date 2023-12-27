@@ -37,7 +37,11 @@ function getMasterConfig() {
 }
 
 async function setupSinglePlayerMode() {
-  const engine = new EngineDirector().createEngine('canvas')
+  const engineBuilder = new EngineDirector().createDefaultEngineBuilder(
+    'canvas'
+  )
+  engineBuilder.withMapEntityBuilder()
+  const engine = engineBuilder.build()
   engine.configManager.updateConfig({
     enableCamera: false,
   } as IEngineConfigOptions)

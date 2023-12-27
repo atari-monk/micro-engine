@@ -88,7 +88,7 @@ export default class EngineBuilder {
   }
 
   withEntityCreator(entityCreator: IEntityCreator) {
-    this.withMapEntityBuilder(entityCreator)
+    //this.withMapEntityBuilder()
     this.withObjectEntityBuilder(entityCreator)
     this.withSpriteObjectEntityBuilder(entityCreator)
     this.withPlayerEntityBuilder(entityCreator)
@@ -96,7 +96,7 @@ export default class EngineBuilder {
     return this
   }
 
-  protected withMapEntityBuilder(entityCreator: IEntityCreator) {
+  withMapEntityBuilder() {
     const builder = new EntityBuilder(
       this._entityDataManager,
       this._entityManager
@@ -107,7 +107,7 @@ export default class EngineBuilder {
         .withLogger(this._logger)
         .withMapComponent(this._tileMap)
     })
-    entityCreator.addBuilder('map', builder)
+    this._entityCreator.addBuilder('map', builder)
   }
 
   protected withObjectEntityBuilder(entityCreator: IEntityCreator) {

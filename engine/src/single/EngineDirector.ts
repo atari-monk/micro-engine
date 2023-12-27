@@ -13,8 +13,8 @@ import CenterCollisionDetector from '../tech/collision_detector/CenterCollisionD
 import CollisionManager from '../tech/collision_detector/CollisionManager'
 
 export default class EngineDirector {
-  createEngine(canvasId: string) {
-    const engine = new EngineBuilder()
+  createDefaultEngineBuilder(canvasId: string) {
+    return new EngineBuilder()
       .withLogger(new LogManager(LogLevel.DEBUG))
       .withGameLoop(new GameLoop())
       .withRenderer(new RendererV2(canvasId))
@@ -26,7 +26,5 @@ export default class EngineDirector {
       .withEngineConfigOptions()
       .withCollisionManager(new CollisionManager(new CenterCollisionDetector()))
       .withEntityCreator(new EntityCreator())
-      .build()
-    return engine
   }
 }
