@@ -12,11 +12,12 @@ import {
   IConfigurationManager,
 } from 'engine_api'
 import Engine from './Engine'
-import EntityBuilder from '../tech/entity/EntityBuilder'
 import IEngineConfigOptions from '../tech/config_manager/IEngineConfigOptions'
 import ConfigManager from '../tech/config_manager/ConfigManager'
-import Entity from '../tech/entity_component/Entity'
 import CollisionManager from '../tech/collision_detector/CollisionManager'
+import ICustomEntityBuilder from '../tech/entity/builder/ICustomEntityBuilder'
+import { BuilderLibrary } from '../tech/entity/builder/BuilderLibrary'
+import BuilderFactory from '../tech/entity/builder/BuilderFactory'
 
 export default class EngineBuilder {
   protected _logger!: ILogger
@@ -88,92 +89,26 @@ export default class EngineBuilder {
   }
 
   withEntityCreator(entityCreator: IEntityCreator) {
-    //this.withMapEntityBuilder()
-    this.withObjectEntityBuilder(entityCreator)
-    this.withSpriteObjectEntityBuilder(entityCreator)
-    this.withPlayerEntityBuilder(entityCreator)
     this._entityCreator = entityCreator
     return this
   }
 
-  withMapEntityBuilder() {
-    const builder = new EntityBuilder(
-      this._entityDataManager,
-      this._entityManager
-    )
-    builder.recordOperation(() => {
-      builder
-        .withEntity(() => new Entity())
-        .withLogger(this._logger)
-        .withMapComponent(this._tileMap)
-    })
-    this._entityCreator.addBuilder('map', builder)
+  withCustomBuilder(builderKey: string, builder: ICustomEntityBuilder) {
+    builder.withEntityBuilder(builderKey)
   }
 
-  protected withObjectEntityBuilder(entityCreator: IEntityCreator) {
-    const builder = new EntityBuilder(
+  withBuilderFromLibrary(builderKey: string, builderType: BuilderLibrary) {
+    const builder = new BuilderFactory(
+      this._entityCreator,
       this._entityDataManager,
-      this._entityManager
-    )
-    builder.recordOperation((dataKey) => {
-      builder
-        .withEntity(() => new Entity())
-        .withLogger(this._logger)
-        .withRenderer(this._renderer)
-        .withEntityData(dataKey!)
-        .withObjectComponent()
-        .withRenderComponent()
-    })
-    entityCreator.addBuilder('object', builder)
-  }
-
-  protected withSpriteObjectEntityBuilder(entityCreator: IEntityCreator) {
-    const builder = new EntityBuilder(
-      this._entityDataManager,
-      this._entityManager
-    )
-    builder.recordOperation((dataKey) =>
-      builder
-        .withEntity(() => new Entity())
-        .withLogger(this._logger)
-        .withRenderer(this._renderer)
-        .withEntityData(dataKey!)
-        .withObjectComponent()
-        .withSpriteComponent()
-        .withRenderComponent()
-        .withStateComponent()
-        .withKinematicsComponent()
-        .withBouncingBallComponent()
-    )
-    entityCreator.addBuilder('spriteObject', builder)
-  }
-
-  protected withPlayerEntityBuilder(entityCreator: IEntityCreator) {
-    const builder = new EntityBuilder(
-      this._entityDataManager,
-      this._entityManager
-    )
-    builder.recordOperation((dataKey) =>
-      builder
-        .withEntity(() => new Entity())
-        .withLogger(this._logger)
-        .withRenderer(this._renderer)
-        .withCollisionDetector(this._collisionManager.getCollisionDetector())
-        .withEntityData(dataKey!)
-        .withObjectComponent()
-        .withSpriteComponent()
-        .withRenderComponent()
-        .withStateComponent()
-        .withCollisionHandlerComponent()
-        .withCollisionComponent()
-        .withLimitMoveComponent()
-    )
-    this.withPlayerMovementComponent(builder)
-    entityCreator.addBuilder('player', builder)
-  }
-
-  protected withPlayerMovementComponent(builder: EntityBuilder) {
-    builder.recordOperation(() => builder.withMovementComponent(this._input))
+      this._entityManager,
+      this._logger,
+      this._tileMap,
+      this._renderer,
+      this._collisionManager,
+      this._input
+    ).createBuilder(builderType)
+    builder.withEntityBuilder(builderKey)
   }
 
   withEngineConfigOptions() {

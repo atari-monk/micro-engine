@@ -8,6 +8,7 @@ import {
   IEngineConfigOptions,
   CollisionComponent,
   ObjectComponent,
+  BuilderLibrary,
 } from 'engine'
 import GameClient from './client-lib/GameClient'
 import EntityData from './data/EntityData'
@@ -40,7 +41,10 @@ async function setupSinglePlayerMode() {
   const engineBuilder = new EngineDirector().createDefaultEngineBuilder(
     'canvas'
   )
-  engineBuilder.withMapEntityBuilder()
+  engineBuilder.withBuilderFromLibrary('map', BuilderLibrary.TileMap)
+  engineBuilder.withBuilderFromLibrary('gate', BuilderLibrary.FootballGate)
+  engineBuilder.withBuilderFromLibrary('ball', BuilderLibrary.Football)
+  engineBuilder.withBuilderFromLibrary('player', BuilderLibrary.SinglePlayer)
   const engine = engineBuilder.build()
   engine.configManager.updateConfig({
     enableCamera: false,

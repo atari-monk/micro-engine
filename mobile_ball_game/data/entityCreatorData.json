@@ -5,17 +5,17 @@
     "entityKey": "map1"
   },
   {
-    "builder": "object",
+    "builder": "gate",
     "entityDataKey": "leftGate",
     "entityKey": "leftGate"
   },
   {
-    "builder": "object",
+    "builder": "gate",
     "entityDataKey": "rightGate",
     "entityKey": "rightGate"
   },
   {
-    "builder": "spriteObject",
+    "builder": "ball",
     "entityDataKey": "ball",
     "entityKey": "ball"
   },

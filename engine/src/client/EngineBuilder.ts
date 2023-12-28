@@ -5,7 +5,6 @@ import {
 import { default as EngineBuilderBase } from '../single/EngineBuilder'
 import Engine from './Engine'
 import { IGameClientApi } from 'engine_api'
-import EntityBuilder from '../tech/entity/EntityBuilder'
 
 export default class EngineBuilder extends EngineBuilderBase {
   private _playerManager!: IPlayerManager
@@ -28,12 +27,6 @@ export default class EngineBuilder extends EngineBuilderBase {
     this._clientGameLoop.clientApi = this._gameClientApi
     this._clientGameLoop.entityManager = this._entityManager
     return this
-  }
-
-  withPlayerMovementComponent(playerEntityBuilder: EntityBuilder) {
-    playerEntityBuilder.recordOperation(() =>
-      playerEntityBuilder.withClientMovementComponent(this._input)
-    )
   }
 
   withPlayerManager(playerManager: IPlayerManager) {

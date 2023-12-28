@@ -6,8 +6,6 @@ import {
 } from 'engine_api'
 import Engine from './Engine'
 import { default as EngineBuilderBase } from '../single/EngineBuilder'
-import EntityBuilder from '../tech/entity/EntityBuilder'
-import Entity from '../tech/entity_component/Entity'
 
 export default class EngineBuilder extends EngineBuilderBase {
   private _playerManager!: IPlayerManager
@@ -42,45 +40,8 @@ export default class EngineBuilder extends EngineBuilderBase {
   }
 
   withEntityCreator(entityCreator: IEntityCreator) {
-    this.withObjectEntityBuilder(entityCreator)
-    this.withPlayerEntityBuilder(entityCreator)
     this._entityCreator = entityCreator
     return this
-  }
-
-  protected withObjectEntityBuilder(entityCreator: IEntityCreator) {
-    const builder = new EntityBuilder(
-      this._entityDataManager,
-      this._entityManager
-    )
-    builder.recordOperation((dataKey) =>
-      builder
-        .withEntity(() => new Entity())
-        .withLogger(this._logger)
-        .withEntityData(dataKey!)
-        .withObjectComponent()
-    )
-    entityCreator.addBuilder('object', builder)
-  }
-
-  protected withPlayerEntityBuilder(entityCreator: IEntityCreator) {
-    const builder = new EntityBuilder(
-      this._entityDataManager,
-      this._entityManager
-    )
-    builder.recordOperation((dataKey) =>
-      builder
-        .withEntity(() => new Entity())
-        .withLogger(this._logger)
-        .withEntityData(dataKey!)
-        .withObjectComponent()
-    )
-    this.withPlayerMovementComponent(builder)
-    entityCreator.addBuilder('player', builder)
-  }
-
-  withPlayerMovementComponent(builder: EntityBuilder) {
-    builder.recordOperation(() => builder.withServerMovementComponent())
   }
 
   buildServerEngine() {

@@ -18,6 +18,7 @@ export { default as IMasterEngineConfigOptions } from './tech/config_manager/IMa
 export { default as ConfigManager } from './tech/config_manager/ConfigManager'
 export { default as CollisionComponent } from './tech/component/CollisionComponent'
 export { default as ObjectComponent } from './tech/component/ObjectComponent'
+export { BuilderLibrary } from './tech/entity/builder/BuilderLibrary'
 //for tests
 export { default as CollisionDetector } from './tech/collision_detector/TopLeftCollisionDetector'
 export { default as Entity } from './tech/entity_component/Entity'
