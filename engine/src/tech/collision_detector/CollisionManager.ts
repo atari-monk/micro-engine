@@ -19,7 +19,11 @@ export default class CollisionManager {
     this.collisionDetector.checkCollision(object1, object2)
   }
 
-  subscribeToCollisions(callback: ICollisionCallback): void {
-    this.collisionDetector.subscribeToCollisions(callback)
+  subscribeToCollisions(
+    object1: IObject,
+    object2: IObject,
+    callback: ICollisionCallback
+  ): void {
+    this.collisionDetector.subscribeToCollisions(object1, object2, callback)
   }
 }

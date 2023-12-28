@@ -43,7 +43,8 @@ export default class BuilderFactory {
           this._entityDataManager,
           this._entityManager,
           this._logger,
-          this._renderer
+          this._renderer,
+          this._collisionManager
         )
       case BuilderLibrary.Football:
         return new BallBuilder(

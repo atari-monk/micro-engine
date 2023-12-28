@@ -8,6 +8,7 @@ import {
   IInputManager,
   ILogger,
   IManager,
+  IObject,
   IRendererV2,
   ITileMap,
 } from 'engine_api'
@@ -164,7 +165,7 @@ export default class EntityBuilder implements IEntityBuilder {
   withCollisionComponent() {
     this.assertCollisionDetector()
     this._entity.addComponent(
-      new CollisionComponent(this._entity, this._collisionDetector)
+      new CollisionComponent(this._collisionDetector, this._entity)
     )
     return this
   }

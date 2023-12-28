@@ -51,13 +51,27 @@ async function setupSinglePlayerMode() {
   } as IEngineConfigOptions)
   engine.afterCreateEntitiesCallback = (entityManager) => {
     const ball = entityManager.getStrict('ball')
+    const ballObj = ball.getComponentByType(ObjectComponent)
     const player1 = entityManager.getStrict('player1')
     const player2 = entityManager.getStrict('player2')
-    const collider1 = player1.getComponentByType(CollisionComponent)
-    collider1.object2 = ball.getComponentByType(ObjectComponent)
-    const collider2 = player2.getComponentByType(CollisionComponent)
-    collider2.object2 = ball.getComponentByType(ObjectComponent)
-    collider2.setCollisionHandler()
+    const leftGate = entityManager.getStrict('leftGate')
+    const rightGate = entityManager.getStrict('rightGate')
+
+    const player1Collider = player1.getComponentByType(CollisionComponent)
+    player1Collider.object2 = ballObj
+    player1Collider.setCollisionHandler()
+
+    const player2Collider = player2.getComponentByType(CollisionComponent)
+    player2Collider.object2 = ballObj
+    player2Collider.setCollisionHandler()
+
+    const leftGateCollider = leftGate.getComponentByType(CollisionComponent)
+    leftGateCollider.object2 = ballObj
+    leftGateCollider.setCollisionHandler()
+
+    const rightGateCollider = rightGate.getComponentByType(CollisionComponent)
+    rightGateCollider.object2 = ballObj
+    rightGateCollider.setCollisionHandler()
   }
   engine.initialize(await getGameData(engine.getScreenCenter()))
   engine.start()

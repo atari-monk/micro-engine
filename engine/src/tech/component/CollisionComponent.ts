@@ -1,10 +1,10 @@
 import { ICollisionDetector, IEntity, IObject } from 'engine_api'
 import Component from '../entity_component/Component'
-import ObjectComponent from './ObjectComponent'
 import CollisionHandlerComponent from './CollisionHandlerComponent'
+import ObjectComponent from './ObjectComponent'
 
 export default class CollisionComponent extends Component {
-  private _object1!: IObject
+  private _object1: IObject
   private _object2!: IObject
 
   set object2(object: IObject) {
@@ -12,8 +12,8 @@ export default class CollisionComponent extends Component {
   }
 
   constructor(
-    private readonly _entity: IEntity,
-    private readonly _collisionDetector: ICollisionDetector
+    private readonly _collisionDetector: ICollisionDetector,
+    private readonly _entity: IEntity
   ) {
     super('CollisionComponent')
     this._object1 = this._entity.getComponentByType(ObjectComponent)
@@ -24,12 +24,13 @@ export default class CollisionComponent extends Component {
       CollisionHandlerComponent
     )
     this._collisionDetector.subscribeToCollisions(
+      this._object1,
+      this._object2,
       collisionHandlerComponent.handleCollision.bind(collisionHandlerComponent)
     )
   }
 
   update(dt: number) {
-    if (!this._object2) return
     this._collisionDetector.checkCollision(this._object1, this._object2)
   }
 

@@ -1,7 +1,7 @@
 {
   "leftGate": {
     "object": {
-      "id": "",
+      "id": "leftGate",
       "name": "",
       "color": "red",
       "position": {
@@ -30,7 +30,7 @@
   },
   "rightGate": {
     "object": {
-      "id": "",
+      "id": "rightGate",
       "name": "",
       "color": "blue",
       "position": {
@@ -59,7 +59,7 @@
   },
   "player1": {
     "object": {
-      "id": "",
+      "id": "player1",
       "name": "",
       "color": "red",
       "position": {
@@ -109,7 +109,7 @@
   },
   "player2": {
     "object": {
-      "id": "",
+      "id": "player2",
       "name": "",
       "color": "blue",
       "position": {
@@ -159,7 +159,7 @@
   },
   "ball": {
     "object": {
-      "id": "",
+      "id": "ball",
       "name": "",
       "color": "purple",
       "position": {
