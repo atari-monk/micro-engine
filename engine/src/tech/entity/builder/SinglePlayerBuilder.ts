@@ -11,6 +11,7 @@ import EntityBuilder from '../EntityBuilder'
 import Entity from '../../entity_component/Entity'
 import ICustomEntityBuilder from './ICustomEntityBuilder'
 import CollisionManager from '../../collision_detector/CollisionManager'
+import PlayerBallCollisionHandler from '../../collision_handler/PlayerBallCollisionHandler'
 
 export default class SinglePlayerBuilder implements ICustomEntityBuilder {
   constructor(
@@ -44,7 +45,7 @@ export default class SinglePlayerBuilder implements ICustomEntityBuilder {
         .withRenderComponent()
         .withMovementComponent(this._input)
         .withStateComponent()
-        .withCollisionHandlerComponent()
+        .withCollisionHandlerComponent(new PlayerBallCollisionHandler())
         .withCollisionComponent()
         .withLimitMoveComponent()
     )

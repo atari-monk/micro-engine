@@ -10,6 +10,8 @@ export { default as ICamera } from './tech/camera/ICamera'
 export { default as ICollisionInfo } from './tech/collision_detector/ICollisionInfo'
 export { default as ICollisionCallback } from './tech/collision_detector/ICollisionCallback'
 export { default as ICollisionDetector } from './tech/collision_detector/ICollisionDetector'
+//collision handler
+export { default as ICollisionHandler } from './tech/collision_handler/ICollisionHandler'
 //config_manager
 export { default as IConfigOptions } from './tech/config_manager/IConfigOptions'
 export { default as IConfigurationManager } from './tech/config_manager/IConfigurationManager'

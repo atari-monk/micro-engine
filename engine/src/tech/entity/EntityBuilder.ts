@@ -1,5 +1,6 @@
 import {
   ICollisionDetector,
+  ICollisionHandler,
   IEntity,
   IEntityBuilder,
   IEntityDataModel,
@@ -168,8 +169,8 @@ export default class EntityBuilder implements IEntityBuilder {
     return this
   }
 
-  withCollisionHandlerComponent() {
-    this._entity.addComponent(new CollisionHandlerComponent())
+  withCollisionHandlerComponent(collisionHandler: ICollisionHandler) {
+    this._entity.addComponent(new CollisionHandlerComponent(collisionHandler))
     return this
   }
 
@@ -189,13 +190,13 @@ export default class EntityBuilder implements IEntityBuilder {
   }
 
   withBouncingBallComponent() {
-     this._entity.addComponent(
-       new BouncingBallComponent(
-         new Vector2(740, 360),
-         this._entity.getComponentByType(ObjectComponent)
-       )
-     )
-     return this
+    this._entity.addComponent(
+      new BouncingBallComponent(
+        new Vector2(740, 360),
+        this._entity.getComponentByType(ObjectComponent)
+      )
+    )
+    return this
   }
 
   build(entityDataKey: string, entityKey: string) {
