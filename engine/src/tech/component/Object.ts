@@ -12,5 +12,6 @@ export const getObjectZero = (): IObject => {
     velocity: new Vector2(),
     mass: 0,
     spriteOffset: new Vector2(),
+    score: 0,
   } as IObject
 }

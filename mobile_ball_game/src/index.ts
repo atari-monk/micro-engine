@@ -41,6 +41,7 @@ async function setupSinglePlayerMode() {
   const engineBuilder = new EngineDirector().createDefaultEngineBuilder(
     'canvas'
   )
+  engineBuilder.withBuilderFromLibrary('gameState', BuilderLibrary.GameState)
   engineBuilder.withBuilderFromLibrary('map', BuilderLibrary.TileMap)
   engineBuilder.withBuilderFromLibrary('gate', BuilderLibrary.FootballGate)
   engineBuilder.withBuilderFromLibrary('ball', BuilderLibrary.Football)
@@ -80,7 +81,7 @@ async function setupSinglePlayerMode() {
 async function getGameData(center: IImmutableVector2) {
   const gameData = new GameData()
   const entityData = new EntityData(center)
-  await entityData.createData()
+  await entityData.loadData()
   gameData.entityData = entityData
   gameData.tileMapData = new TileMapData()
   return gameData

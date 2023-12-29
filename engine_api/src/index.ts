@@ -16,9 +16,10 @@ export { default as ICollisionHandler } from './tech/collision_handler/ICollisio
 export { default as IConfigOptions } from './tech/config_manager/IConfigOptions'
 export { default as IConfigurationManager } from './tech/config_manager/IConfigurationManager'
 //data
-export { default as IEntityDataModel } from './tech/data/IEntityDataModel'
-export { default as IObject } from './tech/data/IObject'
-export { default as IGameData } from './tech/data/IGameData'
+export { default as IEntityDataModel } from './tech/data_model/IEntityDataModel'
+export { default as IGameData } from './tech/data_model/IGameData'
+export { default as IGameState } from './tech/data_model/IGameState'
+export { default as IObject } from './tech/data_model/IObject'
 //entity
 export { default as IEntityBuilder } from './tech/entity/IEntityBuilder'
 export { default as IEntityCreator } from './tech/entity/IEntityCreator'

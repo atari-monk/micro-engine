@@ -1,4 +1,4 @@
-import IObject from '../data/IObject'
+import IObject from '../data_model/IObject'
 import ICollisionCallback from './ICollisionCallback'
 
 export default interface ICollisionDetector {

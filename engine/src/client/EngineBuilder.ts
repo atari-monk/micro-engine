@@ -55,6 +55,7 @@ export default class EngineBuilder extends EngineBuilderBase {
       !this._entityCreator ||
       !this._configManager ||
       !this._collisionManager ||
+      !this._eventSystem ||
       !this._playerManager
     ) {
       throw new Error(
@@ -73,6 +74,7 @@ export default class EngineBuilder extends EngineBuilderBase {
       this._entityCreator,
       this._configManager,
       this._collisionManager,
+      this._eventSystem,
       this._playerManager
     )
   }

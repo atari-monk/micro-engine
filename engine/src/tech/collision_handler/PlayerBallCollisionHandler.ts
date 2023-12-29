@@ -1,11 +1,11 @@
-import { ICollisionHandler, ICollisionInfo } from 'engine_api'
+import { ICollisionHandler, ICollisionInfo, IEventSystem } from 'engine_api'
 import Vector2 from '../../math/vector/Vector2'
 
 export default class PlayerBallCollisionHandler implements ICollisionHandler {
   private _cor: number
   private _collisionCooldown: boolean = false
 
-  constructor() {
+  constructor(private readonly _eventSystem: IEventSystem) {
     this._cor = 0.7
   }
 
@@ -37,6 +37,8 @@ export default class PlayerBallCollisionHandler implements ICollisionHandler {
 
     //console.log(obj1.color, obj2.mass)
     //console.log(obj2.velocity.x, obj2.velocity.y)
+
+    this._eventSystem.publish('playerBallCollision', collisionInfo)
 
     this._collisionCooldown = true
 

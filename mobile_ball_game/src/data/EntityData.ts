@@ -16,7 +16,7 @@ export default class EntityData extends EntityDataManager {
     super()
   }
 
-  async createData(fromCode = false, saveData = false) {
+  async loadData(fromCode = false, saveData = false) {
     if (fromCode) {
       this.createDataByCode()
     } else {
@@ -38,6 +38,7 @@ export default class EntityData extends EntityDataManager {
               object.spriteOffset.y
             ),
             mass: object.mass,
+            score: object.score,
           },
         })
       })
@@ -61,6 +62,7 @@ export default class EntityData extends EntityDataManager {
         velocity: new Vector2(),
         spriteOffset: new Vector2(),
         mass: 0,
+        score: 0,
       },
       animations: {} as IAnimationConfig[],
     })
@@ -76,6 +78,7 @@ export default class EntityData extends EntityDataManager {
         velocity: new Vector2(),
         spriteOffset: new Vector2(),
         mass: 0,
+        score: 0,
       },
       animations: {} as IAnimationConfig[],
     })
@@ -91,6 +94,7 @@ export default class EntityData extends EntityDataManager {
         velocity: new Vector2(),
         spriteOffset: new Vector2(-36, -75),
         mass: 70,
+        score: 0,
       },
       animations: redPlayerAnimations,
     })
@@ -106,6 +110,7 @@ export default class EntityData extends EntityDataManager {
         velocity: new Vector2(),
         spriteOffset: new Vector2(-40, -75),
         mass: 70,
+        score: 0,
       },
       animations: bluePlayerAnimations,
     })
@@ -121,6 +126,7 @@ export default class EntityData extends EntityDataManager {
         velocity: new Vector2(),
         spriteOffset: new Vector2(-35, -19),
         mass: 1,
+        score: 0,
       },
       animations: ballAnimations,
     })

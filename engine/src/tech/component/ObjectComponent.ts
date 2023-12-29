@@ -11,6 +11,7 @@ export default class ObjectComponent extends Component implements IObject {
   public mass: number
   public spriteOffset: IVector2
   public velocity: IVector2
+  public score: number
 
   constructor(objData: IObject) {
     super('ObjectComponent')
@@ -22,6 +23,7 @@ export default class ObjectComponent extends Component implements IObject {
     this.spriteOffset = Vector2.getNew(objData.spriteOffset)
     this.mass = objData.mass
     this.velocity = Vector2.getNew(objData.velocity)
+    this.score = objData.score
   }
 
   update(dt: number) {}

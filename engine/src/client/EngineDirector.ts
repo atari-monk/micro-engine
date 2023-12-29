@@ -12,6 +12,7 @@ import EngineBuilder from './EngineBuilder'
 import EntityCreator from '../tech/entity/creator/EntityCreator'
 import CenterCollisionDetector from '../tech/collision_detector/CenterCollisionDetector'
 import CollisionManager from '../tech/collision_detector/CollisionManager'
+import EventSystem from '../tech/event_system/EventSystem'
 
 export default class EngineDirector {
   createEngine(canvasId: string, gameClientApi: IGameClientApi) {
@@ -28,6 +29,7 @@ export default class EngineDirector {
       .withEngineConfigOptions()
       .withCollisionManager(new CollisionManager(new CenterCollisionDetector()))
       .withEntityCreator(new EntityCreator())
+      .withEventSystem(new EventSystem())
       .withPlayerManager(new PlayerManager())
       .buildClientEngine()
   }

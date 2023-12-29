@@ -10,4 +10,5 @@ export default interface IObject {
   mass: number
   spriteOffset: IVector2
   velocity: IVector2
+  score: number
 }

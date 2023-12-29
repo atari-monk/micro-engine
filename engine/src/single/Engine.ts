@@ -13,6 +13,7 @@ import {
   ITileMap,
   IVector2,
   IConfigurationManager,
+  IEventSystem,
 } from 'engine_api'
 import ObjectComponent from '../tech/component/ObjectComponent'
 import IEngineConfigOptions from '../tech/config_manager/IEngineConfigOptions'
@@ -32,6 +33,7 @@ export default class Engine {
   protected readonly _entityCreator: IEntityCreator
   protected readonly _configManager: IConfigurationManager<IEngineConfigOptions>
   protected readonly _collisionManager: CollisionManager
+  protected readonly _eventSystem: IEventSystem
   private _afterCreateEntitiesCallback: (
     entityManager: IEntityManager
   ) => void = () => {}
@@ -61,7 +63,8 @@ export default class Engine {
     tileMap: ITileMap,
     entityCreator: IEntityCreator,
     configManager: IConfigurationManager<IEngineConfigOptions>,
-    collisionManager: CollisionManager
+    collisionManager: CollisionManager,
+    eventSystem: IEventSystem
   ) {
     this._logger = logger
     this._gameLoop = gameLoop
@@ -74,6 +77,7 @@ export default class Engine {
     this._entityCreator = entityCreator
     this._configManager = configManager
     this._collisionManager = collisionManager
+    this._eventSystem = eventSystem
   }
 
   async initialize(gameData: IGameData) {

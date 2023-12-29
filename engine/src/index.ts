@@ -17,6 +17,7 @@ export { default as IEngineConfigOptions } from './tech/config_manager/IEngineCo
 export { default as IMasterEngineConfigOptions } from './tech/config_manager/IMasterEngineConfigOptions'
 export { default as ConfigManager } from './tech/config_manager/ConfigManager'
 export { default as CollisionComponent } from './tech/component/CollisionComponent'
+export { default as CollisionHandlerComponent } from './tech/component/CollisionHandlerComponent'
 export { default as ObjectComponent } from './tech/component/ObjectComponent'
 export { BuilderLibrary } from './tech/entity/builder/BuilderLibrary'
 //for tests

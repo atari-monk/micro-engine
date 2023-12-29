@@ -3,4 +3,5 @@ export enum BuilderLibrary {
   FootballGate,
   Football,
   SinglePlayer,
+  GameState,
 }

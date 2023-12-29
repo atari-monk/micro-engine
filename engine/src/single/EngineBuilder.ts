@@ -10,6 +10,7 @@ import {
   ITileMap,
   IEntityCreator,
   IConfigurationManager,
+  IEventSystem,
 } from 'engine_api'
 import Engine from './Engine'
 import IEngineConfigOptions from '../tech/config_manager/IEngineConfigOptions'
@@ -31,6 +32,7 @@ export default class EngineBuilder {
   protected _entityCreator!: IEntityCreator
   protected _configManager!: IConfigurationManager<IEngineConfigOptions>
   protected _collisionManager!: CollisionManager
+  protected _eventSystem!: IEventSystem
 
   withLogger(logger: ILogger) {
     this._logger = logger
@@ -106,7 +108,8 @@ export default class EngineBuilder {
       this._tileMap,
       this._renderer,
       this._collisionManager,
-      this._input
+      this._input,
+      this._eventSystem
     ).createBuilder(builderType)
     builder.withEntityBuilder(builderKey)
   }
@@ -124,6 +127,11 @@ export default class EngineBuilder {
     return this
   }
 
+  withEventSystem(eventSystem: IEventSystem) {
+    this._eventSystem = eventSystem
+    return this
+  }
+
   build() {
     if (
       !this._logger ||
@@ -136,7 +144,8 @@ export default class EngineBuilder {
       !this._tileMap ||
       !this._entityCreator ||
       !this._configManager ||
-      !this._collisionManager
+      !this._collisionManager ||
+      !this._eventSystem
     ) {
       throw new Error(
         'All dependencies must be set before building the engine.'
@@ -153,7 +162,8 @@ export default class EngineBuilder {
       this._tileMap,
       this._entityCreator,
       this._configManager,
-      this._collisionManager
+      this._collisionManager,
+      this._eventSystem
     )
   }
 }

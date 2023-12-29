@@ -3,26 +3,19 @@ import {
   IEntityDataModel,
   IEntityManager,
   IEventSystem,
-  IInputManager,
   ILogger,
   IManager,
-  IRendererV2,
 } from 'engine_api'
 import EntityBuilder from '../EntityBuilder'
 import Entity from '../../entity_component/Entity'
 import ICustomEntityBuilder from './ICustomEntityBuilder'
-import CollisionManager from '../../collision_detector/CollisionManager'
-import PlayerBallCollisionHandler from '../../collision_handler/PlayerBallCollisionHandler'
 
-export default class SinglePlayerBuilder implements ICustomEntityBuilder {
+export default class GameStateBuilder implements ICustomEntityBuilder {
   constructor(
     private readonly _entityCreator: IEntityCreator,
     private readonly _entityDataManager: IManager<IEntityDataModel>,
     private readonly _entityManager: IEntityManager,
     private readonly _logger: ILogger,
-    private readonly _renderer: IRendererV2,
-    private readonly _collisionManager: CollisionManager,
-    private readonly _input: IInputManager,
     private readonly _eventSystem: IEventSystem
   ) {}
 
@@ -35,25 +28,13 @@ export default class SinglePlayerBuilder implements ICustomEntityBuilder {
       this._entityDataManager,
       this._entityManager
     )
-    builder.recordOperation((dataKey) =>
+    builder.recordOperation(() => {
       builder
         .withEntity(() => new Entity())
         .withLogger(this._logger)
-        .withRenderer(this._renderer)
         .withEventSystem(this._eventSystem)
-        .withCollisionDetector(this._collisionManager.getCollisionDetector())
-        .withEntityData(dataKey!)
-        .withObjectComponent()
-        .withSpriteComponent()
-        .withRenderComponent()
-        .withMovementComponent(this._input)
-        .withStateComponent()
-        .withCollisionHandlerComponent(
-          new PlayerBallCollisionHandler(this._eventSystem)
-        )
-        .withCollisionComponent()
-        .withLimitMoveComponent()
-    )
+        .withGameStateComponent()
+    })
     return builder
   }
 }

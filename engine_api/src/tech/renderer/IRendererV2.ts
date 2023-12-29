@@ -1,5 +1,5 @@
 import IVector2 from '../../math/vector/IImmutableVector2'
-import IObject from '../data/IObject'
+import IObject from '../data_model/IObject'
 
 export default interface IRendererV2 {
   get ctx(): CanvasRenderingContext2D

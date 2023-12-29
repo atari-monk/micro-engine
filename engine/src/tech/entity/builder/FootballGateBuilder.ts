@@ -41,7 +41,10 @@ export default class FootballGateBuilder implements ICustomEntityBuilder {
         .withObjectComponent()
         .withRenderComponent()
         .withCollisionHandlerComponent(
-          new BallGateCollisionHandler(this._entityManager)
+          new BallGateCollisionHandler(
+            this._entityManager,
+            this._entityDataManager
+          )
         )
         .withCollisionComponent()
     })

@@ -5,10 +5,10 @@ import {
   IEntityBuilder,
   IEntityDataModel,
   IEntityManager,
+  IEventSystem,
   IInputManager,
   ILogger,
   IManager,
-  IObject,
   IRendererV2,
   ITileMap,
 } from 'engine_api'
@@ -29,6 +29,7 @@ import { KinematicsComponent } from '../component/KinematicsComponent'
 import LimitMoveComponent from '../component/LimitMoveComponent'
 import Vector2 from '../../math/vector/Vector2'
 import BouncingBallComponent from '../component/BouncingBallComponent'
+import GameStateComponent from '../component/GameStateComponent'
 
 export default class EntityBuilder implements IEntityBuilder {
   protected _entity!: IEntity
@@ -37,6 +38,7 @@ export default class EntityBuilder implements IEntityBuilder {
   private _operationMap: OperationMap = new OperationMap()
   private _assert: AssertHelper = new AssertHelper(this)
   private _collisionDetector!: ICollisionDetector
+  private _eventSystem!: IEventSystem
 
   constructor(
     private readonly _dataManager: IManager<IEntityDataModel>,
@@ -66,6 +68,10 @@ export default class EntityBuilder implements IEntityBuilder {
 
   private assertEntityData(): void {
     this._assert.assertField('_entityData')
+  }
+
+  private assertEventSystem(): void {
+    this._assert.assertField('_eventSystem')
   }
 
   private assertNestedLogger(): void {
@@ -197,6 +203,17 @@ export default class EntityBuilder implements IEntityBuilder {
         this._entity.getComponentByType(ObjectComponent)
       )
     )
+    return this
+  }
+
+  withEventSystem(eventSystem: IEventSystem) {
+    this._eventSystem = eventSystem
+    return this
+  }
+
+  withGameStateComponent() {
+    this.assertEventSystem()
+    this._entity.addComponent(new GameStateComponent(this._eventSystem))
     return this
   }
 

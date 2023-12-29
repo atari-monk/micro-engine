@@ -7,6 +7,7 @@ import {
   ITileMap,
   IInputManager,
   IRendererV2,
+  IEventSystem,
 } from 'engine_api'
 import BallBuilder from './BallBuilder'
 import { BuilderLibrary } from './BuilderLibrary'
@@ -14,6 +15,7 @@ import FootballGateBuilder from './FootballGateBuilder'
 import SinglePlayerBuilder from './SinglePlayerBuilder'
 import TileMapBuilder from './TileMapBuilder'
 import CollisionManager from '../../collision_detector/CollisionManager'
+import GameStateBuilder from './GameStateBuilder'
 
 export default class BuilderFactory {
   constructor(
@@ -24,7 +26,8 @@ export default class BuilderFactory {
     private readonly _tileMap: ITileMap,
     private readonly _renderer: IRendererV2,
     private readonly _collisionManager: CollisionManager,
-    private readonly _input: IInputManager
+    private readonly _input: IInputManager,
+    private readonly _eventSystem: IEventSystem
   ) {}
 
   createBuilder(builderType: BuilderLibrary) {
@@ -62,7 +65,16 @@ export default class BuilderFactory {
           this._logger,
           this._renderer,
           this._collisionManager,
-          this._input
+          this._input,
+          this._eventSystem
+        )
+      case BuilderLibrary.GameState:
+        return new GameStateBuilder(
+          this._entityCreator,
+          this._entityDataManager,
+          this._entityManager,
+          this._logger,
+          this._eventSystem
         )
       default:
         throw new Error(`Invalid builder type: ${builderType}`)
