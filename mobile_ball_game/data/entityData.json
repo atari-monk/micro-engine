@@ -25,7 +25,8 @@
         "y": 0
       },
       "mass": 0,
-      "score": 0
+      "score": 0,
+      "useArrowKeys": true
     },
     "animations": {}
   },
@@ -55,7 +56,8 @@
         "y": 0
       },
       "mass": 0,
-      "score": 0
+      "score": 0,
+      "useArrowKeys": true
     },
     "animations": {}
   },
@@ -85,7 +87,8 @@
         "y": -75
       },
       "mass": 70,
-      "score": 0
+      "score": 0,
+      "useArrowKeys": false
     },
     "animations": [
       {
@@ -124,7 +127,7 @@
         "y": 110
       },
       "moveStep": {
-        "x": -10,
+        "x": 10,
         "y": 10
       },
       "velocity": {
@@ -136,7 +139,8 @@
         "y": -75
       },
       "mass": 70,
-      "score": 0
+      "score": 0,
+      "useArrowKeys": true
     },
     "animations": [
       {
@@ -187,7 +191,8 @@
         "y": -19
       },
       "mass": 1,
-      "score": 0
+      "score": 0,
+      "useArrowKeys": true
     },
     "animations": [
       {

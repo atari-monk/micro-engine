@@ -39,6 +39,7 @@ export default class EntityData extends EntityDataManager {
             ),
             mass: object.mass,
             score: object.score,
+            useArrowKeys: object.useArrowKeys,
           },
         })
       })
@@ -63,6 +64,7 @@ export default class EntityData extends EntityDataManager {
         spriteOffset: new Vector2(),
         mass: 0,
         score: 0,
+        useArrowKeys: true,
       },
       animations: {} as IAnimationConfig[],
     })
@@ -79,6 +81,7 @@ export default class EntityData extends EntityDataManager {
         spriteOffset: new Vector2(),
         mass: 0,
         score: 0,
+        useArrowKeys: true,
       },
       animations: {} as IAnimationConfig[],
     })
@@ -95,6 +98,7 @@ export default class EntityData extends EntityDataManager {
         spriteOffset: new Vector2(-36, -75),
         mass: 70,
         score: 0,
+        useArrowKeys: true,
       },
       animations: redPlayerAnimations,
     })
@@ -111,6 +115,7 @@ export default class EntityData extends EntityDataManager {
         spriteOffset: new Vector2(-40, -75),
         mass: 70,
         score: 0,
+        useArrowKeys: true,
       },
       animations: bluePlayerAnimations,
     })
@@ -127,6 +132,7 @@ export default class EntityData extends EntityDataManager {
         spriteOffset: new Vector2(-35, -19),
         mass: 1,
         score: 0,
+        useArrowKeys: true,
       },
       animations: ballAnimations,
     })

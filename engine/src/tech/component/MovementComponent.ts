@@ -1,4 +1,4 @@
-import { IInputManager, IObject, IVector2 } from 'engine_api'
+import { IInputManager, IObject } from 'engine_api'
 import Component from '../entity_component/Component'
 
 export default class MovementComponent extends Component {
@@ -6,15 +6,25 @@ export default class MovementComponent extends Component {
 
   constructor(
     private readonly _object: IObject,
-    input: IInputManager
+    input: IInputManager,
+    useArrowKeys: boolean = true
   ) {
     super('MovementComponent')
 
     this._keyActions = {
-      ArrowLeft: () => this.move(-_object.moveStep.x, 0),
-      ArrowRight: () => this.move(_object.moveStep.x, 0),
-      ArrowUp: () => this.move(0, -_object.moveStep.y),
-      ArrowDown: () => this.move(0, _object.moveStep.y),
+      ...(useArrowKeys
+        ? {
+            ArrowLeft: () => this.move(-_object.moveStep.x, 0),
+            ArrowRight: () => this.move(_object.moveStep.x, 0),
+            ArrowUp: () => this.move(0, -_object.moveStep.y),
+            ArrowDown: () => this.move(0, _object.moveStep.y),
+          }
+        : {
+            a: () => this.move(-_object.moveStep.x, 0),
+            d: () => this.move(_object.moveStep.x, 0),
+            w: () => this.move(0, -_object.moveStep.y),
+            s: () => this.move(0, _object.moveStep.y),
+          }),
     }
 
     input.subscribeInputEvent('KeyDown', (key) => {
@@ -25,11 +35,11 @@ export default class MovementComponent extends Component {
     })
   }
 
-  update(dt: number) {}
+  update(dt: number): void {}
 
-  render(dt: number) {}
+  render(dt: number): void {}
 
-  private move(deltaX: number, deltaY: number) {
+  private move(deltaX: number, deltaY: number): void {
     this._object.velocity.x = deltaX
     this._object.velocity.y = deltaY
     this._object.position.x += this._object.velocity.x

@@ -40,6 +40,11 @@ export default class EntityBuilder implements IEntityBuilder {
   private _collisionDetector!: ICollisionDetector
   private _eventSystem!: IEventSystem
 
+  get entityData(): IEntityDataModel {
+    this.assertEntityData()
+    return this._entityData
+  }
+
   constructor(
     private readonly _dataManager: IManager<IEntityDataModel>,
     private readonly _entityManager: IEntityManager
@@ -121,11 +126,15 @@ export default class EntityBuilder implements IEntityBuilder {
     return this
   }
 
-  withMovementComponent(input: IInputManager): this {
+  withMovementComponent(
+    input: IInputManager,
+    useArrowKeys: boolean = true
+  ): this {
     this._entity.addComponent(
       new MovementComponent(
         this._entity.getComponentByType(ObjectComponent),
-        input
+        input,
+        useArrowKeys
       )
     )
     return this

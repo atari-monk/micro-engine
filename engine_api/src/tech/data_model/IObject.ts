@@ -11,4 +11,5 @@ export default interface IObject {
   spriteOffset: IVector2
   velocity: IVector2
   score: number
+  useArrowKeys: boolean
 }

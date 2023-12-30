@@ -12,6 +12,7 @@ export default class ObjectComponent extends Component implements IObject {
   public spriteOffset: IVector2
   public velocity: IVector2
   public score: number
+  public useArrowKeys: boolean
 
   constructor(objData: IObject) {
     super('ObjectComponent')
@@ -24,6 +25,7 @@ export default class ObjectComponent extends Component implements IObject {
     this.mass = objData.mass
     this.velocity = Vector2.getNew(objData.velocity)
     this.score = objData.score
+    this.useArrowKeys = objData.useArrowKeys
   }
 
   update(dt: number) {}
