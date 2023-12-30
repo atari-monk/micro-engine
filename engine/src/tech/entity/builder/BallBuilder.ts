@@ -2,6 +2,7 @@ import {
   IEntityCreator,
   IEntityDataModel,
   IEntityManager,
+  IEventSystem,
   ILogger,
   IManager,
   IRendererV2,
@@ -16,7 +17,8 @@ export default class BallBuilder implements ICustomEntityBuilder {
     private readonly _entityDataManager: IManager<IEntityDataModel>,
     private readonly _entityManager: IEntityManager,
     private readonly _logger: ILogger,
-    private readonly _renderer: IRendererV2
+    private readonly _renderer: IRendererV2,
+    private readonly _eventSystem: IEventSystem
   ) {}
 
   withEntityBuilder(builderKey: string) {
@@ -33,6 +35,7 @@ export default class BallBuilder implements ICustomEntityBuilder {
         .withEntity(() => new Entity())
         .withLogger(this._logger)
         .withRenderer(this._renderer)
+        .withEventSystem(this._eventSystem)
         .withEntityData(dataKey!)
         .withObjectComponent()
         .withSpriteComponent()

@@ -191,7 +191,10 @@ export default class EntityBuilder implements IEntityBuilder {
   }
 
   withKinematicsComponent() {
-    this._entity.addComponent(new KinematicsComponent(this._entity))
+    this.assertEventSystem()
+    this._entity.addComponent(
+      new KinematicsComponent(this._entity, this._eventSystem)
+    )
     return this
   }
 
@@ -224,7 +227,11 @@ export default class EntityBuilder implements IEntityBuilder {
     this.assertEventSystem()
     this.assertRenderer()
     this._entity.addComponent(
-      new GameStateComponent(this._eventSystem, this._renderer)
+      new GameStateComponent(
+        this._eventSystem,
+        this._renderer,
+        this._entityManager
+      )
     )
     return this
   }

@@ -6,7 +6,7 @@ export default class PlayerBallCollisionHandler implements ICollisionHandler {
   private _collisionCooldown: boolean = false
 
   constructor(private readonly _eventSystem: IEventSystem) {
-    this._cor = 0.7
+    this._cor = 0.8
   }
 
   handleCollision(collisionInfo: ICollisionInfo) {
@@ -39,6 +39,8 @@ export default class PlayerBallCollisionHandler implements ICollisionHandler {
     //console.log(obj2.velocity.x, obj2.velocity.y)
 
     this._eventSystem.publish('playerBallCollision', collisionInfo)
+    if (Math.abs(obj2.velocity.x) > 0 || Math.abs(obj2.velocity.y) > 0)
+      this._eventSystem.publish('ballMove')
 
     this._collisionCooldown = true
 
