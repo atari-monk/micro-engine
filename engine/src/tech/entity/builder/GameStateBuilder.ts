@@ -5,6 +5,7 @@ import {
   IEventSystem,
   ILogger,
   IManager,
+  IRendererV2,
 } from 'engine_api'
 import EntityBuilder from '../EntityBuilder'
 import Entity from '../../entity_component/Entity'
@@ -16,7 +17,8 @@ export default class GameStateBuilder implements ICustomEntityBuilder {
     private readonly _entityDataManager: IManager<IEntityDataModel>,
     private readonly _entityManager: IEntityManager,
     private readonly _logger: ILogger,
-    private readonly _eventSystem: IEventSystem
+    private readonly _eventSystem: IEventSystem,
+    private readonly _renderer: IRendererV2
   ) {}
 
   withEntityBuilder(builderKey: string) {
@@ -32,6 +34,7 @@ export default class GameStateBuilder implements ICustomEntityBuilder {
       builder
         .withEntity(() => new Entity())
         .withLogger(this._logger)
+        .withRenderer(this._renderer)
         .withEventSystem(this._eventSystem)
         .withGameStateComponent()
     })

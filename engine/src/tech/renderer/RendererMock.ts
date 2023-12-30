@@ -2,6 +2,12 @@ import { IImmutableVector2, IObject, IRendererV2 } from 'engine_api'
 import ImmutableVector2 from '../../math/vector/ImmutableVector2'
 
 export class RendererMock implements IRendererV2 {
+  drawText(
+    text: string,
+    position: IImmutableVector2,
+    color: string,
+    font: string
+  ): void {}
   drawRect(
     topLeft: IImmutableVector2,
     size: IImmutableVector2,

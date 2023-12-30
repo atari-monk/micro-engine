@@ -47,7 +47,8 @@ export default class BuilderFactory {
           this._entityManager,
           this._logger,
           this._renderer,
-          this._collisionManager
+          this._collisionManager,
+          this._eventSystem
         )
       case BuilderLibrary.Football:
         return new BallBuilder(
@@ -74,7 +75,8 @@ export default class BuilderFactory {
           this._entityDataManager,
           this._entityManager,
           this._logger,
-          this._eventSystem
+          this._eventSystem,
+          this._renderer
         )
       default:
         throw new Error(`Invalid builder type: ${builderType}`)

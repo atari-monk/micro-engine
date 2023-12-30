@@ -2,6 +2,7 @@ import {
   IEntityCreator,
   IEntityDataModel,
   IEntityManager,
+  IEventSystem,
   ILogger,
   IManager,
   IRendererV2,
@@ -19,7 +20,8 @@ export default class FootballGateBuilder implements ICustomEntityBuilder {
     private readonly _entityManager: IEntityManager,
     private readonly _logger: ILogger,
     private readonly _renderer: IRendererV2,
-    private readonly _collisionManager: CollisionManager
+    private readonly _collisionManager: CollisionManager,
+    private readonly _eventSystem: IEventSystem
   ) {}
 
   withEntityBuilder(builderKey: string): void {
@@ -43,7 +45,8 @@ export default class FootballGateBuilder implements ICustomEntityBuilder {
         .withCollisionHandlerComponent(
           new BallGateCollisionHandler(
             this._entityManager,
-            this._entityDataManager
+            this._entityDataManager,
+            this._eventSystem
           )
         )
         .withCollisionComponent()

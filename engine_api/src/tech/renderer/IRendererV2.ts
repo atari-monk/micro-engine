@@ -25,4 +25,5 @@ export default interface IRendererV2 {
   getCenter(): IVector2
   fillCanvas(color: string): void
   drawObject(object: IObject): void
+  drawText(text: string, position: IVector2, color: string, font: string): void
 }

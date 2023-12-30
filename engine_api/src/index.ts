@@ -20,6 +20,7 @@ export { default as IEntityDataModel } from './tech/data_model/IEntityDataModel'
 export { default as IGameData } from './tech/data_model/IGameData'
 export { default as IGameState } from './tech/data_model/IGameState'
 export { default as IObject } from './tech/data_model/IObject'
+export { default as IScoreInfo } from './tech/data_model/IScoreInfo'
 //entity
 export { default as IEntityBuilder } from './tech/entity/IEntityBuilder'
 export { default as IEntityCreator } from './tech/entity/IEntityCreator'

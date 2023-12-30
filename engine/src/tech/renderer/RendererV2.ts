@@ -109,4 +109,15 @@ export default class RendererV2 extends BaseRenderer implements IRendererV2 {
       this.drawFrameAroundPoint(object.position, object.size, object.color)
     }
   }
+
+  drawText(
+    text: string,
+    position: IVector2,
+    color: string = 'white',
+    font: string = '12px sans-serif'
+  ): void {
+    this.context.fillStyle = color
+    this.context.font = font
+    this.context.fillText(text, position.x, position.y)
+  }
 }

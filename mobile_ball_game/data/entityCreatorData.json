@@ -1,13 +1,13 @@
 [
   {
-    "builder": "gameState",
-    "entityDataKey": "",
-    "entityKey": "gameState"
-  },
-  {
     "builder": "map",
     "entityDataKey": "",
     "entityKey": "map1"
+  },
+  {
+    "builder": "gameState",
+    "entityDataKey": "",
+    "entityKey": "gameState"
   },
   {
     "builder": "gate",

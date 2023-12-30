@@ -3,7 +3,9 @@ import {
   ICollisionInfo,
   IEntityDataModel,
   IEntityManager,
+  IEventSystem,
   IManager,
+  IScoreInfo,
 } from 'engine_api'
 import ObjectComponent from '../component/ObjectComponent'
 import Vector2 from '../../math/vector/Vector2'
@@ -12,7 +14,8 @@ import GameStateComponent from '../component/GameStateComponent'
 export default class BallGateCollisionHandler implements ICollisionHandler {
   constructor(
     private readonly _entityManager: IEntityManager,
-    private readonly _entityDataManager: IManager<IEntityDataModel>
+    private readonly _entityDataManager: IManager<IEntityDataModel>,
+    private readonly _eventSystem: IEventSystem
   ) {}
 
   handleCollision(collisionInfo: ICollisionInfo) {
@@ -44,12 +47,20 @@ export default class BallGateCollisionHandler implements ICollisionHandler {
     if (collisionInfo.object1.id === 'leftGate') {
       if (gameState.lastCollisionInfo.object1.id === 'player2') {
         player2Obj.score++
+        this._eventSystem.publish('updateScore', {
+          redScore: player1Obj.score,
+          blueScore: player2Obj.score,
+        } as IScoreInfo)
       }
     }
 
     if (collisionInfo.object1.id === 'rightGate') {
       if (gameState.lastCollisionInfo.object1.id === 'player1') {
         player1Obj.score++
+        this._eventSystem.publish('updateScore', {
+          redScore: player1Obj.score,
+          blueScore: player2Obj.score,
+        } as IScoreInfo)
       }
     }
   }

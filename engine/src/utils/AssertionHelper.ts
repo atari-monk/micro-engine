@@ -6,7 +6,7 @@ export default class AssertHelper {
   }
 
   assertField(fieldName: string): void {
-    if (!(fieldName in this.target)) {
+    if (!(fieldName in this.target) || this.target[fieldName] === undefined) {
       throw new Error(`Assertion failed: ${fieldName} must be set`)
     }
   }
@@ -16,7 +16,7 @@ export default class AssertHelper {
 
     const field = this.target[fieldName]
 
-    if (!(nestedFieldName in field)) {
+    if (!(nestedFieldName in field) || field[nestedFieldName] === undefined) {
       throw new Error(
         `Assertion failed: ${nestedFieldName} must be set in ${fieldName}`
       )

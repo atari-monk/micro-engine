@@ -24,7 +24,8 @@
         "x": 0,
         "y": 0
       },
-      "mass": 0
+      "mass": 0,
+      "score": 0
     },
     "animations": {}
   },
@@ -53,7 +54,8 @@
         "x": 0,
         "y": 0
       },
-      "mass": 0
+      "mass": 0,
+      "score": 0
     },
     "animations": {}
   },
@@ -82,7 +84,8 @@
         "x": -36,
         "y": -75
       },
-      "mass": 70
+      "mass": 70,
+      "score": 0
     },
     "animations": [
       {
@@ -132,7 +135,8 @@
         "x": -40,
         "y": -75
       },
-      "mass": 70
+      "mass": 70,
+      "score": 0
     },
     "animations": [
       {
@@ -182,7 +186,8 @@
         "x": -35,
         "y": -19
       },
-      "mass": 1
+      "mass": 1,
+      "score": 0
     },
     "animations": [
       {

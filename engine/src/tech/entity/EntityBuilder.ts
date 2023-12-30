@@ -75,7 +75,7 @@ export default class EntityBuilder implements IEntityBuilder {
   }
 
   private assertNestedLogger(): void {
-    this._assert.assertNested('_entity', 'logger')
+    this._assert.assertNested('_entity', '_logger')
   }
 
   withEntity<T extends IEntity>(entityFunction: () => T) {
@@ -213,7 +213,10 @@ export default class EntityBuilder implements IEntityBuilder {
 
   withGameStateComponent() {
     this.assertEventSystem()
-    this._entity.addComponent(new GameStateComponent(this._eventSystem))
+    this.assertRenderer()
+    this._entity.addComponent(
+      new GameStateComponent(this._eventSystem, this._renderer)
+    )
     return this
   }
 
