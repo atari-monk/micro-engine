@@ -15,5 +15,6 @@ export default interface IVector2 {
   squaredLength(): number
   normalize(): this
   clampLength(min: number, max: number): this
+  clone(): IVector2
   equals(v: IVector2): boolean
 }

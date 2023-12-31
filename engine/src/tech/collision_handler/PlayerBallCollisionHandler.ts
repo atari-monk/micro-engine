@@ -1,10 +1,15 @@
-import { ICollisionHandler, ICollisionInfo, IEventSystem } from 'engine_api'
+import {
+  ICollisionHandler,
+  ICollisionInfo,
+  IEventSystem,
+  IObject,
+} from 'engine_api'
 import Vector2 from '../../math/vector/Vector2'
 
 export default class PlayerBallCollisionHandler implements ICollisionHandler {
   private _cor: number = 0.9
   private _collisionCooldown: boolean = false
-  private _speedMultiplier: number = 1.5
+  private _speedMultiplier: number = 10
   private _maxSpeed = 100
 
   constructor(private readonly _eventSystem: IEventSystem) {}
@@ -16,6 +21,8 @@ export default class PlayerBallCollisionHandler implements ICollisionHandler {
 
     const obj1 = collisionInfo.object1
     const obj2 = collisionInfo.object2
+
+    this.moveBall(obj1, obj2)
 
     const v1 = Vector2.getNew(obj1.velocity)
     const v2 = Vector2.getNew(obj2.velocity)
@@ -50,5 +57,27 @@ export default class PlayerBallCollisionHandler implements ICollisionHandler {
     setTimeout(() => {
       this._collisionCooldown = false
     }, 200)
+  }
+
+  private moveBall(player: IObject, ball: IObject) {
+    const separationVector = {
+      x: player.position.x - ball.position.x,
+      y: player.position.y - ball.position.y,
+    }
+
+    const length = Math.sqrt(
+      separationVector.x * separationVector.x +
+        separationVector.y * separationVector.y
+    )
+
+    const normalizedVector = {
+      x: separationVector.x / length,
+      y: separationVector.y / length,
+    }
+
+    // Adjust the multiplier as needed
+    const moveAmount = 1.1
+    ball.position.x += normalizedVector.x * moveAmount
+    ball.position.y += normalizedVector.y * moveAmount
   }
 }

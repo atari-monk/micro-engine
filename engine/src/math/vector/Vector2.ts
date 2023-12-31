@@ -15,6 +15,10 @@ export default class Vector2 implements IVector2 {
     return new Vector2(vector.x, vector.y)
   }
 
+  clone() {
+    return new Vector2(this.x, this.y)
+  }
+
   private operate(
     { x = 0, y = 0 }: IVector2 | { x: number; y: number } = { x: 0, y: 0 },
     operation: MathOperation = 'add'
