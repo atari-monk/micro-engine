@@ -18,6 +18,7 @@ import './../assets/ball.png'
 import './../assets/red-player.png'
 import './../assets/blue-player.png'
 import './../assets/goalPost.png'
+import './../assets/grass.png'
 import './../data/entityCreatorData.json'
 import './../data/entityData.json'
 
@@ -43,6 +44,7 @@ async function setupSinglePlayerMode() {
     'canvas'
   )
   engineBuilder.withBuilderFromLibrary('gameState', BuilderLibrary.GameState)
+  engineBuilder.withBuilderFromLibrary('field', BuilderLibrary.Sprite)
   engineBuilder.withBuilderFromLibrary('map', BuilderLibrary.TileMap)
   engineBuilder.withBuilderFromLibrary('gate', BuilderLibrary.FootballGate)
   engineBuilder.withBuilderFromLibrary('ball', BuilderLibrary.Football)

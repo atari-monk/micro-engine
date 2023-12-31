@@ -16,6 +16,7 @@ import SinglePlayerBuilder from './SinglePlayerBuilder'
 import TileMapBuilder from './TileMapBuilder'
 import CollisionManager from '../../collision_detector/CollisionManager'
 import GameStateBuilder from './GameStateBuilder'
+import SpriteBuilder from './SpriteBuilder'
 
 export default class BuilderFactory {
   constructor(
@@ -77,6 +78,14 @@ export default class BuilderFactory {
           this._entityManager,
           this._logger,
           this._eventSystem,
+          this._renderer
+        )
+      case BuilderLibrary.Sprite:
+        return new SpriteBuilder(
+          this._entityCreator,
+          this._entityDataManager,
+          this._entityManager,
+          this._logger,
           this._renderer
         )
       default:

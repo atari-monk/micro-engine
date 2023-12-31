@@ -4,4 +4,5 @@ export enum BuilderLibrary {
   Football,
   SinglePlayer,
   GameState,
+  Sprite,
 }

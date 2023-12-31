@@ -5,6 +5,11 @@
     "entityKey": "map1"
   },
   {
+    "builder": "field",
+    "entityDataKey": "field",
+    "entityKey": "field"
+  },
+  {
     "builder": "gameState",
     "entityDataKey": "",
     "entityKey": "gameState"
