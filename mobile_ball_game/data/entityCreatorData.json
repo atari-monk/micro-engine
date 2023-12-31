@@ -1,10 +1,5 @@
 [
   {
-    "builder": "map",
-    "entityDataKey": "",
-    "entityKey": "map1"
-  },
-  {
     "builder": "field",
     "entityDataKey": "field",
     "entityKey": "field"

@@ -45,7 +45,7 @@ async function setupSinglePlayerMode() {
   )
   engineBuilder.withBuilderFromLibrary('gameState', BuilderLibrary.GameState)
   engineBuilder.withBuilderFromLibrary('field', BuilderLibrary.Sprite)
-  engineBuilder.withBuilderFromLibrary('map', BuilderLibrary.TileMap)
+  //engineBuilder.withBuilderFromLibrary('map', BuilderLibrary.TileMap)
   engineBuilder.withBuilderFromLibrary('gate', BuilderLibrary.FootballGate)
   engineBuilder.withBuilderFromLibrary('ball', BuilderLibrary.Football)
   engineBuilder.withBuilderFromLibrary('player', BuilderLibrary.SinglePlayer)
