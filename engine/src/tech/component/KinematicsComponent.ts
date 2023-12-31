@@ -25,14 +25,15 @@ export class KinematicsComponent extends Component {
       Math.pow(this.frictionCoefficient, dt)
     )
 
-    if (
-      this._objectComponent.velocity.length() < this.stopThreshold &&
-      this._objectComponent.velocity.x !== 0 ||
-      this._objectComponent.velocity.y !== 0
-    ) {
-      this._objectComponent.velocity.x = 0
-      this._objectComponent.velocity.y = 0
-      this._eventSystem.publish('ballStop')
+    if (this._objectComponent.velocity.length() < this.stopThreshold) {
+      if (
+        this._objectComponent.velocity.x !== 0 ||
+        this._objectComponent.velocity.y !== 0
+      ) {
+        this._objectComponent.velocity.x = 0
+        this._objectComponent.velocity.y = 0
+        this._eventSystem.publish('ballStop')
+      }
     }
   }
 }
