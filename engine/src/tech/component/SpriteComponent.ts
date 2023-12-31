@@ -22,7 +22,8 @@ export default class SpriteComponent extends Component {
     this.sprite.draw(
       this._renderer.ctx,
       this._object.position.x + this._object.spriteOffset.x,
-      this._object.position.y + this._object.spriteOffset.y
+      this._object.position.y + this._object.spriteOffset.y,
+      this._object.isFlipped
     )
   }
 

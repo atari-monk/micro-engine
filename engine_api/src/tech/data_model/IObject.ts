@@ -12,4 +12,5 @@ export default interface IObject {
   velocity: IVector2
   score: number
   useArrowKeys: boolean
+  isFlipped: boolean
 }

@@ -25,6 +25,7 @@ export class EntityData extends EntityDataManager {
         mass: 0,
         score: 0,
         useArrowKeys: true,
+        isFlipped: true,
       },
       animations: {} as IAnimationConfig[],
     })
@@ -42,6 +43,7 @@ export class EntityData extends EntityDataManager {
         mass: 0,
         score: 0,
         useArrowKeys: true,
+        isFlipped: true,
       },
       animations: {} as IAnimationConfig[],
     })
@@ -59,6 +61,7 @@ export class EntityData extends EntityDataManager {
         mass: 0,
         score: 0,
         useArrowKeys: true,
+        isFlipped: true,
       },
       animations: {} as IAnimationConfig[],
     })
@@ -76,6 +79,7 @@ export class EntityData extends EntityDataManager {
         mass: 0,
         score: 0,
         useArrowKeys: true,
+        isFlipped: true,
       },
       animations: {} as IAnimationConfig[],
     })
@@ -93,6 +97,7 @@ export class EntityData extends EntityDataManager {
         mass: 0,
         score: 0,
         useArrowKeys: true,
+        isFlipped: true,
       },
       animations: ballAnimations,
     })

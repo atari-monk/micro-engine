@@ -21,14 +21,26 @@
         "y": 0
       },
       "spriteOffset": {
-        "x": 0,
-        "y": 0
+        "x": -115,
+        "y": -80
       },
       "mass": 0,
       "score": 0,
-      "useArrowKeys": true
+      "useArrowKeys": true,
+      "isFlipped": true
     },
-    "animations": {}
+    "animations": [
+      {
+        "imagePath": "./assets/goalPost.png",
+        "frameCount": 1,
+        "frameDuration": 1,
+        "frameSize": {
+          "x": 260,
+          "y": 170
+        },
+        "animationType": 1
+      }
+    ]
   },
   "rightGate": {
     "object": {
@@ -52,14 +64,26 @@
         "y": 0
       },
       "spriteOffset": {
-        "x": 0,
-        "y": 0
+        "x": -145,
+        "y": -80
       },
       "mass": 0,
       "score": 0,
-      "useArrowKeys": true
+      "useArrowKeys": true,
+      "isFlipped": false
     },
-    "animations": {}
+    "animations": [
+      {
+        "imagePath": "./assets/goalPost.png",
+        "frameCount": 1,
+        "frameDuration": 1,
+        "frameSize": {
+          "x": 260,
+          "y": 170
+        },
+        "animationType": 1
+      }
+    ]
   },
   "player1": {
     "object": {
@@ -88,7 +112,8 @@
       },
       "mass": 70,
       "score": 0,
-      "useArrowKeys": false
+      "useArrowKeys": false,
+      "isFlipped": false
     },
     "animations": [
       {
@@ -140,7 +165,8 @@
       },
       "mass": 70,
       "score": 0,
-      "useArrowKeys": true
+      "useArrowKeys": true,
+      "isFlipped": false
     },
     "animations": [
       {
@@ -192,7 +218,8 @@
       },
       "mass": 1,
       "score": 0,
-      "useArrowKeys": true
+      "useArrowKeys": true,
+      "isFlipped": false
     },
     "animations": [
       {

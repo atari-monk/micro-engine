@@ -14,5 +14,6 @@ export const getObjectZero = (): IObject => {
     spriteOffset: new Vector2(),
     score: 0,
     useArrowKeys: true,
+    isFlipped: false,
   } as IObject
 }

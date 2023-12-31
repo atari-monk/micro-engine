@@ -102,19 +102,46 @@ export class SpriteAnimator {
     }
   }
 
-  draw(ctx: CanvasRenderingContext2D, x: number, y: number) {
+  draw(ctx: CanvasRenderingContext2D, x: number, y: number, isFlipped = false) {
     const currentFrame =
       this.animations[this.currentAnimationIndex][this.currentFrameIndex]
+
+    if (isFlipped) {
+      this.drawFlipped(ctx, currentFrame, x, y)
+    } else {
+      this.drawNormal(ctx, currentFrame, x, y)
+    }
+  }
+
+  private drawNormal(
+    ctx: CanvasRenderingContext2D,
+    frame: IAnimationFrame,
+    x: number,
+    y: number
+  ) {
     ctx.drawImage(
       this.image,
-      currentFrame.framePosition.x,
-      currentFrame.framePosition.y,
-      currentFrame.frameSize.x,
-      currentFrame.frameSize.y,
+      frame.framePosition.x,
+      frame.framePosition.y,
+      frame.frameSize.x,
+      frame.frameSize.y,
       x,
       y,
-      currentFrame.frameSize.x,
-      currentFrame.frameSize.y
+      frame.frameSize.x,
+      frame.frameSize.y
     )
+  }
+
+  private drawFlipped(
+    ctx: CanvasRenderingContext2D,
+    frame: IAnimationFrame,
+    x: number,
+    y: number
+  ) {
+    ctx.save()
+    ctx.translate(x + frame.frameSize.x, y)
+    ctx.scale(-1, 1)
+    this.drawNormal(ctx, frame, 0, 0)
+    ctx.restore()
   }
 }
