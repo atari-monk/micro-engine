@@ -2,12 +2,12 @@ import { ICollisionHandler, ICollisionInfo, IEventSystem } from 'engine_api'
 import Vector2 from '../../math/vector/Vector2'
 
 export default class PlayerBallCollisionHandler implements ICollisionHandler {
-  private _cor: number
+  private _cor: number = 0.9
   private _collisionCooldown: boolean = false
+  private _speedMultiplier: number = 1.5
+  private _maxSpeed = 100
 
-  constructor(private readonly _eventSystem: IEventSystem) {
-    this._cor = 0.8
-  }
+  constructor(private readonly _eventSystem: IEventSystem) {}
 
   handleCollision(collisionInfo: ICollisionInfo) {
     if (this._collisionCooldown) {
@@ -33,7 +33,10 @@ export default class PlayerBallCollisionHandler implements ICollisionHandler {
       .multiply(this._cor)
 
     //obj1.velocity.setValues(newObj1Velocity)
-    obj2.velocity.setValues(newObj2Velocity)
+    obj2.velocity
+      .setValues(newObj2Velocity)
+      .multiply(this._speedMultiplier)
+      .clampLength(0, this._maxSpeed)
 
     //console.log(obj1.color, obj2.mass)
     //console.log(obj2.velocity.x, obj2.velocity.y)

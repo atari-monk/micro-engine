@@ -28,6 +28,7 @@ export default class Vector2 implements IVector2 {
   setValues(v: IVector2) {
     this.x = v.x
     this.y = v.y
+    return this
   }
 
   convert(v: IImmutableVector2) {
@@ -67,6 +68,16 @@ export default class Vector2 implements IVector2 {
     const mag = this.length()
     if (mag !== 0) {
       this.operate({ x: mag, y: mag }, 'divide')
+    }
+    return this
+  }
+
+  clampLength(min: number, max: number): this {
+    const currentLength = this.length()
+    if (currentLength < min) {
+      this.normalize().multiply(min)
+    } else if (currentLength > max) {
+      this.normalize().multiply(max)
     }
     return this
   }

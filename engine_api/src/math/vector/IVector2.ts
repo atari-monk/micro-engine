@@ -4,7 +4,7 @@ export default interface IVector2 {
   x: number
   y: number
 
-  setValues(v: IVector2): void
+  setValues(v: IVector2): this
   convert(v: IImmutableVector2): void
   add(other: IVector2): this
   subtract(other: IVector2): this
@@ -14,5 +14,6 @@ export default interface IVector2 {
   length(): number
   squaredLength(): number
   normalize(): this
+  clampLength(min: number, max: number): this
   equals(v: IVector2): boolean
 }
