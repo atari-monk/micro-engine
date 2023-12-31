@@ -32,6 +32,7 @@ export default class GameStateComponent
     this._eventSystem.subscribe('updateScore', this.scoreHandler.bind(this))
     this._eventSystem.subscribe('ballMove', this.ballMoveHandler.bind(this))
     this._eventSystem.subscribe('ballStop', this.ballStopHandler.bind(this))
+    this._eventSystem.subscribe('playerMove', this.playerMoveHandler.bind(this))
   }
 
   update(dt: number) {}
@@ -74,5 +75,17 @@ export default class GameStateComponent
       .getStrict('ball')
       .getComponentByType(StateComponent)
     ballAnim.changeState(new IdleState())
+  }
+
+  private playerMoveHandler(data: string) {
+    const anim = this._entityManager
+      .getStrict(data)
+      .getComponentByType(StateComponent)
+
+    if (anim.changeState(new MoveState())) {
+      setTimeout(() => {
+        anim.changeState(new IdleState())
+      }, 2000)
+    }
   }
 }

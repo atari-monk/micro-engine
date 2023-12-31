@@ -1,4 +1,4 @@
-import { IInputManager, IObject } from 'engine_api'
+import { IEventSystem, IInputManager, IObject } from 'engine_api'
 import Component from '../entity_component/Component'
 
 export default class MovementComponent extends Component {
@@ -6,6 +6,7 @@ export default class MovementComponent extends Component {
 
   constructor(
     private readonly _object: IObject,
+    private readonly _eventSystem: IEventSystem,
     input: IInputManager,
     useArrowKeys: boolean = true
   ) {
@@ -31,6 +32,7 @@ export default class MovementComponent extends Component {
       const action = this._keyActions[key]
       if (action) {
         action()
+        this._eventSystem.publish('playerMove', this._object.id)
       }
     })
   }

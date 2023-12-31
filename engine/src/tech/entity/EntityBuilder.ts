@@ -130,9 +130,11 @@ export default class EntityBuilder implements IEntityBuilder {
     input: IInputManager,
     useArrowKeys: boolean = true
   ): this {
+    this.assertEventSystem()
     this._entity.addComponent(
       new MovementComponent(
         this._entity.getComponentByType(ObjectComponent),
+        this._eventSystem,
         input,
         useArrowKeys
       )
