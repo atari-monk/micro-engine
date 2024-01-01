@@ -5,6 +5,11 @@ import CollisionCircleComponent from '../component/CollisionCircleComponent'
 import CircleComponent from '../component/CircleComponent'
 import ILogicSystem from './ILogicSystem'
 
+enum Axis {
+  X = 'x',
+  Y = 'y',
+}
+
 export default class InsideWallsCollisionSystem implements ILogicSystem {
   private _entityList: IEntity[] = []
 
@@ -15,14 +20,14 @@ export default class InsideWallsCollisionSystem implements ILogicSystem {
   }
 
   update(deltaTime: number) {
-    this._entityList.forEach((entity) => {
+    for (const entity of this._entityList) {
       const objectComponent = entity.getComponentByType(ObjectComponent)
       const circleComponent = entity.getComponentByType(
         CollisionCircleComponent
       )
       const wallComponent = entity.getComponentByType(WallComponent)
 
-      ;['x', 'y'].forEach((axis: any) => {
+      ;[Axis.X, Axis.Y].forEach((axis: any) => {
         this.checkAndHandleCollision(
           objectComponent,
           circleComponent,
@@ -30,14 +35,14 @@ export default class InsideWallsCollisionSystem implements ILogicSystem {
           axis
         )
       })
-    })
+    }
   }
 
   private checkAndHandleCollision(
     object: ObjectComponent,
     circle: CircleComponent,
     wall: WallComponent,
-    axis: 'x' | 'y'
+    axis: Axis
   ) {
     const position = object.position[axis]
     const radius = circle.radius
@@ -61,7 +66,7 @@ export default class InsideWallsCollisionSystem implements ILogicSystem {
     object: ObjectComponent,
     radius: number,
     maxLimit: number,
-    axis: 'x' | 'y'
+    axis: Axis
   ) {
     object.velocity[axis] *= -1
     object.position[axis] = this.adjustPosition(

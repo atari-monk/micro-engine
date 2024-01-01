@@ -90,15 +90,8 @@ export default class Vector2 implements IVector2 {
     return this.x === v.x && this.y === v.y
   }
 
-  static zero(): Vector2 {
-    return new Vector2()
-  }
-
-  static unitX(): Vector2 {
-    return new Vector2(1, 0)
-  }
-
-  static unitY(): Vector2 {
-    return new Vector2(0, 1)
-  }
+  static zero: Vector2 = new Vector2(0, 0)
+  static one: Vector2 = new Vector2(1, 1)
+  static unitX: Vector2 = new Vector2(1, 0)
+  static unitY: Vector2 = new Vector2(0, 1)
 }
