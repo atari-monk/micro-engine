@@ -1,5 +1,5 @@
 export default interface IComponent {
-  update(dt: number): void
-  render(dt: number): void
+  update(deltaTime: number): void
+  render(deltaTime: number): void
   get name(): string
 }

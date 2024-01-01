@@ -18,6 +18,7 @@ import {
 import ObjectComponent from '../tech/component/ObjectComponent'
 import IEngineConfigOptions from '../tech/config_manager/IEngineConfigOptions'
 import CollisionManager from '../tech/collision_detector/CollisionManager'
+import ILogicSystemManager from '../tech/entity_component_system/system/ILogicSystemManager'
 
 export default class Engine {
   protected readonly _logger: ILogger
@@ -34,6 +35,7 @@ export default class Engine {
   protected readonly _configManager: IConfigurationManager<IEngineConfigOptions>
   protected readonly _collisionManager: CollisionManager
   protected readonly _eventSystem: IEventSystem
+  protected readonly _logicSystemManager: ILogicSystemManager
   private _afterCreateEntitiesCallback: (
     entityManager: IEntityManager
   ) => void = () => {}
@@ -52,6 +54,14 @@ export default class Engine {
     this._afterCreateEntitiesCallback = callback
   }
 
+  get logicSystemManager() {
+    return this._logicSystemManager
+  }
+
+  get entityManager() {
+    return this._entityManager
+  }
+
   constructor(
     logger: ILogger,
     gameLoop: IGameLoop,
@@ -64,7 +74,8 @@ export default class Engine {
     entityCreator: IEntityCreator,
     configManager: IConfigurationManager<IEngineConfigOptions>,
     collisionManager: CollisionManager,
-    eventSystem: IEventSystem
+    eventSystem: IEventSystem,
+    logicSystemManager: ILogicSystemManager
   ) {
     this._logger = logger
     this._gameLoop = gameLoop
@@ -78,6 +89,7 @@ export default class Engine {
     this._configManager = configManager
     this._collisionManager = collisionManager
     this._eventSystem = eventSystem
+    this._logicSystemManager = logicSystemManager
   }
 
   async initialize(gameData: IGameData) {
@@ -121,8 +133,9 @@ export default class Engine {
       this._player.getComponentByType<ObjectComponent>(ObjectComponent).position
   }
 
-  private update = (dt: number) => {
-    this._entityManager.update(dt)
+  private update = (deltaTime: number) => {
+    this._entityManager.update(deltaTime)
+    this._logicSystemManager.update(deltaTime)
   }
 
   private render = (dt: number) => {

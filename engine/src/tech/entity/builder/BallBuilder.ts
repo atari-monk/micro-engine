@@ -10,6 +10,7 @@ import {
 import EntityBuilder from '../EntityBuilder'
 import Entity from '../../entity_component/Entity'
 import ICustomEntityBuilder from './ICustomEntityBuilder'
+import Vector2 from '../../../math/vector/Vector2'
 
 export default class BallBuilder implements ICustomEntityBuilder {
   constructor(
@@ -30,19 +31,22 @@ export default class BallBuilder implements ICustomEntityBuilder {
       this._entityDataManager,
       this._entityManager
     )
-    builder.recordOperation((dataKey) =>
-      builder
-        .withEntity(() => new Entity())
-        .withLogger(this._logger)
-        .withRenderer(this._renderer)
-        .withEventSystem(this._eventSystem)
-        .withEntityData(dataKey!)
-        .withObjectComponent()
-        .withSpriteComponent()
-        .withRenderComponent()
-        .withStateComponent()
-        .withKinematicsComponent()
-        .withBouncingBallComponent()
+    builder.recordOperation(
+      (dataKey) =>
+        builder
+          .withEntity(() => new Entity())
+          .withLogger(this._logger)
+          .withRenderer(this._renderer)
+          .withEventSystem(this._eventSystem)
+          .withEntityData(dataKey!)
+          .withObjectComponent()
+          .withSpriteComponent()
+          .withRenderComponent()
+          .withStateComponent()
+          .withKinematicsComponent()
+          .withCollisionCircleComponent()
+          .withWallComponent(new Vector2(740, 360))
+      //.withBouncingBallComponent()
     )
     return builder
   }

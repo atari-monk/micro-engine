@@ -75,6 +75,7 @@ export default class EngineBuilder extends EngineBuilderBase {
       this._configManager,
       this._collisionManager,
       this._eventSystem,
+      this._logicSystemManager,
       this._playerManager
     )
   }

@@ -9,6 +9,7 @@ import {
   CollisionComponent,
   ObjectComponent,
   BuilderLibrary,
+  InsideWallsCollisionSystem,
 } from 'engine'
 import GameClient from './client-lib/GameClient'
 import EntityData from './data/EntityData'
@@ -43,16 +44,20 @@ async function setupSinglePlayerMode() {
   const engineBuilder = new EngineDirector().createDefaultEngineBuilder(
     'canvas'
   )
+
   engineBuilder.withBuilderFromLibrary('gameState', BuilderLibrary.GameState)
   engineBuilder.withBuilderFromLibrary('field', BuilderLibrary.Sprite)
   //engineBuilder.withBuilderFromLibrary('map', BuilderLibrary.TileMap)
   engineBuilder.withBuilderFromLibrary('gate', BuilderLibrary.FootballGate)
   engineBuilder.withBuilderFromLibrary('ball', BuilderLibrary.Football)
   engineBuilder.withBuilderFromLibrary('player', BuilderLibrary.SinglePlayer)
+
   const engine = engineBuilder.build()
+
   engine.configManager.updateConfig({
     enableCamera: false,
   } as IEngineConfigOptions)
+
   engine.afterCreateEntitiesCallback = (entityManager) => {
     const ball = entityManager.getStrict('ball')
     const ballObj = ball.getComponentByType(ObjectComponent)
@@ -76,6 +81,10 @@ async function setupSinglePlayerMode() {
     const rightGateCollider = rightGate.getComponentByType(CollisionComponent)
     rightGateCollider.object2 = ballObj
     rightGateCollider.setCollisionHandler()
+
+    const wallSystem = new InsideWallsCollisionSystem(engine.entityManager)
+    wallSystem.registerEntityByName('ball')
+    engine.logicSystemManager.add('wall', wallSystem)
   }
   engine.initialize(await getGameData(engine.getScreenCenter()))
   engine.start()

@@ -19,6 +19,7 @@ import CollisionManager from '../tech/collision_detector/CollisionManager'
 import ICustomEntityBuilder from '../tech/entity/builder/ICustomEntityBuilder'
 import { BuilderLibrary } from '../tech/entity/builder/BuilderLibrary'
 import BuilderFactory from '../tech/entity/builder/BuilderFactory'
+import ILogicSystemManager from '../tech/entity_component_system/system/ILogicSystemManager'
 
 export default class EngineBuilder {
   protected _logger!: ILogger
@@ -33,6 +34,7 @@ export default class EngineBuilder {
   protected _configManager!: IConfigurationManager<IEngineConfigOptions>
   protected _collisionManager!: CollisionManager
   protected _eventSystem!: IEventSystem
+  protected _logicSystemManager!: ILogicSystemManager
 
   withLogger(logger: ILogger) {
     this._logger = logger
@@ -132,6 +134,11 @@ export default class EngineBuilder {
     return this
   }
 
+  withLogicSystemManeger(logicSystemManager: ILogicSystemManager) {
+    this._logicSystemManager = logicSystemManager
+    return this
+  }
+
   build() {
     if (
       !this._logger ||
@@ -145,7 +152,8 @@ export default class EngineBuilder {
       !this._entityCreator ||
       !this._configManager ||
       !this._collisionManager ||
-      !this._eventSystem
+      !this._eventSystem ||
+      !this._logicSystemManager
     ) {
       throw new Error(
         'All dependencies must be set before building the engine.'
@@ -163,7 +171,8 @@ export default class EngineBuilder {
       this._entityCreator,
       this._configManager,
       this._collisionManager,
-      this._eventSystem
+      this._eventSystem,
+      this._logicSystemManager
     )
   }
 }

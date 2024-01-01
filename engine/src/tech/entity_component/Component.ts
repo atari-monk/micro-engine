@@ -11,7 +11,7 @@ export default class Component implements IComponent {
     this._name = name
   }
 
-  update(dt: number) {}
+  update(deltaTime: number) {}
 
-  render(dt: number) {}
+  render(deltaTime: number) {}
 }

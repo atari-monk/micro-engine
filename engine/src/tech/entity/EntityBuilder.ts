@@ -11,6 +11,7 @@ import {
   IManager,
   IRendererV2,
   ITileMap,
+  IVector2,
 } from 'engine_api'
 import MapComponent from '../component/MapComponent'
 import ObjectComponent from '../component/ObjectComponent'
@@ -30,6 +31,8 @@ import LimitMoveComponent from '../component/LimitMoveComponent'
 import Vector2 from '../../math/vector/Vector2'
 import BouncingBallComponent from '../component/BouncingBallComponent'
 import GameStateComponent from '../component/GameStateComponent'
+import WallComponent from '../entity_component_system/component/WallComponent'
+import CollisionCircleComponent from '../entity_component_system/component/CollisionCircleComponent'
 
 export default class EntityBuilder implements IEntityBuilder {
   protected _entity!: IEntity
@@ -235,6 +238,21 @@ export default class EntityBuilder implements IEntityBuilder {
         this._entityManager
       )
     )
+    return this
+  }
+
+  withCollisionCircleComponent() {
+    this.assertEntityData()
+    const component = new CollisionCircleComponent()
+    component.radius = this._entityData.object.size.x / 2
+    this._entity.addComponent(component)
+    return this
+  }
+
+  withWallComponent(size: IVector2) {
+    const component = new WallComponent()
+    component.size = size
+    this._entity.addComponent(component)
     return this
   }
 

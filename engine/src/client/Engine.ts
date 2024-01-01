@@ -21,6 +21,7 @@ import {
 import { default as EngineBase } from '../single/Engine'
 import IEngineConfigOptions from '../tech/config_manager/IEngineConfigOptions'
 import CollisionManager from '../tech/collision_detector/CollisionManager'
+import ILogicSystemManager from '../tech/entity_component_system/system/ILogicSystemManager'
 
 export default class Engine extends EngineBase implements IEngineClientApi {
   private readonly _playerManager: IPlayerManager
@@ -49,6 +50,7 @@ export default class Engine extends EngineBase implements IEngineClientApi {
     configManager: IConfigurationManager<IEngineConfigOptions>,
     collisionManager: CollisionManager,
     eventSystem: IEventSystem,
+    logicSystemManager: ILogicSystemManager,
     playerManager: IPlayerManager
   ) {
     super(
@@ -63,7 +65,8 @@ export default class Engine extends EngineBase implements IEngineClientApi {
       entityCreator,
       configManager,
       collisionManager,
-      eventSystem
+      eventSystem,
+      logicSystemManager
     )
     this._playerManager = playerManager
     this._clientGameLoop = clientGameLoop

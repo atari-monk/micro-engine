@@ -9,8 +9,7 @@ export default class Entity implements IEntity {
   }
 
   addComponent(component: IComponent): void {
-    const componentName = component.name
-    this._list.set(componentName, component)
+    this._list.set(component.name, component)
   }
 
   getComponentByType<T extends IComponent>(

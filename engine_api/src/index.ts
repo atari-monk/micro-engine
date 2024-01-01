@@ -31,7 +31,7 @@ export { default as IEntityManager } from './tech/entity_component/IEntityManage
 export { default as ILogable } from './tech/entity_component/ILogable'
 export { default as IManager } from './tech/entity_component/IManager'
 export { default as IRenderable } from './tech/entity_component/IRenderable'
-export { default as IUpdateable } from './tech/entity_component/IUpdateable'
+export { default as IUpdateable } from './tech/entity_component/IUpdatable'
 //event_system
 export { default as IEventHandler } from './tech/event_system/IEventHandler'
 export { default as IEventSystem } from './tech/event_system/IEventSystem'

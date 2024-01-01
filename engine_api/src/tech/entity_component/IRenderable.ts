@@ -1,3 +1,3 @@
 export default interface IRenderable {
-  render(dt: number): void
+  render(deltaTime: number): void
 }
