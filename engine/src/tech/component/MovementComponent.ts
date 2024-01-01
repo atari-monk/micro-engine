@@ -1,50 +1,80 @@
 import { IEventSystem, IInputManager, IObject } from 'engine_api'
 import Component from '../entity_component/Component'
+import Vector2 from '../../math/vector/Vector2'
+
+type KeyAction = () => void
 
 export default class MovementComponent extends Component {
-  private readonly _keyActions: { [key: string]: () => void }
+  private readonly _keyActions: { [key: string]: KeyAction }
+  private readonly _cumulativeDirection: Vector2
+  private _pressedKeys: Set<string> = new Set()
 
   constructor(
     private readonly _object: IObject,
     private readonly _eventSystem: IEventSystem,
-    input: IInputManager,
-    useArrowKeys: boolean = true
+    private readonly _input: IInputManager,
+    private readonly _useArrowKeys: boolean = true
   ) {
     super('MovementComponent')
 
-    this._keyActions = {
-      ...(useArrowKeys
-        ? {
-            ArrowLeft: () => this.move(-_object.moveStep.x, 0),
-            ArrowRight: () => this.move(_object.moveStep.x, 0),
-            ArrowUp: () => this.move(0, -_object.moveStep.y),
-            ArrowDown: () => this.move(0, _object.moveStep.y),
-          }
-        : {
-            a: () => this.move(-_object.moveStep.x, 0),
-            d: () => this.move(_object.moveStep.x, 0),
-            w: () => this.move(0, -_object.moveStep.y),
-            s: () => this.move(0, _object.moveStep.y),
-          }),
-    }
+    this._cumulativeDirection = new Vector2()
+    this._keyActions = this.initializeKeyActions()
 
-    input.subscribeInputEvent('KeyDown', (key) => {
-      const action = this._keyActions[key]
-      if (action) {
-        action()
-        this._eventSystem.publish('playerMove', this._object.id)
-      }
+    this._input.subscribeInputEvent('KeyDown', (key) => {
+      this._pressedKeys.add(key)
+      this.handleKeys()
+    })
+
+    this._input.subscribeInputEvent('KeyUp', (key) => {
+      this._pressedKeys.delete(key)
+      this.handleKeys()
     })
   }
 
-  update(dt: number): void {}
+  private initializeKeyActions(): { [key: string]: KeyAction } {
+    const keyActions: { [key: string]: KeyAction } = {}
 
-  render(dt: number): void {}
+    if (this._useArrowKeys) {
+      keyActions['ArrowLeft'] = () => this.updateDirection(-1, 0)
+      keyActions['ArrowRight'] = () => this.updateDirection(1, 0)
+      keyActions['ArrowUp'] = () => this.updateDirection(0, -1)
+      keyActions['ArrowDown'] = () => this.updateDirection(0, 1)
+    } else {
+      keyActions['a'] = () => this.updateDirection(-1, 0)
+      keyActions['d'] = () => this.updateDirection(1, 0)
+      keyActions['w'] = () => this.updateDirection(0, -1)
+      keyActions['s'] = () => this.updateDirection(0, 1)
+    }
 
-  private move(deltaX: number, deltaY: number): void {
-    this._object.velocity.x = deltaX
-    this._object.velocity.y = deltaY
-    this._object.position.x += this._object.velocity.x
-    this._object.position.y += this._object.velocity.y
+    return keyActions
+  }
+
+  private updateDirection(x: number, y: number): void {
+    this._cumulativeDirection.x += x
+    this._cumulativeDirection.y += y
+  }
+
+  private handleKeys(): void {
+    //console.log('Before handling keys:', this._cumulativeDirection)
+
+    this._cumulativeDirection.x = 0
+    this._cumulativeDirection.y = 0
+
+    this._pressedKeys.forEach((key) => {
+      const action = this._keyActions[key]
+      if (action) {
+        action()
+      }
+    })
+
+    const direction = this._cumulativeDirection.clone().normalize()
+
+    const scaledDirection = new Vector2(
+      direction.x * this._object.moveStep.x,
+      direction.y * this._object.moveStep.y
+    )
+
+    this._object.velocity.setValues(scaledDirection)
+    this._eventSystem.publish('playerMove', this._object.id)
   }
 }

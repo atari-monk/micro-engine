@@ -56,6 +56,7 @@ export default class SinglePlayerBuilder implements ICustomEntityBuilder {
         )
         .withCollisionComponent()
         .withLimitMoveComponent()
+        .withKinematicsComponent()
     )
     return builder
   }
