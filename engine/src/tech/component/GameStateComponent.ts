@@ -31,7 +31,10 @@ export default class GameStateComponent
     )
     this._eventSystem.subscribe('updateScore', this.scoreHandler.bind(this))
     this._eventSystem.subscribe('ballMove', this.ballMoveHandler.bind(this))
-    this._eventSystem.subscribe('ballStop', this.ballStopHandler.bind(this))
+    this._eventSystem.subscribe(
+      'entityStopped',
+      this.entityStoppedHandler.bind(this)
+    )
     this._eventSystem.subscribe('playerMove', this.playerMoveHandler.bind(this))
   }
 
@@ -60,7 +63,7 @@ export default class GameStateComponent
 
   private scoreHandler(data: IScoreInfo) {
     this.score = data
-    this.ballStopHandler()
+    this.entityStoppedHandler('ball')
   }
 
   private ballMoveHandler() {
@@ -70,11 +73,13 @@ export default class GameStateComponent
     ballAnim.changeState(new MoveState())
   }
 
-  private ballStopHandler() {
-    const ballAnim = this._entityManager
-      .getStrict('ball')
-      .getComponentByType(StateComponent)
-    ballAnim.changeState(new IdleState())
+  private entityStoppedHandler(id: string) {
+    if (id === 'ball') {
+      const ballAnim = this._entityManager
+        .getStrict('ball')
+        .getComponentByType(StateComponent)
+      ballAnim.changeState(new IdleState())
+    }
   }
 
   private playerMoveHandler(data: string) {

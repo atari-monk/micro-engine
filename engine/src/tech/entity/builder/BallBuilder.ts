@@ -31,22 +31,20 @@ export default class BallBuilder implements ICustomEntityBuilder {
       this._entityDataManager,
       this._entityManager
     )
-    builder.recordOperation(
-      (dataKey) =>
-        builder
-          .withEntity(() => new Entity())
-          .withLogger(this._logger)
-          .withRenderer(this._renderer)
-          .withEventSystem(this._eventSystem)
-          .withEntityData(dataKey!)
-          .withObjectComponent()
-          .withSpriteComponent()
-          .withRenderComponent()
-          .withStateComponent()
-          .withKinematicsComponent()
-          .withCollisionCircleComponent()
-          .withWallComponent(new Vector2(740, 360))
-      //.withBouncingBallComponent()
+    builder.recordOperation((dataKey) =>
+      builder
+        .withEntity(() => new Entity())
+        .withLogger(this._logger)
+        .withRenderer(this._renderer)
+        .withEventSystem(this._eventSystem)
+        .withEntityData(dataKey!)
+        .withObjectComponent()
+        .withSpriteComponent()
+        .withRenderComponent()
+        .withStateComponent()
+        .withKinematicsComponent(0.85, 5)
+        .withCollisionCircleComponent()
+        .withWallComponent(new Vector2(740, 360))
     )
     return builder
   }

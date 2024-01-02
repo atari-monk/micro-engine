@@ -22,6 +22,7 @@ export { default as ObjectComponent } from './tech/component/ObjectComponent'
 export { BuilderLibrary } from './tech/entity/builder/BuilderLibrary'
 export { default as InsideWallsCollisionSystem } from './tech/entity_component_system/system/InsideWallsCollisionSystem'
 export { default as MovementSystem } from './tech/entity_component_system/system/MovementSystem'
+export { default as KinematicsSystem } from './tech/entity_component_system/system/KinematicsSystem'
 //for tests
 export { default as CollisionDetector } from './tech/collision_detector/TopLeftCollisionDetector'
 export { default as Entity } from './tech/entity_component/Entity'

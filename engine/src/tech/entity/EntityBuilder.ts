@@ -188,11 +188,15 @@ export default class EntityBuilder implements IEntityBuilder {
     return this
   }
 
-  withKinematicsComponent() {
+  withKinematicsComponent(
+    frictionCoefficient: number = 0,
+    stopThreshold: number = 0
+  ) {
     this.assertEventSystem()
-    this._entity.addComponent(
-      new KinematicsComponent(this._entity, this._eventSystem)
-    )
+    const component = new KinematicsComponent()
+    component.frictionCoefficient = frictionCoefficient
+    component.stopThreshold = stopThreshold
+    this._entity.addComponent(component)
     return this
   }
 

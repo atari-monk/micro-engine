@@ -11,6 +11,7 @@ import {
   BuilderLibrary,
   InsideWallsCollisionSystem,
   MovementSystem,
+  KinematicsSystem,
 } from 'engine'
 import GameClient from './client-lib/GameClient'
 import EntityData from './data/EntityData'
@@ -87,6 +88,15 @@ async function setupSinglePlayerMode() {
     const wallSystem = new InsideWallsCollisionSystem(engine.entityManager)
     wallSystem.registerEntityByName('ball')
     engine.logicSystemManager.add('wall', wallSystem)
+
+    const kinematicSystem = new KinematicsSystem(
+      engine.entityManager,
+      engine.eventSystem
+    )
+    kinematicSystem.registerEntityByName('ball')
+    kinematicSystem.registerEntityByName('player1')
+    kinematicSystem.registerEntityByName('player2')
+    engine.logicSystemManager.add('kinematic', kinematicSystem)
 
     const moveSystem = new MovementSystem(
       engine.entityManager,
