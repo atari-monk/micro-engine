@@ -29,8 +29,4 @@ export default class ObjectComponent extends Component implements IObject {
     this.useArrowKeys = objData.useArrowKeys
     this.isFlipped = objData.isFlipped
   }
-
-  update(dt: number) {}
-
-  render(dt: number) {}
 }

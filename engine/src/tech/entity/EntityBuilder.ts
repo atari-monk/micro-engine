@@ -29,7 +29,6 @@ import CollisionHandlerComponent from '../component/CollisionHandlerComponent'
 import { KinematicsComponent } from '../component/KinematicsComponent'
 import LimitMoveComponent from '../component/LimitMoveComponent'
 import Vector2 from '../../math/vector/Vector2'
-import BouncingBallComponent from '../component/BouncingBallComponent'
 import GameStateComponent from '../component/GameStateComponent'
 import WallComponent from '../entity_component_system/component/WallComponent'
 import CollisionCircleComponent from '../entity_component_system/component/CollisionCircleComponent'
@@ -129,19 +128,13 @@ export default class EntityBuilder implements IEntityBuilder {
     return this
   }
 
-  withMovementComponent(
-    input: IInputManager,
-    useArrowKeys: boolean = true
-  ): this {
-    this.assertEventSystem()
-    this._entity.addComponent(
-      new MovementComponent(
-        this._entity.getComponentByType(ObjectComponent),
-        this._eventSystem,
-        input,
-        useArrowKeys
-      )
-    )
+  withMovementComponent(): this {
+    this.assertEntityData()
+    const component = new MovementComponent()
+    component.moveSpeed = this._entityData.object.moveStep.x
+    component.useArrowKeys = this._entityData.object.useArrowKeys
+    component.velocity = this._entityData.object.velocity
+    this._entity.addComponent(component)
     return this
   }
 
@@ -206,16 +199,6 @@ export default class EntityBuilder implements IEntityBuilder {
   withLimitMoveComponent() {
     this._entity.addComponent(
       new LimitMoveComponent(
-        new Vector2(740, 360),
-        this._entity.getComponentByType(ObjectComponent)
-      )
-    )
-    return this
-  }
-
-  withBouncingBallComponent() {
-    this._entity.addComponent(
-      new BouncingBallComponent(
         new Vector2(740, 360),
         this._entity.getComponentByType(ObjectComponent)
       )

@@ -3,39 +3,31 @@ import ObjectComponent from '../../component/ObjectComponent'
 import WallComponent from '../component/WallComponent'
 import CollisionCircleComponent from '../component/CollisionCircleComponent'
 import CircleComponent from '../component/CircleComponent'
-import ILogicSystem from './ILogicSystem'
+import LogicSystemBase from './LogicSystemBase'
 
 enum Axis {
   X = 'x',
   Y = 'y',
 }
 
-export default class InsideWallsCollisionSystem implements ILogicSystem {
-  private _entityList: IEntity[] = []
-
-  constructor(private readonly _entityManager: IEntityManager) {}
-
-  registerEntityByName(name: string) {
-    this._entityList.push(this._entityManager.getStrict(name))
+export default class InsideWallsCollisionSystem extends LogicSystemBase {
+  constructor(entityManager: IEntityManager) {
+    super(entityManager)
   }
 
-  update(deltaTime: number) {
-    for (const entity of this._entityList) {
-      const objectComponent = entity.getComponentByType(ObjectComponent)
-      const circleComponent = entity.getComponentByType(
-        CollisionCircleComponent
-      )
-      const wallComponent = entity.getComponentByType(WallComponent)
+  updateLogic(deltaTime: number, entity: IEntity) {
+    const objectComponent = entity.getComponentByType(ObjectComponent)
+    const circleComponent = entity.getComponentByType(CollisionCircleComponent)
+    const wallComponent = entity.getComponentByType(WallComponent)
 
-      ;[Axis.X, Axis.Y].forEach((axis: any) => {
-        this.checkAndHandleCollision(
-          objectComponent,
-          circleComponent,
-          wallComponent,
-          axis
-        )
-      })
-    }
+    ;[Axis.X, Axis.Y].forEach((axis: any) => {
+      this.checkAndHandleCollision(
+        objectComponent,
+        circleComponent,
+        wallComponent,
+        axis
+      )
+    })
   }
 
   private checkAndHandleCollision(

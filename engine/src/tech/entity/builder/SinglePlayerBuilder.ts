@@ -46,10 +46,7 @@ export default class SinglePlayerBuilder implements ICustomEntityBuilder {
         .withObjectComponent()
         .withSpriteComponent()
         .withRenderComponent()
-        .withMovementComponent(
-          this._input,
-          builder.entityData.object.useArrowKeys
-        )
+        .withMovementComponent()
         .withStateComponent()
         .withCollisionHandlerComponent(
           new PlayerBallCollisionHandler(this._eventSystem)
