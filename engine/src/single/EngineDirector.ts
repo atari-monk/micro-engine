@@ -13,6 +13,7 @@ import CenterCollisionDetector from '../tech/collision_detector/CenterCollisionD
 import CollisionManager from '../tech/collision_detector/CollisionManager'
 import EventSystem from '../tech/event_system/EventSystem'
 import LogicSystemManager from '../tech/entity_component_system/system/LogicSystemManager'
+import InitLogicSystemManager from '../tech/entity_component_system/system/InitLogicSystemManager'
 
 export default class EngineDirector {
   createDefaultEngineBuilder(canvasId: string) {
@@ -30,5 +31,6 @@ export default class EngineDirector {
       .withEntityCreator(new EntityCreator())
       .withEventSystem(new EventSystem())
       .withLogicSystemManeger(new LogicSystemManager())
+      .withInitLogicSystemManeger(new InitLogicSystemManager())
   }
 }

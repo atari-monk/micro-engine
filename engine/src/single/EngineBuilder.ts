@@ -20,6 +20,7 @@ import ICustomEntityBuilder from '../tech/entity/builder/ICustomEntityBuilder'
 import { BuilderLibrary } from '../tech/entity/builder/BuilderLibrary'
 import BuilderFactory from '../tech/entity/builder/BuilderFactory'
 import ILogicSystemManager from '../tech/entity_component_system/system/ILogicSystemManager'
+import IInitLogicSystemManager from '../tech/entity_component_system/system/IInitLogicSystemManager'
 
 export default class EngineBuilder {
   protected _logger!: ILogger
@@ -35,6 +36,7 @@ export default class EngineBuilder {
   protected _collisionManager!: CollisionManager
   protected _eventSystem!: IEventSystem
   protected _logicSystemManager!: ILogicSystemManager
+  protected _initLogicSystemManager!: IInitLogicSystemManager
 
   withLogger(logger: ILogger) {
     this._logger = logger
@@ -99,6 +101,7 @@ export default class EngineBuilder {
 
   withCustomBuilder(builderKey: string, builder: ICustomEntityBuilder) {
     builder.withEntityBuilder(builderKey)
+    return this
   }
 
   withBuilderFromLibrary(builderKey: string, builderType: BuilderLibrary) {
@@ -114,6 +117,7 @@ export default class EngineBuilder {
       this._eventSystem
     ).createBuilder(builderType)
     builder.withEntityBuilder(builderKey)
+    return this
   }
 
   withEngineConfigOptions() {
@@ -139,6 +143,11 @@ export default class EngineBuilder {
     return this
   }
 
+  withInitLogicSystemManeger(initLogicSystemManager: IInitLogicSystemManager) {
+    this._initLogicSystemManager = initLogicSystemManager
+    return this
+  }
+
   build() {
     if (
       !this._logger ||
@@ -153,7 +162,8 @@ export default class EngineBuilder {
       !this._configManager ||
       !this._collisionManager ||
       !this._eventSystem ||
-      !this._logicSystemManager
+      !this._logicSystemManager ||
+      !this._initLogicSystemManager
     ) {
       throw new Error(
         'All dependencies must be set before building the engine.'
@@ -172,7 +182,8 @@ export default class EngineBuilder {
       this._configManager,
       this._collisionManager,
       this._eventSystem,
-      this._logicSystemManager
+      this._logicSystemManager,
+      this._initLogicSystemManager
     )
   }
 }

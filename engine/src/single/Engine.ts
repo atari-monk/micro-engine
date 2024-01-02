@@ -19,6 +19,7 @@ import ObjectComponent from '../tech/component/ObjectComponent'
 import IEngineConfigOptions from '../tech/config_manager/IEngineConfigOptions'
 import CollisionManager from '../tech/collision_detector/CollisionManager'
 import ILogicSystemManager from '../tech/entity_component_system/system/ILogicSystemManager'
+import IInitLogicSystemManager from '../tech/entity_component_system/system/IInitLogicSystemManager'
 
 export default class Engine {
   protected readonly _logger: ILogger
@@ -36,6 +37,7 @@ export default class Engine {
   protected readonly _collisionManager: CollisionManager
   protected readonly _eventSystem: IEventSystem
   protected readonly _logicSystemManager: ILogicSystemManager
+  protected readonly _initLogicSystemManager: IInitLogicSystemManager
   private _afterCreateEntitiesCallback: (
     entityManager: IEntityManager
   ) => void = () => {}
@@ -58,8 +60,20 @@ export default class Engine {
     return this._logicSystemManager
   }
 
+  get initLogicSystemManager() {
+    return this._initLogicSystemManager
+  }
+
   get entityManager() {
     return this._entityManager
+  }
+
+  get input() {
+    return this._input
+  }
+
+  get eventSystem() {
+    return this._eventSystem
   }
 
   constructor(
@@ -75,7 +89,8 @@ export default class Engine {
     configManager: IConfigurationManager<IEngineConfigOptions>,
     collisionManager: CollisionManager,
     eventSystem: IEventSystem,
-    logicSystemManager: ILogicSystemManager
+    logicSystemManager: ILogicSystemManager,
+    initLogicSystemManager: IInitLogicSystemManager
   ) {
     this._logger = logger
     this._gameLoop = gameLoop
@@ -90,6 +105,7 @@ export default class Engine {
     this._collisionManager = collisionManager
     this._eventSystem = eventSystem
     this._logicSystemManager = logicSystemManager
+    this._initLogicSystemManager = initLogicSystemManager
   }
 
   async initialize(gameData: IGameData) {

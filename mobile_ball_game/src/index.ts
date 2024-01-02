@@ -10,6 +10,7 @@ import {
   ObjectComponent,
   BuilderLibrary,
   InsideWallsCollisionSystem,
+  MovementSystem,
 } from 'engine'
 import GameClient from './client-lib/GameClient'
 import EntityData from './data/EntityData'
@@ -45,12 +46,13 @@ async function setupSinglePlayerMode() {
     'canvas'
   )
 
-  engineBuilder.withBuilderFromLibrary('gameState', BuilderLibrary.GameState)
-  engineBuilder.withBuilderFromLibrary('field', BuilderLibrary.Sprite)
-  //engineBuilder.withBuilderFromLibrary('map', BuilderLibrary.TileMap)
-  engineBuilder.withBuilderFromLibrary('gate', BuilderLibrary.FootballGate)
-  engineBuilder.withBuilderFromLibrary('ball', BuilderLibrary.Football)
-  engineBuilder.withBuilderFromLibrary('player', BuilderLibrary.SinglePlayer)
+  engineBuilder
+    .withBuilderFromLibrary('gameState', BuilderLibrary.GameState)
+    .withBuilderFromLibrary('field', BuilderLibrary.Sprite)
+    //.withBuilderFromLibrary('map', BuilderLibrary.TileMap)
+    .withBuilderFromLibrary('gate', BuilderLibrary.FootballGate)
+    .withBuilderFromLibrary('ball', BuilderLibrary.Football)
+    .withBuilderFromLibrary('player', BuilderLibrary.SinglePlayer)
 
   const engine = engineBuilder.build()
 
@@ -85,6 +87,16 @@ async function setupSinglePlayerMode() {
     const wallSystem = new InsideWallsCollisionSystem(engine.entityManager)
     wallSystem.registerEntityByName('ball')
     engine.logicSystemManager.add('wall', wallSystem)
+
+    const moveSystem = new MovementSystem(
+      engine.entityManager,
+      engine.input,
+      engine.eventSystem
+    )
+    moveSystem.registerEntityByName('player1')
+    moveSystem.registerEntityByName('player2')
+    engine.initLogicSystemManager.add('move', moveSystem)
+    engine.initLogicSystemManager.init()
   }
   engine.initialize(await getGameData(engine.getScreenCenter()))
   engine.start()
