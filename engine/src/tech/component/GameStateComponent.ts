@@ -8,7 +8,7 @@ import {
 import Component from '../entity_component/Component'
 import { IGameState } from 'engine_api'
 import Vector2 from '../../math/vector/Vector2'
-import StateComponent from '../state_machine/StateComponent'
+import StateComponent from './StateComponent'
 import MoveState from '../state_machine/MoveState'
 import IdleState from '../state_machine/IdleState'
 
@@ -70,7 +70,7 @@ export default class GameStateComponent
     const ballAnim = this._entityManager
       .getStrict('ball')
       .getComponentByType(StateComponent)
-    ballAnim.changeState(new MoveState())
+    ballAnim.changeState(new MoveState(this._eventSystem))
   }
 
   private entityStoppedHandler(id: string) {
@@ -78,7 +78,7 @@ export default class GameStateComponent
       const ballAnim = this._entityManager
         .getStrict('ball')
         .getComponentByType(StateComponent)
-      ballAnim.changeState(new IdleState())
+      ballAnim.changeState(new IdleState(this._eventSystem))
     }
   }
 
@@ -87,9 +87,9 @@ export default class GameStateComponent
       .getStrict(data)
       .getComponentByType(StateComponent)
 
-    if (anim.changeState(new MoveState())) {
+    if (anim.changeState(new MoveState(this._eventSystem))) {
       setTimeout(() => {
-        anim.changeState(new IdleState())
+        anim.changeState(new IdleState(this._eventSystem))
       }, 2000)
     }
   }

@@ -21,6 +21,7 @@ import { BuilderLibrary } from '../tech/entity/builder/BuilderLibrary'
 import BuilderFactory from '../tech/entity/builder/BuilderFactory'
 import ILogicSystemManager from '../tech/entity_component_system/system/logic/ILogicSystemManager'
 import IInitLogicSystemManager from '../tech/entity_component_system/system/init_logic/IInitLogicSystemManager'
+import IRenderSystemManager from '../tech/entity_component_system/system/render/IRenderSystemManager'
 
 export default class EngineBuilder {
   protected _logger!: ILogger
@@ -37,6 +38,7 @@ export default class EngineBuilder {
   protected _eventSystem!: IEventSystem
   protected _logicSystemManager!: ILogicSystemManager
   protected _initLogicSystemManager!: IInitLogicSystemManager
+  protected _renderSystemManager!: IRenderSystemManager
 
   withLogger(logger: ILogger) {
     this._logger = logger
@@ -137,13 +139,18 @@ export default class EngineBuilder {
     return this
   }
 
-  withLogicSystemManeger(logicSystemManager: ILogicSystemManager) {
+  withLogicSystemManager(logicSystemManager: ILogicSystemManager) {
     this._logicSystemManager = logicSystemManager
     return this
   }
 
   withInitLogicSystemManeger(initLogicSystemManager: IInitLogicSystemManager) {
     this._initLogicSystemManager = initLogicSystemManager
+    return this
+  }
+
+  withRenderSystemManager(renderSystemManager: IRenderSystemManager) {
+    this._renderSystemManager = renderSystemManager
     return this
   }
 
@@ -162,7 +169,8 @@ export default class EngineBuilder {
       !this._collisionManager ||
       !this._eventSystem ||
       !this._logicSystemManager ||
-      !this._initLogicSystemManager
+      !this._initLogicSystemManager ||
+      !this._renderSystemManager
     ) {
       throw new Error(
         'All dependencies must be set before building the engine.'
@@ -182,7 +190,8 @@ export default class EngineBuilder {
       this._collisionManager,
       this._eventSystem,
       this._logicSystemManager,
-      this._initLogicSystemManager
+      this._initLogicSystemManager,
+      this._renderSystemManager
     )
   }
 }

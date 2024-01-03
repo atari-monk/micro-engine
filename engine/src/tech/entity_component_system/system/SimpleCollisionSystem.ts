@@ -1,6 +1,6 @@
 import { IEntity, IEntityManager } from 'engine_api'
 import LogicSystemBase from './logic/LogicSystemBase'
-import { ICollisionSubSystem } from './ICollisionSubSystem'
+import ICollisionSubSystem from './ICollisionSubSystem'
 
 export default class SimpleCollisionSystem extends LogicSystemBase {
   constructor(

@@ -17,6 +17,8 @@ import {
   SimpleCollisionSystem,
   InsideBoxCollisionSubSystem,
   LimitMoveSubSystem,
+  RenderSystem,
+  RenderSubSystem,
 } from 'engine'
 import GameClient from './client-lib/GameClient'
 import EntityData from './data/EntityData'
@@ -29,6 +31,7 @@ import './../assets/goalPost.png'
 import './../assets/grass.png'
 import './../data/entityCreatorData.json'
 import './../data/entityData.json'
+import { SpriteAnimator } from 'engine/tech/sprite/SpriteAnimator'
 
 const config = getMasterConfig()
 if (config.singlePlayerMode) {
@@ -73,6 +76,7 @@ async function setupSinglePlayerMode() {
     const player2 = entityManager.getStrict('player2')
     const leftGate = entityManager.getStrict('leftGate')
     const rightGate = entityManager.getStrict('rightGate')
+    const field = entityManager.getStrict('field')
 
     const wallSystem = new SimpleCollisionSystem(
       engine.entityManager,
@@ -144,6 +148,85 @@ async function setupSinglePlayerMode() {
     moveSystem.registerEntityByName('player2')
     engine.initLogicSystemManager.add('move', moveSystem)
     engine.initLogicSystemManager.init()
+
+    const player1RenderSystem = new RenderSystem(
+      entityManager,
+      new RenderSubSystem(
+        engine.renderer,
+        new SpriteAnimator(
+          engine.entityDataManager.getStrict('player1').animations
+        ),
+        engine.eventSystem,
+        player1
+      )
+    )
+    player1RenderSystem.registerEntityByName('player1')
+    const player2RenderSystem = new RenderSystem(
+      entityManager,
+      new RenderSubSystem(
+        engine.renderer,
+        new SpriteAnimator(
+          engine.entityDataManager.getStrict('player2').animations
+        ),
+        engine.eventSystem,
+        player2
+      )
+    )
+    player2RenderSystem.registerEntityByName('player2')
+    const ballRenderSystem = new RenderSystem(
+      entityManager,
+      new RenderSubSystem(
+        engine.renderer,
+        new SpriteAnimator(
+          engine.entityDataManager.getStrict('ball').animations
+        ),
+        engine.eventSystem,
+        ball
+      )
+    )
+    ballRenderSystem.registerEntityByName('ball')
+    const leftGateRenderSystem = new RenderSystem(
+      entityManager,
+      new RenderSubSystem(
+        engine.renderer,
+        new SpriteAnimator(
+          engine.entityDataManager.getStrict('leftGate').animations
+        ),
+        engine.eventSystem,
+        leftGate
+      )
+    )
+    leftGateRenderSystem.registerEntityByName('leftGate')
+    const rightGateRenderSystem = new RenderSystem(
+      entityManager,
+      new RenderSubSystem(
+        engine.renderer,
+        new SpriteAnimator(
+          engine.entityDataManager.getStrict('rightGate').animations
+        ),
+        engine.eventSystem,
+        rightGate
+      )
+    )
+    rightGateRenderSystem.registerEntityByName('rightGate')
+    const fieldRenderSystem = new RenderSystem(
+      entityManager,
+      new RenderSubSystem(
+        engine.renderer,
+        new SpriteAnimator(
+          engine.entityDataManager.getStrict('field').animations
+        ),
+        engine.eventSystem,
+        field
+      )
+    )
+    fieldRenderSystem.registerEntityByName('field')
+    engine.renderSystemManager.add('field', fieldRenderSystem)
+    engine.renderSystemManager.add('ball', ballRenderSystem)
+    engine.renderSystemManager.add('leftGate', leftGateRenderSystem)
+    engine.renderSystemManager.add('rightGate', rightGateRenderSystem)
+    engine.renderSystemManager.add('player1', player1RenderSystem)
+    engine.renderSystemManager.add('player2', player2RenderSystem)
   }
   engine.initialize(await getGameData(engine.getScreenCenter()))
   engine.start()

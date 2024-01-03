@@ -3,7 +3,7 @@ import ObjectComponent from '../../component/ObjectComponent'
 import WallComponent from '../component/WallComponent'
 import CollisionCircleComponent from '../component/CollisionCircleComponent'
 import CircleComponent from '../component/CircleComponent'
-import { ICollisionSubSystem } from './ICollisionSubSystem'
+import ICollisionSubSystem from './ICollisionSubSystem'
 
 enum Axis {
   X = 'x',

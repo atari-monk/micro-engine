@@ -38,7 +38,6 @@ export default class SinglePlayerBuilder implements ICustomEntityBuilder {
         .withEventSystem(this._eventSystem)
         .withEntityData(dataKey!)
         .withObjectComponent()
-        .withSpriteComponent()
         .withRenderComponent()
         .withMovementComponent()
         .withStateComponent()

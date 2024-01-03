@@ -39,7 +39,6 @@ export default class BallBuilder implements ICustomEntityBuilder {
         .withEventSystem(this._eventSystem)
         .withEntityData(dataKey!)
         .withObjectComponent()
-        .withSpriteComponent()
         .withRenderComponent()
         .withStateComponent()
         .withKinematicsComponent(0.85, 5)

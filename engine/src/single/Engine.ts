@@ -20,6 +20,7 @@ import IEngineConfigOptions from '../tech/config_manager/IEngineConfigOptions'
 import CollisionManager from '../tech/collision_detector/CollisionManager'
 import ILogicSystemManager from '../tech/entity_component_system/system/logic/ILogicSystemManager'
 import IInitLogicSystemManager from '../tech/entity_component_system/system/init_logic/IInitLogicSystemManager'
+import IRenderSystemManager from '../tech/entity_component_system/system/render/IRenderSystemManager'
 
 export default class Engine {
   protected readonly _logger: ILogger
@@ -38,6 +39,7 @@ export default class Engine {
   protected readonly _eventSystem: IEventSystem
   protected readonly _logicSystemManager: ILogicSystemManager
   protected readonly _initLogicSystemManager: IInitLogicSystemManager
+  protected readonly _renderSystemManager: IRenderSystemManager
   private _afterCreateEntitiesCallback: (
     entityManager: IEntityManager
   ) => void = () => {}
@@ -62,6 +64,14 @@ export default class Engine {
 
   get initLogicSystemManager() {
     return this._initLogicSystemManager
+  }
+
+  get renderSystemManager() {
+    return this._renderSystemManager
+  }
+
+  get renderer() {
+    return this._renderer
   }
 
   get entityManager() {
@@ -98,7 +108,8 @@ export default class Engine {
     collisionManager: CollisionManager,
     eventSystem: IEventSystem,
     logicSystemManager: ILogicSystemManager,
-    initLogicSystemManager: IInitLogicSystemManager
+    initLogicSystemManager: IInitLogicSystemManager,
+    renderSystemManager: IRenderSystemManager
   ) {
     this._logger = logger
     this._gameLoop = gameLoop
@@ -114,6 +125,7 @@ export default class Engine {
     this._eventSystem = eventSystem
     this._logicSystemManager = logicSystemManager
     this._initLogicSystemManager = initLogicSystemManager
+    this._renderSystemManager = renderSystemManager
   }
 
   async initialize(gameData: IGameData) {
@@ -158,16 +170,17 @@ export default class Engine {
   }
 
   private update = (deltaTime: number) => {
-    this._entityManager.update(deltaTime)
     this._logicSystemManager.update(deltaTime)
+    this._entityManager.update(deltaTime)
   }
 
-  private render = (dt: number) => {
+  private render = (deltaTime: number) => {
     this._renderer.clearCanvas()
-    this._renderer.fillCanvas('rgba(87, 40, 145, 1)')
+    this._renderer.fillCanvas('rgba(0, 0, 0, 1)')
     if (this._config.enableCamera && this._playerPosition)
       this._camera.setPosition(this._playerPosition)
-    this._entityManager.render(dt)
+    this._renderSystemManager.render(deltaTime)
+    this._entityManager.render(deltaTime)
     if (this._config.enableCamera) this._renderer.resetTranslation()
   }
 

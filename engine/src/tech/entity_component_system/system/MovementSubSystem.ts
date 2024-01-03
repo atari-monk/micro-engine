@@ -1,6 +1,5 @@
 import { IEventSystem, IInputManager } from 'engine_api'
 import Vector2 from '../../../math/vector/Vector2'
-import MovementComponent from '../../component/MovementComponent'
 import ObjectComponent from '../../component/ObjectComponent'
 
 type KeyAction = () => void

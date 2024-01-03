@@ -35,7 +35,6 @@ export default class FootballGateBuilder implements ICustomEntityBuilder {
         .withRenderer(this._renderer)
         .withEntityData(dataKey!)
         .withObjectComponent()
-        .withSpriteComponent()
         .withRenderComponent()
         .withCollisionComponent()
     })

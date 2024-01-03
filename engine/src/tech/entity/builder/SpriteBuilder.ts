@@ -35,7 +35,6 @@ export default class SpriteBuilder implements ICustomEntityBuilder {
         .withRenderer(this._renderer)
         .withEntityData(dataKey!)
         .withObjectComponent()
-        .withSpriteComponent()
         .withRenderComponent()
     })
     return builder

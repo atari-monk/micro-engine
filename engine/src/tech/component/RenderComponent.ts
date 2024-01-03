@@ -1,17 +1,11 @@
-import { IObject, IRendererV2 } from 'engine_api'
+import { IAnimationConfig } from 'engine_api'
 import Component from '../entity_component/Component'
 
 export default class RenderComponent extends Component {
-  constructor(
-    private readonly _object: IObject,
-    private readonly _renderer: IRendererV2
-  ) {
+  public renderObject: boolean = true
+  public spriteAnimation: IAnimationConfig[] = [] 
+
+  constructor() {
     super('RenderComponent')
-  }
-
-  update(dt: number) {}
-
-  render(dt: number) {
-    this._renderer.drawObject(this._object)
   }
 }

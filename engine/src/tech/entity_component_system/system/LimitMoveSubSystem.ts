@@ -1,6 +1,6 @@
 import { IEntity } from 'engine_api'
 import ObjectComponent from '../../component/ObjectComponent'
-import { ICollisionSubSystem } from './ICollisionSubSystem'
+import ICollisionSubSystem from './ICollisionSubSystem'
 import LimitMoveComponent from '../../component/LimitMoveComponent'
 
 export default class LimitMoveSubSystem implements ICollisionSubSystem {

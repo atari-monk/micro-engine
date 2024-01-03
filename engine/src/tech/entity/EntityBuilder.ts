@@ -15,13 +15,12 @@ import MapComponent from '../component/MapComponent'
 import ObjectComponent from '../component/ObjectComponent'
 import RenderComponent from '../component/RenderComponent'
 import MovementComponent from '../component/MovementComponent'
-import SpriteComponent from '../component/SpriteComponent'
 import { OperationMap } from '../../utils/operation/OperationMap'
 import { Operation } from '../../utils/operation/Operation'
 import AssertHelper from '../../utils/AssertionHelper'
 import ClientMovementComponent from '../component/ClientMovementComponent'
 import ServerMovementComponent from '../component/ServerMovementComponent'
-import StateComponent from '../state_machine/StateComponent'
+import StateComponent from '../component/StateComponent'
 import CollisionComponent from '../component/CollisionComponent'
 import { KinematicsComponent } from '../component/KinematicsComponent'
 import LimitMoveComponent from '../component/LimitMoveComponent'
@@ -110,13 +109,10 @@ export default class EntityBuilder implements IEntityBuilder {
   }
 
   withRenderComponent(): this {
-    this.assertRenderer()
-    this._entity.addComponent(
-      new RenderComponent(
-        this._entity.getComponentByType(ObjectComponent),
-        this._renderer
-      )
-    )
+    this.assertEntityData()
+    const component = new RenderComponent()
+    component.spriteAnimation = this._entityData.animations
+    this._entity.addComponent(component)
     return this
   }
 
@@ -144,21 +140,11 @@ export default class EntityBuilder implements IEntityBuilder {
     return this
   }
 
-  withSpriteComponent() {
-    this.assertRenderer()
-    this.assertEntityData()
-    this._entity.addComponent(
-      new SpriteComponent(
-        this._renderer,
-        this._entity.getComponentByType(ObjectComponent),
-        this._entityData.animations
-      )
-    )
-    return this
-  }
-
   withStateComponent() {
-    this._entity.addComponent(new StateComponent(this._entity))
+    this.assertEventSystem()
+    this._entity.addComponent(
+      new StateComponent(this._entity, this._eventSystem)
+    )
     return this
   }
 
