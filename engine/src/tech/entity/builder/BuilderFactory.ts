@@ -5,7 +5,6 @@ import {
   IEntityManager,
   ILogger,
   ITileMap,
-  IInputManager,
   IRendererV2,
   IEventSystem,
 } from 'engine_api'
@@ -27,7 +26,6 @@ export default class BuilderFactory {
     private readonly _tileMap: ITileMap,
     private readonly _renderer: IRendererV2,
     private readonly _collisionManager: CollisionManager,
-    private readonly _input: IInputManager,
     private readonly _eventSystem: IEventSystem
   ) {}
 
@@ -47,9 +45,7 @@ export default class BuilderFactory {
           this._entityDataManager,
           this._entityManager,
           this._logger,
-          this._renderer,
-          this._collisionManager,
-          this._eventSystem
+          this._renderer
         )
       case BuilderLibrary.Football:
         return new BallBuilder(
@@ -67,8 +63,6 @@ export default class BuilderFactory {
           this._entityManager,
           this._logger,
           this._renderer,
-          this._collisionManager,
-          this._input,
           this._eventSystem
         )
       case BuilderLibrary.GameState:

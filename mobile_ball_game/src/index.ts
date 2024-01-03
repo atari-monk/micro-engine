@@ -12,6 +12,9 @@ import {
   InsideWallsCollisionSystem,
   MovementSystem,
   KinematicsSystem,
+  CollisionSystem,
+  PlayerBallCollisionHandler,
+  BallGateCollisionHandler,
 } from 'engine'
 import GameClient from './client-lib/GameClient'
 import EntityData from './data/EntityData'
@@ -69,22 +72,6 @@ async function setupSinglePlayerMode() {
     const leftGate = entityManager.getStrict('leftGate')
     const rightGate = entityManager.getStrict('rightGate')
 
-    const player1Collider = player1.getComponentByType(CollisionComponent)
-    player1Collider.object2 = ballObj
-    player1Collider.setCollisionHandler()
-
-    const player2Collider = player2.getComponentByType(CollisionComponent)
-    player2Collider.object2 = ballObj
-    player2Collider.setCollisionHandler()
-
-    const leftGateCollider = leftGate.getComponentByType(CollisionComponent)
-    leftGateCollider.object2 = ballObj
-    leftGateCollider.setCollisionHandler()
-
-    const rightGateCollider = rightGate.getComponentByType(CollisionComponent)
-    rightGateCollider.object2 = ballObj
-    rightGateCollider.setCollisionHandler()
-
     const wallSystem = new InsideWallsCollisionSystem(engine.entityManager)
     wallSystem.registerEntityByName('ball')
     engine.logicSystemManager.add('wall', wallSystem)
@@ -97,6 +84,43 @@ async function setupSinglePlayerMode() {
     kinematicSystem.registerEntityByName('player1')
     kinematicSystem.registerEntityByName('player2')
     engine.logicSystemManager.add('kinematic', kinematicSystem)
+
+    const playerBallCollisionSystem = new CollisionSystem(
+      engine.entityManager,
+      engine.collisionManager.getCollisionDetector(),
+      new PlayerBallCollisionHandler(engine.eventSystem)
+    )
+    playerBallCollisionSystem.registerEntityByName('player1')
+    playerBallCollisionSystem.registerEntityByName('player2')
+    const player1Collider = player1.getComponentByType(CollisionComponent)
+    player1Collider.objectIdToCollideWith = ballObj.id
+    playerBallCollisionSystem.initilize(player1)
+    const player2Collider = player2.getComponentByType(CollisionComponent)
+    player2Collider.objectIdToCollideWith = ballObj.id
+    playerBallCollisionSystem.initilize(player2)
+    engine.logicSystemManager.add(
+      'playerBallCollision',
+      playerBallCollisionSystem
+    )
+
+    const ballGateCollisionSystem = new CollisionSystem(
+      engine.entityManager,
+      engine.collisionManager.getCollisionDetector(),
+      new BallGateCollisionHandler(
+        entityManager,
+        engine.entityDataManager,
+        engine.eventSystem
+      )
+    )
+    ballGateCollisionSystem.registerEntityByName('leftGate')
+    ballGateCollisionSystem.registerEntityByName('rightGate')
+    const leftGateCollider = leftGate.getComponentByType(CollisionComponent)
+    leftGateCollider.objectIdToCollideWith = ballObj.id
+    ballGateCollisionSystem.initilize(leftGate)
+    const rightGateCollider = rightGate.getComponentByType(CollisionComponent)
+    rightGateCollider.objectIdToCollideWith = ballObj.id
+    ballGateCollisionSystem.initilize(rightGate)
+    engine.logicSystemManager.add('ballGateCollision', ballGateCollisionSystem)
 
     const moveSystem = new MovementSystem(
       engine.entityManager,

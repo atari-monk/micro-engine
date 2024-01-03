@@ -113,7 +113,6 @@ export default class EngineBuilder {
       this._tileMap,
       this._renderer,
       this._collisionManager,
-      this._input,
       this._eventSystem
     ).createBuilder(builderType)
     builder.withEntityBuilder(builderKey)

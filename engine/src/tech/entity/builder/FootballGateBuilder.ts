@@ -2,7 +2,6 @@ import {
   IEntityCreator,
   IEntityDataModel,
   IEntityManager,
-  IEventSystem,
   ILogger,
   IManager,
   IRendererV2,
@@ -10,8 +9,6 @@ import {
 import EntityBuilder from '../EntityBuilder'
 import Entity from '../../entity_component/Entity'
 import ICustomEntityBuilder from './ICustomEntityBuilder'
-import BallGateCollisionHandler from '../../collision_handler/BallGateCollisionHandler'
-import CollisionManager from '../../collision_detector/CollisionManager'
 
 export default class FootballGateBuilder implements ICustomEntityBuilder {
   constructor(
@@ -19,9 +16,7 @@ export default class FootballGateBuilder implements ICustomEntityBuilder {
     private readonly _entityDataManager: IManager<IEntityDataModel>,
     private readonly _entityManager: IEntityManager,
     private readonly _logger: ILogger,
-    private readonly _renderer: IRendererV2,
-    private readonly _collisionManager: CollisionManager,
-    private readonly _eventSystem: IEventSystem
+    private readonly _renderer: IRendererV2
   ) {}
 
   withEntityBuilder(builderKey: string): void {
@@ -38,18 +33,10 @@ export default class FootballGateBuilder implements ICustomEntityBuilder {
         .withEntity(() => new Entity())
         .withLogger(this._logger)
         .withRenderer(this._renderer)
-        .withCollisionDetector(this._collisionManager.getCollisionDetector())
         .withEntityData(dataKey!)
         .withObjectComponent()
         .withSpriteComponent()
         .withRenderComponent()
-        .withCollisionHandlerComponent(
-          new BallGateCollisionHandler(
-            this._entityManager,
-            this._entityDataManager,
-            this._eventSystem
-          )
-        )
         .withCollisionComponent()
     })
     return builder

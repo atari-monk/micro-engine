@@ -1,6 +1,4 @@
 import {
-  ICollisionDetector,
-  ICollisionHandler,
   IEntity,
   IEntityBuilder,
   IEntityDataModel,
@@ -25,7 +23,6 @@ import ClientMovementComponent from '../component/ClientMovementComponent'
 import ServerMovementComponent from '../component/ServerMovementComponent'
 import StateComponent from '../state_machine/StateComponent'
 import CollisionComponent from '../component/CollisionComponent'
-import CollisionHandlerComponent from '../component/CollisionHandlerComponent'
 import { KinematicsComponent } from '../component/KinematicsComponent'
 import LimitMoveComponent from '../component/LimitMoveComponent'
 import Vector2 from '../../math/vector/Vector2'
@@ -39,7 +36,6 @@ export default class EntityBuilder implements IEntityBuilder {
   private _entityData!: IEntityDataModel
   private _operationMap: OperationMap = new OperationMap()
   private _assert: AssertHelper = new AssertHelper(this)
-  private _collisionDetector!: ICollisionDetector
   private _eventSystem!: IEventSystem
 
   get entityData(): IEntityDataModel {
@@ -67,10 +63,6 @@ export default class EntityBuilder implements IEntityBuilder {
 
   private assertRenderer(): void {
     this._assert.assertField('_renderer')
-  }
-
-  private assertCollisionDetector(): void {
-    this._assert.assertField('_collisionDetector')
   }
 
   private assertEntityData(): void {
@@ -170,21 +162,9 @@ export default class EntityBuilder implements IEntityBuilder {
     return this
   }
 
-  withCollisionDetector(collisionDetector: ICollisionDetector) {
-    this._collisionDetector = collisionDetector
-    return this
-  }
-
   withCollisionComponent() {
-    this.assertCollisionDetector()
-    this._entity.addComponent(
-      new CollisionComponent(this._collisionDetector, this._entity)
-    )
-    return this
-  }
-
-  withCollisionHandlerComponent(collisionHandler: ICollisionHandler) {
-    this._entity.addComponent(new CollisionHandlerComponent(collisionHandler))
+    const component = new CollisionComponent()
+    this._entity.addComponent(component)
     return this
   }
 

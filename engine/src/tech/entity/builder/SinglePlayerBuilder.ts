@@ -3,7 +3,6 @@ import {
   IEntityDataModel,
   IEntityManager,
   IEventSystem,
-  IInputManager,
   ILogger,
   IManager,
   IRendererV2,
@@ -11,8 +10,6 @@ import {
 import EntityBuilder from '../EntityBuilder'
 import Entity from '../../entity_component/Entity'
 import ICustomEntityBuilder from './ICustomEntityBuilder'
-import CollisionManager from '../../collision_detector/CollisionManager'
-import PlayerBallCollisionHandler from '../../collision_handler/PlayerBallCollisionHandler'
 
 export default class SinglePlayerBuilder implements ICustomEntityBuilder {
   constructor(
@@ -21,8 +18,6 @@ export default class SinglePlayerBuilder implements ICustomEntityBuilder {
     private readonly _entityManager: IEntityManager,
     private readonly _logger: ILogger,
     private readonly _renderer: IRendererV2,
-    private readonly _collisionManager: CollisionManager,
-    private readonly _input: IInputManager,
     private readonly _eventSystem: IEventSystem
   ) {}
 
@@ -41,16 +36,12 @@ export default class SinglePlayerBuilder implements ICustomEntityBuilder {
         .withLogger(this._logger)
         .withRenderer(this._renderer)
         .withEventSystem(this._eventSystem)
-        .withCollisionDetector(this._collisionManager.getCollisionDetector())
         .withEntityData(dataKey!)
         .withObjectComponent()
         .withSpriteComponent()
         .withRenderComponent()
         .withMovementComponent()
         .withStateComponent()
-        .withCollisionHandlerComponent(
-          new PlayerBallCollisionHandler(this._eventSystem)
-        )
         .withCollisionComponent()
         .withLimitMoveComponent()
         .withKinematicsComponent()

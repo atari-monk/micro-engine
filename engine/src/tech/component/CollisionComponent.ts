@@ -1,38 +1,17 @@
-import { ICollisionDetector, IEntity, IObject } from 'engine_api'
 import Component from '../entity_component/Component'
-import CollisionHandlerComponent from './CollisionHandlerComponent'
-import ObjectComponent from './ObjectComponent'
 
 export default class CollisionComponent extends Component {
-  private _object1: IObject
-  private _object2!: IObject
+  private _objectIdToCollideWith!: string
 
-  set object2(object: IObject) {
-    this._object2 = object
-  }
-
-  constructor(
-    private readonly _collisionDetector: ICollisionDetector,
-    private readonly _entity: IEntity
-  ) {
+  constructor() {
     super('CollisionComponent')
-    this._object1 = this._entity.getComponentByType(ObjectComponent)
   }
 
-  setCollisionHandler() {
-    const collisionHandlerComponent = this._entity.getComponentByType(
-      CollisionHandlerComponent
-    )
-    this._collisionDetector.subscribeToCollisions(
-      this._object1,
-      this._object2,
-      collisionHandlerComponent.handleCollision.bind(collisionHandlerComponent)
-    )
+  set objectIdToCollideWith(objectId: string) {
+    this._objectIdToCollideWith = objectId
   }
 
-  update(dt: number) {
-    this._collisionDetector.checkCollision(this._object1, this._object2)
+  get objectIdToCollideWith(): string {
+    return this._objectIdToCollideWith
   }
-
-  render(dt: number) {}
 }

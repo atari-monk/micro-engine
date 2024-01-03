@@ -76,6 +76,14 @@ export default class Engine {
     return this._eventSystem
   }
 
+  get collisionManager() {
+    return this._collisionManager
+  }
+
+  get entityDataManager() {
+    return this._entityDataManager
+  }
+
   constructor(
     logger: ILogger,
     gameLoop: IGameLoop,
