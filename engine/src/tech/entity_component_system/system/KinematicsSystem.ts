@@ -1,5 +1,5 @@
 import { IEntity, IEntityManager, IEventSystem } from 'engine_api'
-import LogicSystemBase from './LogicSystemBase'
+import LogicSystemBase from './logic/LogicSystemBase'
 import ObjectComponent from '../../component/ObjectComponent'
 import Vector2 from '../../../math/vector/Vector2'
 import { KinematicsComponent } from '../../component/KinematicsComponent'

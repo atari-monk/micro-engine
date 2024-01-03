@@ -1,4 +1,4 @@
-import MapManager from '../../entity_component/MapManager'
+import MapManager from '../../../entity_component/MapManager'
 import IInitLogicSystem from './IInitLogicSystem'
 import IInitLogicSystemManager from './IInitLogicSystemManager'
 

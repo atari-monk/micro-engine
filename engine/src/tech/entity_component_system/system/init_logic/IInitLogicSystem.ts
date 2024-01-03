@@ -1,4 +1,4 @@
-import IRegisterEntityByName from './IRegisterEntityByName'
+import IRegisterEntityByName from '../IRegisterEntityByName'
 
 export default interface IInitLogicSystem extends IRegisterEntityByName {
   init(): void

@@ -7,7 +7,7 @@ import {
 import MovementComponent from '../../component/MovementComponent'
 import ObjectComponent from '../../component/ObjectComponent'
 import MovementSubSystem from './MovementSubSystem'
-import InitLogicSystemBase from './InitLogicSystemBase'
+import InitLogicSystemBase from './init_logic/InitLogicSystemBase'
 
 export default class MovementSystem extends InitLogicSystemBase {
   private _subSystem: MovementSubSystem[] = []

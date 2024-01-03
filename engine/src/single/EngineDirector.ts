@@ -12,8 +12,8 @@ import EntityCreator from '../tech/entity/creator/EntityCreator'
 import CenterCollisionDetector from '../tech/collision_detector/CenterCollisionDetector'
 import CollisionManager from '../tech/collision_detector/CollisionManager'
 import EventSystem from '../tech/event_system/EventSystem'
-import LogicSystemManager from '../tech/entity_component_system/system/LogicSystemManager'
-import InitLogicSystemManager from '../tech/entity_component_system/system/InitLogicSystemManager'
+import LogicSystemManager from '../tech/entity_component_system/system/logic/LogicSystemManager'
+import InitLogicSystemManager from '../tech/entity_component_system/system/init_logic/InitLogicSystemManager'
 
 export default class EngineDirector {
   createDefaultEngineBuilder(canvasId: string) {

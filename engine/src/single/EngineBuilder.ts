@@ -19,8 +19,8 @@ import CollisionManager from '../tech/collision_detector/CollisionManager'
 import ICustomEntityBuilder from '../tech/entity/builder/ICustomEntityBuilder'
 import { BuilderLibrary } from '../tech/entity/builder/BuilderLibrary'
 import BuilderFactory from '../tech/entity/builder/BuilderFactory'
-import ILogicSystemManager from '../tech/entity_component_system/system/ILogicSystemManager'
-import IInitLogicSystemManager from '../tech/entity_component_system/system/IInitLogicSystemManager'
+import ILogicSystemManager from '../tech/entity_component_system/system/logic/ILogicSystemManager'
+import IInitLogicSystemManager from '../tech/entity_component_system/system/init_logic/IInitLogicSystemManager'
 
 export default class EngineBuilder {
   protected _logger!: ILogger

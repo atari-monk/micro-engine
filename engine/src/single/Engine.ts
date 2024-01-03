@@ -18,8 +18,8 @@ import {
 import ObjectComponent from '../tech/component/ObjectComponent'
 import IEngineConfigOptions from '../tech/config_manager/IEngineConfigOptions'
 import CollisionManager from '../tech/collision_detector/CollisionManager'
-import ILogicSystemManager from '../tech/entity_component_system/system/ILogicSystemManager'
-import IInitLogicSystemManager from '../tech/entity_component_system/system/IInitLogicSystemManager'
+import ILogicSystemManager from '../tech/entity_component_system/system/logic/ILogicSystemManager'
+import IInitLogicSystemManager from '../tech/entity_component_system/system/init_logic/IInitLogicSystemManager'
 
 export default class Engine {
   protected readonly _logger: ILogger

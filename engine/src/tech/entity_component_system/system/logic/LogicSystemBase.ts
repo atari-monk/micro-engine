@@ -1,5 +1,5 @@
 import { IEntity, IEntityManager } from 'engine_api'
-import ILogicSystem from './IRegisterEntityByName'
+import ILogicSystem from '../IRegisterEntityByName'
 
 export default abstract class LogicSystemBase implements ILogicSystem {
   protected entityList: IEntity[] = []
