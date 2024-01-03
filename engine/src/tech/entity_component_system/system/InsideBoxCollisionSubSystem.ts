@@ -17,6 +17,7 @@ export default class InsideBoxCollisionSubSystem
     const objectComponent = entity.getComponentByType(ObjectComponent)
     const circleComponent = entity.getComponentByType(CollisionCircleComponent)
     const wallComponent = entity.getComponentByType(WallComponent)
+
     ;[Axis.X, Axis.Y].forEach((axis: any) => {
       this.checkAndHandleCollision(
         objectComponent,

@@ -181,12 +181,9 @@ export default class EntityBuilder implements IEntityBuilder {
   }
 
   withLimitMoveComponent() {
-    this._entity.addComponent(
-      new LimitMoveComponent(
-        new Vector2(740, 360),
-        this._entity.getComponentByType(ObjectComponent)
-      )
-    )
+    const component = new LimitMoveComponent()
+    component.limitSize = new Vector2(740, 360)
+    this._entity.addComponent(component)
     return this
   }
 

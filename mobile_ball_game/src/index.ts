@@ -16,6 +16,7 @@ import {
   BallGateCollisionHandler,
   SimpleCollisionSystem,
   InsideBoxCollisionSubSystem,
+  LimitMoveSubSystem,
 } from 'engine'
 import GameClient from './client-lib/GameClient'
 import EntityData from './data/EntityData'
@@ -79,6 +80,14 @@ async function setupSinglePlayerMode() {
     )
     wallSystem.registerEntityByName('ball')
     engine.logicSystemManager.add('wall', wallSystem)
+
+    const limitSystem = new SimpleCollisionSystem(
+      engine.entityManager,
+      new LimitMoveSubSystem()
+    )
+    limitSystem.registerEntityByName('player1')
+    limitSystem.registerEntityByName('player2')
+    engine.logicSystemManager.add('limitMove', limitSystem)
 
     const kinematicSystem = new KinematicsSystem(
       engine.entityManager,
