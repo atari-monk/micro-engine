@@ -9,12 +9,13 @@ import {
   CollisionComponent,
   ObjectComponent,
   BuilderLibrary,
-  InsideWallsCollisionSystem,
   MovementSystem,
   KinematicsSystem,
   CollisionSystem,
   PlayerBallCollisionHandler,
   BallGateCollisionHandler,
+  SimpleCollisionSystem,
+  InsideBoxCollisionSubSystem,
 } from 'engine'
 import GameClient from './client-lib/GameClient'
 import EntityData from './data/EntityData'
@@ -72,7 +73,10 @@ async function setupSinglePlayerMode() {
     const leftGate = entityManager.getStrict('leftGate')
     const rightGate = entityManager.getStrict('rightGate')
 
-    const wallSystem = new InsideWallsCollisionSystem(engine.entityManager)
+    const wallSystem = new SimpleCollisionSystem(
+      engine.entityManager,
+      new InsideBoxCollisionSubSystem()
+    )
     wallSystem.registerEntityByName('ball')
     engine.logicSystemManager.add('wall', wallSystem)
 
