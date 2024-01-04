@@ -1,4 +1,4 @@
-import { IEntity, IEventSystem, IRendererV2 } from 'engine_api'
+import { IEntity, IEventSystem, IManager, IRendererV2 } from 'engine_api'
 import ObjectComponent from '../../component/ObjectComponent'
 import IRenderSubSystem from './IRenderSubSystem'
 import RenderComponent from '../../component/RenderComponent'
@@ -7,15 +7,25 @@ import { SpriteAnimator } from '../../sprite/SpriteAnimator'
 export default class RenderSubSystem implements IRenderSubSystem {
   constructor(
     private readonly _renderer: IRendererV2,
-    private readonly _spriteAnimator: SpriteAnimator,
-    private readonly _eventSystem: IEventSystem,
-    entity: IEntity
-  ) {
+    private readonly _spriteAnimatorManager: IManager<SpriteAnimator>,
+    private readonly _eventSystem: IEventSystem
+  ) {}
+
+  add(entity: IEntity): void {
+    const objectComponent = entity.getComponentByType(ObjectComponent)
+    const renderComponent = entity.getComponentByType(RenderComponent)
+
+    this._spriteAnimatorManager.add(
+      objectComponent.id,
+      new SpriteAnimator(renderComponent.spriteAnimation)
+    )
+
     this._eventSystem.subscribe(
       'animation',
       (data: { id: string; animId: number }) => {
-        if (data.id === entity.getComponentByType(ObjectComponent).id)
-          this._spriteAnimator.switchAnimation(data.animId)
+        this._spriteAnimatorManager
+          .getStrict(data.id)
+          .switchAnimation(data.animId)
       }
     )
   }
@@ -25,8 +35,9 @@ export default class RenderSubSystem implements IRenderSubSystem {
     const renderComponent = entity.getComponentByType(RenderComponent)
 
     if (renderComponent.spriteAnimation.length > 0) {
-      this._spriteAnimator.update(deltaTime)
-      this._spriteAnimator.draw(
+      const animator = this._spriteAnimatorManager.getStrict(objectComponent.id)
+      animator.update(deltaTime)
+      animator.draw(
         this._renderer.ctx,
         objectComponent.position.x + objectComponent.spriteOffset.x,
         objectComponent.position.y + objectComponent.spriteOffset.y,
