@@ -4,7 +4,7 @@ import IInitLogicSystem from './IInitLogicSystem'
 export default abstract class InitLogicSystemBase implements IInitLogicSystem {
   protected entityList: IEntity[] = []
 
-  constructor(protected readonly entityManager: IEntityManager) {}
+  constructor(protected readonly _entityManager: IEntityManager) {}
 
   init(): void {
     this.iterateEntities((entity) => this.initLogic(entity))
@@ -19,6 +19,6 @@ export default abstract class InitLogicSystemBase implements IInitLogicSystem {
   abstract initLogic(entity: IEntity): void
 
   registerEntityByName(name: string): void {
-    this.entityList.push(this.entityManager.getStrict(name))
+    this.entityList.push(this._entityManager.getStrict(name))
   }
 }

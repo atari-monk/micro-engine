@@ -134,7 +134,7 @@ export default class EntityBuilder implements IEntityBuilder {
   withServerMovementComponent(): this {
     this._entity.addComponent(
       new ServerMovementComponent(
-        this._entity.getComponentByType(ObjectComponent)
+        this._entity.getComponentByTypeStrict(ObjectComponent)
       )
     )
     return this
@@ -179,15 +179,7 @@ export default class EntityBuilder implements IEntityBuilder {
   }
 
   withGameStateComponent() {
-    this.assertEventSystem()
-    this.assertRenderer()
-    this._entity.addComponent(
-      new GameStateComponent(
-        this._eventSystem,
-        this._renderer,
-        this._entityManager
-      )
-    )
+    this._entity.addComponent(new GameStateComponent())
     return this
   }
 

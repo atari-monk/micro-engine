@@ -3,6 +3,8 @@ import ObjectComponent from '../../component/ObjectComponent'
 import IRenderSubSystem from './IRenderSubSystem'
 import RenderComponent from '../../component/RenderComponent'
 import { SpriteAnimator } from '../../sprite/SpriteAnimator'
+import GameStateComponent from '../../component/GameStateComponent'
+import Vector2 from '../../../math/vector/Vector2'
 
 export default class RenderSubSystem implements IRenderSubSystem {
   constructor(
@@ -11,9 +13,9 @@ export default class RenderSubSystem implements IRenderSubSystem {
     private readonly _eventSystem: IEventSystem
   ) {}
 
-  add(entity: IEntity): void {
-    const objectComponent = entity.getComponentByType(ObjectComponent)
-    const renderComponent = entity.getComponentByType(RenderComponent)
+  addSprite(entity: IEntity): void {
+    const objectComponent = entity.getComponentByTypeStrict(ObjectComponent)
+    const renderComponent = entity.getComponentByTypeStrict(RenderComponent)
 
     this._spriteAnimatorManager.add(
       objectComponent.id,
@@ -33,17 +35,39 @@ export default class RenderSubSystem implements IRenderSubSystem {
   renderLogic(deltaTime: number, entity: IEntity) {
     const objectComponent = entity.getComponentByType(ObjectComponent)
     const renderComponent = entity.getComponentByType(RenderComponent)
+    const gameStateComponent = entity.getComponentByType(GameStateComponent)
 
-    if (renderComponent.spriteAnimation.length > 0) {
-      const animator = this._spriteAnimatorManager.getStrict(objectComponent.id)
-      animator.update(deltaTime)
-      animator.draw(
-        this._renderer.ctx,
-        objectComponent.position.x + objectComponent.spriteOffset.x,
-        objectComponent.position.y + objectComponent.spriteOffset.y,
-        objectComponent.isFlipped
+    if (objectComponent && renderComponent) {
+      if (renderComponent.spriteAnimation.length > 0) {
+        const animator = this._spriteAnimatorManager.getStrict(
+          objectComponent.id
+        )
+        animator.update(deltaTime)
+        animator.draw(
+          this._renderer.ctx,
+          objectComponent.position.x + objectComponent.spriteOffset.x,
+          objectComponent.position.y + objectComponent.spriteOffset.y,
+          objectComponent.isFlipped
+        )
+      }
+      if (renderComponent.renderObject)
+        this._renderer.drawObject(objectComponent)
+    }
+
+    if (gameStateComponent) {
+      this._renderer.drawText(
+        gameStateComponent.score.redScore.toString(),
+        new Vector2(370 - 20, 20),
+        'red',
+        '20px Arial'
+      )
+      this._renderer.drawText(':', new Vector2(370, 20), 'yellow', '20px Arial')
+      this._renderer.drawText(
+        gameStateComponent.score.blueScore.toString(),
+        new Vector2(370 + 15, 20),
+        'blue',
+        '20px Arial'
       )
     }
-    if (renderComponent.renderObject) this._renderer.drawObject(objectComponent)
   }
 }

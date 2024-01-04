@@ -27,6 +27,7 @@ export { default as RenderSubSystem } from './tech/entity_component_system/syste
 export { default as MovementSystem } from './tech/entity_component_system/system/MovementSystem'
 export { default as KinematicsSystem } from './tech/entity_component_system/system/KinematicsSystem'
 export { default as CollisionSystem } from './tech/entity_component_system/system/CollisionSystem'
+export { default as GameEventSystem } from './tech/entity_component_system/system/GameEventSystem'
 export { default as CenterCollisionDetector } from './tech/collision_detector/CenterCollisionDetector'
 export { default as BallGateCollisionHandler } from './tech/collision_handler/BallGateCollisionHandler'
 export { default as PlayerBallCollisionHandler } from './tech/collision_handler/PlayerBallCollisionHandler'

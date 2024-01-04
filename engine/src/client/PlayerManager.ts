@@ -17,13 +17,14 @@ export default class PlayerManager
   getPlayer1Id(): string {
     const player = this.getStrict('player1')
     const playerObj =
-      player.getComponentByType<ObjectComponent>(ObjectComponent)
+      player.getComponentByTypeStrict<ObjectComponent>(ObjectComponent)
     return playerObj.id ?? ''
   }
 
   addPlayer(socketId: string): IResult {
     for (const player of this.values()) {
-      const object = player.getComponentByType<ObjectComponent>(ObjectComponent)
+      const object =
+        player.getComponentByTypeStrict<ObjectComponent>(ObjectComponent)
       if (object.id === socketId) {
         return {
           isDone: false,
@@ -63,7 +64,7 @@ export default class PlayerManager
     gameFrameDto.players.forEach((playerDto) => {
       for (const player of this.values()) {
         const object =
-          player.getComponentByType<ObjectComponent>(ObjectComponent)
+          player.getComponentByTypeStrict<ObjectComponent>(ObjectComponent)
         if (playerDto.id === object.id) {
           this.logDebug(
             `updatePlayer: (${playerDto.position.x}, ${playerDto.position.y})`

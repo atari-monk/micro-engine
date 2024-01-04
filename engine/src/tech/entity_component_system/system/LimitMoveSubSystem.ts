@@ -5,8 +5,9 @@ import LimitMoveComponent from '../../component/LimitMoveComponent'
 
 export default class LimitMoveSubSystem implements ICollisionSubSystem {
   updateLogic(deltaTime: number, entity: IEntity) {
-    const objectComponent = entity.getComponentByType(ObjectComponent)
-    const limitMoveComponent = entity.getComponentByType(LimitMoveComponent)
+    const objectComponent = entity.getComponentByTypeStrict(ObjectComponent)
+    const limitMoveComponent =
+      entity.getComponentByTypeStrict(LimitMoveComponent)
 
     const halfWidth = objectComponent.size.x / 2
     const halfHeight = objectComponent.size.y / 2

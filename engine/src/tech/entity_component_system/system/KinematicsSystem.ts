@@ -13,8 +13,9 @@ export default class KinematicsSystem extends LogicSystemBase {
   }
 
   updateLogic(deltaTime: number, entity: IEntity): void {
-    const objectComponent = entity.getComponentByType(ObjectComponent)
-    const kinematicsComponent = entity.getComponentByType(KinematicsComponent)
+    const objectComponent = entity.getComponentByTypeStrict(ObjectComponent)
+    const kinematicsComponent =
+      entity.getComponentByTypeStrict(KinematicsComponent)
 
     objectComponent.position.add(
       Vector2.getNew(objectComponent.velocity).multiply(deltaTime)

@@ -14,6 +14,15 @@ export default class Entity implements IEntity {
 
   getComponentByType<T extends IComponent>(
     componentType: new (...args: any[]) => T
+  ): T | undefined {
+    const componentName = componentType.name
+    const component = this._list.get(componentName) as T | undefined
+
+    return component
+  }
+
+  getComponentByTypeStrict<T extends IComponent>(
+    componentType: new (...args: any[]) => T
   ): T {
     const componentName = componentType.name
     const component = this._list.get(componentName) as T | undefined

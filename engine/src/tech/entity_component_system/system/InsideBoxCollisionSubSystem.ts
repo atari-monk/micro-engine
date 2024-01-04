@@ -14,9 +14,11 @@ export default class InsideBoxCollisionSubSystem
   implements ICollisionSubSystem
 {
   updateLogic(deltaTime: number, entity: IEntity) {
-    const objectComponent = entity.getComponentByType(ObjectComponent)
-    const circleComponent = entity.getComponentByType(CollisionCircleComponent)
-    const wallComponent = entity.getComponentByType(WallComponent)
+    const objectComponent = entity.getComponentByTypeStrict(ObjectComponent)
+    const circleComponent = entity.getComponentByTypeStrict(
+      CollisionCircleComponent
+    )
+    const wallComponent = entity.getComponentByTypeStrict(WallComponent)
 
     ;[Axis.X, Axis.Y].forEach((axis: any) => {
       this.checkAndHandleCollision(

@@ -1,4 +1,4 @@
-import { ClientsDto, ILogger, InputDto } from 'engine_api'
+import { ClientsDto, InputDto } from 'engine_api'
 import { IServerPlayerManager as IPlayerManager } from 'engine_api/server'
 import ObjectComponent from '../tech/component/ObjectComponent'
 import ServerMovementComponent from '../tech/component/ServerMovementComponent'
@@ -14,11 +14,12 @@ export default class PlayerManager
     let found = false
     const message = `setPlayerInput: ${inputDto.id} ${inputDto.direction}`
     for (const entity of this.values()) {
-      const object = entity.getComponentByType<ObjectComponent>(ObjectComponent)
+      const object =
+        entity.getComponentByTypeStrict<ObjectComponent>(ObjectComponent)
       if (object.id !== inputDto.id) {
         continue
       }
-      const movement = entity.getComponentByType<ServerMovementComponent>(
+      const movement = entity.getComponentByTypeStrict<ServerMovementComponent>(
         ServerMovementComponent
       )
 
@@ -35,7 +36,8 @@ export default class PlayerManager
   getGameFrameDto() {
     const dto = new GameFrameDto()
     for (const entity of this.values()) {
-      const object = entity.getComponentByType<ObjectComponent>(ObjectComponent)
+      const object =
+        entity.getComponentByTypeStrict<ObjectComponent>(ObjectComponent)
       this.logDebug(`${object.position.x}, ${object.position.y}`)
       dto.addPlayer(object.id, new ObjectDto(object))
     }
@@ -46,7 +48,7 @@ export default class PlayerManager
     const dto = new ClientsDto()
     for (const entity of this.values()) {
       dto.clients.push(
-        entity.getComponentByType<ObjectComponent>(ObjectComponent).id
+        entity.getComponentByTypeStrict<ObjectComponent>(ObjectComponent).id
       )
     }
     return dto

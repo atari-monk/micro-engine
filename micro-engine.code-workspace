@@ -25,6 +25,10 @@
       "path": "mobile_ball_game"
     },
     {
+      "name": "script",
+      "path": "script"
+    },
+    {
       "name": "engine_node_tests",
       "path": "engine_node_tests"
     },

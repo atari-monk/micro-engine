@@ -166,7 +166,9 @@ export default class Engine {
   private setupCamera() {
     this._player = this._entityManager.getStrict('player1')
     this._playerPosition =
-      this._player.getComponentByType<ObjectComponent>(ObjectComponent).position
+      this._player.getComponentByTypeStrict<ObjectComponent>(
+        ObjectComponent
+      ).position
   }
 
   private update = (deltaTime: number) => {

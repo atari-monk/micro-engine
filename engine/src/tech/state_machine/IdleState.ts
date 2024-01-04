@@ -6,7 +6,7 @@ export default class IdleState implements IState {
 
   enter(entity: IEntity): void {
     this._eventSystem.publish('animation', {
-      id: entity.getComponentByType(ObjectComponent).id,
+      id: entity.getComponentByTypeStrict(ObjectComponent).id,
       animId: 0,
     })
   }

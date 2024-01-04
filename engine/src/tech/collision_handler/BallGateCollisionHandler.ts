@@ -25,13 +25,13 @@ export default class BallGateCollisionHandler implements ICollisionHandler {
 
     const player1Obj = this._entityManager
       .getStrict('player1')
-      .getComponentByType(ObjectComponent)
+      .getComponentByTypeStrict(ObjectComponent)
     const player2Obj = this._entityManager
       .getStrict('player2')
-      .getComponentByType(ObjectComponent)
+      .getComponentByTypeStrict(ObjectComponent)
     const ballObj = this._entityManager
       .getStrict('ball')
-      .getComponentByType(ObjectComponent)
+      .getComponentByTypeStrict(ObjectComponent)
 
     player1Obj.position = Vector2.getNew(player1Data.object.position)
     player1Obj.velocity = Vector2.getNew(player1Data.object.velocity)
@@ -42,7 +42,7 @@ export default class BallGateCollisionHandler implements ICollisionHandler {
 
     const gameState = this._entityManager
       .getStrict('gameState')
-      .getComponentByType(GameStateComponent)
+      .getComponentByTypeStrict(GameStateComponent)
 
     if (collisionInfo.object1.id === 'leftGate') {
       if (gameState.lastCollisionInfo.object1.id === 'player2') {

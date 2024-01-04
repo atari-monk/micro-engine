@@ -27,11 +27,11 @@ export default class CollisionSystem extends LogicSystemBase {
   }
 
   private getData(entity: IEntity): [ObjectComponent, ObjectComponent] {
-    const objectComponent = entity.getComponentByType(ObjectComponent)
-    const collisionComponent = entity.getComponentByType(CollisionComponent)
+    const objectComponent = entity.getComponentByTypeStrict(ObjectComponent)
+    const collisionComponent = entity.getComponentByTypeStrict(CollisionComponent)
     const objectComponent2 = this.entityManager
       .getStrict(collisionComponent.objectIdToCollideWith)
-      .getComponentByType(ObjectComponent)
+      .getComponentByTypeStrict(ObjectComponent)
     return [objectComponent, objectComponent2]
   }
 

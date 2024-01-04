@@ -21,8 +21,8 @@ export default class MovementSystem extends InitLogicSystemBase {
   }
 
   initLogic(entity: IEntity) {
-    const movementComponent = entity.getComponentByType(MovementComponent)
-    const objectComponent = entity.getComponentByType(ObjectComponent)
+    const movementComponent = entity.getComponentByTypeStrict(MovementComponent)
+    const objectComponent = entity.getComponentByTypeStrict(ObjectComponent)
 
     const movementSubSystem = new MovementSubSystem(
       this._input,
