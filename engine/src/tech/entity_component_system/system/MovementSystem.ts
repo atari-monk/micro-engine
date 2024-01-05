@@ -27,7 +27,6 @@ export default class MovementSystem extends InitLogicSystemBase {
     const movementSubSystem = new MovementSubSystem(
       this._input,
       this._eventSystem,
-      objectComponent.id,
       movementComponent.useArrowKeys
     )
     movementSubSystem.subscribeInput(objectComponent)

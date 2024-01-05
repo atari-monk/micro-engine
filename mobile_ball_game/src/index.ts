@@ -21,6 +21,8 @@ import {
   RenderSubSystem,
   MapManager,
   GameEventSystem,
+  StateMachineSystem,
+  EntityId,
 } from 'engine'
 import GameClient from './client-lib/GameClient'
 import EntityData from './data/EntityData'
@@ -58,8 +60,8 @@ async function setupSinglePlayerMode() {
   )
 
   engineBuilder
-    .withBuilderFromLibrary('gameState', BuilderLibrary.GameState)
-    .withBuilderFromLibrary('field', BuilderLibrary.Sprite)
+    .withBuilderFromLibrary(EntityId.GameState, BuilderLibrary.GameState)
+    .withBuilderFromLibrary(EntityId.Field, BuilderLibrary.Sprite)
     //.withBuilderFromLibrary('map', BuilderLibrary.TileMap)
     .withBuilderFromLibrary('gate', BuilderLibrary.FootballGate)
     .withBuilderFromLibrary('ball', BuilderLibrary.Football)
@@ -72,37 +74,37 @@ async function setupSinglePlayerMode() {
   } as IEngineConfigOptions)
 
   engine.afterCreateEntitiesCallback = (entityManager) => {
-    const ball = entityManager.getStrict('ball')
+    const ball = entityManager.getStrict(EntityId.Ball)
     const ballObj = ball.getComponentByTypeStrict(ObjectComponent)
-    const player1 = entityManager.getStrict('player1')
-    const player2 = entityManager.getStrict('player2')
-    const leftGate = entityManager.getStrict('leftGate')
-    const rightGate = entityManager.getStrict('rightGate')
-    const field = entityManager.getStrict('field')
-    const gameState = entityManager.getStrict('gameState')
+    const player1 = entityManager.getStrict(EntityId.Player1)
+    const player2 = entityManager.getStrict(EntityId.Player2)
+    const leftGate = entityManager.getStrict(EntityId.LeftGate)
+    const rightGate = entityManager.getStrict(EntityId.RightGate)
+    const field = entityManager.getStrict(EntityId.Field)
+    const gameState = entityManager.getStrict(EntityId.GameState)
 
     const wallSystem = new SimpleCollisionSystem(
       engine.entityManager,
       new InsideBoxCollisionSubSystem()
     )
-    wallSystem.registerEntityByName('ball')
+    wallSystem.registerEntityByName(EntityId.Ball)
     engine.logicSystemManager.add('wall', wallSystem)
 
     const limitSystem = new SimpleCollisionSystem(
       engine.entityManager,
       new LimitMoveSubSystem()
     )
-    limitSystem.registerEntityByName('player1')
-    limitSystem.registerEntityByName('player2')
+    limitSystem.registerEntityByName(EntityId.Player1)
+    limitSystem.registerEntityByName(EntityId.Player2)
     engine.logicSystemManager.add('limitMove', limitSystem)
 
     const kinematicSystem = new KinematicsSystem(
       engine.entityManager,
       engine.eventSystem
     )
-    kinematicSystem.registerEntityByName('ball')
-    kinematicSystem.registerEntityByName('player1')
-    kinematicSystem.registerEntityByName('player2')
+    kinematicSystem.registerEntityByName(EntityId.Ball)
+    kinematicSystem.registerEntityByName(EntityId.Player1)
+    kinematicSystem.registerEntityByName(EntityId.Player2)
     engine.logicSystemManager.add('kinematic', kinematicSystem)
 
     const playerBallCollisionSystem = new CollisionSystem(
@@ -110,8 +112,8 @@ async function setupSinglePlayerMode() {
       engine.collisionManager.getCollisionDetector(),
       new PlayerBallCollisionHandler(engine.eventSystem)
     )
-    playerBallCollisionSystem.registerEntityByName('player1')
-    playerBallCollisionSystem.registerEntityByName('player2')
+    playerBallCollisionSystem.registerEntityByName(EntityId.Player1)
+    playerBallCollisionSystem.registerEntityByName(EntityId.Player2)
     const player1Collider = player1.getComponentByTypeStrict(CollisionComponent)
     player1Collider.objectIdToCollideWith = ballObj.id
     playerBallCollisionSystem.initilize(player1)
@@ -132,9 +134,10 @@ async function setupSinglePlayerMode() {
         engine.eventSystem
       )
     )
-    ballGateCollisionSystem.registerEntityByName('leftGate')
-    ballGateCollisionSystem.registerEntityByName('rightGate')
-    const leftGateCollider = leftGate.getComponentByTypeStrict(CollisionComponent)
+    ballGateCollisionSystem.registerEntityByName(EntityId.LeftGate)
+    ballGateCollisionSystem.registerEntityByName(EntityId.RightGate)
+    const leftGateCollider =
+      leftGate.getComponentByTypeStrict(CollisionComponent)
     leftGateCollider.objectIdToCollideWith = ballObj.id
     ballGateCollisionSystem.initilize(leftGate)
     const rightGateCollider =
@@ -148,17 +151,26 @@ async function setupSinglePlayerMode() {
       engine.input,
       engine.eventSystem
     )
-    moveSystem.registerEntityByName('player1')
-    moveSystem.registerEntityByName('player2')
+    moveSystem.registerEntityByName(EntityId.Player1)
+    moveSystem.registerEntityByName(EntityId.Player2)
 
     const gameEventSystem = new GameEventSystem(
       entityManager,
       engine.eventSystem
     )
-    gameEventSystem.registerEntityByName('gameState')
+    gameEventSystem.registerEntityByName(EntityId.GameState)
+
+    const stateMachineSystem = new StateMachineSystem(
+      entityManager,
+      engine.eventSystem
+    )
+    stateMachineSystem.registerEntityByName(EntityId.Player1)
+    stateMachineSystem.registerEntityByName(EntityId.Player2)
+    stateMachineSystem.registerEntityByName(EntityId.Ball)
 
     engine.initLogicSystemManager.add('move', moveSystem)
     engine.initLogicSystemManager.add('event', gameEventSystem)
+    engine.initLogicSystemManager.add('state', stateMachineSystem)
     engine.initLogicSystemManager.init()
 
     const renderSubSystem = new RenderSubSystem(
@@ -175,13 +187,13 @@ async function setupSinglePlayerMode() {
     renderSubSystem.addSprite(leftGate)
     renderSubSystem.addSprite(rightGate)
 
-    renderSystem.registerEntityByName('field')
-    renderSystem.registerEntityByName('player1')
-    renderSystem.registerEntityByName('player2')
-    renderSystem.registerEntityByName('ball')
-    renderSystem.registerEntityByName('leftGate')
-    renderSystem.registerEntityByName('rightGate')
-    renderSystem.registerEntityByName('gameState')
+    renderSystem.registerEntityByName(EntityId.Field)
+    renderSystem.registerEntityByName(EntityId.Player1)
+    renderSystem.registerEntityByName(EntityId.Player2)
+    renderSystem.registerEntityByName(EntityId.Ball)
+    renderSystem.registerEntityByName(EntityId.LeftGate)
+    renderSystem.registerEntityByName(EntityId.RightGate)
+    renderSystem.registerEntityByName(EntityId.GameState)
 
     engine.renderSystemManager.add('render', renderSystem)
   }

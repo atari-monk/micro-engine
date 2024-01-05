@@ -142,9 +142,7 @@ export default class EntityBuilder implements IEntityBuilder {
 
   withStateComponent() {
     this.assertEventSystem()
-    this._entity.addComponent(
-      new StateComponent(this._entity, this._eventSystem)
-    )
+    this._entity.addComponent(new StateComponent())
     return this
   }
 

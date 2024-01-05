@@ -2,7 +2,7 @@ import { IEntity, IEntityManager } from 'engine_api'
 import IInitLogicSystem from './IInitLogicSystem'
 
 export default abstract class InitLogicSystemBase implements IInitLogicSystem {
-  protected entityList: IEntity[] = []
+  protected _entityList: IEntity[] = []
 
   constructor(protected readonly _entityManager: IEntityManager) {}
 
@@ -11,7 +11,7 @@ export default abstract class InitLogicSystemBase implements IInitLogicSystem {
   }
 
   private iterateEntities(callback: (entity: IEntity) => void): void {
-    for (const entity of this.entityList) {
+    for (const entity of this._entityList) {
       callback(entity)
     }
   }
@@ -19,6 +19,6 @@ export default abstract class InitLogicSystemBase implements IInitLogicSystem {
   abstract initLogic(entity: IEntity): void
 
   registerEntityByName(name: string): void {
-    this.entityList.push(this._entityManager.getStrict(name))
+    this._entityList.push(this._entityManager.getStrict(name))
   }
 }

@@ -1,8 +1,27 @@
 import { IEventSystem, IInputManager } from 'engine_api'
 import Vector2 from '../../../math/vector/Vector2'
 import ObjectComponent from '../../component/ObjectComponent'
+import MoveState from '../../state_machine/MoveState'
+import { EventNames } from '../../event_system/EventNames'
+import IdleState from '../../state_machine/IdleState'
 
 type KeyAction = () => void
+const ArrowKeyNames = {
+  ArrowLeft: 'ArrowLeft',
+  ArrowRight: 'ArrowRight',
+  ArrowUp: 'ArrowUp',
+  ArrowDown: 'ArrowDown',
+} as const
+const WSADKeyNames = {
+  a: 'a',
+  d: 'd',
+  w: 'w',
+  s: 's',
+} as const
+const KeyEvents = {
+  KeyDown: 'KeyDown',
+  KeyUp: 'KeyUp',
+} as const
 
 export default class MovementSubSystem {
   private readonly _keyAction: { [key: string]: KeyAction }
@@ -12,7 +31,6 @@ export default class MovementSubSystem {
   constructor(
     private readonly _input: IInputManager,
     private readonly _eventSystem: IEventSystem,
-    private readonly _id: string,
     useArrowKeys: boolean = true
   ) {
     this._keyAction = useArrowKeys
@@ -23,10 +41,10 @@ export default class MovementSubSystem {
   private initArrowKeyAction(): { [key: string]: KeyAction } {
     const keyActions: { [key: string]: KeyAction } = {}
 
-    keyActions['ArrowLeft'] = () => this.updateDirection(-1, 0)
-    keyActions['ArrowRight'] = () => this.updateDirection(1, 0)
-    keyActions['ArrowUp'] = () => this.updateDirection(0, -1)
-    keyActions['ArrowDown'] = () => this.updateDirection(0, 1)
+    keyActions[ArrowKeyNames.ArrowLeft] = () => this.updateDirection(-1, 0)
+    keyActions[ArrowKeyNames.ArrowRight] = () => this.updateDirection(1, 0)
+    keyActions[ArrowKeyNames.ArrowUp] = () => this.updateDirection(0, -1)
+    keyActions[ArrowKeyNames.ArrowDown] = () => this.updateDirection(0, 1)
 
     return keyActions
   }
@@ -34,10 +52,10 @@ export default class MovementSubSystem {
   private initWSADKeyAction(): { [key: string]: KeyAction } {
     const keyActions: { [key: string]: KeyAction } = {}
 
-    keyActions['a'] = () => this.updateDirection(-1, 0)
-    keyActions['d'] = () => this.updateDirection(1, 0)
-    keyActions['w'] = () => this.updateDirection(0, -1)
-    keyActions['s'] = () => this.updateDirection(0, 1)
+    keyActions[WSADKeyNames.a] = () => this.updateDirection(-1, 0)
+    keyActions[WSADKeyNames.d] = () => this.updateDirection(1, 0)
+    keyActions[WSADKeyNames.w] = () => this.updateDirection(0, -1)
+    keyActions[WSADKeyNames.s] = () => this.updateDirection(0, 1)
 
     return keyActions
   }
@@ -48,13 +66,13 @@ export default class MovementSubSystem {
   }
 
   subscribeInput(objectComponent: ObjectComponent) {
-    this._input.subscribeInputEvent('KeyDown', (key) => {
+    this._input.subscribeInputEvent(KeyEvents.KeyDown, (key) => {
       if (!this._keyAction.hasOwnProperty(key)) return
       this._pressedKey.add(key)
       this.handleKeys(objectComponent)
     })
 
-    this._input.subscribeInputEvent('KeyUp', (key) => {
+    this._input.subscribeInputEvent(KeyEvents.KeyUp, (key) => {
       if (!this._keyAction.hasOwnProperty(key)) return
       this._pressedKey.delete(key)
       this.handleKeys(objectComponent)
@@ -62,8 +80,14 @@ export default class MovementSubSystem {
   }
 
   private handleKeys(objectComponent: ObjectComponent): void {
-    this._cumulativeDirection.x = 0
-    this._cumulativeDirection.y = 0
+    if (this._pressedKey.size === 0) {
+      objectComponent.velocity.x = 0
+      objectComponent.velocity.y = 0
+      this.sendIdleState(objectComponent)
+      return
+    }
+
+    this.resetCumulativeDirection()
 
     this._pressedKey.forEach((key) => {
       const action = this._keyAction[key]
@@ -80,6 +104,25 @@ export default class MovementSubSystem {
     )
 
     objectComponent.velocity.setValues(scaledDirection)
-    this._eventSystem.publish('playerMove', this._id)
+    this.sendMoveEvent(objectComponent)
+  }
+
+  private resetCumulativeDirection() {
+    this._cumulativeDirection.x = 0
+    this._cumulativeDirection.y = 0
+  }
+
+  private sendIdleState(objectComponent: ObjectComponent): void {
+    this._eventSystem.publish(EventNames.ChangeState, {
+      id: objectComponent.id,
+      newState: new IdleState(this._eventSystem),
+    })
+  }
+
+  private sendMoveEvent(objectComponent: ObjectComponent) {
+    this._eventSystem.publish(EventNames.ChangeState, {
+      id: objectComponent.id,
+      newState: new MoveState(this._eventSystem),
+    })
   }
 }

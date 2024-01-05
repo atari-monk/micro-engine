@@ -3,6 +3,8 @@ import LogicSystemBase from './logic/LogicSystemBase'
 import ObjectComponent from '../../component/ObjectComponent'
 import Vector2 from '../../../math/vector/Vector2'
 import { KinematicsComponent } from '../../component/KinematicsComponent'
+import IdleState from '../../state_machine/IdleState'
+import { EventNames } from '../../event_system/EventNames'
 
 export default class KinematicsSystem extends LogicSystemBase {
   constructor(
@@ -37,8 +39,15 @@ export default class KinematicsSystem extends LogicSystemBase {
       ) {
         objectComponent.velocity.x = 0
         objectComponent.velocity.y = 0
-        this._eventSystem.publish('entityStopped', objectComponent.id)
+        this.sendEvent(objectComponent)
       }
     }
+  }
+
+  private sendEvent(objectComponent: ObjectComponent) {
+    this._eventSystem.publish(EventNames.ChangeState, {
+      id: objectComponent.id,
+      newState: new IdleState(this._eventSystem),
+    })
   }
 }
