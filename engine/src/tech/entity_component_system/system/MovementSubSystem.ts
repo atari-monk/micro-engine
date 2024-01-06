@@ -6,25 +6,14 @@ import { EventNames } from '../../event_system/EventNames'
 import IdleState from '../../state_machine/IdleState'
 
 type KeyAction = () => void
-const ArrowKeyNames = {
-  ArrowLeft: 'ArrowLeft',
-  ArrowRight: 'ArrowRight',
-  ArrowUp: 'ArrowUp',
-  ArrowDown: 'ArrowDown',
-} as const
-const WSADKeyNames = {
-  a: 'a',
-  d: 'd',
-  w: 'w',
-  s: 's',
-} as const
+type KeyActionMap = { [key: string]: KeyAction }
 const KeyEvents = {
   KeyDown: 'KeyDown',
   KeyUp: 'KeyUp',
 } as const
 
 export default class MovementSubSystem {
-  private readonly _keyAction: { [key: string]: KeyAction }
+  private readonly _keyActions: KeyActionMap
   private readonly _cumulativeDirection: Vector2 = new Vector2()
   private _pressedKey: Set<string> = new Set()
 
@@ -33,31 +22,27 @@ export default class MovementSubSystem {
     private readonly _eventSystem: IEventSystem,
     useArrowKeys: boolean = true
   ) {
-    this._keyAction = useArrowKeys
+    this._keyActions = useArrowKeys
       ? this.initArrowKeyAction()
       : this.initWSADKeyAction()
   }
 
-  private initArrowKeyAction(): { [key: string]: KeyAction } {
-    const keyActions: { [key: string]: KeyAction } = {}
-
-    keyActions[ArrowKeyNames.ArrowLeft] = () => this.updateDirection(-1, 0)
-    keyActions[ArrowKeyNames.ArrowRight] = () => this.updateDirection(1, 0)
-    keyActions[ArrowKeyNames.ArrowUp] = () => this.updateDirection(0, -1)
-    keyActions[ArrowKeyNames.ArrowDown] = () => this.updateDirection(0, 1)
-
-    return keyActions
+  private initArrowKeyAction() {
+    return {
+      ArrowLeft: () => this.updateDirection(-1, 0),
+      ArrowRight: () => this.updateDirection(1, 0),
+      ArrowUp: () => this.updateDirection(0, -1),
+      ArrowDown: () => this.updateDirection(0, 1),
+    } as KeyActionMap
   }
 
-  private initWSADKeyAction(): { [key: string]: KeyAction } {
-    const keyActions: { [key: string]: KeyAction } = {}
-
-    keyActions[WSADKeyNames.a] = () => this.updateDirection(-1, 0)
-    keyActions[WSADKeyNames.d] = () => this.updateDirection(1, 0)
-    keyActions[WSADKeyNames.w] = () => this.updateDirection(0, -1)
-    keyActions[WSADKeyNames.s] = () => this.updateDirection(0, 1)
-
-    return keyActions
+  private initWSADKeyAction() {
+    return {
+      a: () => this.updateDirection(-1, 0),
+      d: () => this.updateDirection(1, 0),
+      w: () => this.updateDirection(0, -1),
+      s: () => this.updateDirection(0, 1),
+    } as KeyActionMap
   }
 
   private updateDirection(x: number, y: number): void {
@@ -67,13 +52,13 @@ export default class MovementSubSystem {
 
   subscribeInput(objectComponent: ObjectComponent) {
     this._input.subscribeInputEvent(KeyEvents.KeyDown, (key) => {
-      if (!this._keyAction.hasOwnProperty(key)) return
+      if (!this._keyActions.hasOwnProperty(key)) return
       this._pressedKey.add(key)
       this.handleKeys(objectComponent)
     })
 
     this._input.subscribeInputEvent(KeyEvents.KeyUp, (key) => {
-      if (!this._keyAction.hasOwnProperty(key)) return
+      if (!this._keyActions.hasOwnProperty(key)) return
       this._pressedKey.delete(key)
       this.handleKeys(objectComponent)
     })
@@ -90,7 +75,7 @@ export default class MovementSubSystem {
     this.resetCumulativeDirection()
 
     this._pressedKey.forEach((key) => {
-      const action = this._keyAction[key]
+      const action = this._keyActions[key]
       if (action) {
         action()
       }
