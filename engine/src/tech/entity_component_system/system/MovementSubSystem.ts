@@ -4,6 +4,8 @@ import ObjectComponent from '../../component/ObjectComponent'
 import MoveState from '../../state_machine/MoveState'
 import { EventNames } from '../../event_system/EventNames'
 import IdleState from '../../state_machine/IdleState'
+import IMovementSubSystem from './IMovementSubSystem'
+import MovementComponent from '../../component/MovementComponent'
 
 type KeyAction = () => void
 type KeyActionMap = { [key: string]: KeyAction }
@@ -12,19 +14,21 @@ const KeyEvents = {
   KeyUp: 'KeyUp',
 } as const
 
-export default class MovementSubSystem {
-  private readonly _keyActions: KeyActionMap
+export default class MovementSubSystem implements IMovementSubSystem {
+  private _keyActions!: KeyActionMap
+  private readonly _arrowKeyActions: KeyActionMap
+  private readonly _wsadKeyActions: KeyActionMap
   private readonly _cumulativeDirection: Vector2 = new Vector2()
   private _pressedKey: Set<string> = new Set()
+  private _keyDownCallback!: (key: string) => void
+  private _keyUpCallback!: (key: string) => void
 
   constructor(
     private readonly _input: IInputManager,
-    private readonly _eventSystem: IEventSystem,
-    useArrowKeys: boolean = true
+    private readonly _eventSystem: IEventSystem
   ) {
-    this._keyActions = useArrowKeys
-      ? this.initArrowKeyAction()
-      : this.initWSADKeyAction()
+    this._arrowKeyActions = this.initArrowKeyAction()
+    this._wsadKeyActions = this.initWSADKeyAction()
   }
 
   private initArrowKeyAction() {
@@ -50,18 +54,33 @@ export default class MovementSubSystem {
     this._cumulativeDirection.y += y
   }
 
-  subscribeInput(objectComponent: ObjectComponent) {
-    this._input.subscribeInputEvent(KeyEvents.KeyDown, (key) => {
+  subscribeInput(
+    objectComponent: ObjectComponent,
+    movementComponent: MovementComponent
+  ) {
+    this._keyActions = movementComponent.useArrowKeys
+      ? this._arrowKeyActions
+      : this._wsadKeyActions
+
+    this._keyDownCallback = (key: string) => {
       if (!this._keyActions.hasOwnProperty(key)) return
       this._pressedKey.add(key)
       this.handleKeys(objectComponent)
-    })
+    }
 
-    this._input.subscribeInputEvent(KeyEvents.KeyUp, (key) => {
+    this._keyUpCallback = (key: string) => {
       if (!this._keyActions.hasOwnProperty(key)) return
       this._pressedKey.delete(key)
       this.handleKeys(objectComponent)
-    })
+    }
+
+    this._input.subscribeInputEvent(KeyEvents.KeyDown, this._keyDownCallback)
+    this._input.subscribeInputEvent(KeyEvents.KeyUp, this._keyUpCallback)
+  }
+
+  unsubscribeInput() {
+    this._input.unsubscribeInputEvent(KeyEvents.KeyDown, this._keyDownCallback)
+    this._input.unsubscribeInputEvent(KeyEvents.KeyUp, this._keyUpCallback)
   }
 
   private handleKeys(objectComponent: ObjectComponent): void {

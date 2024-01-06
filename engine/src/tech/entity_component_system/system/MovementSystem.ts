@@ -1,35 +1,33 @@
-import {
-  IEntity,
-  IEntityManager,
-  IEventSystem,
-  IInputManager,
-} from 'engine_api'
+import { IEntity, IEntityManager, IFactory, IManager } from 'engine_api'
 import MovementComponent from '../../component/MovementComponent'
 import ObjectComponent from '../../component/ObjectComponent'
-import MovementSubSystem from './MovementSubSystem'
 import InitLogicSystemBase from './init_logic/InitLogicSystemBase'
+import IMovementSubSystem from './IMovementSubSystem'
+import MapManager from '../../entity_component/MapManager'
 
 export default class MovementSystem extends InitLogicSystemBase {
-  private _subSystem: MovementSubSystem[] = []
+  private _subSystemManager: IManager<IMovementSubSystem> =
+    new MapManager<IMovementSubSystem>()
 
   constructor(
     entityManager: IEntityManager,
-    private readonly _input: IInputManager,
-    private readonly _eventSystem: IEventSystem
+    private readonly _subSystemFactory: IFactory<IMovementSubSystem>
   ) {
     super(entityManager)
   }
 
   initLogic(entity: IEntity) {
-    const movementComponent = entity.getComponentByTypeStrict(MovementComponent)
     const objectComponent = entity.getComponentByTypeStrict(ObjectComponent)
+    const movementComponent = entity.getComponentByTypeStrict(MovementComponent)
 
-    const movementSubSystem = new MovementSubSystem(
-      this._input,
-      this._eventSystem,
-      movementComponent.useArrowKeys
-    )
-    movementSubSystem.subscribeInput(objectComponent)
-    this._subSystem.push(movementSubSystem)
+    const subSystem = this._subSystemFactory.create()
+    subSystem.subscribeInput(objectComponent, movementComponent)
+    this._subSystemManager.add(objectComponent.id, subSystem)
+  }
+
+  unsubscribe(entity: IEntity) {
+    const objectComponent = entity.getComponentByTypeStrict(ObjectComponent)
+    const subSystem = this._subSystemManager.getStrict(objectComponent.id)
+    subSystem.unsubscribeInput()
   }
 }

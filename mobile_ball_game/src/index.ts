@@ -23,6 +23,7 @@ import {
   GameEventSystem,
   StateMachineSystem,
   EntityId,
+  MovementSubSystemFactory,
 } from 'engine'
 import GameClient from './client-lib/GameClient'
 import EntityData from './data/EntityData'
@@ -146,10 +147,13 @@ async function setupSinglePlayerMode() {
     ballGateCollisionSystem.initilize(rightGate)
     engine.logicSystemManager.add('ballGateCollision', ballGateCollisionSystem)
 
-    const moveSystem = new MovementSystem(
-      engine.entityManager,
+    const movementSubSystemFactory = new MovementSubSystemFactory(
       engine.input,
       engine.eventSystem
+    )
+    const moveSystem = new MovementSystem(
+      engine.entityManager,
+      movementSubSystemFactory
     )
     moveSystem.registerEntityByName(EntityId.Player1)
     moveSystem.registerEntityByName(EntityId.Player2)

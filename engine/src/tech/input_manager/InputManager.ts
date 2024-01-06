@@ -11,6 +11,13 @@ export default class InputManager implements IInputManager {
     this.inputCallbacks[eventType].push(callback)
   }
 
+  unsubscribeInputEvent(eventType: string, callback: IInputCallback): void {
+    const callbacks = this.inputCallbacks[eventType]
+    if (callbacks) {
+      this.inputCallbacks[eventType] = callbacks.filter((cb) => cb !== callback)
+    }
+  }
+
   unsubscribeAll(eventType: string): void {
     if (this.inputCallbacks[eventType]) {
       delete this.inputCallbacks[eventType]
