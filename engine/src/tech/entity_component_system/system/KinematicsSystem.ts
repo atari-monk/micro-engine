@@ -19,9 +19,13 @@ export default class KinematicsSystem extends LogicSystemBase {
     const kinematicsComponent =
       entity.getComponentByTypeStrict(KinematicsComponent)
 
-    objectComponent.position.add(
-      Vector2.getNew(objectComponent.velocity).multiply(deltaTime)
-    )
+    if (objectComponent.moveStep.x === 0 && objectComponent.moveStep.y === 0) {
+      objectComponent.position.add(
+        Vector2.getNew(objectComponent.velocity).multiply(deltaTime)
+      )
+    } else {
+      objectComponent.position.add(Vector2.getNew(objectComponent.velocity))
+    }
 
     if (kinematicsComponent.frictionCoefficient > 0) {
       objectComponent.velocity.multiply(
