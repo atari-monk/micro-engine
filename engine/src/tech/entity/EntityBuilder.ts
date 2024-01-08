@@ -127,11 +127,7 @@ export default class EntityBuilder implements IEntityBuilder {
   }
 
   withServerMovementComponent(): this {
-    this._entity.addComponent(
-      new ServerMovementComponent(
-        this._entity.getComponentByTypeStrict(ObjectComponent)
-      )
-    )
+    this._entity.addComponent(new ServerMovementComponent())
     return this
   }
 
