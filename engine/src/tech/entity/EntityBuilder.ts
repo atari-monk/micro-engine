@@ -4,7 +4,6 @@ import {
   IEntityDataModel,
   IEntityManager,
   IEventSystem,
-  IInputManager,
   ILogger,
   IManager,
   IRendererV2,
@@ -58,10 +57,6 @@ export default class EntityBuilder implements IEntityBuilder {
 
   private assertEntity(): void {
     this._assert.assertField('_entity')
-  }
-
-  private assertRenderer(): void {
-    this._assert.assertField('_renderer')
   }
 
   private assertEntityData(): void {
@@ -126,8 +121,8 @@ export default class EntityBuilder implements IEntityBuilder {
     return this
   }
 
-  withClientMovementComponent(input: IInputManager): this {
-    this._entity.addComponent(new ClientMovementComponent(input))
+  withClientMovementComponent(): this {
+    this._entity.addComponent(new ClientMovementComponent())
     return this
   }
 

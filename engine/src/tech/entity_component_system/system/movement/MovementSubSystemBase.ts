@@ -1,4 +1,4 @@
-import { IEventSystem, IInputManager } from 'engine_api'
+import { IEntity, IEventSystem, IInputManager } from 'engine_api'
 import MovementComponent from '../../../component/MovementComponent'
 import ObjectComponent from '../../../component/ObjectComponent'
 import IMovementSubSystem from './IMovementSubSystem'
@@ -47,10 +47,10 @@ export default abstract class MovementSubSystemBase
   protected abstract OnUp(): void
   protected abstract OnDown(): void
 
-  subscribeInput(
-    objectComponent: ObjectComponent,
-    movementComponent: MovementComponent
-  ): void {
+  subscribeInput(entity: IEntity): void {
+    const objectComponent = entity.getComponentByTypeStrict(ObjectComponent)
+    const movementComponent = entity.getComponentByTypeStrict(MovementComponent)
+
     this._keyActions = movementComponent.useArrowKeys
       ? this._arrowKeyActions
       : this._wsadKeyActions

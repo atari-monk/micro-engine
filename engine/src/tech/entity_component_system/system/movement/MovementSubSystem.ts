@@ -1,4 +1,4 @@
-import { IEventSystem, IInputManager } from 'engine_api'
+import { IEntity, IEventSystem, IInputManager } from 'engine_api'
 import Vector2 from '../../../../math/vector/Vector2'
 import ObjectComponent from '../../../component/ObjectComponent'
 import MoveState from '../../../state_machine/MoveState'
@@ -48,10 +48,10 @@ export default class MovementSubSystem implements IMovementSubSystem {
     this._cumulativeDirection.y += y
   }
 
-  subscribeInput(
-    objectComponent: ObjectComponent,
-    movementComponent: MovementComponent
-  ) {
+  subscribeInput(entity: IEntity) {
+    const objectComponent = entity.getComponentByTypeStrict(ObjectComponent)
+    const movementComponent = entity.getComponentByTypeStrict(MovementComponent)
+
     this._keyActions = movementComponent.useArrowKeys
       ? this._arrowKeyActions
       : this._wsadKeyActions

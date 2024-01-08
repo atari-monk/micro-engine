@@ -18,10 +18,9 @@ export default class MovementSystem extends InitLogicSystemBase {
 
   initLogic(entity: IEntity) {
     const objectComponent = entity.getComponentByTypeStrict(ObjectComponent)
-    const movementComponent = entity.getComponentByTypeStrict(MovementComponent)
 
     const subSystem = this._subSystemFactory.create()
-    subSystem.subscribeInput(objectComponent, movementComponent)
+    subSystem.subscribeInput(entity)
     this._subSystemManager.add(objectComponent.id, subSystem)
   }
 

@@ -1,4 +1,4 @@
-import { IEventSystem, IInputManager } from 'engine_api'
+import { IEntity, IEventSystem, IInputManager } from 'engine_api'
 import MovementComponent from '../../../component/MovementComponent'
 import ObjectComponent from '../../../component/ObjectComponent'
 import IMovementSubSystem from './IMovementSubSystem'
@@ -45,10 +45,9 @@ export default class StepMovementSubSystem implements IMovementSubSystem {
     this._objectComponent.velocity.y = deltaY
   }
 
-  subscribeInput(
-    objectComponent: ObjectComponent,
-    movementComponent: MovementComponent
-  ): void {
+  subscribeInput(entity: IEntity): void {
+    const objectComponent = entity.getComponentByTypeStrict(ObjectComponent)
+    const movementComponent = entity.getComponentByTypeStrict(MovementComponent)
     this._objectComponent = objectComponent
 
     this._arrowKeyActions = this.initArrowKeyAction()

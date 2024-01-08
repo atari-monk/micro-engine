@@ -1,10 +1,6 @@
-import MovementComponent from '../../../component/MovementComponent'
-import ObjectComponent from '../../../component/ObjectComponent'
+import { IEntity } from 'engine_api'
 
 export default interface IMovementSubSystem {
-  subscribeInput(
-    objectComponent: ObjectComponent,
-    movementComponent: MovementComponent
-  ): void
+  subscribeInput(entity: IEntity): void
   unsubscribeInput(): void
 }

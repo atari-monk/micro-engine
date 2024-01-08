@@ -1,8 +1,9 @@
-import { Direction, InputDto } from 'engine_api'
+import { Direction, IEntity, InputDto } from 'engine_api'
 import MovementSubSystemBase from './MovementSubSystemBase'
+import ClientMovementComponent from '../../../component/ClientMovementComponent'
 
 export default class ClientMovementSubSystem extends MovementSubSystemBase {
-  private _inputDto: InputDto = new InputDto()
+  private _inputDto!: InputDto
   private _keyToDirectionMap: { [key: string]: Direction } = {
     ArrowLeft: Direction.Left,
     ArrowRight: Direction.Right,
@@ -10,8 +11,11 @@ export default class ClientMovementSubSystem extends MovementSubSystemBase {
     ArrowDown: Direction.Down,
   }
 
-  get inputDto(): InputDto {
-    return this._inputDto
+  subscribeInput(entity: IEntity): void {
+    super.subscribeInput(entity)
+    this._inputDto = entity.getComponentByTypeStrict(
+      ClientMovementComponent
+    ).inputDto
   }
 
   protected OnLeft(): void {

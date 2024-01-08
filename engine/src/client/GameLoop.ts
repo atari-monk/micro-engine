@@ -17,7 +17,7 @@ export default class GameLoop implements IGameLoop {
   private renderCallbacks: IRenderCallback[] = []
   private paused: boolean = false
 
-  private _player?: IEntity
+  private _player!: IEntity
   private _inputDto: InputDto | undefined
 
   private _entityManager!: IEntityManager
@@ -35,10 +35,8 @@ export default class GameLoop implements IGameLoop {
     console.log('Load GameLoop clientId: ', clientId)
     const player1 = this._entityManager.getStrict('player1')
     const player2 = this._entityManager.getStrict('player2')
-    const player1Id =
-      player1.getComponentByType<ObjectComponent>(ObjectComponent)?.id
-    const player2Id =
-      player2.getComponentByType<ObjectComponent>(ObjectComponent)?.id
+    const player1Id = player1.getComponentByTypeStrict(ObjectComponent).id
+    const player2Id = player2.getComponentByTypeStrict(ObjectComponent).id
     if (clientId == player1Id) {
       this._player = player1
       console.log('Player1 was chosen')
@@ -47,9 +45,10 @@ export default class GameLoop implements IGameLoop {
       this._player = player2
       console.log('Player2 was chosen')
     }
-    this._inputDto = this._player?.getComponentByType<ClientMovementComponent>(
+    if (!this._player) throw new Error('player was not assigned!')
+    this._inputDto = this._player.getComponentByTypeStrict(
       ClientMovementComponent
-    )?.inputDto
+    ).inputDto
   }
 
   start(): void {
