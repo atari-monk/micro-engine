@@ -27,10 +27,10 @@ export default class MovementSubSystem implements IMovementSubSystem {
 
   private initArrowKeyAction() {
     return {
-      ArrowLeft: () => this.updateDirection(-1, 0),
-      ArrowRight: () => this.updateDirection(1, 0),
-      ArrowUp: () => this.updateDirection(0, -1),
-      ArrowDown: () => this.updateDirection(0, 1),
+      arrowleft: () => this.updateDirection(-1, 0),
+      arrowright: () => this.updateDirection(1, 0),
+      arrowup: () => this.updateDirection(0, -1),
+      arrowdown: () => this.updateDirection(0, 1),
     } as KeyActionMap
   }
 
@@ -57,14 +57,16 @@ export default class MovementSubSystem implements IMovementSubSystem {
       : this._wsadKeyActions
 
     this._keyDownCallback = (key: string) => {
-      if (!this._keyActions.hasOwnProperty(key)) return
-      this._pressedKey.add(key)
+      const keyLower = key.toLowerCase()
+      if (!this._keyActions.hasOwnProperty(keyLower)) return
+      this._pressedKey.add(keyLower)
       this.handleKeys(objectComponent)
     }
 
     this._keyUpCallback = (key: string) => {
-      if (!this._keyActions.hasOwnProperty(key)) return
-      this._pressedKey.delete(key)
+      const keyLower = key.toLowerCase()
+      if (!this._keyActions.hasOwnProperty(keyLower)) return
+      this._pressedKey.delete(keyLower)
       this.handleKeys(objectComponent)
     }
 
